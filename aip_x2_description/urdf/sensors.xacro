@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="vehicle"
+  xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="config_dir" default="$(find aip_x2_description)/config"/>
+  <xacro:property name="calibration" value="${load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+
+  <!-- top unit -->
+  <xacro:include filename="top_unit.xacro"/>
+  <xacro:top_unit_macro parent="base_link" x="${calibration['base_link2top_unit_base_link']['x']}" y="${calibration['base_link2top_unit_base_link']['y']}" z="${calibration['base_link2top_unit_base_link']['z']}" roll="${calibration['base_link2top_unit_base_link']['roll']}" pitch="${calibration['base_link2top_unit_base_link']['pitch']}" yaw="${calibration['base_link2top_unit_base_link']['yaw']}" />
+
+  <!-- front unit -->
+  <xacro:include filename="front_unit.xacro"/>
+  <xacro:front_unit_macro parent="base_link" x="${calibration['base_link2front_unit_base_link']['x']}" y="${calibration['base_link2front_unit_base_link']['y']}" z="${calibration['base_link2front_unit_base_link']['z']}" roll="${calibration['base_link2front_unit_base_link']['roll']}" pitch="${calibration['base_link2front_unit_base_link']['pitch']}" yaw="${calibration['base_link2front_unit_base_link']['yaw']}" />
+
+  <!-- rear unit -->
+  <xacro:include filename="rear_unit.xacro"/>
+  <xacro:rear_unit_macro parent="base_link" x="${calibration['base_link2rear_unit_base_link']['x']}" y="${calibration['base_link2rear_unit_base_link']['y']}" z="${calibration['base_link2rear_unit_base_link']['z']}" roll="${calibration['base_link2rear_unit_base_link']['roll']}" pitch="${calibration['base_link2rear_unit_base_link']['pitch']}" yaw="${calibration['base_link2rear_unit_base_link']['yaw']}" />
+
+</robot>
