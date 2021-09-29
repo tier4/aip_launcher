@@ -25,7 +25,7 @@
 
     <!-- lidar -->
     <!-- left -->
-    <xacro:Pandar40P suffix="pandar_40p_left" parent="top_unit_base_link"
+    <xacro:Pandar40P name="pandar_40p_left" parent="top_unit_base_link"
       x="${calibration['top_unit_base_link2pandar_40p_left_base_link']['x']}"
       y="${calibration['top_unit_base_link2pandar_40p_left_base_link']['y']}"
       z="${calibration['top_unit_base_link2pandar_40p_left_base_link']['z']}"
@@ -33,7 +33,7 @@
       pitch="${calibration['top_unit_base_link2pandar_40p_left_base_link']['pitch']}"
       yaw="${calibration['top_unit_base_link2pandar_40p_left_base_link']['yaw']}" />
 
-    <xacro:PandarQT suffix="pandar_qt_left" parent="top_unit_base_link"
+    <xacro:PandarQT name="pandar_qt_left" parent="top_unit_base_link"
       x="${calibration['top_unit_base_link2pandar_qt_left_base_link']['x']}"
       y="${calibration['top_unit_base_link2pandar_qt_left_base_link']['y']}"
       z="${calibration['top_unit_base_link2pandar_qt_left_base_link']['z']}"
@@ -42,7 +42,7 @@
       yaw="${calibration['top_unit_base_link2pandar_qt_left_base_link']['yaw']}" />
 
     <!-- right -->
-    <xacro:Pandar40P suffix="pandar_40p_right" parent="top_unit_base_link"
+    <xacro:Pandar40P name="pandar_40p_right" parent="top_unit_base_link"
       x="${calibration['top_unit_base_link2pandar_40p_right_base_link']['x']}"
       y="${calibration['top_unit_base_link2pandar_40p_right_base_link']['y']}"
       z="${calibration['top_unit_base_link2pandar_40p_right_base_link']['z']}"
@@ -50,7 +50,7 @@
       pitch="${calibration['top_unit_base_link2pandar_40p_right_base_link']['pitch']}"
       yaw="${calibration['top_unit_base_link2pandar_40p_right_base_link']['yaw']}" />
 
-    <xacro:PandarQT suffix="pandar_qt_right" parent="top_unit_base_link"
+    <xacro:PandarQT name="pandar_qt_right" parent="top_unit_base_link"
       x="${calibration['top_unit_base_link2pandar_qt_right_base_link']['x']}"
       y="${calibration['top_unit_base_link2pandar_qt_right_base_link']['y']}"
       z="${calibration['top_unit_base_link2pandar_qt_right_base_link']['z']}"
@@ -60,31 +60,31 @@
 
     <!-- camera -->
     <!-- TLR -->
-    <xacro:monocular_camera_macro suffix="traffic_light_camera/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2traffic_light_camera']['x']}" y="${calibration['top_unit_base_link2traffic_light_camera']['y']}" z="${calibration['top_unit_base_link2traffic_light_camera']['z']}" roll="${calibration['top_unit_base_link2traffic_light_camera']['roll']}" pitch="${calibration['top_unit_base_link2traffic_light_camera']['pitch']}" yaw="${calibration['top_unit_base_link2traffic_light_camera']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="traffic_light_camera/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2traffic_light_camera']['x']}" y="${calibration['top_unit_base_link2traffic_light_camera']['y']}" z="${calibration['top_unit_base_link2traffic_light_camera']['z']}" roll="${calibration['top_unit_base_link2traffic_light_camera']['roll']}" pitch="${calibration['top_unit_base_link2traffic_light_camera']['pitch']}" yaw="${calibration['top_unit_base_link2traffic_light_camera']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
     <!-- BFS1(F) -->
-    <xacro:monocular_camera_macro suffix="camera0/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera0']['x']}" y="${calibration['top_unit_base_link2camera0']['y']}" z="${calibration['top_unit_base_link2camera0']['z']}" roll="${calibration['top_unit_base_link2camera0']['roll']}" pitch="${calibration['top_unit_base_link2camera0']['pitch']}" yaw="${calibration['top_unit_base_link2camera0']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="camera0/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera0']['x']}" y="${calibration['top_unit_base_link2camera0']['y']}" z="${calibration['top_unit_base_link2camera0']['z']}" roll="${calibration['top_unit_base_link2camera0']['roll']}" pitch="${calibration['top_unit_base_link2camera0']['pitch']}" yaw="${calibration['top_unit_base_link2camera0']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
     <!-- BFS2(RF) -->
-    <xacro:monocular_camera_macro suffix="camera1/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera1']['x']}" y="${calibration['top_unit_base_link2camera1']['y']}" z="${calibration['top_unit_base_link2camera1']['z']}" roll="${calibration['top_unit_base_link2camera1']['roll']}" pitch="${calibration['top_unit_base_link2camera1']['pitch']}" yaw="${calibration['top_unit_base_link2camera1']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="camera1/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera1']['x']}" y="${calibration['top_unit_base_link2camera1']['y']}" z="${calibration['top_unit_base_link2camera1']['z']}" roll="${calibration['top_unit_base_link2camera1']['roll']}" pitch="${calibration['top_unit_base_link2camera1']['pitch']}" yaw="${calibration['top_unit_base_link2camera1']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
     <!-- BFS3(RR) -->
-    <xacro:monocular_camera_macro suffix="camera2/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera2']['x']}" y="${calibration['top_unit_base_link2camera2']['y']}" z="${calibration['top_unit_base_link2camera2']['z']}" roll="${calibration['top_unit_base_link2camera2']['roll']}" pitch="${calibration['top_unit_base_link2camera2']['pitch']}" yaw="${calibration['top_unit_base_link2camera2']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="camera2/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera2']['x']}" y="${calibration['top_unit_base_link2camera2']['y']}" z="${calibration['top_unit_base_link2camera2']['z']}" roll="${calibration['top_unit_base_link2camera2']['roll']}" pitch="${calibration['top_unit_base_link2camera2']['pitch']}" yaw="${calibration['top_unit_base_link2camera2']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
     <!-- BFS4(R) -->
     <!-- embedded! -->
 
     <!-- BFS5(LR) -->
-    <xacro:monocular_camera_macro suffix="camera4/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera4']['x']}" y="${calibration['top_unit_base_link2camera4']['y']}" z="${calibration['top_unit_base_link2camera4']['z']}" roll="${calibration['top_unit_base_link2camera4']['roll']}" pitch="${calibration['top_unit_base_link2camera4']['pitch']}" yaw="${calibration['top_unit_base_link2camera4']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="camera4/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera4']['x']}" y="${calibration['top_unit_base_link2camera4']['y']}" z="${calibration['top_unit_base_link2camera4']['z']}" roll="${calibration['top_unit_base_link2camera4']['roll']}" pitch="${calibration['top_unit_base_link2camera4']['pitch']}" yaw="${calibration['top_unit_base_link2camera4']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
     <!-- BFS6(LR) -->
-    <xacro:monocular_camera_macro suffix="camera5/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera5']['x']}" y="${calibration['top_unit_base_link2camera5']['y']}" z="${calibration['top_unit_base_link2camera5']['z']}" roll="${calibration['top_unit_base_link2camera5']['roll']}" pitch="${calibration['top_unit_base_link2camera5']['pitch']}" yaw="${calibration['top_unit_base_link2camera5']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
+    <xacro:monocular_camera_macro name="camera5/camera" parent="top_unit_base_link" namespace="" x="${calibration['top_unit_base_link2camera5']['x']}" y="${calibration['top_unit_base_link2camera5']['y']}" z="${calibration['top_unit_base_link2camera5']['z']}" roll="${calibration['top_unit_base_link2camera5']['roll']}" pitch="${calibration['top_unit_base_link2camera5']['pitch']}" yaw="${calibration['top_unit_base_link2camera5']['yaw']}" fps="30" width="800" height="400" fov="1.3"/>
 
-    
+
     <!-- gnss -->
     <!-- left -->
     <xacro:imu_macro
-      suffix="gnss_right"
+      name="gnss_right"
       parent="top_unit_base_link"
       namespace=""
       x="${calibration['top_unit_base_link2gnss_right']['x']}"
@@ -96,7 +96,7 @@
       fps="100" />
     <!-- right -->
     <xacro:imu_macro
-      suffix="gnss_left"
+      name="gnss_left"
       parent="top_unit_base_link"
       namespace=""
       x="${calibration['top_unit_base_link2gnss_left']['x']}"
@@ -109,7 +109,7 @@
 
     <!-- imu -->
     <xacro:imu_macro
-      suffix="tamagawa/imu"
+      name="tamagawa/imu"
       parent="top_unit_base_link"
       namespace=""
       x="${calibration['top_unit_base_link2imu_tamagawa']['x']}"
