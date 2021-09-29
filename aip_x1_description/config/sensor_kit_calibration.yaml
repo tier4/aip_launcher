@@ -13,7 +13,7 @@ sensor_kit_base_link2livox_front_left_base_link:
   pitch: 0.000
   yaw: 1.047
 sensor_kit_base_link2livox_front_center_base_link:
-  x:  1.054
+  x: 1.054
   y: 0.000
   z: -1.330
   roll: 0.000

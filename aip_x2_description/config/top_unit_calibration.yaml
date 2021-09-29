@@ -11,7 +11,7 @@ top_unit_base_link2camera0:
   z: 0.0345
   roll: 0.0
   pitch: 0.0
-  yaw: 0.0  
+  yaw: 0.0
 top_unit_base_link2camera1:
   x: 0.09841
   y: -0.78172
