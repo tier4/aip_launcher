@@ -34,7 +34,7 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.28.1
+    rev: v0.29.0
     hooks:
       - id: markdownlint
         args: ["-c", ".markdownlint.yaml", "--fix"]
@@ -52,7 +52,7 @@ repos:
       - id: sort-package-xml
 
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.15
+    rev: v0.1.16
     hooks:
       - id: shellcheck
 
