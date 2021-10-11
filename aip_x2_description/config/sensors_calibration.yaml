@@ -1,21 +1,22 @@
-base_link2top_unit_base_link:
-  x: 2.870
-  y: 0.0
-  z: 2.135
-  roll: 0.0
-  pitch: 0.0
-  yaw: 0.0
-base_link2front_unit_base_link:
-  x: 4.029
-  y: 0.0
-  z: 0.75
-  roll: 0.0
-  pitch: 0.0
-  yaw: 0.0
-base_link2rear_unit_base_link:
-  x: -1.031
-  y: 0.0
-  z: 0.750
-  roll: 0.0
-  pitch: 0.0
-  yaw: 3.1415
+base_link:
+  top_unit_base_link:
+    x: 2.870
+    y: 0.0
+    z: 2.135
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  front_unit_base_link:
+    x: 4.029
+    y: 0.0
+    z: 0.75
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  rear_unit_base_link:
+    x: -1.031
+    y: 0.0
+    z: 0.750
+    roll: 0.0
+    pitch: 0.0
+    yaw: 3.1415
