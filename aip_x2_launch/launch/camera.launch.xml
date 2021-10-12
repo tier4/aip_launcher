@@ -4,7 +4,7 @@
 
   <group>
     <push-ros-namespace namespace="camera"/>
-    <group>
+    <!-- <group>
       <push-ros-namespace namespace="traffic_light"/>
       <node pkg="usb_cam" name="traffic_light_camera" exec="usb_cam_node" if="$(var launch_driver)">
         <remap from="/image_raw" to="image_raw" />
@@ -18,7 +18,7 @@
         <param name="pixel_format" value="yuyv" />
         <param name="frame_rate" value="24" />
       </node>
-    </group>
+    </group> -->
   </group>
 
 </launch>
