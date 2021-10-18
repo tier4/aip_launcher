@@ -24,7 +24,7 @@
       <arg name="coordinate_system" value="$(var coordinate_system)" />
       <arg name="use_ublox_receiver" value="true" />
 
-      <arg name="gnss_frame" value="gnss_link" />
+      <arg name="gnss_frame" value="gnss_right_link" />
     </include>
 
   </group>
