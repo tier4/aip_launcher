@@ -76,7 +76,13 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 **create_parameter_dict(
-                    "scan_phase", "model", "device_ip", "calibration", "return_mode"
+                    "model",
+                    "scan_phase",
+                    "angle_range",
+                    "distance_range",
+                    "device_ip",
+                    "calibration",
+                    "return_mode",
                 )
             }
         ],
@@ -238,6 +244,8 @@ def generate_launch_description():
     add_launch_arg("calibration", "")
     add_launch_arg("device_ip", "192.168.1.201")
     add_launch_arg("scan_phase", "0.0")
+    add_launch_arg("angle_range" "[270.0, 90.0]")
+    add_launch_arg("distance_range" "[0.1, 200.0]")
     add_launch_arg("return_mode", "Dual")
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("container_name", "pandar_composable_node_container")
