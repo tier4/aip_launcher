@@ -17,6 +17,8 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
+from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
@@ -175,6 +177,23 @@ def launch_setup(context, *args, **kwargs):
         }],
     )
 
+    dual_return_filter_component = ComposableNode(
+        package='pointcloud_preprocessor',
+        plugin='pointcloud_preprocessor::DualReturnOutlierFilterComponent',
+        name='dual_return_filter',
+        remappings=[
+            ('input', 'rectified/pointcloud_ex'),
+            ('output', 'outlier_filtered/pointcloud'),
+        ],
+        parameters=[{
+            'vertical_bins': LaunchConfiguration('vertical_bins'),
+            'visibility_threshold': LaunchConfiguration('visibility_threshold'),
+        }],
+        extra_arguments=[{
+            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
+        }],
+    )
+
     container = ComposableNodeContainer(
         name='pandar_node_container',
         namespace='pointcloud_preprocessor',
@@ -182,7 +201,7 @@ def launch_setup(context, *args, **kwargs):
         executable=LaunchConfiguration('container_executable'),
         composable_node_descriptions=[pointcloud_component, self_crop_component,
                                       right_mirror_crop_component, left_mirror_crop_component,
-                                      undistort_component, ring_outlier_filter_component],
+                                      undistort_component],
     )
 
     driver_loader = LoadComposableNodes(
@@ -192,7 +211,19 @@ def launch_setup(context, *args, **kwargs):
             LaunchConfiguration('launch_driver')),
     )
 
-    return [container, driver_loader]
+    ring_outlier_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[ring_outlier_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationNotEquals('return_mode', 'Dual'),
+    )
+
+    dual_return_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[dual_return_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationEquals('return_mode', 'Dual'),
+    )
+
+    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader]
 
 
 def generate_launch_description():
@@ -220,6 +251,8 @@ def generate_launch_description():
     add_launch_arg('vehicle_mirror_param_file')
     add_launch_arg('use_multithread', 'true')
     add_launch_arg('use_intra_process', 'true')
+    add_launch_arg('vertical_bins', '40')
+    add_launch_arg('visibility_threshold', '0.5')
 
     set_container_executable = SetLaunchConfiguration(
         'container_executable',
