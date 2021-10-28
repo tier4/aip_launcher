@@ -3,6 +3,7 @@
   <arg name="launch_driver" default="true" />
   <arg name="use_concat_filter" default="true" />
   <arg name="use_radius_search" default="false" />
+  <arg name="use_dji_driver" default="false" />
   <arg name="vehicle_param_file" />
   <arg name="vehicle_mirror_param_file" />
 
@@ -11,58 +12,57 @@
 
     <group>
       <push-ros-namespace namespace="top"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+      <include file="$(find-pkg-share aip_x1_launch)/launch/velodyne_VLP16.launch.xml">
         <arg name="sensor_frame" value="velodyne_top" />
         <arg name="device_ip" value="192.168.1.20"/>
         <arg name="port" value="2368"/>
+        <arg name="scan_phase" value="180.0" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       </include>
     </group>
 
-    <group>
-      <push-ros-namespace namespace="front_left"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py">
-        <arg name="sensor_frame" value="livox_front_left" />
-        <arg name="bd_code_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x1/livox_front_left_bd_code.param.yaml" />
-        <arg name="launch_driver" value="$(var launch_driver)" />
-        <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-      </include>
-    </group>
+    <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py" if="$(var use_dji_driver)">
+      <arg name="multi_topic" value="1" />
+      <arg name="launch_driver" value="$(var launch_driver)" />
+      <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
+      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+    </include>
 
-    <group>
-      <push-ros-namespace namespace="front_center"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py">
-        <arg name="sensor_frame" value="livox_front_center" />
-        <arg name="bd_code_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x1/livox_front_center_bd_code.param.yaml" />
-        <arg name="launch_driver" value="$(var launch_driver)" />
-        <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-      </include>
+    <group unless="$(var use_dji_driver)">
+      <group>
+	      <push-ros-namespace namespace="front_right"/>
+        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+          <arg name="launch_driver" value="$(var launch_driver)" />
+          <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_right_config.yaml" />
+        </include>
+      </group>
+      <group>
+        <push-ros-namespace namespace="front_center"/>
+        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+          <arg name="launch_driver" value="$(var launch_driver)" />
+          <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_center_config.yaml" />
+	      </include>
+      </group>
+      <group>
+        <push-ros-namespace namespace="front_left"/>
+        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+          <arg name="launch_driver" value="$(var launch_driver)" />
+          <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_left_config.yaml" />
+	      </include>
+      </group>
     </group>
-
-    <group>
-      <push-ros-namespace namespace="front_right"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py">
-        <arg name="sensor_frame" value="livox_front_right" />
-        <arg name="bd_code_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x1/livox_front_right_bd_code.param.yaml" />
-        <arg name="launch_driver" value="$(var launch_driver)" />
-        <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-      </include>
-    </group>
-
 
     <include file="$(find-pkg-share aip_x1_launch)/launch/pointcloud_preprocessor.launch.py">
       <arg name="base_frame" value="base_link" />
       <arg name="use_concat_filter" value="$(var use_concat_filter)" />
       <arg name="use_radius_search" value="$(var use_radius_search)" />
       <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
-      <arg name="use_intra_process" value="false" />
+      <arg name="use_intra_process" value="true" />
       <arg name="use_multithread" value="false" />
     </include>
 
+    <include file="$(find-pkg-share aip_x1_launch)/launch/topic_state_monitor.launch.py" />
   </group>
 </launch>
