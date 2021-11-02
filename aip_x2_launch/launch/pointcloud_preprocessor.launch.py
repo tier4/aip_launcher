@@ -30,295 +30,298 @@ import yaml
 
 
 def get_vehicle_info(context):
-    path = LaunchConfiguration('vehicle_param_file').perform(context)
-    with open(path, 'r') as f:
-        p = yaml.safe_load(f)['/**']['ros__parameters']
-    p['vehicle_length'] = p['front_overhang'] + \
-        p['wheel_base'] + p['rear_overhang']
-    p['vehicle_width'] = p['wheel_tread'] + \
-        p['left_overhang'] + p['right_overhang']
-    p['min_longitudinal_offset'] = -p['rear_overhang']
-    p['max_longitudinal_offset'] = p['front_overhang'] + p['wheel_base']
-    p['min_lateral_offset'] = -(p['wheel_tread'] / 2.0 + p['right_overhang'])
-    p['max_lateral_offset'] = p['wheel_tread'] / 2.0 + p['left_overhang']
-    p['min_height_offset'] = 0.0
-    p['max_height_offset'] = p['vehicle_height']
+    path = LaunchConfiguration("vehicle_param_file").perform(context)
+    with open(path, "r") as f:
+        p = yaml.safe_load(f)["/**"]["ros__parameters"]
+    p["vehicle_length"] = p["front_overhang"] + p["wheel_base"] + p["rear_overhang"]
+    p["vehicle_width"] = p["wheel_tread"] + p["left_overhang"] + p["right_overhang"]
+    p["min_longitudinal_offset"] = -p["rear_overhang"]
+    p["max_longitudinal_offset"] = p["front_overhang"] + p["wheel_base"]
+    p["min_lateral_offset"] = -(p["wheel_tread"] / 2.0 + p["right_overhang"])
+    p["max_lateral_offset"] = p["wheel_tread"] / 2.0 + p["left_overhang"]
+    p["min_height_offset"] = 0.0
+    p["max_height_offset"] = p["vehicle_height"]
     return p
 
 
 def get_vehicle_mirror_info(context):
-    path = LaunchConfiguration('vehicle_mirror_param_file').perform(context)
-    with open(path, 'r') as f:
+    path = LaunchConfiguration("vehicle_mirror_param_file").perform(context)
+    with open(path, "r") as f:
         p = yaml.safe_load(f)
     return p
 
 
 def launch_setup(context, *args, **kwargs):
 
-    pkg = 'pointcloud_preprocessor'
+    pkg = "pointcloud_preprocessor"
 
     vehicle_info = get_vehicle_info(context)
 
     front_lower_cropbox_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::CropBoxFilterComponent',
-        name='front_lower_crop_box_filter',
+        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+        name="front_lower_crop_box_filter",
         remappings=[
-            ('input', 'front_lower/outlier_filtered/pointcloud'),
-            ('output', 'front_lower/measurement_range_cropped/pointcloud'),
+            ("input", "front_lower/outlier_filtered/pointcloud"),
+            ("output", "front_lower/measurement_range_cropped/pointcloud"),
         ],
-        parameters=[{
-            'input_frame': LaunchConfiguration('base_frame'),
-            'output_frame': LaunchConfiguration('base_frame'),
-            'min_x': -50.0,
-            'max_x': 100.0,
-            'min_y': -50.0,
-            'max_y': 50.0,
-            'min_z': vehicle_info['min_height_offset'],
-            'max_z': vehicle_info['max_height_offset'],
-            'negative': False,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "input_frame": LaunchConfiguration("base_frame"),
+                "output_frame": LaunchConfiguration("base_frame"),
+                "min_x": -50.0,
+                "max_x": 100.0,
+                "min_y": -50.0,
+                "max_y": 50.0,
+                "min_z": vehicle_info["min_height_offset"],
+                "max_z": vehicle_info["max_height_offset"],
+                "negative": False,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     front_lower_ground_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::ScanGroundFilterComponent',
-        name='front_lower_scan_ground_filter',
+        plugin="pointcloud_preprocessor::ScanGroundFilterComponent",
+        name="front_lower_scan_ground_filter",
         remappings=[
-            ('input', 'front_lower/measurement_range_cropped/pointcloud'),
-            ('output', 'front_lower/no_ground/pointcloud')
+            ("input", "front_lower/measurement_range_cropped/pointcloud"),
+            ("output", "front_lower/no_ground/pointcloud"),
         ],
-        parameters=[{
-            'global_slope_max_angle_deg': 10.0,
-            'local_slope_max_angle_deg': 30.0,
-            'split_points_distance_tolerance': 0.1,
-            'split_height_distance': 0.05,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "global_slope_max_angle_deg": 10.0,
+                "local_slope_max_angle_deg": 30.0,
+                "split_points_distance_tolerance": 0.1,
+                "split_height_distance": 0.05,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     front_upper_cropbox_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::CropBoxFilterComponent',
-        name='front_upper_crop_box_filter',
+        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+        name="front_upper_crop_box_filter",
         remappings=[
-            ('input', 'front_upper/outlier_filtered/pointcloud'),
-            ('output', 'front_upper/measurement_range_cropped/pointcloud'),
+            ("input", "front_upper/outlier_filtered/pointcloud"),
+            ("output", "front_upper/measurement_range_cropped/pointcloud"),
         ],
-        parameters=[{
-            'input_frame': LaunchConfiguration('base_frame'),
-            'output_frame': LaunchConfiguration('base_frame'),
-            'min_x': -50.0,
-            'max_x': 100.0,
-            'min_y': -50.0,
-            'max_y': 50.0,
-            'min_z': vehicle_info['min_height_offset'],
-            'max_z': vehicle_info['max_height_offset'],
-            'negative': False,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "input_frame": LaunchConfiguration("base_frame"),
+                "output_frame": LaunchConfiguration("base_frame"),
+                "min_x": -50.0,
+                "max_x": 100.0,
+                "min_y": -50.0,
+                "max_y": 50.0,
+                "min_z": vehicle_info["min_height_offset"],
+                "max_z": vehicle_info["max_height_offset"],
+                "negative": False,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     front_upper_ground_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::ScanGroundFilterComponent',
-        name='front_upper_scan_ground_filter',
+        plugin="pointcloud_preprocessor::ScanGroundFilterComponent",
+        name="front_upper_scan_ground_filter",
         remappings=[
-            ('input', 'front_upper/measurement_range_cropped/pointcloud'),
-            ('output', 'front_upper/no_ground/pointcloud')
+            ("input", "front_upper/measurement_range_cropped/pointcloud"),
+            ("output", "front_upper/no_ground/pointcloud"),
         ],
-        parameters=[{
-            'global_slope_max_angle_deg': 10.0,
-            'local_slope_max_angle_deg': 30.0,
-            'split_points_distance_tolerance': 0.045,
-            'split_height_distance': 0.15,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "global_slope_max_angle_deg": 10.0,
+                "local_slope_max_angle_deg": 30.0,
+                "split_points_distance_tolerance": 0.045,
+                "split_height_distance": 0.15,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     # set concat filter as a component
     concat_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent',
-        name='concatenate_data',
-        remappings=[('output', 'concatenated/pointcloud')],
-        parameters=[{
-            'input_topics': ['/sensing/lidar/front_upper/outlier_filtered/pointcloud',
-                             '/sensing/lidar/front_lower/outlier_filtered/pointcloud',
-                             '/sensing/lidar/left_upper/outlier_filtered/pointcloud',
-                             '/sensing/lidar/left_lower/outlier_filtered/pointcloud',
-                             '/sensing/lidar/right_upper/outlier_filtered/pointcloud',
-                             '/sensing/lidar/right_lower/outlier_filtered/pointcloud',
-                             '/sensing/lidar/rear_upper/outlier_filtered/pointcloud',
-                             '/sensing/lidar/rear_lower/outlier_filtered/pointcloud'],
-            'output_frame': LaunchConfiguration('base_frame'),
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        name="concatenate_data",
+        remappings=[("output", "concatenated/pointcloud")],
+        parameters=[
+            {
+                "input_topics": [
+                    "/sensing/lidar/front_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/front_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/left_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/left_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/right_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/right_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/rear_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
+                ],
+                "output_frame": LaunchConfiguration("base_frame"),
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     passthrough_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::PassThroughFilterComponent',
-        name='passthrough_filter',
+        plugin="pointcloud_preprocessor::PassThroughFilterComponent",
+        name="passthrough_filter",
         remappings=[
-            ('input', 'left_upper/outlier_filtered/pointcloud'),
-            ('output', 'concatenated/pointcloud'),
+            ("input", "left_upper/outlier_filtered/pointcloud"),
+            ("output", "concatenated/pointcloud"),
         ],
-        parameters=[{
-            'output_frame': LaunchConfiguration('base_frame'),
-            'min_z': vehicle_info['min_height_offset'],
-            'max_z': vehicle_info['max_height_offset'],
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "output_frame": LaunchConfiguration("base_frame"),
+                "min_z": vehicle_info["min_height_offset"],
+                "max_z": vehicle_info["max_height_offset"],
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     # set crop box filter as a component
     cropbox_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::CropBoxFilterComponent',
-        name='crop_box_filter',
+        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+        name="crop_box_filter",
         remappings=[
-            ('input', 'concatenated/pointcloud'),
-            ('output', 'measurement_range_cropped/pointcloud'),
+            ("input", "concatenated/pointcloud"),
+            ("output", "measurement_range_cropped/pointcloud"),
         ],
-        parameters=[{
-            'input_frame': LaunchConfiguration('base_frame'),
-            'output_frame': LaunchConfiguration('base_frame'),
-            'min_x': -50.0,
-            'max_x': 100.0,
-            'min_y': -50.0,
-            'max_y': 50.0,
-            'min_z': vehicle_info['min_height_offset'],
-            'max_z': vehicle_info['max_height_offset'],
-            'negative': False,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "input_frame": LaunchConfiguration("base_frame"),
+                "output_frame": LaunchConfiguration("base_frame"),
+                "min_x": -50.0,
+                "max_x": 100.0,
+                "min_y": -50.0,
+                "max_y": 50.0,
+                "min_z": vehicle_info["min_height_offset"],
+                "max_z": vehicle_info["max_height_offset"],
+                "negative": False,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     ground_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::ScanGroundFilterComponent',
-        name='scan_ground_filter',
+        plugin="pointcloud_preprocessor::ScanGroundFilterComponent",
+        name="scan_ground_filter",
         remappings=[
-            ('input', 'measurement_range_cropped/pointcloud'),
-            ('output', 'concatenated/no_ground/pointcloud')
+            ("input", "measurement_range_cropped/pointcloud"),
+            ("output", "concatenated/no_ground/pointcloud"),
         ],
-        parameters=[{
-            'global_slope_max_angle_deg': 10.0,
-            'local_slope_max_angle_deg': 30.0,
-            'split_points_distance_tolerance': 0.2,
-            'split_height_distance': 0.2,
-            'use_virtual_ground_point': False,
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        parameters=[
+            {
+                "global_slope_max_angle_deg": 10.0,
+                "local_slope_max_angle_deg": 30.0,
+                "split_points_distance_tolerance": 0.2,
+                "split_height_distance": 0.2,
+                "use_virtual_ground_point": False,
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     ground_concat_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent',
-        name='concatenate_data_front',
-        remappings=[('output', 'no_ground/oneshot/pointcloud')],
-        parameters=[{
-            'input_topics': ['/sensing/lidar/concatenated/no_ground/pointcloud',
-                             '/sensing/lidar/front_upper/no_ground/pointcloud',
-                             '/sensing/lidar/front_lower/no_ground/pointcloud'],
-            'output_frame': LaunchConfiguration('base_frame'),
-        }],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        name="concatenate_data_front",
+        remappings=[("output", "no_ground/oneshot/pointcloud")],
+        parameters=[
+            {
+                "input_topics": [
+                    "/sensing/lidar/concatenated/no_ground/pointcloud",
+                    "/sensing/lidar/front_upper/no_ground/pointcloud",
+                    "/sensing/lidar/front_lower/no_ground/pointcloud",
+                ],
+                "output_frame": LaunchConfiguration("base_frame"),
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     load_laserscan_to_occupancy_grid_map = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
-                FindPackageShare('laserscan_to_occupancy_grid_map'),
-                '/launch/laserscan_to_occupancy_grid_map.launch.py'
+                FindPackageShare("laserscan_to_occupancy_grid_map"),
+                "/launch/laserscan_to_occupancy_grid_map.launch.py",
             ]
         ),
         launch_arguments={
-            'container':
-            '/sensing/lidar/pointcloud_preprocessor/pointcloud_preprocessor_container',
-            'input/obstacle_pointcloud': 'no_ground/oneshot/pointcloud',
-            'input/raw_pointcloud': 'concatenated/pointcloud',
-            'output': 'occupancy_grid',
-            'use_intra_process': LaunchConfiguration('use_intra_process'),
-        }.items()
+            "container": "/sensing/lidar/pointcloud_preprocessor/pointcloud_preprocessor_container",
+            "input/obstacle_pointcloud": "no_ground/oneshot/pointcloud",
+            "input/raw_pointcloud": "concatenated/pointcloud",
+            "output": "occupancy_grid",
+            "use_intra_process": LaunchConfiguration("use_intra_process"),
+        }.items(),
     )
 
     occupancy_grid_map_outlier_component = ComposableNode(
         package=pkg,
-        plugin='pointcloud_preprocessor::OccupancyGridMapOutlierFilterComponent',
-        name='occupancy_grid_map_outlier_filter',
+        plugin="pointcloud_preprocessor::OccupancyGridMapOutlierFilterComponent",
+        name="occupancy_grid_map_outlier_filter",
         remappings=[
-            ('~/input/occupancy_grid_map', 'occupancy_grid'),
-            ('~/input/pointcloud', 'no_ground/oneshot/pointcloud'),
-            ('~/output/pointcloud', 'no_ground/pointcloud'),
+            ("~/input/occupancy_grid_map", "occupancy_grid"),
+            ("~/input/pointcloud", "no_ground/oneshot/pointcloud"),
+            ("~/output/pointcloud", "no_ground/pointcloud"),
         ],
-        extra_arguments=[{
-            'use_intra_process_comms': LaunchConfiguration('use_intra_process')
-        }],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     front_upper_loader = LoadComposableNodes(
-        composable_node_descriptions=[
-            front_upper_cropbox_component, front_upper_ground_component],
-        target_container='/sensing/lidar/front_upper/pointcloud_preprocessor/pandar_node_container'
+        composable_node_descriptions=[front_upper_cropbox_component, front_upper_ground_component],
+        target_container="/sensing/lidar/front_upper/pointcloud_preprocessor/pandar_node_container",
     )
 
     front_lower_loader = LoadComposableNodes(
-        composable_node_descriptions=[
-            front_lower_cropbox_component, front_lower_ground_component],
-        target_container='/sensing/lidar/front_lower/pointcloud_preprocessor/pandar_node_container'
+        composable_node_descriptions=[front_lower_cropbox_component, front_lower_ground_component],
+        target_container="/sensing/lidar/front_lower/pointcloud_preprocessor/pandar_node_container",
     )
 
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
-        name='pointcloud_preprocessor_container',
-        namespace='pointcloud_preprocessor',
-        package='rclcpp_components',
-        executable=LaunchConfiguration('container_executable'),
+        name="pointcloud_preprocessor_container",
+        namespace="pointcloud_preprocessor",
+        package="rclcpp_components",
+        executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[
             ground_concat_component,
             cropbox_component,
             ground_component,
             occupancy_grid_map_outlier_component,
         ],
-        output='screen',
+        output="screen",
     )
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
         target_container=container,
-        condition=IfCondition(LaunchConfiguration('use_concat_filter')),
+        condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
     passthrough_loader = LoadComposableNodes(
         composable_node_descriptions=[passthrough_component],
         target_container=container,
-        condition=UnlessCondition(LaunchConfiguration('use_concat_filter')),
+        condition=UnlessCondition(LaunchConfiguration("use_concat_filter")),
     )
 
-    return [front_upper_loader, front_lower_loader, container, concat_loader,
-            passthrough_loader, load_laserscan_to_occupancy_grid_map]
+    return [
+        front_upper_loader,
+        front_lower_loader,
+        container,
+        concat_loader,
+        passthrough_loader,
+        load_laserscan_to_occupancy_grid_map,
+    ]
 
 
 def generate_launch_description():
@@ -326,28 +329,28 @@ def generate_launch_description():
     launch_arguments = []
 
     def add_launch_arg(name: str, default_value=None):
-        launch_arguments.append(DeclareLaunchArgument(
-            name, default_value=default_value))
+        launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
-    add_launch_arg('base_frame', 'base_link')
-    add_launch_arg('use_concat_filter', 'use_concat_filter')
-    add_launch_arg('vehicle_param_file')
-    add_launch_arg('use_multithread', 'False')
-    add_launch_arg('use_intra_process', 'True')
+    add_launch_arg("base_frame", "base_link")
+    add_launch_arg("use_concat_filter", "use_concat_filter")
+    add_launch_arg("vehicle_param_file")
+    add_launch_arg("use_multithread", "False")
+    add_launch_arg("use_intra_process", "True")
 
     set_container_executable = SetLaunchConfiguration(
-        'container_executable',
-        'component_container',
-        condition=UnlessCondition(LaunchConfiguration('use_multithread'))
+        "container_executable",
+        "component_container",
+        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
-        'container_executable',
-        'component_container_mt',
-        condition=IfCondition(LaunchConfiguration('use_multithread'))
+        "container_executable",
+        "component_container_mt",
+        condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
-    return launch.LaunchDescription(launch_arguments +
-                                    [set_container_executable,
-                                     set_container_mt_executable] +
-                                    [OpaqueFunction(function=launch_setup)])
+    return launch.LaunchDescription(
+        launch_arguments
+        + [set_container_executable, set_container_mt_executable]
+        + [OpaqueFunction(function=launch_setup)]
+    )
