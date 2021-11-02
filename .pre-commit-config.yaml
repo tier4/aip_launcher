@@ -27,7 +27,6 @@ repos:
       - id: check-xml
       - id: check-yaml
       - id: detect-private-key
-      - id: double-quote-string-fixer
       - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: trailing-whitespace
@@ -45,14 +44,41 @@ repos:
       - id: prettier
 
   - repo: https://github.com/tier4/pre-commit-hooks-ros
-    rev: v0.3.0
+    rev: v0.4.0
     hooks:
       - id: prettier-package-xml
       - id: sort-package-xml
 
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.16
+    rev: v0.1.17
     hooks:
       - id: shellcheck
 
-exclude: "(.svg)"
+  - repo: https://github.com/pycqa/isort
+    rev: 5.9.3
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/psf/black
+    rev: 21.9b0
+    hooks:
+      - id: black
+        args: ["--line-length=100"]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          [
+            "flake8-blind-except",
+            "flake8-builtins",
+            "flake8-class-newline",
+            "flake8-comprehensions",
+            "flake8-deprecated",
+            "flake8-docstrings",
+            "flake8-import-order",
+            "flake8-quotes",
+          ]
+
+exclude: ".svg"
