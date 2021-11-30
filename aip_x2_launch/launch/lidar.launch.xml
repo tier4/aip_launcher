@@ -17,7 +17,7 @@
         <arg name="lidar_port" value="2321" />
         <arg name="gps_port" value="10121" />
         <arg name="scan_phase" value="0.0" />
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
@@ -50,7 +50,7 @@
         <arg name="lidar_port" value="2322" />
         <arg name="gps_port" value="10122" />
         <arg name="scan_phase" value="0.0" />
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
@@ -84,7 +84,7 @@
         <arg name="lidar_port" value="2323" />
         <arg name="gps_port" value="10123" />
         <arg name="scan_phase" value="0.0" />
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
@@ -118,7 +118,7 @@
         <arg name="lidar_port" value="2324" />
         <arg name="gps_port" value="10124" />
         <arg name="scan_phase" value="0.0" />
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
