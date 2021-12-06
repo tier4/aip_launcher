@@ -97,20 +97,22 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
     )
 
+    target_container = (
+        container
+        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
+        else LaunchConfiguration("container_name")
+    )
+
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
-        target_container=container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name"),
+        target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
     passthrough_loader = LoadComposableNodes(
         composable_node_descriptions=[passthrough_component],
-        target_container=container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name"),
+        target_container=target_container,
         condition=UnlessCondition(LaunchConfiguration("use_concat_filter")),
     )
 
