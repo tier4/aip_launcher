@@ -88,7 +88,10 @@ def launch_setup(context, *args, **kwargs):
     mirror_cropbox_parameters["negative"] = True
 
     mirror_info = get_vehicle_mirror_info(context)
-    mirror_cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"]
+    # TODO hardcoded change to not detect the mirrors as obstacle in SVL
+    # this seems caused by some delay in the pointcloud update which cause points of the mirror to "stay in place" for a short time while the car moves.
+    # when the car moves the points stay behind their actual position and can get out of the crop box if it is too small.
+    mirror_cropbox_parameters["min_x"] = 1.0 # mirror_info["min_longitudinal_offset"]
     mirror_cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"]
     mirror_cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"]
     mirror_cropbox_parameters["max_y"] = mirror_info["max_lateral_offset"]
