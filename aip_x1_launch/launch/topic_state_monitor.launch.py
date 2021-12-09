@@ -155,7 +155,7 @@ def generate_launch_description():
         name="topic_state_monitor_rough_no_ground",
         parameters=[
             {
-                "topic": "/perception/obstacle_segmentation/ground_segmentation/obstacle/oneshot/concatenated/pointcloud",
+                "topic": "/perception/obstacle_segmentation/single_frame/pointcloud_raw",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
@@ -173,7 +173,7 @@ def generate_launch_description():
         name="topic_state_monitor_short_height_no_ground",
         parameters=[
             {
-                "topic": "/perception/obstacle_segmentation/ground_segmentation/short_height/obstacle/oneshot/pointcloud",
+                "topic": "/perception/obstacle_segmentation/plane_fitting/pointcloud",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
