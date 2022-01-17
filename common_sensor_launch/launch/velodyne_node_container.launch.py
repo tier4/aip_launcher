@@ -103,8 +103,8 @@ def launch_setup(context, *args, **kwargs):
             plugin="pointcloud_preprocessor::CropBoxFilterComponent",
             name="crop_box_filter_self",
             remappings=[
-                ("input", "pointcloud_raw_ex"),
-                ("output", "self_cropped/pointcloud_ex"),
+                ("input", "pointcloud_raw"),
+                ("output", "self_cropped/pointcloud"),
             ],
             parameters=[cropbox_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -125,40 +125,40 @@ def launch_setup(context, *args, **kwargs):
             plugin="pointcloud_preprocessor::CropBoxFilterComponent",
             name="crop_box_filter_mirror",
             remappings=[
-                ("input", "self_cropped/pointcloud_ex"),
-                ("output", "mirror_cropped/pointcloud_ex"),
+                ("input", "self_cropped/pointcloud"),
+                ("output", "mirror_cropped/pointcloud"),
             ],
             parameters=[cropbox_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
 
-    nodes.append(
-        ComposableNode(
-            package="velodyne_pointcloud",
-            plugin="velodyne_pointcloud::Interpolate",
-            name="velodyne_interpolate_node",
-            remappings=[
-                ("velodyne_points_ex", "mirror_cropped/pointcloud_ex"),
-                ("velodyne_points_interpolate", "rectified/pointcloud"),
-                ("velodyne_points_interpolate_ex", "rectified/pointcloud_ex"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
+    # nodes.append(
+    #     ComposableNode(
+    #         package="velodyne_pointcloud",
+    #         plugin="velodyne_pointcloud::Interpolate",
+    #         name="velodyne_interpolate_node",
+    #         remappings=[
+    #             ("velodyne_points_ex", "mirror_cropped/pointcloud_ex"),
+    #             ("velodyne_points_interpolate", "rectified/pointcloud"),
+    #             ("velodyne_points_interpolate_ex", "rectified/pointcloud_ex"),
+    #         ],
+    #         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    #     )
+    # )
 
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
-            plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
-            name="ring_outlier_filter",
-            remappings=[
-                ("input", "rectified/pointcloud_ex"),
-                ("output", "outlier_filtered/pointcloud"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
+    # nodes.append(
+    #     ComposableNode(
+    #         package="pointcloud_preprocessor",
+    #         plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
+    #         name="ring_outlier_filter",
+    #         remappings=[
+    #             ("input", "rectified/pointcloud_ex"),
+    #             ("output", "outlier_filtered/pointcloud"),
+    #         ],
+    #         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    #     )
+    # )
 
     # set container to run all required components in the same process
     container = ComposableNodeContainer(

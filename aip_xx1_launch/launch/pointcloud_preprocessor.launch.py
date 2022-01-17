@@ -66,9 +66,12 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "input_topics": [
-                    "/sensing/lidar/top/outlier_filtered/pointcloud",
-                    "/sensing/lidar/left/outlier_filtered/pointcloud",
-                    "/sensing/lidar/right/outlier_filtered/pointcloud",
+                    # "/sensing/lidar/top/outlier_filtered/pointcloud",
+                    "/sensing/lidar/top/mirror_cropped/pointcloud",
+                    "/sensing/lidar/left/mirror_cropped/pointcloud",
+                    "/sensing/lidar/right/mirror_cropped/pointcloud",
+                    # "/sensing/lidar/left/outlier_filtered/pointcloud",
+                    # "/sensing/lidar/right/outlier_filtered/pointcloud",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
             }
@@ -81,7 +84,8 @@ def launch_setup(context, *args, **kwargs):
         plugin="pointcloud_preprocessor::PassThroughFilterComponent",
         name="passthrough_filter",
         remappings=[
-            ("input", "top/outlier_filtered/pointcloud"),
+            # ("input", "top/outlier_filtered/pointcloud"),
+            ("input", "/sensing/lidar/top/mirror_cropped/pointcloud"),
             ("output", "concatenated/pointcloud"),
         ],
         parameters=[
