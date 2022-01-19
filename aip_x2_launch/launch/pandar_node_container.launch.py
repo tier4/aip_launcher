@@ -17,6 +17,8 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
+from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
@@ -86,8 +88,8 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["negative"] = True
 
     vehicle_info = get_vehicle_info(context)
-    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"]
-    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"]
+    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"] - 0.15
+    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"] + 0.15
     cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"]
     cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"]
     cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
@@ -173,6 +175,23 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    dual_return_filter_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
+        name="dual_return_filter",
+        remappings=[
+            ("input", "rectified/pointcloud_ex"),
+            ("output", "outlier_filtered/pointcloud"),
+        ],
+        parameters=[
+            {
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "visibility_threshold": LaunchConfiguration("visibility_threshold"),
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
     container = ComposableNodeContainer(
         name="pandar_node_container",
         namespace="pointcloud_preprocessor",
@@ -184,7 +203,6 @@ def launch_setup(context, *args, **kwargs):
             right_mirror_crop_component,
             left_mirror_crop_component,
             undistort_component,
-            ring_outlier_filter_component,
         ],
     )
 
@@ -194,7 +212,19 @@ def launch_setup(context, *args, **kwargs):
         condition=launch.conditions.IfCondition(LaunchConfiguration("launch_driver")),
     )
 
-    return [container, driver_loader]
+    ring_outlier_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[ring_outlier_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
+    )
+
+    dual_return_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[dual_return_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationEquals("return_mode", "Dual"),
+    )
+
+    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader]
 
 
 def generate_launch_description():
@@ -221,6 +251,8 @@ def generate_launch_description():
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
+    add_launch_arg("vertical_bins", "40")
+    add_launch_arg("visibility_threshold", "0.5")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
