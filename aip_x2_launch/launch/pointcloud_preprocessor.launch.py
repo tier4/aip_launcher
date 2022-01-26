@@ -45,6 +45,8 @@ def launch_setup(context, *args, **kwargs):
                     "/sensing/lidar/rear_upper/outlier_filtered/pointcloud",
                     "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
                 ],
+                "input_offset": [0.025, 0.025, 0.025, 0.0, 0.05, 0.05, 0.05, 0.05],
+                "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),
             }
         ],
@@ -86,7 +88,7 @@ def generate_launch_description():
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
     add_launch_arg("base_frame", "base_link")
-    add_launch_arg("use_multithread", "False")
+    add_launch_arg("use_multithread", "True")
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("container_name", "pointcloud_preprocessor_container")
