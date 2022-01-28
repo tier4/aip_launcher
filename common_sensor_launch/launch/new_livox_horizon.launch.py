@@ -87,6 +87,7 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[params],
         condition=IfCondition(LaunchConfiguration("launch_driver")),
+        output='screen',
     )
 
     container = ComposableNodeContainer(
