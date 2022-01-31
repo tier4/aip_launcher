@@ -75,7 +75,7 @@
         <arg name="lidar_port" value="2332" />
         <arg name="gps_port" value="10132" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="angle_range" value="[90.0, 220.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_lower.csv" />
@@ -113,7 +113,7 @@
         <arg name="lidar_port" value="2333" />
         <arg name="gps_port" value="10133" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="angle_range" value="[140.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_lower.csv" />
