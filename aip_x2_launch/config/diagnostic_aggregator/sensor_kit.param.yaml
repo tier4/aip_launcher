@@ -15,7 +15,7 @@
                 visibility:
                   type: diagnostic_aggregator/GenericAnalyzer
                   path: visibility
-                  contains: ["right_upper: visibility_validation"]
+                  contains: ["left_upper: visibility_validation"]
                   timeout: 1.0
 
         gnss:
