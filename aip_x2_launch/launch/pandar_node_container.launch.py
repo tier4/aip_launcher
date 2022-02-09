@@ -193,9 +193,15 @@ def launch_setup(context, *args, **kwargs):
             {
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "visibility_threshold": LaunchConfiguration("visibility_threshold"),
-                "weak_first_local_noise_threshold": LaunchConfiguration("weak_first_local_noise_threshold"),
-                "weak_first_segment_check_size_h": LaunchConfiguration("weak_first_segment_check_size_h"),
-                "weak_first_segment_check_size_v": LaunchConfiguration("weak_first_segment_check_size_v"),
+                "weak_first_local_noise_threshold": LaunchConfiguration(
+                    "weak_first_local_noise_threshold"
+                ),
+                "weak_first_segment_check_size_h": LaunchConfiguration(
+                    "weak_first_segment_check_size_h"
+                ),
+                "weak_first_segment_check_size_v": LaunchConfiguration(
+                    "weak_first_segment_check_size_v"
+                ),
                 "ROI_mode": LaunchConfiguration("ROI_mode"),
                 "min_azimuth": LaunchConfiguration("min_azimuth"),
                 "max_azimuth": LaunchConfiguration("max_azimuth"),
