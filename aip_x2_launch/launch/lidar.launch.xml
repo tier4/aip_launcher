@@ -22,6 +22,9 @@
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
+        <arg name="min_azimuth" value="13500.0"/>
+        <arg name="max_azimuth" value="22500.0"/>
+        <arg name="max_distance" value ="12.0"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
@@ -58,6 +61,9 @@
         <arg name="scan_phase" value="357.0" />
         <arg name="angle_range" value="[90.0, 357.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="min_azimuth" value="22500.0"/>
+        <arg name="max_azimuth" value="31500.0"/>
+        <arg name="max_distance" value ="12.0"/>
         <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -96,6 +102,9 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[3.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="min_azimuth" value="4500.0"/>
+        <arg name="max_azimuth" value="13500.0"/>
+        <arg name="max_distance" value ="12.0"/>
         <arg name="return_mode" value="Strongest" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -134,6 +143,9 @@
         <arg name="scan_phase" value="180.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="min_azimuth" value="13500.0"/>
+        <arg name="max_azimuth" value="22500.0"/>
+        <arg name="max_distance" value ="12.0"/>
         <arg name="return_mode" value="Strongest" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />

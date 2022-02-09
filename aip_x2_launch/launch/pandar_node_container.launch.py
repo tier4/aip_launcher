@@ -193,6 +193,13 @@ def launch_setup(context, *args, **kwargs):
             {
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "visibility_threshold": LaunchConfiguration("visibility_threshold"),
+                "weak_first_local_noise_threshold": LaunchConfiguration("weak_first_local_noise_threshold"),
+                "weak_first_segment_check_size_h": LaunchConfiguration("weak_first_segment_check_size_h"),
+                "weak_first_segment_check_size_v": LaunchConfiguration("weak_first_segment_check_size_v"),
+                "ROI_mode": LaunchConfiguration("ROI_mode"),
+                "min_azimuth": LaunchConfiguration("min_azimuth"),
+                "max_azimuth": LaunchConfiguration("max_azimuth"),
+                "max_distance": LaunchConfiguration("max_distance"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -260,7 +267,14 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
-    add_launch_arg("visibility_threshold", "0.5")
+    add_launch_arg("visibility_threshold", "0.9")
+    add_launch_arg("weak_first_local_noise_threshold", "2")
+    add_launch_arg("weak_first_segment_check_size_h", "30")
+    add_launch_arg("weak_first_segment_check_size_v", "2")
+    add_launch_arg("ROI_mode", "1")
+    add_launch_arg("min_azimuth", "13500.0")
+    add_launch_arg("max_azimuth", "22500.0")
+    add_launch_arg("max_distance", "12.0")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
