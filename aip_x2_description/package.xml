@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>aip_x2_description</name>
   <version>0.1.0</version>
   <description>The aip_x2_description package</description>
-
   <maintainer email="shinnosuke.hirakawa@tier4.jp">Shinnosuke Hirakawa</maintainer>
-  <license>Apache 2</license>
-
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
