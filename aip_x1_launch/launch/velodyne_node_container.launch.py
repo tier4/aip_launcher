@@ -111,7 +111,7 @@ def launch_setup(context, *args, **kwargs):
             name="distortion_corrector_node",
             remappings=[
                 ("~/input/velocity_report", "/vehicle/status/velocity_status"),
-                ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
+                ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
                 ("~/output/pointcloud", "rectified/pointcloud_ex"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
