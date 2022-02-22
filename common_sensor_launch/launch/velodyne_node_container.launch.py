@@ -90,12 +90,18 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["negative"] = True
 
     vehicle_info = get_vehicle_info(context)
-    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"]
-    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"]
-    cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"]
-    cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"]
-    cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
-    cropbox_parameters["max_z"] = vehicle_info["max_height_offset"]
+    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["min_z"] = vehicle_info["min_height_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_z"] = vehicle_info["max_height_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
 
     nodes.append(
         ComposableNode(
@@ -112,12 +118,18 @@ def launch_setup(context, *args, **kwargs):
     )
 
     mirror_info = get_vehicle_mirror_info(context)
-    cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"]
-    cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"]
-    cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"]
-    cropbox_parameters["max_y"] = mirror_info["max_lateral_offset"]
-    cropbox_parameters["min_z"] = mirror_info["min_height_offset"]
-    cropbox_parameters["max_z"] = mirror_info["max_height_offset"]
+    cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_y"] = mirror_info["max_lateral_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["min_z"] = mirror_info["min_height_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
+    cropbox_parameters["max_z"] = mirror_info["max_height_offset"] + \
+        LaunchConfiguration("vehicle_crop_margin")
 
     nodes.append(
         ComposableNode(
@@ -243,6 +255,7 @@ def generate_launch_description():
     add_launch_arg(
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
+    add_launch_arg("vehicle_crop_margin", description="margin when cropping ego vehicle")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS2 component container communication")
 
