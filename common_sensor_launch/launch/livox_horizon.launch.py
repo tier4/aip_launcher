@@ -28,9 +28,7 @@ import yaml
 
 
 def get_vehicle_info(context):
-    path = LaunchConfiguration("vehicle_param_file").perform(context)
-    with open(path, "r") as f:
-        p = yaml.safe_load(f)["/**"]["ros__parameters"]
+    p = context.launch_configurations.get('ros_params', {})
     p["vehicle_length"] = p["front_overhang"] + p["wheel_base"] + p["rear_overhang"]
     p["vehicle_width"] = p["wheel_tread"] + p["left_overhang"] + p["right_overhang"]
     p["min_longitudinal_offset"] = -p["rear_overhang"]
@@ -180,7 +178,6 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("sensor_frame", "livox_frame")
     add_launch_arg("use_tag_filter", "true")
-    add_launch_arg("vehicle_param_file")
     add_launch_arg("vehicle_mirror_param_file")
 
     return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
