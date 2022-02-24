@@ -27,15 +27,20 @@ from launch_ros.descriptions import ComposableNode
 
 
 def get_vehicle_info(context):
-    p = context.launch_configurations.get("ros_params", {})
-    p["vehicle_length"] = p["front_overhang"] + p["wheel_base"] + p["rear_overhang"]
-    p["vehicle_width"] = p["wheel_tread"] + p["left_overhang"] + p["right_overhang"]
-    p["min_longitudinal_offset"] = -p["rear_overhang"]
-    p["max_longitudinal_offset"] = p["front_overhang"] + p["wheel_base"]
-    p["min_lateral_offset"] = -(p["wheel_tread"] / 2.0 + p["right_overhang"])
-    p["max_lateral_offset"] = p["wheel_tread"] / 2.0 + p["left_overhang"]
+    global_param = context.launch_configurations.get("ros_params", {})
+    p = {}
+    p["vehicle_length"] = (
+        global_param["front_overhang"] + global_param["wheel_base"] + global_param["rear_overhang"]
+    )
+    p["vehicle_width"] = (
+        global_param["wheel_tread"] + global_param["left_overhang"] + global_param["right_overhang"]
+    )
+    p["min_longitudinal_offset"] = -global_param["rear_overhang"]
+    p["max_longitudinal_offset"] = global_param["front_overhang"] + global_param["wheel_base"]
+    p["min_lateral_offset"] = -(global_param["wheel_tread"] / 2.0 + global_param["right_overhang"])
+    p["max_lateral_offset"] = global_param["wheel_tread"] / 2.0 + global_param["left_overhang"]
     p["min_height_offset"] = 0.0
-    p["max_height_offset"] = p["vehicle_height"]
+    p["max_height_offset"] = global_param["vehicle_height"]
     return p
 
 
