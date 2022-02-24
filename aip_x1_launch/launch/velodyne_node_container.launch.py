@@ -22,11 +22,10 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-import yaml
 
 
 def get_vehicle_info(context):
-    p = context.launch_configurations.get('ros_params', {})
+    p = context.launch_configurations.get("ros_params", {})
     p["vehicle_length"] = p["front_overhang"] + p["wheel_base"] + p["rear_overhang"]
     p["vehicle_width"] = p["wheel_tread"] + p["left_overhang"] + p["right_overhang"]
     p["min_longitudinal_offset"] = -p["rear_overhang"]
