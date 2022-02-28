@@ -215,7 +215,6 @@ def launch_setup(context, *args, **kwargs):
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "resolution": LaunchConfiguration("resolution"),
                 "model": LaunchConfiguration("model"),
-
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -258,7 +257,13 @@ def launch_setup(context, *args, **kwargs):
         target_container=container,
     )
 
-    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader, blockage_diag_loader]
+    return [
+        container,
+        driver_loader,
+        ring_outlier_filter_loader,
+        dual_return_filter_loader,
+        blockage_diag_loader,
+    ]
 
 
 def generate_launch_description():
