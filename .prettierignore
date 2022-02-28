@@ -1,2 +1,2 @@
 *.param.yaml
-traffic_light_camera.yaml
+*.rviz
