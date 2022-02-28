@@ -197,6 +197,30 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    blockage_diag_return_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::BlockageDiagComponent",
+        name="blockage_return_diag",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "blockage_diag/pointcloud"),
+        ],
+        parameters=[
+            {
+                "angle_range": LaunchConfiguration("angle_range"),
+                "distance_range": LaunchConfiguration("distance_range"),
+                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                "ground_blockage_threshold": LaunchConfiguration("ground_blockage_threshold"),
+                "sky_blockage_threshold": LaunchConfiguration("sky_blockage_threshold"),
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "resolution": LaunchConfiguration("resolution"),
+                "model": LaunchConfiguration("model"),
+
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
     container = ComposableNodeContainer(
         name="pandar_node_container",
         namespace="pointcloud_preprocessor",
@@ -229,7 +253,12 @@ def launch_setup(context, *args, **kwargs):
         condition=LaunchConfigurationEquals("return_mode", "Dual"),
     )
 
-    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader]
+    blockage_diag_loader = LoadComposableNodes(
+        composable_node_descriptions=[blockage_diag_return_component],
+        target_container=container,
+    )
+
+    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader, blockage_diag_loader]
 
 
 def generate_launch_description():
@@ -259,6 +288,10 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
     add_launch_arg("visibility_threshold", "0.5")
+    add_launch_arg("ground_blockage_threshold", "0.1")
+    add_launch_arg("sky_blockage_threshold", "0.15")
+    add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("resolution", "100.0")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
