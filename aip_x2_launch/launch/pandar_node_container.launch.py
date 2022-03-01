@@ -206,6 +206,12 @@ def launch_setup(context, *args, **kwargs):
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
                 "max_distance": LaunchConfiguration("max_distance"),
+                "x_max": LaunchConfiguration("x_max"),
+                "x_min": LaunchConfiguration("x_min"),
+                "y_max": LaunchConfiguration("y_max"),
+                "y_min": LaunchConfiguration("y_min"),
+                "z_max": LaunchConfiguration("z_max"),
+                "z_min": LaunchConfiguration("z_min"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -281,6 +287,12 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("max_distance", "12.0")
+    add_launch_arg("x_max", "18.0")
+    add_launch_arg("x_min", "-12.0")
+    add_launch_arg("y_max", "2.0")
+    add_launch_arg("y_min", "-2.0")
+    add_launch_arg("z_max", "10.0")
+    add_launch_arg("z_min", "0.0")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
