@@ -7,7 +7,15 @@
   <arg name="vehicle_mirror_param_file" />
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-
+  <arg name="roi_mode" default="Fixed_azimuth_ROI" />
+  <arg name="weak_first_local_noise_threshold" default="2" />
+  <arg name="max_distance" default="5.0"/>
+  <arg name="x_max" default="18.0"/>
+  <arg name="x_min" default="-12.0"/>
+  <arg name="y_max" default="2.0"/>
+  <arg name="y_min" default="-2.0"/>
+  <arg name="z_max" default="10.0"/>
+  <arg name="z_min" default="0.0"/>
   <group>
     <push-ros-namespace namespace="lidar" />
     <group>
@@ -24,7 +32,15 @@
         <arg name="return_mode" value="Strongest" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
-        <arg name="max_distance" value ="12.0"/>
+        <arg name="roi_mode" value ="$(var roi_mode)"/>
+        <arg name="weak_first_local_noise_threshold" value="$(var weak_first_local_noise_threshold)"/>
+        <arg name="max_distance" value="$(var max_distance)"/>
+        <arg name="x_max" value="$(var x_max)"/>
+        <arg name="x_min" value="$(var x_min)"/>
+        <arg name="y_max" value="$(var y_max)"/>
+        <arg name="y_min" value="$(var y_min)"/>
+        <arg name="z_max" value="$(var z_max)"/>
+        <arg name="z_min" value="$(var z_min)"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
@@ -63,7 +79,15 @@
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
-        <arg name="max_distance" value ="12.0"/>
+        <arg name="roi_mode" value ="$(var roi_mode)"/>
+        <arg name="weak_first_local_noise_threshold" value="$(var weak_first_local_noise_threshold)"/>
+        <arg name="max_distance" value="$(var max_distance)"/>
+        <arg name="x_max" value="$(var x_max)"/>
+        <arg name="x_min" value="$(var x_min)"/>
+        <arg name="y_max" value="$(var y_max)"/>
+        <arg name="y_min" value="$(var y_min)"/>
+        <arg name="z_max" value="$(var z_max)"/>
+        <arg name="z_min" value="$(var z_min)"/>
         <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -104,7 +128,15 @@
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
-        <arg name="max_distance" value ="12.0"/>
+        <arg name="roi_mode" value ="$(var roi_mode)"/>
+        <arg name="weak_first_local_noise_threshold" value="$(var weak_first_local_noise_threshold)"/>
+        <arg name="max_distance" value="$(var max_distance)"/>
+        <arg name="x_max" value="$(var x_max)"/>
+        <arg name="x_min" value="$(var x_min)"/>
+        <arg name="y_max" value="$(var y_max)"/>
+        <arg name="y_min" value="$(var y_min)"/>
+        <arg name="z_max" value="$(var z_max)"/>
+        <arg name="z_min" value="$(var z_min)"/>
         <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -145,7 +177,15 @@
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
-        <arg name="max_distance" value ="12.0"/>
+        <arg name="roi_mode" value ="$(var roi_mode)"/>
+        <arg name="weak_first_local_noise_threshold" value="$(var weak_first_local_noise_threshold)"/>
+        <arg name="max_distance" value="$(var max_distance)"/>
+        <arg name="x_max" value="$(var x_max)"/>
+        <arg name="x_min" value="$(var x_min)"/>
+        <arg name="y_max" value="$(var y_max)"/>
+        <arg name="y_min" value="$(var y_min)"/>
+        <arg name="z_max" value="$(var z_max)"/>
+        <arg name="z_min" value="$(var z_min)"/>
         <arg name="return_mode" value="Strongest" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />

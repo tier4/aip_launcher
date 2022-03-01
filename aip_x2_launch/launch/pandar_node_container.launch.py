@@ -196,12 +196,6 @@ def launch_setup(context, *args, **kwargs):
                 "weak_first_local_noise_threshold": LaunchConfiguration(
                     "weak_first_local_noise_threshold"
                 ),
-                "weak_first_segment_check_size_h": LaunchConfiguration(
-                    "weak_first_segment_check_size_h"
-                ),
-                "weak_first_segment_check_size_v": LaunchConfiguration(
-                    "weak_first_segment_check_size_v"
-                ),
                 "roi_mode": LaunchConfiguration("roi_mode"),
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
@@ -281,12 +275,10 @@ def generate_launch_description():
     add_launch_arg("vertical_bins", "40")
     add_launch_arg("visibility_threshold", "0.9")
     add_launch_arg("weak_first_local_noise_threshold", "2")
-    add_launch_arg("weak_first_segment_check_size_h", "30")
-    add_launch_arg("weak_first_segment_check_size_v", "2")
-    add_launch_arg("roi_mode", "Fixed_azimuth_ROI")
+    add_launch_arg("roi_mode", "Fixed_xyz_ROI")
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
-    add_launch_arg("max_distance", "12.0")
+    add_launch_arg("max_distance", "5.0")
     add_launch_arg("x_max", "18.0")
     add_launch_arg("x_min", "-12.0")
     add_launch_arg("y_max", "2.0")
