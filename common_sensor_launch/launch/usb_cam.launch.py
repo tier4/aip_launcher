@@ -34,8 +34,8 @@ def launch_setup(context, *args, **kwargs):
         ComposableNode(
             package="usb_cam",
             plugin="usb_cam::UsbCamNode",
-            name="traffic_light_camera",
-            namespace="/sensing/camera/traffic_light",
+            name=LaunchConfiguration("usb_cam_name"),
+            namespace=LaunchConfiguration("usb_cam_namespace"),
             parameters=[
                 load_composable_node_param("usb_cam_param_path"),
                 {
@@ -77,6 +77,8 @@ def generate_launch_description():
 
     add_launch_arg("container", "")
     add_launch_arg("camera_id")
+    add_launch_arg("usb_cam_name", "traffic_light_camera")
+    add_launch_arg("usb_cam_namespace", "/sesning/camera/traffic_light")
     add_launch_arg("usb_cam_param_path")
     add_launch_arg("camera_info_url")
     add_launch_arg("use_intra_process", "True")

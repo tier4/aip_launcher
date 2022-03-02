@@ -35,7 +35,7 @@ def launch_setup(context, *args, **kwargs):
             package="gscam",
             plugin="gscam::GSCam",
             name=["gscam", LaunchConfiguration("camera_id")],
-            namespace="/sensing/camera/",
+            namespace=LaunchConfiguration("gscam_namespace"),
             remappings=[
                 (
                     "camera/image_raw",
@@ -93,7 +93,7 @@ def launch_setup(context, *args, **kwargs):
             package="jetson_camera_trigger",
             plugin="jetson_camera_trigger::JetsonCameraTrigger",
             name=["camera", LaunchConfiguration("camera_id"), "_trigger"],
-            namespace="/sensing/camera/",
+            namespace=LaunchConfiguration("gscam_namespace"),
             remappings=[
                 ("trigger_time", ["camera", LaunchConfiguration("camera_id"), "/trigger_time"]),
             ],
@@ -136,6 +136,7 @@ def generate_launch_description():
     add_launch_arg("container", "")
     add_launch_arg("image_topic")
     add_launch_arg("camera_id")
+    add_launch_arg("gscam_namespace", "/sensing/camera")
 
     add_launch_arg("gscam_param_path")
 

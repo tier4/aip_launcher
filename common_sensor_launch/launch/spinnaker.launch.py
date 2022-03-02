@@ -35,7 +35,7 @@ def launch_setup(context, *args, **kwargs):
             package="spinnaker_camera_nodes",
             plugin="autoware::drivers::camera::SpinnakerCameraNode",
             name=["spinnaker_camera_node", LaunchConfiguration("camera_id")],
-            namespace="/sensing/camera/",
+            namespace=LaunchConfiguration("spinnaker_namespace"),
             remappings=[
                 (
                     "camera0/image_raw",
@@ -95,6 +95,7 @@ def generate_launch_description():
     add_launch_arg("container", "")
     add_launch_arg("image_topic")
     add_launch_arg("camera_id")
+    add_launch_arg("spinnaker_namespace", "/sensing/camera")
     add_launch_arg("spinnaker_param_path")
     add_launch_arg(
         "camera_info_url_key",
