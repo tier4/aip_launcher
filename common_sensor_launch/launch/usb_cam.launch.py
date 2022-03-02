@@ -51,9 +51,9 @@ def launch_setup(context, *args, **kwargs):
     ]
 
     # If an existing container is not provided, start a container and load nodes into it
-    traffic_light_recognition_camera_container = ComposableNodeContainer(
+    usb_cam_container = ComposableNodeContainer(
         condition=LaunchConfigurationEquals("container", ""),
-        name="traffic_light_recognition_camera_container",
+        name="usb_container",
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
@@ -69,7 +69,7 @@ def launch_setup(context, *args, **kwargs):
         target_container=LaunchConfiguration("container"),
     )
 
-    return [traffic_light_recognition_camera_container, load_composable_nodes]
+    return [usb_cam_container, load_composable_nodes]
 
 
 def generate_launch_description():
@@ -81,27 +81,8 @@ def generate_launch_description():
 
     add_launch_arg("container", "")
     add_launch_arg("camera_id")
-    add_launch_arg(
-        "usb_cam_param_path",
-        [
-            FindPackageShare("individual_params"),
-            "/config/",
-            EnvironmentVariable(name="VEHICLE_ID", default_value="default"),
-            "/aip_xx1/leopard/usb_cam_",
-            LaunchConfiguration("camera_id"),
-            ".param.yaml",
-        ],
-    )
-    add_launch_arg(
-        "camera_info_url",
-        [
-            "package://individual_params/config/",
-            EnvironmentVariable(name="VEHICLE_ID", default_value="default"),
-            "/aip_xx1/leopard/traffic_light_",
-            LaunchConfiguration("camera_id"),
-            "_camera.yaml",
-        ],
-    )
+    add_launch_arg("usb_cam_param_path")
+    add_launch_arg("camera_info_url")
     add_launch_arg("use_intra_process", "True")
 
     return LaunchDescription(

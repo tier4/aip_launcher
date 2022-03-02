@@ -107,9 +107,9 @@ def launch_setup(context, *args, **kwargs):
     ]
 
     # If an existing container is not provided, start a container and load nodes into it
-    aip_x2_camera_container = ComposableNodeContainer(
+    gscam_container = ComposableNodeContainer(
         condition=LaunchConfigurationEquals("container", ""),
-        name="aip_x2_camera_container",
+        name="gscam_container",
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
@@ -125,7 +125,7 @@ def launch_setup(context, *args, **kwargs):
         target_container=LaunchConfiguration("container"),
     )
 
-    return [aip_x2_camera_container, load_composable_nodes]
+    return [gscam_container, load_composable_nodes]
 
 
 def generate_launch_description():
@@ -139,40 +139,11 @@ def generate_launch_description():
     add_launch_arg("image_topic")
     add_launch_arg("camera_id")
 
-    add_launch_arg(
-        "gscam_param_path",
-        [
-            FindPackageShare("individual_params"),
-            "/config/",
-            EnvironmentVariable(name="VEHICLE_ID", default_value="default"),
-            "/aip_x2/tier4-c1/gscam",
-            LaunchConfiguration("camera_id"),
-            ".param.yaml",
-        ],
-    )
+    add_launch_arg("gscam_param_path")
 
-    add_launch_arg(
-        "camera_info_url",
-        [
-            "package://individual_params/config/",
-            EnvironmentVariable(name="VEHICLE_ID", default_value="default"),
-            "/aip_x2/tier4-c1/camera",
-            LaunchConfiguration("camera_id"),
-            "_info.yaml",
-        ],
-    )
+    add_launch_arg("camera_info_url")
 
-    add_launch_arg(
-        "camera_trigger_param_path",
-        [
-            FindPackageShare("individual_params"),
-            "/config/",
-            EnvironmentVariable(name="VEHICLE_ID", default_value="default"),
-            "/aip_x2/tier4-c1/camera",
-            LaunchConfiguration("camera_id"),
-            "_trigger.param.yaml",
-        ],
-    )
+    add_launch_arg("camera_trigger_param_path")
 
     add_launch_arg("use_intra_process", "True")
 
