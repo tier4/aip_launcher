@@ -17,12 +17,10 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.conditions import LaunchConfigurationEquals
 from launch.conditions import LaunchConfigurationNotEquals
-from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -42,11 +40,9 @@ def launch_setup(context, *args, **kwargs):
                 load_composable_node_param("usb_cam_param_path"),
                 {
                     "camera_info_url": LaunchConfiguration("camera_info_url"),
-                }
+                },
             ],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         ),
     ]
 
