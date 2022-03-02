@@ -86,7 +86,6 @@ def launch_setup(context, *args, **kwargs):
             parameters=[
                 load_composable_node_param("gscam_param_path"),
                 {
-                    "camera.image_raw.jpeg_quality": 80,
                     "camera_info_url": LaunchConfiguration("camera_info_url"),
                 },
             ],

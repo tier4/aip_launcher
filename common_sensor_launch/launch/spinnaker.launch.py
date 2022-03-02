@@ -56,7 +56,6 @@ def launch_setup(context, *args, **kwargs):
             parameters=[
                 load_composable_node_param("spinnaker_param_path"),
                 {
-                    LaunchConfiguration("camera_jpeg_quality_key"): 80,
                     LaunchConfiguration("camera_info_url_key"): LaunchConfiguration(
                         "camera_info_url"
                     ),
@@ -107,16 +106,6 @@ def generate_launch_description():
             "/aip_xx1/flir/bfs",
             LaunchConfiguration("camera_id"),
             ".param.yaml",
-        ],
-    )
-    add_launch_arg(
-        "camera_jpeg_quality_key",
-        [
-            "camera",
-            LaunchConfiguration("camera_id"),
-            ".",
-            LaunchConfiguration("image_topic"),
-            ".jpeg_quality",
         ],
     )
     add_launch_arg(
