@@ -213,7 +213,6 @@ def launch_setup(context, *args, **kwargs):
                 "ground_blockage_threshold": LaunchConfiguration("ground_blockage_threshold"),
                 "sky_blockage_threshold": LaunchConfiguration("sky_blockage_threshold"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "resolution": LaunchConfiguration("resolution"),
                 "model": LaunchConfiguration("model"),
             }
         ],
@@ -296,7 +295,6 @@ def generate_launch_description():
     add_launch_arg("ground_blockage_threshold", "0.1")
     add_launch_arg("sky_blockage_threshold", "0.15")
     add_launch_arg("horizontal_ring_id", "12")
-    add_launch_arg("resolution", "100.0")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
