@@ -95,7 +95,7 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
-    add_launch_arg("container")
+    add_launch_arg("container", "")
     add_launch_arg("image_topic")
     add_launch_arg("camera_id")
     add_launch_arg(
