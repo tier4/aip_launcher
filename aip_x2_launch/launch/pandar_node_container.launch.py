@@ -202,7 +202,8 @@ def launch_setup(context, *args, **kwargs):
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
             }
-        ] + [dual_return_filter_info],
+        ]
+        + [dual_return_filter_info],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
