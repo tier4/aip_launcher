@@ -264,7 +264,6 @@ def generate_launch_description():
     add_launch_arg("frame_id", "pandar")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
-    add_launch_arg("vehicle_param_file")
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
