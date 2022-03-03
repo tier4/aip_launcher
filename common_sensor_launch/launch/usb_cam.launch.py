@@ -77,7 +77,7 @@ def generate_launch_description():
 
     add_launch_arg("container", "")
     add_launch_arg("usb_cam_name", "traffic_light_camera")
-    add_launch_arg("usb_cam_namespace", "/sesning/camera/traffic_light")
+    add_launch_arg("usb_cam_namespace", "/sensing/camera/traffic_light")
     add_launch_arg("usb_cam_param_path")
     add_launch_arg("camera_info_url")
     add_launch_arg("use_intra_process", "True")
