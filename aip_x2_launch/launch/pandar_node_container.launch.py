@@ -27,6 +27,13 @@ from launch_ros.descriptions import ComposableNode
 import yaml
 
 
+def get_dual_return_filter_info(context):
+    path = LaunchConfiguration("dual_return_filter_param_file").perform(context)
+    with open(path, "r") as f:
+        p = yaml.safe_load(f)["/**"]["ros__parameters"]
+    return p
+
+
 def get_vehicle_info(context):
     path = LaunchConfiguration("vehicle_param_file").perform(context)
     with open(path, "r") as f:
@@ -90,6 +97,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    dual_return_filter_info = get_dual_return_filter_info(context)
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
 
@@ -192,22 +200,10 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "visibility_threshold": LaunchConfiguration("visibility_threshold"),
-                "weak_first_local_noise_threshold": LaunchConfiguration(
-                    "weak_first_local_noise_threshold"
-                ),
-                "roi_mode": LaunchConfiguration("roi_mode"),
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
-                "max_distance": LaunchConfiguration("max_distance"),
-                "x_max": LaunchConfiguration("x_max"),
-                "x_min": LaunchConfiguration("x_min"),
-                "y_max": LaunchConfiguration("y_max"),
-                "y_min": LaunchConfiguration("y_min"),
-                "z_max": LaunchConfiguration("z_max"),
-                "z_min": LaunchConfiguration("z_min"),
             }
-        ],
+        ] + [dual_return_filter_info],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -269,23 +265,13 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("vehicle_param_file")
+    add_launch_arg("dual_return_filter_param_file")
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
-    add_launch_arg("visibility_threshold", "0.9")
-    add_launch_arg("weak_first_local_noise_threshold", "2")
-    add_launch_arg("roi_mode", "Fixed_xyz_ROI")
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
-    add_launch_arg("max_distance", "5.0")
-    add_launch_arg("x_max", "18.0")
-    add_launch_arg("x_min", "-12.0")
-    add_launch_arg("y_max", "2.0")
-    add_launch_arg("y_min", "-2.0")
-    add_launch_arg("z_max", "10.0")
-    add_launch_arg("z_min", "0.0")
-
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
