@@ -76,7 +76,6 @@ def generate_launch_description():
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
     add_launch_arg("container", "")
-    add_launch_arg("camera_id")
     add_launch_arg("usb_cam_name", "traffic_light_camera")
     add_launch_arg("usb_cam_namespace", "/sesning/camera/traffic_light")
     add_launch_arg("usb_cam_param_path")
