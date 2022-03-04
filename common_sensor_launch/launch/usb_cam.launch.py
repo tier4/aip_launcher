@@ -49,7 +49,7 @@ def launch_setup(context, *args, **kwargs):
     # If an existing container is not provided, start a container and load nodes into it
     usb_cam_container = ComposableNodeContainer(
         condition=LaunchConfigurationEquals("container", ""),
-        name="usb_container",
+        name="usb_cam_container",
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
