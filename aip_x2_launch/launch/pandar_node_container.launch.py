@@ -224,6 +224,7 @@ def launch_setup(context, *args, **kwargs):
                 "sky_blockage_threshold": LaunchConfiguration("sky_blockage_threshold"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "model": LaunchConfiguration("model"),
+                "blockage_count_threshold":LaunchConfiguration("blockage_count_threshold"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -305,6 +306,7 @@ def generate_launch_description():
     add_launch_arg("ground_blockage_threshold", "0.1")
     add_launch_arg("sky_blockage_threshold", "0.15")
     add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("blockage_count_threshold", "50")
 
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
