@@ -224,7 +224,7 @@ def launch_setup(context, *args, **kwargs):
                 "sky_blockage_threshold": LaunchConfiguration("sky_blockage_threshold"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "model": LaunchConfiguration("model"),
-                "blockage_count_threshold":LaunchConfiguration("blockage_count_threshold"),
+                "blockage_count_threshold": LaunchConfiguration("blockage_count_threshold"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
