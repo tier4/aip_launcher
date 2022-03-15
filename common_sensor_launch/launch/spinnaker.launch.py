@@ -15,6 +15,7 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
+from launch.actions import SetLaunchConfiguration
 from launch.conditions import LaunchConfigurationEquals
 from launch.conditions import LaunchConfigurationNotEquals
 from launch.substitutions import LaunchConfiguration
@@ -97,16 +98,17 @@ def generate_launch_description():
     add_launch_arg("camera_id")
     add_launch_arg("spinnaker_namespace", "/sensing/camera")
     add_launch_arg("spinnaker_param_path")
-    add_launch_arg(
+    add_launch_arg("camera_info_url")
+    add_launch_arg("use_intra_process", "True")
+    set_camera_info_url_key = SetLaunchConfiguration(
         "camera_info_url_key",
         ["camera_settings.camera", LaunchConfiguration("camera_id"), ".camera_info_url"],
     )
-    add_launch_arg("camera_info_url")
-    add_launch_arg("use_intra_process", "True")
 
     return LaunchDescription(
         [
             *launch_arguments,
+            set_camera_info_url_key,
             OpaqueFunction(function=launch_setup),
         ]
     )
