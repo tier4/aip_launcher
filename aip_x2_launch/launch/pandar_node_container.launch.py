@@ -218,10 +218,8 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "angle_range": LaunchConfiguration("angle_range"),
-                "distance_range": LaunchConfiguration("distance_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
-                "ground_blockage_threshold": LaunchConfiguration("ground_blockage_threshold"),
-                "sky_blockage_threshold": LaunchConfiguration("sky_blockage_threshold"),
+                "blockage_ratio_threshold": LaunchConfiguration("blockage_ratio_threshold"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "model": LaunchConfiguration("model"),
                 "blockage_count_threshold": LaunchConfiguration("blockage_count_threshold"),
@@ -303,8 +301,7 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
-    add_launch_arg("ground_blockage_threshold", "0.1")
-    add_launch_arg("sky_blockage_threshold", "0.15")
+    add_launch_arg("blockage_ratio_threshold", "0.1")
     add_launch_arg("horizontal_ring_id", "12")
     add_launch_arg("blockage_count_threshold", "50")
 
