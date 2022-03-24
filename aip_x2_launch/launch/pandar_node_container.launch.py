@@ -207,7 +207,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    blockage_diag_return_component = ComposableNode(
+    blockage_diag_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::BlockageDiagComponent",
         name="blockage_return_diag",
@@ -261,7 +261,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     blockage_diag_loader = LoadComposableNodes(
-        composable_node_descriptions=[blockage_diag_return_component],
+        composable_node_descriptions=[blockage_diag_component],
         target_container=container,
     )
 

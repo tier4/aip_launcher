@@ -18,17 +18,12 @@
                   contains: ["left_upper: visibility_validation"]
                   timeout: 1.0
 
-                ground_blockage:
+                blockage:
                   type: diagnostic_aggregator/GenericAnalyzer
-                  path: ground_blockage
+                  path: blockage
                   contains: [": ground_blockage_validation"]
                   timeout: 1.0
 
-                sky_blockage:
-                  type: diagnostic_aggregator/GenericAnalyzer
-                  path: sky_blockage
-                  contains: [": sky_blockage_validation"]
-                  timeout: 1.0
         gnss:
           type: diagnostic_aggregator/AnalyzerGroup
           path: gnss
