@@ -21,6 +21,8 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="vertical_bins" value ="40" />
+        <arg name="horizontal_ring_id" value="12" />
         <arg name="return_mode" value="Strongest" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
@@ -41,6 +43,8 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
+        <arg name="vertical_bins" value ="64" />
+        <arg name="horizontal_ring_id" value="40" />
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -60,6 +64,8 @@
         <arg name="scan_phase" value="357.0" />
         <arg name="angle_range" value="[90.0, 357.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="vertical_bins" value ="40" />
+        <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="return_mode" value="Dual" />
@@ -81,6 +87,8 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 220.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
+        <arg name="vertical_bins" value ="64" />
+        <arg name="horizontal_ring_id" value="54" />
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -100,6 +108,8 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[3.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="vertical_bins" value ="40" />
+        <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="return_mode" value="Dual" />
@@ -121,6 +131,8 @@
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[140.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
+        <arg name="vertical_bins" value ="64" />
+        <arg name="horizontal_ring_id" value="54" />
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -140,6 +152,8 @@
         <arg name="scan_phase" value="180.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="vertical_bins" value ="40" />
+        <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="return_mode" value="Strongest" />
@@ -161,6 +175,8 @@
         <arg name="scan_phase" value="180.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
+        <arg name="vertical_bins" value ="64" />
+        <arg name="horizontal_ring_id" value="40" />
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />

@@ -207,6 +207,27 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    blockage_diag_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::BlockageDiagComponent",
+        name="blockage_return_diag",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "blockage_diag/pointcloud"),
+        ],
+        parameters=[
+            {
+                "angle_range": LaunchConfiguration("angle_range"),
+                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                "blockage_ratio_threshold": LaunchConfiguration("blockage_ratio_threshold"),
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "model": LaunchConfiguration("model"),
+                "blockage_count_threshold": LaunchConfiguration("blockage_count_threshold"),
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
     container = ComposableNodeContainer(
         name="pandar_node_container",
         namespace="pointcloud_preprocessor",
@@ -239,7 +260,18 @@ def launch_setup(context, *args, **kwargs):
         condition=LaunchConfigurationEquals("return_mode", "Dual"),
     )
 
-    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader]
+    blockage_diag_loader = LoadComposableNodes(
+        composable_node_descriptions=[blockage_diag_component],
+        target_container=container,
+    )
+
+    return [
+        container,
+        driver_loader,
+        ring_outlier_filter_loader,
+        dual_return_filter_loader,
+        blockage_diag_loader,
+    ]
 
 
 def generate_launch_description():
@@ -269,6 +301,10 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
+    add_launch_arg("blockage_ratio_threshold", "0.1")
+    add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("blockage_count_threshold", "50")
+
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     set_container_executable = SetLaunchConfiguration(
