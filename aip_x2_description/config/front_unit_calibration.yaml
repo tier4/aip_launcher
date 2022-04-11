@@ -1,4 +1,11 @@
 front_unit_base_link:
+  camera6/camera_link:
+    x: -0.337224
+    y: -0.234415
+    z: 0.102745
+    roll: 0.004805
+    pitch: 0.012465
+    yaw: 0.018125
   pandar_40p_front_base_link:
     x: 0.0
     y: 0.0
