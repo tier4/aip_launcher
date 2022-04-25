@@ -22,6 +22,7 @@
     <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_bridge.launch.xml">
       <arg name="interface" value="$(var socketcan_device)" />
     </include>
+  </group>
 
   <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml" if="$(var launch_driver)">
     <arg name="input/frame" value="$(var input/frame)" />
