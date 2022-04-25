@@ -1,0 +1,15 @@
+
+<launch>
+  <arg name="launch_driver" default="true" />
+  <group>
+    <push-ros-namespace namespace="radar"/>
+  <group>
+      <push-ros-namespace namespace="ars408"/> <include file="$(find-pkg-share common_sensor_launch)/launch/continental_ars408.launch.xml">
+          <arg name="launch_driver" value="$(var launch_driver)" />
+          <arg name="use_kvaser" value="true" />
+          <arg name="hardware_id" value="$(var kvaser_hardware_id)" />
+          <arg name="circuit_id" value="$(var kvaser_circuit_id)" />
+        </include>
+    </group>
+  </group>
+</launch>
