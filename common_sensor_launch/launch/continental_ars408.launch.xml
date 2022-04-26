@@ -12,7 +12,7 @@
   <arg name="topic_type" default="TrackedObject" description="choose among RadarTrack, TrackedObject, and DetectedObject"/>
 
   <group if="$(var use_kvaser)">
-    <include file="$(find-pkg-share kvaser_interface)/launch/kvaser_bridge.launch.xml">
+    <include file="$(find-pkg-share kvaser_interface)/launch/kvaser_bridge.launch">
       <arg name="hardware_id" value="$(var kvaser_hardware_id)" />
       <arg name="circuit_id" value="$(var kvaser_circuit_id)" />
       <arg name="bit_rate" value="500000" />
