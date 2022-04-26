@@ -4,7 +4,6 @@
   <name>aip_x1_launch</name>
   <version>0.1.0</version>
   <description>The aip_x1_launch package</description>
-
   <maintainer email="hiroki.ota@tier4.jp">Hiroki OTA</maintainer>
   <license>Apache License 2.0</license>
 
