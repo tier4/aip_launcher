@@ -5,7 +5,7 @@
   </include>
 
   <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
-    <arg name="diag_name" value="ground_blockage_validation"/>
+    <arg name="diag_name" value="blockage_validation"/>
   </include>
 
 </launch>
