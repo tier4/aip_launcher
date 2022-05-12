@@ -19,6 +19,9 @@
         <param name="frame_rate" value="24" />
       </node>
     </group> -->
+    <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+    </include>
+
   </group>
 
 </launch>
