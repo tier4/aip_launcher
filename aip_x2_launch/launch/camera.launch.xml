@@ -19,8 +19,42 @@
         <param name="frame_rate" value="24" />
       </node>
     </group> -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
-    </include>
+
+    <group>
+      <push-ros-namespace namespace="camera0" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group>
+
+    <!-- <group>
+      <push-ros-namespace namespace="camera1" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="camera2" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="camera3" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="camera4" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="camera5" />
+      <include file="$(find-pkg-share aip_x2_launch)/launch/image_diagnostics_node.launch.py">
+      </include>
+    </group> -->
 
   </group>
 

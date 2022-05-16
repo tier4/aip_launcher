@@ -21,56 +21,10 @@ def generate_launch_description():
         [
             Node(
                 package="image_diagnostics",
-                namespace="image_diagnostics0",
                 executable="image_diagnostics_node",
-                name="image_diagnostics_node0",
+                name="image_diagnostics_node",
                 remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera0/image_raw/compressed"),
-                ],
-            ),
-            Node(
-                package="image_diagnostics",
-                namespace="image_diagnostics1",
-                executable="image_diagnostics_node",
-                name="image_diagnostics_node1",
-                remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera1/image_raw/compressed"),
-                ],
-            ),
-            Node(
-                package="image_diagnostics",
-                namespace="image_diagnostics2",
-                executable="image_diagnostics_node",
-                name="image_diagnostics_node2",
-                remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera2/image_raw/compressed"),
-                ],
-            ),
-            Node(
-                package="image_diagnostics",
-                namespace="image_diagnostics3",
-                executable="image_diagnostics_node",
-                name="image_diagnostics_node3",
-                remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera3/image_raw/compressed"),
-                ],
-            ),
-            Node(
-                package="image_diagnostics",
-                namespace="image_diagnostics4",
-                executable="image_diagnostics_node",
-                name="image_diagnostics_node4",
-                remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera4/image_raw/compressed"),
-                ],
-            ),
-            Node(
-                package="image_diagnostics",
-                namespace="image_diagnostics5",
-                executable="image_diagnostics_node",
-                name="image_diagnostics_node5",
-                remappings=[
-                    ("input/compressed_image", "/sensing/camera/camera5/image_raw/compressed"),
+                    ("input/raw_image", "image_raw"),
                 ],
             ),
         ]
