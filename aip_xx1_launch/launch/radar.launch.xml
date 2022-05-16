@@ -1,15 +1,25 @@
 <launch>
   <arg name="launch_driver" default="true" />
+  <arg name="input/frame" default="can_rx" />
+  <arg name="output/objects" default="objects" />
 
   <group>
     <push-ros-namespace namespace="radar"/>
+
     <group>
       <push-ros-namespace namespace="front_center"/>
-      <include file="$(find-pkg-share pe_ars408)/launch/continental_ars408_kvaser_can.launch.xml">
+
+      <!-- kvaser interface-->
+      <group>
+        <include file="$(find-pkg-share lexus_description)/launch/pacmod3.launch.py" />
+      </group>
+
+      <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
+        <arg name="input/frame" value="$(var input/frame)" />
+        <arg name="output/objects" value="$(var output/objects)" />
         <arg name="launch_driver" value="$(var launch_driver)" />
-        <arg name="hardware_id" value="$(var kvaser_hardware_id)" />
-        <arg name="circuit_id" value="$(var kvaser_circuit_id)" />
       </include>
+
     </group>
   </group>
 </launch>
