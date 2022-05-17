@@ -25,14 +25,14 @@ import yaml
 
 def on_output(event):
     card_info = yaml.safe_load(event.text.decode())
-    if "Card 1" in card_info.keys():
+    if "Card 0" in card_info.keys():
         return IncludeLaunchDescription(
             FrontendLaunchDescriptionSource(
                 [FindPackageShare("pacmod3"), "/launch/pacmod3.launch.xml"]
             ),
             launch_arguments={
                 "use_kvaser": "true",
-                "kvaser_hardware_id": str(card_info["Card 1"]["S/N"]),
+                "kvaser_hardware_id": str(card_info["Card 0"]["S/N"]),
             }.items(),
         )
 
