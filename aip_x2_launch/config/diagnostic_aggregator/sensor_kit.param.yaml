@@ -23,7 +23,14 @@
                   path: blockage
                   contains: [": ground_blockage_validation"]
                   timeout: 1.0
-
+        camera:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: camera
+          analyzers:
+            performance_monitoring:
+              type: diagnostic_aggregator/GenericAnalyzer
+              path: status
+              contains: [": Image_Diagnostics"]
         gnss:
           type: diagnostic_aggregator/AnalyzerGroup
           path: gnss
