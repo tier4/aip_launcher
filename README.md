@@ -64,7 +64,6 @@ When you create your own sensor kit packages, please refer to `aip_*_launch` as 
 <!-- LiDAR Driver -->
 <include file="$(find-pkg-share aip_xxx_launch)/launch/lidar.launch.xml">
     <arg name="launch_driver" value="$(var launch_driver)" />
-    <arg name="vehicle_param_file" value="$(var vehicle_param_file)" />
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
 </include>
 

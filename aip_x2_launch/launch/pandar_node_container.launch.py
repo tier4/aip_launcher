@@ -27,18 +27,24 @@ from launch_ros.descriptions import ComposableNode
 import yaml
 
 
-def get_vehicle_info(context):
-    path = LaunchConfiguration("vehicle_param_file").perform(context)
+def get_dual_return_filter_info(context):
+    path = LaunchConfiguration("dual_return_filter_param_file").perform(context)
     with open(path, "r") as f:
         p = yaml.safe_load(f)["/**"]["ros__parameters"]
-    p["vehicle_length"] = p["front_overhang"] + p["wheel_base"] + p["rear_overhang"]
-    p["vehicle_width"] = p["wheel_tread"] + p["left_overhang"] + p["right_overhang"]
-    p["min_longitudinal_offset"] = -p["rear_overhang"]
-    p["max_longitudinal_offset"] = p["front_overhang"] + p["wheel_base"]
-    p["min_lateral_offset"] = -(p["wheel_tread"] / 2.0 + p["right_overhang"])
-    p["max_lateral_offset"] = p["wheel_tread"] / 2.0 + p["left_overhang"]
+    return p
+
+
+def get_vehicle_info(context):
+    gp = context.launch_configurations.get("ros_params", {})
+    p = {}
+    p["vehicle_length"] = gp["front_overhang"] + gp["wheel_base"] + gp["rear_overhang"]
+    p["vehicle_width"] = gp["wheel_tread"] + gp["left_overhang"] + gp["right_overhang"]
+    p["min_longitudinal_offset"] = -gp["rear_overhang"]
+    p["max_longitudinal_offset"] = gp["front_overhang"] + gp["wheel_base"]
+    p["min_lateral_offset"] = -(gp["wheel_tread"] / 2.0 + gp["right_overhang"])
+    p["max_lateral_offset"] = gp["wheel_tread"] / 2.0 + gp["left_overhang"]
     p["min_height_offset"] = 0.0
-    p["max_height_offset"] = p["vehicle_height"]
+    p["max_height_offset"] = gp["vehicle_height"]
     return p
 
 
@@ -90,6 +96,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    dual_return_filter_info = get_dual_return_filter_info(context)
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
 
@@ -192,7 +199,30 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "visibility_threshold": LaunchConfiguration("visibility_threshold"),
+                "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
+                "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+            }
+        ]
+        + [dual_return_filter_info],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
+    blockage_diag_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::BlockageDiagComponent",
+        name="blockage_return_diag",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "blockage_diag/pointcloud"),
+        ],
+        parameters=[
+            {
+                "angle_range": LaunchConfiguration("angle_range"),
+                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                "blockage_ratio_threshold": LaunchConfiguration("blockage_ratio_threshold"),
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "model": LaunchConfiguration("model"),
+                "blockage_count_threshold": LaunchConfiguration("blockage_count_threshold"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -230,7 +260,18 @@ def launch_setup(context, *args, **kwargs):
         condition=LaunchConfigurationEquals("return_mode", "Dual"),
     )
 
-    return [container, driver_loader, ring_outlier_filter_loader, dual_return_filter_loader]
+    blockage_diag_loader = LoadComposableNodes(
+        composable_node_descriptions=[blockage_diag_component],
+        target_container=container,
+    )
+
+    return [
+        container,
+        driver_loader,
+        ring_outlier_filter_loader,
+        dual_return_filter_loader,
+        blockage_diag_loader,
+    ]
 
 
 def generate_launch_description():
@@ -255,13 +296,17 @@ def generate_launch_description():
     add_launch_arg("frame_id", "pandar")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
-    add_launch_arg("vehicle_param_file")
+    add_launch_arg("dual_return_filter_param_file")
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
-    add_launch_arg("visibility_threshold", "0.5")
+    add_launch_arg("blockage_ratio_threshold", "0.1")
+    add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("blockage_count_threshold", "50")
 
+    add_launch_arg("min_azimuth_deg", "135.0")
+    add_launch_arg("max_azimuth_deg", "225.0")
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",

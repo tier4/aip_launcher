@@ -1,0 +1,5 @@
+<launch>
+
+  <include file="$(find-pkg-share aip_x1_launch)/launch/dummy_diag_publisher/lidar.launch.xml"/>
+
+</launch>

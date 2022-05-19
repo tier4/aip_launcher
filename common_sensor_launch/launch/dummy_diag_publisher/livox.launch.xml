@@ -1,0 +1,31 @@
+<launch>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_connection"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_fan_status"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_firmware_status"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_internal_voltage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_motor_status"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_service_life"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="livox_temperature"/>
+  </include>
+
+</launch>
