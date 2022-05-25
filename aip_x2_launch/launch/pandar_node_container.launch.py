@@ -35,6 +35,8 @@ def get_dual_return_filter_info(context):
 
 
 def get_vehicle_info(context):
+    # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
+    # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
     gp = context.launch_configurations.get("ros_params", {})
     if not gp:
         gp = context.launch_configurations.get("global_params", {})
