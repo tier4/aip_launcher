@@ -17,7 +17,7 @@
       -->
       <!-- temp tf launch -->
 
-      <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="3.8 0 0.0 0 0 0 base_link ars408" />
+      <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="3.8 0.0 0.0 0.0 0.0 0.0 base_link ars408" />
 
       <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
         <arg name="input/frame" value="$(var input/frame)" />
