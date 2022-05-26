@@ -25,7 +25,11 @@ from launch_ros.descriptions import ComposableNode
 
 
 def get_vehicle_info(context):
+    # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
+    # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
     gp = context.launch_configurations.get("ros_params", {})
+    if not gp:
+        gp = context.launch_configurations.get("global_params", {})
     p = {}
     p["vehicle_length"] = gp["front_overhang"] + gp["wheel_base"] + gp["rear_overhang"]
     p["vehicle_width"] = gp["wheel_tread"] + gp["left_overhang"] + gp["right_overhang"]
