@@ -112,7 +112,7 @@ def launch_setup(context, *args, **kwargs):
             plugin="pointcloud_preprocessor::DistortionCorrectorComponent",
             name="distortion_corrector_node",
             remappings=[
-                ("~/input/velocity_report", "/vehicle/status/velocity_status"),
+                ("~/input/twist_with_covariance", "/sensing/internal_sensors/twist_with_covariance"),
                 ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
                 ("~/output/pointcloud", "rectified/pointcloud_ex"),
             ],
