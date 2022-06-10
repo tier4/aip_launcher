@@ -1,7 +1,10 @@
 <launch>
 
   <arg name="launch_driver" default="true" description="do launch driver"/>
-  <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
+  <!--
+    <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
+  -->
+  <arg name="vehicle_mirror_param_file" default="$(find-pkg-share aip_xx1_launch)/launch/mirror.param.yaml"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
 
@@ -19,6 +22,11 @@
     <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/camera.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include> -->
+
+    <!-- Radar Driver -->
+    <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml">
+      <arg name="launch_driver" value="$(var launch_driver)" />
+    </include>
 
     <!-- IMU Driver -->
     <include file="$(find-pkg-share aip_xx1_launch)/launch/imu.launch.xml">
