@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from launch import LaunchDescription
+from launch.actions import ExecuteProcess
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.conditions import LaunchConfigurationEquals
@@ -21,7 +22,9 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+import sys
 import yaml
+
 
 
 def launch_setup(context, *args, **kwargs):
@@ -84,6 +87,9 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            ExecuteProcess(
+                cmd=[sys.executable, '-c', "print('action')"],
+                respawn=True, respawn_delay=1.0),
             *launch_arguments,
             OpaqueFunction(function=launch_setup),
         ]
