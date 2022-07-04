@@ -11,7 +11,7 @@
 
       <!-- kvaser interface-->
       <group>
-        <include file="$(find-pkg-share aip_xx1_launch)/launch/pacmod3.launch.py" />
+        <include file="$(find-pkg-share aip_xx1_launch)/launch/radar_kvaser_can.launch.py" />
       </group>
 
       <!-- tf launch (temporary) -->
