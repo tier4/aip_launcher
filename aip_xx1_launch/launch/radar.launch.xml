@@ -2,6 +2,7 @@
   <arg name="launch_driver" default="true" />
   <arg name="input/frame" default="/pacmod/radar/can_tx" />
   <arg name="output/objects" default="objects_raw" />
+  <arg name="radar_can_device" default="can1" />
 
   <group>
     <push-ros-namespace namespace="radar"/>
@@ -9,9 +10,13 @@
     <group>
       <push-ros-namespace namespace="front_center"/>
 
-      <!-- kvaser interface-->
+      <!-- socket can -->
       <group>
-        <include file="$(find-pkg-share aip_xx1_launch)/launch/radar_kvaser_can.launch.py" />
+        <include file="$(find-pkg-share pacmod3)/launch/pacmod3.launch.xml">
+          <arg name="use_socketcan" value="true" />
+          <arg name="socketcan_device" value="$(var radar_can_device)" />
+          <arg name="namespace" value="pacmod/radar" />>
+        </include>
       </group>
 
       <!-- tf launch (temporary) -->
