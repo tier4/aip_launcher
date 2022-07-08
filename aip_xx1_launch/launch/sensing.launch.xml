@@ -2,6 +2,7 @@
 
   <arg name="launch_driver" default="true" description="do launch driver"/>
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
+  <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_fusion, lidar, camera"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
 
@@ -27,6 +28,11 @@
 
     <!-- GNSS Driver -->
     <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
+      <arg name="launch_driver" value="$(var launch_driver)" />
+    </include>
+
+    <!-- Radar Driver -->
+    <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml" if="$(eval '&quot;$(var perception_mode)&quot;==&quot;camera_lidar_radar_fusion&quot;')">
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
