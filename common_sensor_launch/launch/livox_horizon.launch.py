@@ -75,7 +75,7 @@ def get_crop_box_min_range_component(ns, context):
                 "input_frame": "livox_" + ns,
                 "output_frame": LaunchConfiguration("base_frame"),
                 "min_x": 0.0,
-                "max_x": 1.5,
+                "max_x": LaunchConfiguration("min_range"),
                 "min_y": -2.0,
                 "max_y": 2.0,
                 "min_z": -2.0,
@@ -179,5 +179,6 @@ def generate_launch_description():
     add_launch_arg("sensor_frame", "livox_frame")
     add_launch_arg("use_tag_filter", "true")
     add_launch_arg("vehicle_mirror_param_file")
+    add_launch_arg("min_range", "1.5")
 
     return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
