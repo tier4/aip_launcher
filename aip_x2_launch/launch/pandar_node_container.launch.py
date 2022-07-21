@@ -109,7 +109,7 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"] + 0.15
     cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"]
     cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"]
-    cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
+    cropbox_parameters["min_z"] = vehicle_info["min_height_offset"] - 0.15
     cropbox_parameters["max_z"] = vehicle_info["max_height_offset"]
 
     self_crop_component = ComposableNode(
