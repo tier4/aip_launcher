@@ -13,6 +13,7 @@
     <group>
       <push-ros-namespace namespace="top"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLS128.launch.xml">
+        <arg name="max_range" default="250.0" />
         <arg name="sensor_frame" value="velodyne_top" />
         <arg name="device_ip" value="192.168.1.201"/>
         <arg name="port" value="2368"/>
@@ -25,6 +26,7 @@
     <group>
       <push-ros-namespace namespace="left"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" default="15.0" />
         <arg name="sensor_frame" value="velodyne_left" />
         <arg name="device_ip" value="192.168.1.202"/>
         <arg name="port" value="2369"/>
@@ -37,6 +39,7 @@
     <group>
       <push-ros-namespace namespace="right"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" default="15.0" />
         <arg name="sensor_frame" value="velodyne_right" />
         <arg name="device_ip" value="192.168.1.203"/>
         <arg name="port" value="2370"/>
