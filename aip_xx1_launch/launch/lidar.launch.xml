@@ -52,6 +52,7 @@
     <group>
       <push-ros-namespace namespace="rear"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" default="130.0" />
         <arg name="sensor_frame" value="velodyne_rear" />
         <arg name="device_ip" value="192.168.1.204"/>
         <arg name="port" value="2371"/>
