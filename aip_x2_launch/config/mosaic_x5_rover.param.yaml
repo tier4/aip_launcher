@@ -1,0 +1,43 @@
+
+
+# Configuration Settings for the Rover Rx
+
+/**:
+  ros__parameters:
+    device: tcp://192.168.100.101:28784
+
+    frame_id: gnss_right_link
+
+    datum: WGS84
+
+    poi_to_arp:
+      delta_e: 0.0
+      delta_n: 0.0
+      delta_u: 0.0
+
+    ant_type: Unknown
+    ant_serial_nr: Unknown
+
+    polling_period:
+      pvt: 200
+      rest: 200
+
+    use_gnss_time: false
+    leap_seconds: 18
+
+    publish:
+      gpgga: true
+      gprmc: false
+      gpgsa: false
+      gpgsv: false
+      pvtcartesian: false
+      pvtgeodetic: true  # required to navsatfix publish
+      poscovcartesian: false
+      poscovgeodetic: true  # required to navsatfix publish
+      atteuler: false
+      attcoveuler: false
+      gpst : false
+      navsatfix: true
+      gpsfix: false
+      pose: false
+      diagnostics: false
