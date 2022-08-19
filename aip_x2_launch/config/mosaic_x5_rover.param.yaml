@@ -15,6 +15,10 @@
       delta_n: 0.0
       delta_u: 0.0
 
+    att_offset:
+      heading: 0.0
+      pitch: 0.0
+
     ant_type: Unknown
     ant_serial_nr: Unknown
 
@@ -26,18 +30,32 @@
     leap_seconds: 18
 
     publish:
-      gpgga: true
-      gprmc: false
-      gpgsa: false
-      gpgsv: false
-      pvtcartesian: false
-      pvtgeodetic: true  # required to navsatfix publish
-      poscovcartesian: false
-      poscovgeodetic: true  # required to navsatfix publish
-      atteuler: false
-      attcoveuler: false
-      gpst : false
       navsatfix: true
       gpsfix: false
+      gpgga: false
+      gprmc: false
+      gpst : false
+      measepoch: false
+      pvtcartesian: false
+      pvtgeodetic: true
+      poscovcartesian: false
+      poscovgeodetic: true
+      velcovgeodetic: false
+      atteuler: false
+      attcoveuler: false
       pose: false
-      diagnostics: false
+      diagnostics: true
+      # For GNSS Rx only
+      gpgsa: false
+      gpgsv: false
+      # For INS Rx only
+      insnavcart: false
+      insnavgeod: false
+      extsensormeas: false
+      imusetup: false
+      velsensorsetup: false
+      exteventinsnavcart: false
+      exteventinsnavgeod: false
+      imu: false
+      localization: false
+      tf: false
