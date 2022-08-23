@@ -14,6 +14,7 @@
   <exec_depend>dummy_diag_publisher</exec_depend>
   <exec_depend>gnss_poser</exec_depend>
   <exec_depend>pointcloud_preprocessor</exec_depend>
+  <exec_depend>septentrio_gnss_driver</exec_depend>
   <exec_depend>tamagawa_imu_driver</exec_depend>
   <exec_depend>topic_tools</exec_depend>
   <exec_depend>ublox_gps</exec_depend>
