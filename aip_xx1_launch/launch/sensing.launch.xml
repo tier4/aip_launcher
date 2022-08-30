@@ -27,9 +27,9 @@
     </include>
 
     <!-- GNSS Driver -->
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- Radar Driver -->
     <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml" if="$(eval '&quot;$(var perception_mode)&quot;==&quot;camera_lidar_radar_fusion&quot;')">
@@ -40,6 +40,7 @@
     <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
       <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
       <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+      <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_xx1/vehicle_velocity_converter.param.yaml" />
     </include>
 
   </group>
