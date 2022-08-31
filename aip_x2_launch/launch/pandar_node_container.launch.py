@@ -310,6 +310,8 @@ def generate_launch_description():
     add_launch_arg("blockage_ratio_threshold", "0.1")
     add_launch_arg("horizontal_ring_id", "12")
     add_launch_arg("blockage_count_threshold", "50")
+    add_launch_arg("buffering_frames", "100")
+    add_launch_arg("buffering_interval", "5")
 
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
