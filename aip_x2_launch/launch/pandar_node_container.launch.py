@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
+from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -23,12 +26,24 @@ from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
 import yaml
 
 
 def get_dual_return_filter_info(context):
     path = LaunchConfiguration("dual_return_filter_param_file").perform(context)
+    with open(path, "r") as f:
+        p = yaml.safe_load(f)["/**"]["ros__parameters"]
+    return p
+
+
+def get_pandar_monitor_info():
+    path = os.path.join(
+            get_package_share_directory("pandar_monitor"),
+            "config",
+            "pandar_monitor.param.yaml",
+        )
     with open(path, "r") as f:
         p = yaml.safe_load(f)["/**"]["ros__parameters"]
     return p
@@ -65,6 +80,20 @@ def launch_setup(context, *args, **kwargs):
         for x in args:
             result[x] = LaunchConfiguration(x)
         return result
+
+    monitor_node = Node(
+        executable="pandar_monitor_node",
+        package="pandar_monitor",
+        name="pandar_monitor",
+        parameters=[
+            {
+                "ip_address": LaunchConfiguration("device_ip"),
+            }
+        ]
+        + [get_pandar_monitor_info()],
+        condition=IfCondition(LaunchConfiguration("launch_driver")),
+        output="screen",
+    )
 
     driver_component = ComposableNode(
         package="pandar_driver",
@@ -277,6 +306,7 @@ def launch_setup(context, *args, **kwargs):
         ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
+        monitor_node,
     ]
 
 
