@@ -40,10 +40,10 @@ def get_dual_return_filter_info(context):
 
 def get_pandar_monitor_info():
     path = os.path.join(
-            get_package_share_directory("pandar_monitor"),
-            "config",
-            "pandar_monitor.param.yaml",
-        )
+        get_package_share_directory("pandar_monitor"),
+        "config",
+        "pandar_monitor.param.yaml",
+    )
     with open(path, "r") as f:
         p = yaml.safe_load(f)["/**"]["ros__parameters"]
     return p
