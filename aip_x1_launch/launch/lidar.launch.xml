@@ -29,7 +29,7 @@
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
     </include>
 
-    <group unless="$(var use_dji_driver)">
+    <!-- <group unless="$(var use_dji_driver)">
       <group>
 	      <push-ros-namespace namespace="front_right"/>
         <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
@@ -51,7 +51,7 @@
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_left_config.yaml" />
 	      </include>
       </group>
-    </group>
+    </group> -->
 
     <include file="$(find-pkg-share aip_x1_launch)/launch/pointcloud_preprocessor.launch.py">
       <arg name="base_frame" value="base_link" />
