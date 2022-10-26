@@ -37,17 +37,13 @@
       <include file="$(find-pkg-share aip_x1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
         <arg name="frame_id" value="pandar_xt32_front_center" />
-        <arg name="device_ip" value="192.168.110.201" />
+        <arg name="device_ip" value="192.168.1.201" />
         <arg name="lidar_port" value="2321" />
         <arg name="gps_port" value="10121" />
-        <arg name="scan_phase" value="270.0" />
-        <arg name="angle_range" value="[90.0, 270.0]"/>
-        <arg name="distance_range" value="[0.5, 200.0]"/>
-        <arg name="vertical_bins" value ="32" />
-        <arg name="horizontal_ring_id" value="12" />
+        <arg name="scan_phase" value="0.0" />
+        <arg name="angle_range" value="[0.0, 360.0]"/>
+        <arg name="distance_range" value="[0.05, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
-        <arg name="min_azimuth_deg" value="135.0"/>
-        <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
