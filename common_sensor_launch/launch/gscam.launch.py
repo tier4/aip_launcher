@@ -85,7 +85,7 @@ def launch_setup(context, *args, **kwargs):
                 load_composable_node_param("gscam_param_path"),
                 {
                     "camera_info_url": LaunchConfiguration("camera_info_url"),
-                    "use_sensor_data_qos_": LaunchConfiguration("use_sensor_data_qos")
+                    "use_sensor_data_qos": LaunchConfiguration("use_sensor_data_qos")
                 },
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
