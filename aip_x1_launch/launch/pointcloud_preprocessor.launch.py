@@ -36,9 +36,7 @@ def launch_setup(context, *args, **kwargs):
             {
                 "input_topics": [
                     "/sensing/lidar/top/outlier_filtered/pointcloud",
-                    "/sensing/lidar/front_left/min_range_cropped/pointcloud",
-                    "/sensing/lidar/front_right/min_range_cropped/pointcloud",
-                    "/sensing/lidar/front_center/min_range_cropped/pointcloud",
+                    "/sensing/lidar/front_center/pointcloud_raw",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
                 "timeout_sec": 1.0,
