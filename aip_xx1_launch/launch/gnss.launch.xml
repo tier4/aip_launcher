@@ -15,7 +15,7 @@
 
     <!-- Ublox Driver -->
     <group if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)">
-      <node pkg="ublox_gps" name="ublox" exec="ublox_gps_node" if="$(var launch_driver)" respawn="true" respawn_delay="1.0">
+      <node pkg="ublox_gps" name="ublox" exec="ublox_gps_node" if="$(var launch_driver)" respawn="true" respawn_delay="10.0">
         <remap from="~/fix" to="~/nav_sat_fix" />
         <!-- NOTE: load 2 file paths to work in both galactic and humble -->
         <!-- The first one will be deleted after migration to humble has done -->
