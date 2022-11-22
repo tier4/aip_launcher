@@ -148,7 +148,7 @@ This is the package that contains some sensor driver launch files for reasons su
     └── package.xml
 ```
 
-## Description for aip_***_description
+## Description for aip\_\*\*\*\_description
 
 ### Settings
 
