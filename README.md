@@ -4,11 +4,9 @@
 
 ```bash
 .
-├── aip_x1_launch # AI.Pilot X1 package
-│   └── ... # some directories and files
-├── aip_x2_launch
+├── aip_***_launch # AI.Pilot *** package
 │   └── ...
-├── aip_xx1_launch
+├── aip_***_description # AI.Pilot *** package
 │   └── ...
 ├── ... # other AI.Pilot packages...
 └── common_sensor_launch # common sensor driver package
@@ -148,4 +146,23 @@ This is the package that contains some sensor driver launch files for reasons su
     │   ├── velodyne_VLP16.launch.xml
     │   └── ...
     └── package.xml
+```
+
+## Description for aip_***_description
+
+### Settings
+
+- Add each transformation between a base frame and a sensor into calibration yaml as below.
+
+```yaml
+# sample_sensor_calibration.yaml
+# parent -> child
+parent_name
+  child_name
+    x:
+    y:
+    z:
+    roll:
+    pitch:
+    yaw:
 ```
