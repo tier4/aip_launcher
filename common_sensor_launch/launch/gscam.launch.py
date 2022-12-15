@@ -91,8 +91,8 @@ def launch_setup(context, *args, **kwargs):
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         ),
         ComposableNode(
-            package="jetson_camera_trigger",
-            plugin="jetson_camera_trigger::JetsonCameraTrigger",
+            package="sensor_trigger",
+            plugin="sensor_trigger::SensorTrigger",
             name=["camera", LaunchConfiguration("camera_id"), "_trigger"],
             namespace=LaunchConfiguration("gscam_namespace"),
             remappings=[
