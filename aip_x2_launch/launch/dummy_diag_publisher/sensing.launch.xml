@@ -3,4 +3,8 @@
   <include file="$(find-pkg-share common_sensor_launch)/launch/dummy_diag_publisher/gnss.launch.xml"/>
   <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/dummy_diag_publisher/lidar.launch.xml"/> -->
 
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="sensing_topic_status"/>
+  </include>
+
 </launch>
