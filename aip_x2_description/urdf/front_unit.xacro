@@ -20,7 +20,7 @@
     </link>
 
     <!-- sensor -->
-    <xacro:property name="calibration" value="${load_yaml('$(arg config_dir)/front_unit_calibration.yaml')}"/>
+    <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/front_unit_calibration.yaml')}"/>
 
     <!-- BFS7(LR) -->
     <xacro:monocular_camera_macro

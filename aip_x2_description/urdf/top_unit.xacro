@@ -21,7 +21,7 @@
     </link>
 
     <!-- sensor -->
-    <xacro:property name="calibration" value="${load_yaml('$(arg config_dir)/top_unit_calibration.yaml')}"/>
+    <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/top_unit_calibration.yaml')}"/>
 
     <!-- lidar -->
     <!-- left -->
