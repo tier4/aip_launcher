@@ -10,9 +10,6 @@
     <!-- Ublox Driver -->
     <node pkg="ublox_gps" name="ublox" exec="ublox_gps_node" if="$(var launch_driver)" respawn="true" respawn_delay="1.0">
       <remap from="~/fix" to="~/nav_sat_fix" />
-      <!-- NOTE: load 2 file paths to work in both galactic and humble -->
-      <!-- The first one will be deleted after migration to humble has done -->
-      <param from="$(find-pkg-share ublox_gps)/c94_f9p_rover.yaml"/>
       <param from="$(find-pkg-share ublox_gps)/config/c94_f9p_rover.yaml"/>
     </node>
 
