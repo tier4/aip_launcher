@@ -19,7 +19,7 @@
 
       # livox
       livox_connection: default
-      livox_fan_satus: default
+      livox_fan_status: default
       livox_firmware_status: default
       livox_internal_voltage: default
       livox_motor_status: default
