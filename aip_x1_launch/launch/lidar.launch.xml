@@ -23,12 +23,6 @@
       </include>
     </group>
 
-    <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py" if="$(var use_dji_driver)">
-      <arg name="multi_topic" value="1" />
-      <arg name="launch_driver" value="$(var launch_driver)" />
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-    </include>
-
     <group unless="$(var use_dji_driver)">
       <group>
 	      <push-ros-namespace namespace="front_right"/>
