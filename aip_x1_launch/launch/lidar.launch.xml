@@ -3,7 +3,6 @@
   <arg name="launch_driver" default="true" />
   <arg name="use_concat_filter" default="true" />
   <arg name="use_radius_search" default="false" />
-  <arg name="use_dji_driver" default="false" />
   <arg name="vehicle_mirror_param_file" />
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
@@ -23,13 +22,7 @@
       </include>
     </group>
 
-    <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py" if="$(var use_dji_driver)">
-      <arg name="multi_topic" value="1" />
-      <arg name="launch_driver" value="$(var launch_driver)" />
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-    </include>
-
-    <group unless="$(var use_dji_driver)">
+    <group>
       <group>
 	      <push-ros-namespace namespace="front_right"/>
         <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
