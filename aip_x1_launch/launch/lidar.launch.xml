@@ -7,6 +7,9 @@
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
 
+  <!-- x1 additional setting -->
+  <arg name="livox_min_range" default="1.0" />
+
   <group>
     <push-ros-namespace namespace="lidar"/>
 
@@ -28,6 +31,7 @@
         <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_right_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
         </include>
       </group>
       <group>
@@ -35,6 +39,7 @@
         <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_center_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
 	      </include>
       </group>
       <group>
@@ -42,6 +47,7 @@
         <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_left_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
 	      </include>
       </group>
     </group>
