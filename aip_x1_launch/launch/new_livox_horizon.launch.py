@@ -59,7 +59,7 @@ def get_crop_box_min_range_component(context, livox_frame_id):
                 "input_frame": livox_frame_id,
                 "output_frame": LaunchConfiguration("base_frame"),
                 "min_x": 0.0,
-                "max_x": 1.5,
+                "max_x": LaunchConfiguration("min_range"),
                 "min_y": -2.0,
                 "max_y": 2.0,
                 "min_z": -2.0,
@@ -120,5 +120,8 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_tag_filter", "true")
     add_launch_arg("lidar_config_file")
+
+    # x1 additional setting
+    add_launch_arg("min_range", "1.5")
 
     return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
