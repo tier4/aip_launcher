@@ -10,7 +10,6 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <exec_depend>common_sensor_launch</exec_depend>
   <exec_depend>compare_map_segmentation</exec_depend>
   <exec_depend>gnss_poser</exec_depend>
   <exec_depend>pointcloud_preprocessor</exec_depend>
