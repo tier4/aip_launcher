@@ -25,21 +25,21 @@
     <group>
       <group>
 	      <push-ros-namespace namespace="front_right"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_right_config.yaml" />
         </include>
       </group>
       <group>
         <push-ros-namespace namespace="front_center"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_center_config.yaml" />
 	      </include>
       </group>
       <group>
         <push-ros-namespace namespace="front_left"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_left_config.yaml" />
 	      </include>
