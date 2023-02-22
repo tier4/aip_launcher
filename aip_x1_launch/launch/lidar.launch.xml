@@ -3,10 +3,12 @@
   <arg name="launch_driver" default="true" />
   <arg name="use_concat_filter" default="true" />
   <arg name="use_radius_search" default="false" />
-  <arg name="use_dji_driver" default="false" />
   <arg name="vehicle_mirror_param_file" />
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <!-- x1 additional setting -->
+  <arg name="livox_min_range" default="1.0" />
 
   <group>
     <push-ros-namespace namespace="lidar"/>
@@ -23,32 +25,29 @@
       </include>
     </group>
 
-    <include file="$(find-pkg-share common_sensor_launch)/launch/livox_horizon.launch.py" if="$(var use_dji_driver)">
-      <arg name="multi_topic" value="1" />
-      <arg name="launch_driver" value="$(var launch_driver)" />
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-    </include>
-
-    <group unless="$(var use_dji_driver)">
+    <group>
       <group>
 	      <push-ros-namespace namespace="front_right"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_right_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
         </include>
       </group>
       <group>
         <push-ros-namespace namespace="front_center"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_center_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
 	      </include>
       </group>
       <group>
         <push-ros-namespace namespace="front_left"/>
-        <include file="$(find-pkg-share common_sensor_launch)/launch/new_livox_horizon.launch.py">
+        <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
           <arg name="launch_driver" value="$(var launch_driver)" />
           <arg name="lidar_config_file" value="$(find-pkg-share individual_params)/config/default/new_driver_livox_front_left_config.yaml" />
+          <arg name="min_range" value="$(var livox_min_range)" />
 	      </include>
       </group>
     </group>

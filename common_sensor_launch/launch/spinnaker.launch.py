@@ -87,7 +87,6 @@ def launch_setup(context, *args, **kwargs):
 
 
 def generate_launch_description():
-
     launch_arguments = []
 
     def add_launch_arg(name: str, default_value=None):

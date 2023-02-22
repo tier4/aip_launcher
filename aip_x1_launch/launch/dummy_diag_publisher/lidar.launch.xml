@@ -1,6 +1,0 @@
-<launch>
-
-  <include file="$(find-pkg-share common_sensor_launch)/launch/dummy_diag_publisher/velodyne.launch.xml"/>
-  <include file="$(find-pkg-share common_sensor_launch)/launch/dummy_diag_publisher/livox.launch.xml"/>
-
-</launch>
