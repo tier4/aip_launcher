@@ -26,7 +26,7 @@
 
     use_gnss_time: false
 
-    rtk_settings:  
+    rtk_settings:
       ntrip_1:
         id: ""
         caster: ""
