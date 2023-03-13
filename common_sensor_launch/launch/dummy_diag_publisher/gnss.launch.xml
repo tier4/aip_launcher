@@ -1,0 +1,31 @@
+<launch>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_connection"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_data"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_antenna"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_tx_usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_spoofing"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="gnss_jamming"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="fix topic status"/>
+  </include>
+
+</launch>
