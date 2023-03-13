@@ -1,0 +1,6 @@
+<launch>
+
+  <include file="$(find-pkg-share common_sensor_launch)/launch/dummy_diag_publisher/gnss.launch.xml"/>
+  <include file="$(find-pkg-share aip_xx2_launch)/launch/dummy_diag_publisher/lidar.launch.xml"/>
+
+</launch>

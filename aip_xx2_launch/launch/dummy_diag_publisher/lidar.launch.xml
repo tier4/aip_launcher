@@ -1,0 +1,5 @@
+<launch>
+
+  <include file="$(find-pkg-share common_sensor_launch)/launch/dummy_diag_publisher/velodyne.launch.xml"/>
+
+</launch>
