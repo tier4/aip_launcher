@@ -344,6 +344,8 @@ def generate_launch_description():
     add_launch_arg("blockage_count_threshold", "50")
     add_launch_arg("blockage_buffering_frames", "2")
     add_launch_arg("blockage_buffering_interval", "1")
+    add_launch_arg("dust_ratio_threshold", "0.1")
+    add_launch_arg("dust_count_threshold", "10")
     add_launch_arg("dust_kernel_size", "2")
     add_launch_arg("dust_buffering_frames", "10")
     add_launch_arg("dust_buffering_interval", "1")

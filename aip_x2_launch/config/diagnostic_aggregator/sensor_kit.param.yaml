@@ -34,6 +34,12 @@
                   contains: [": blockage_validation"]
                   timeout: 1.0
 
+                dust:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: dust
+                  contains: [": dust_validation"]
+                  timeout: 1.0
+
         gnss:
           type: diagnostic_aggregator/AnalyzerGroup
           path: gnss
