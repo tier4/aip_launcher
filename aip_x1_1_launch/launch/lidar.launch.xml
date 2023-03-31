@@ -8,9 +8,6 @@
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
 
-  <!-- x1 additional setting -->
-  <arg name="livox_min_range" default="1.0" />
-
   <group>
     <push-ros-namespace namespace="lidar"/>
 
