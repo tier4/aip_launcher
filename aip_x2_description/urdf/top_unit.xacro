@@ -176,35 +176,6 @@
       fov="1.3"
     />
 
-    <!-- gnss -->
-    <!-- left -->
-    <xacro:imu_macro
-      name="gnss_right"
-      parent="top_unit_base_link"
-      namespace=""
-      x="${calibration['top_unit_base_link']['gnss_right_link']['x']}"
-      y="${calibration['top_unit_base_link']['gnss_right_link']['y']}"
-      z="${calibration['top_unit_base_link']['gnss_right_link']['z']}"
-      roll="${calibration['top_unit_base_link']['gnss_right_link']['roll']}"
-      pitch="${calibration['top_unit_base_link']['gnss_right_link']['pitch']}"
-      yaw="${calibration['top_unit_base_link']['gnss_right_link']['yaw']}"
-      fps="100"
-    />
-
-    <!-- right -->
-    <xacro:imu_macro
-      name="gnss_left"
-      parent="top_unit_base_link"
-      namespace=""
-      x="${calibration['top_unit_base_link']['gnss_left_link']['x']}"
-      y="${calibration['top_unit_base_link']['gnss_left_link']['y']}"
-      z="${calibration['top_unit_base_link']['gnss_left_link']['z']}"
-      roll="${calibration['top_unit_base_link']['gnss_left_link']['roll']}"
-      pitch="${calibration['top_unit_base_link']['gnss_left_link']['pitch']}"
-      yaw="${calibration['top_unit_base_link']['gnss_left_link']['yaw']}"
-      fps="100"
-    />
-
     <!-- imu -->
     <xacro:imu_macro
       name="tamagawa/imu"
