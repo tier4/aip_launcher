@@ -34,43 +34,43 @@
                       contains: [": velodyne_rpm"]
                       timeout: 3.0
 
-            livox:
-              type: diagnostic_aggregator/AnalyzerGroup
-              path: livox
-              analyzers:
-                health_monitoring:
-                  type: diagnostic_aggregator/AnalyzerGroup
-                  path: health_monitoring
-                  analyzers:
-                    connection:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: connection
-                      contains: [": livox_connection"]
-                      timeout: 3.0
+            # livox:
+            #   type: diagnostic_aggregator/AnalyzerGroup
+            #   path: livox
+            #   analyzers:
+            #     health_monitoring:
+            #       type: diagnostic_aggregator/AnalyzerGroup
+            #       path: health_monitoring
+            #       analyzers:
+            #         connection:
+            #           type: diagnostic_aggregator/GenericAnalyzer
+            #           path: connection
+            #           contains: [": livox_connection"]
+            #           timeout: 3.0
 
-                    fan_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: fan_status
-                      contains: [": livox_fan_status"]
-                      timeout: 3.0
+            #         fan_status:
+            #           type: diagnostic_aggregator/GenericAnalyzer
+            #           path: fan_status
+            #           contains: [": livox_fan_status"]
+            #           timeout: 3.0
 
-                    firmware_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: firmware_status
-                      contains: [": livox_firmware_status"]
-                      timeout: 3.0
+            #         firmware_status:
+            #           type: diagnostic_aggregator/GenericAnalyzer
+            #           path: firmware_status
+            #           contains: [": livox_firmware_status"]
+            #           timeout: 3.0
 
-                    internal_voltage:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: internal_voltage
-                      contains: [": livox_internal_voltage"]
-                      timeout: 3.0
+            #         internal_voltage:
+            #           type: diagnostic_aggregator/GenericAnalyzer
+            #           path: internal_voltage
+            #           contains: [": livox_internal_voltage"]
+            #           timeout: 3.0
 
-                    motor_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: motor_status
-                      contains: [": livox_motor_status"]
-                      timeout: 3.0
+            #         motor_status:
+            #           type: diagnostic_aggregator/GenericAnalyzer
+            #           path: motor_status
+            #           contains: [": livox_motor_status"]
+            #           timeout: 3.0
 
                     # pps_signal:
                     #   type: diagnostic_aggregator/GenericAnalyzer
@@ -84,17 +84,17 @@
                     #   contains: [": livox_ptp_signal"]
                     #   timeout: 3.0
 
-                    service_life:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: service_life
-                      contains: [": livox_service_life"]
-                      timeout: 3.0
+                    # service_life:
+                    #   type: diagnostic_aggregator/GenericAnalyzer
+                    #   path: service_life
+                    #   contains: [": livox_service_life"]
+                    #   timeout: 3.0
 
-                    temperature:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: temperature
-                      contains: [": livox_temperature"]
-                      timeout: 3.0
+                    # temperature:
+                    #   type: diagnostic_aggregator/GenericAnalyzer
+                    #   path: temperature
+                    #   contains: [": livox_temperature"]
+                    #   timeout: 3.0
 
                     # time_sync:
                     #   type: diagnostic_aggregator/GenericAnalyzer
