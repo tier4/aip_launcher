@@ -115,26 +115,6 @@ class GroundSegmentationPipeline:
 
     def create_ransac_pipeline(self):
         components = []
-        # components.append(
-        #     ComposableNode(
-        #         package="pointcloud_preprocessor",
-        #         plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
-        #         name="concatenate_data",
-        #         namespace="plane_fitting",
-        #         remappings=[("output", "concatenated/pointcloud")],
-        #         parameters=[
-        #             {
-        #                 "input_topics": self.ground_segmentation_param["ransac_input_topics"],
-        #                 "output_frame": LaunchConfiguration("base_frame"),
-        #                 "timeout_sec": 1.0,
-        #             }
-        #         ],
-        #         extra_arguments=[
-        #             {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-        #         ],
-        #     )
-        # )
-
         components.append(
             ComposableNode(
                 package="pointcloud_preprocessor",
@@ -160,27 +140,27 @@ class GroundSegmentationPipeline:
             )
         )
 
-        # components.append(
-        #     ComposableNode(
-        #         package="pointcloud_preprocessor",
-        #         plugin="pointcloud_preprocessor::Lanelet2MapFilterComponent",
-        #         name="vector_map_filter",
-        #         namespace="plane_fitting",
-        #         remappings=[
-        #             ("input/pointcloud", "detection_area/pointcloud"),
-        #             ("input/vector_map", "/map/vector_map"),
-        #             ("output", "vector_map_filtered/pointcloud"),
-        #         ],
-        #         parameters=[
-        #             {
-        #                 "voxel_size_x": 0.25,
-        #                 "voxel_size_y": 0.25,
-        #             }
-        #         ],
-        #         # cannot use intra process because vector map filter uses transient local.
-        #         extra_arguments=[{"use_intra_process_comms": False}],
-        #     )
-        # )
+        components.append(
+            ComposableNode(
+                package="pointcloud_preprocessor",
+                plugin="pointcloud_preprocessor::Lanelet2MapFilterComponent",
+                name="vector_map_filter",
+                namespace="plane_fitting",
+                remappings=[
+                    ("input/pointcloud", "detection_area/pointcloud"),
+                    ("input/vector_map", "/map/vector_map"),
+                    ("output", "vector_map_filtered/pointcloud"),
+                ],
+                parameters=[
+                    {
+                        "voxel_size_x": 0.25,
+                        "voxel_size_y": 0.25,
+                    }
+                ],
+                # cannot use intra process because vector map filter uses transient local.
+                extra_arguments=[{"use_intra_process_comms": False}],
+            )
+        )
 
         components.append(
             ComposableNode(
@@ -189,7 +169,7 @@ class GroundSegmentationPipeline:
                 name="ransac_ground_filter",
                 namespace="plane_fitting",
                 remappings=[
-                    ("input", "detection_area/pointcloud"),
+                    ("input", "vector_map_filtered/pointcloud"),
                     ("output", "pointcloud"),
                 ],
                 parameters=[self.ground_segmentation_param["ransac_ground_filter"]["parameters"]],
