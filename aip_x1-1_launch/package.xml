@@ -5,13 +5,15 @@
   <version>0.1.0</version>
   <description>The aip_x1-1_launch package</description>
 
-  <maintainer email="hiroki.ota@tier4.jp">Hiroki OTA</maintainer>
+  <maintainer email="yohei.mishina@tier4.jp">Yohei Mishina</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
   <exec_depend>compare_map_segmentation</exec_depend>
   <exec_depend>gnss_poser</exec_depend>
+  <exec_depend>pandar_driver</exec_depend>
+  <exec_depend>pandar_pointcloud</exec_depend>
   <exec_depend>pointcloud_preprocessor</exec_depend>
   <exec_depend>tamagawa_imu_driver</exec_depend>
   <exec_depend>topic_tools</exec_depend>

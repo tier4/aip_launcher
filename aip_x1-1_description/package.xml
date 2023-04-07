@@ -4,12 +4,12 @@
   <version>0.1.0</version>
   <description>The aip_x1-1_description package</description>
 
-  <maintainer email="yukihiro.saito@tier4.jp">Yukihiro Saito</maintainer>
+  <maintainer email="yohei.mishina@tier4.jp">Yohei Mishina</maintainer>
   <license>Apache 2</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <depend>livox_description</depend>
+  <depend>pandar_description</depend>
   <depend>velodyne_description</depend>
 
   <export>
