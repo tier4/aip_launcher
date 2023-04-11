@@ -38,7 +38,7 @@
       <include file="$(find-pkg-share aip_x1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
         <arg name="frame_id" value="pandar_xt32_front_center" />
-        <arg name="device_ip" value="192.168.1.201" />
+        <arg name="device_ip" value="192.168.2.200" />
         <arg name="lidar_port" value="2321" />
         <arg name="gps_port" value="10121" />
         <arg name="scan_phase" value="0.0" />
