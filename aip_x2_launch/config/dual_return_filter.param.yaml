@@ -3,7 +3,7 @@
     roi_mode: "Fixed_azimuth_ROI" # description="options: `No_ROI`, `Fixed_xyz_ROI` or `Fixed_azimuth_ROI`"/>
     weak_first_local_noise_threshold: 2 # description="for No_ROI roi_mode, recommended value is 10" />
     visibility_error_threshold: 0.5
-    visibility_warn_threshold: 0.9
+    visibility_warn_threshold: 0.7
     max_distance: 5.0
     x_max: 18.0
     x_min: -12.0
