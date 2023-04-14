@@ -33,10 +33,9 @@
                       path: rpm
                       contains: [": velodyne_rpm"]
                       timeout: 3.0
-
-            livox:
+            pandar:
               type: diagnostic_aggregator/AnalyzerGroup
-              path: livox
+              path: pandar
               analyzers:
                 health_monitoring:
                   type: diagnostic_aggregator/AnalyzerGroup
@@ -45,59 +44,15 @@
                     connection:
                       type: diagnostic_aggregator/GenericAnalyzer
                       path: connection
-                      contains: [": livox_connection"]
-                      timeout: 3.0
-
-                    fan_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: fan_status
-                      contains: [": livox_fan_status"]
-                      timeout: 3.0
-
-                    firmware_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: firmware_status
-                      contains: [": livox_firmware_status"]
-                      timeout: 3.0
-
-                    internal_voltage:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: internal_voltage
-                      contains: [": livox_internal_voltage"]
-                      timeout: 3.0
-
-                    motor_status:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: motor_status
-                      contains: [": livox_motor_status"]
-                      timeout: 3.0
-
-                    # pps_signal:
-                    #   type: diagnostic_aggregator/GenericAnalyzer
-                    #   path: pps_signal
-                    #   contains: [": livox_pps_signal"]
-                    #   timeout: 3.0
-
-                    # ptp_signal:
-                    #   type: diagnostic_aggregator/GenericAnalyzer
-                    #   path: ptp_signal
-                    #   contains: [": livox_ptp_signal"]
-                    #   timeout: 3.0
-
-                    service_life:
-                      type: diagnostic_aggregator/GenericAnalyzer
-                      path: service_life
-                      contains: [": livox_service_life"]
-                      timeout: 3.0
-
+                      contains: [": pandar_connection"]
+                      timeout: 1.0
                     temperature:
                       type: diagnostic_aggregator/GenericAnalyzer
                       path: temperature
-                      contains: [": livox_temperature"]
-                      timeout: 3.0
-
-                    # time_sync:
-                    #   type: diagnostic_aggregator/GenericAnalyzer
-                    #   path: time_sync
-                    #   contains: [": livox_time_sync"]
-                    #   timeout: 3.0
+                      contains: [": pandar_temperature"]
+                      timeout: 1.0
+                    ptp:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: ptp
+                      contains: [": pandar_ptp"]
+                      timeout: 1.0
