@@ -49,3 +49,13 @@
                       path: gnss
                       contains: [": gnss"]
                       timeout: 1.0
+
+        imu:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: imu
+          analyzers:
+            yaw_rate:
+              type: diagnostic_aggregator/GenericAnalyzer
+              path: yaw_rate
+              contains: [": yaw_rate_status"]
+              timeout: 1.0
