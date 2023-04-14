@@ -24,6 +24,10 @@
       <arg name="output_topic" value="imu_data" />
       <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x2/imu_corrector.param.yaml" />
     </include>
+
+    <include file="$(find-pkg-share imu_monitor)/launch/imu_monitor.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share imu_monitor)/config/imu_monitor.param.yaml"/>
+    </include>
   </group>
 
 </launch>
