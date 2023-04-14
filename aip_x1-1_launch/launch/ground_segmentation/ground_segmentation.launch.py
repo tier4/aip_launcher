@@ -34,8 +34,8 @@ class GroundSegmentationPipeline:
         self.context = context
         self.vehicle_info = self.get_vehicle_info()
         ground_segmentation_param_path = os.path.join(
-            get_package_share_directory("aip_x1_launch"),
-            "config/obstacle_segmentation/ground_segmentation/ground_segmentation.param.yaml",
+            get_package_share_directory("aip_x1-1_launch"),
+            "config/ground_segmentation/ground_segmentation.param.yaml",
         )
         with open(ground_segmentation_param_path, "r") as f:
             self.ground_segmentation_param = yaml.safe_load(f)["/**"]["ros__parameters"]
@@ -118,31 +118,11 @@ class GroundSegmentationPipeline:
         components.append(
             ComposableNode(
                 package="pointcloud_preprocessor",
-                plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
-                name="concatenate_data",
-                namespace="plane_fitting",
-                remappings=[("output", "concatenated/pointcloud")],
-                parameters=[
-                    {
-                        "input_topics": self.ground_segmentation_param["ransac_input_topics"],
-                        "output_frame": LaunchConfiguration("base_frame"),
-                        "timeout_sec": 1.0,
-                    }
-                ],
-                extra_arguments=[
-                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                ],
-            )
-        )
-
-        components.append(
-            ComposableNode(
-                package="pointcloud_preprocessor",
                 plugin="pointcloud_preprocessor::CropBoxFilterComponent",
                 name="short_height_obstacle_detection_area_filter",
                 namespace="plane_fitting",
                 remappings=[
-                    ("input", "concatenated/pointcloud"),
+                    ("input", self.ground_segmentation_param["ransac_input_topics"]),
                     ("output", "detection_area/pointcloud"),
                 ],
                 parameters=[
@@ -326,7 +306,7 @@ class GroundSegmentationPipeline:
                         "inpaint_radius": 1.0,
                         "param_file_path": PathJoinSubstitution(
                             [
-                                FindPackageShare("aip_x1_launch"),
+                                FindPackageShare("aip_x1-1_launch"),
                                 "config",
                                 "obstacle_segmentation",
                                 "ground_segmentation",
