@@ -36,6 +36,9 @@
       <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
       <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x2/vehicle_velocity_converter.param.yaml" />
     </include>
-  </group>
 
+    <include file="$(find-pkg-share aip_x2_launch)/launch/topic_state_monitor.launch.py" />
+
+  </group>
+  
 </launch>
