@@ -15,8 +15,18 @@
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
 
+    <!-- Camera Driver -->
+    <include file="$(find-pkg-share aip_x1-1_launch)/launch/camera.launch.xml">
+      <arg name="launch_driver" value="$(var launch_driver)" />
+    </include>
+
     <!-- IMU Driver -->
     <include file="$(find-pkg-share aip_x1-1_launch)/launch/imu.launch.xml">
+      <arg name="launch_driver" value="$(var launch_driver)" />
+    </include>
+
+    <!-- GNSS Driver -->
+    <include file="$(find-pkg-share aip_x1-1_launch)/launch/gnss.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
