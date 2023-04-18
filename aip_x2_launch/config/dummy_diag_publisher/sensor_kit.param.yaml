@@ -1,0 +1,22 @@
+/**:
+  ros__parameters:
+    required_diags:
+      # IMU
+      yaw_rate_status: default
+
+      # LiDAR
+      pandar_connection: default
+      pandar_temperature: default
+      pandar_ptp: default
+      visibility_validation: default
+      blockage_validation: default
+
+      # GNSS
+      gnss: default
+
+      # sensing
+      sensing_topic_status: default
+      septentrio_topic_status: default
+      concat_status: default
+      temperature_status: default
+      emergency_vehicle: default
