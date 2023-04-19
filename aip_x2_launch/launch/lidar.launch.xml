@@ -40,8 +40,8 @@
         <arg name="device_ip" value="192.168.120.211" />
         <arg name="lidar_port" value="2331" />
         <arg name="gps_port" value="10131" />
-        <arg name="scan_phase" value="270.0" />
-        <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="scan_phase" value="300.0" />
+        <arg name="angle_range" value="[0.0, 360.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
@@ -172,8 +172,8 @@
         <arg name="device_ip" value="192.168.120.214" />
         <arg name="lidar_port" value="2334" />
         <arg name="gps_port" value="10134" />
-        <arg name="scan_phase" value="180.0" />
-        <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="scan_phase" value="200.0" />
+        <arg name="angle_range" value="[110.0, 290.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
