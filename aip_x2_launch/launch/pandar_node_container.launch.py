@@ -134,8 +134,8 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["negative"] = True
 
     vehicle_info = get_vehicle_info(context)
-    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"] - 0.15
-    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"] + 0.15
+    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"]
+    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"]
     cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"]
     cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"]
     cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
