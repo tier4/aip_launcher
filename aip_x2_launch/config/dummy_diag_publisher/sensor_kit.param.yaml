@@ -18,5 +18,5 @@
       sensing_topic_status: default
       septentrio_topic_status: default
       concat_status: default
-      temperature_status: default
+      temperature_monitor: default
       emergency_vehicle: default
