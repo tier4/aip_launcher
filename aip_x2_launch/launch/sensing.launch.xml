@@ -40,5 +40,5 @@
     <include file="$(find-pkg-share aip_x2_launch)/launch/topic_state_monitor.launch.py" />
 
   </group>
-  
+
 </launch>
