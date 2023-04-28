@@ -36,12 +36,12 @@ def launch_setup(context, *args, **kwargs):
             {
                 "input_topics": [
                     "/sensing/lidar/top/outlier_filtered/pointcloud",
-                    # "/sensing/lidar/left/outlier_filtered/pointcloud",
-                    # "/sensing/lidar/right/outlier_filtered/pointcloud",
+                    "/sensing/lidar/left/outlier_filtered/pointcloud",
+                    "/sensing/lidar/right/outlier_filtered/pointcloud",
                     "/sensing/lidar/rear/outlier_filtered/pointcloud",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
-                "input_offset": [0.055, 0.025], # each sensor will wait 20, 50, 50, 50ms
+                "input_offset": [0.055, 0.025, 0.025, 0.025], # each sensor will wait 20, 50, 50, 50ms
                 "timeout_sec": 0.075, # set shorter than 100ms
             }
         ],
