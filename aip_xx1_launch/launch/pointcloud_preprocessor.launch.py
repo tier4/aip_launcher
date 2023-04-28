@@ -41,8 +41,8 @@ def launch_setup(context, *args, **kwargs):
                     "/sensing/lidar/rear/outlier_filtered/pointcloud",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
-                "input_offset": [0.055, 0.025], # each sensor will wait 20, 50, 50, 50ms
-                "timeout_sec": 0.075, # set shorter than 100ms
+                "input_offset": [0.055, 0.025],  # each sensor will wait 20, 50, 50, 50ms
+                "timeout_sec": 0.075,  # set shorter than 100ms
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
