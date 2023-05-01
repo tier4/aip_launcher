@@ -8,7 +8,7 @@
       pandar_connection: default
       pandar_temperature: default
       pandar_ptp: default
-      visibility_validation: default
+      "left_upper: visibility_validation": default
       blockage_validation: default
 
       # GNSS
