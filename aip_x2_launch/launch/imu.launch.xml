@@ -4,7 +4,7 @@
     <push-ros-namespace namespace="imu"/>
 
     <arg name="launch_driver" default="true" />
-    <arg name="interface" default="can1"/>
+    <arg name="interface" default="CAN1"/>
     <arg name="receiver_interval_sec" default="0.01"/>
 
     <group>
