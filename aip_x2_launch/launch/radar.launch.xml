@@ -1,0 +1,31 @@
+<launch>
+  <arg name="launch_driver" default="true" />
+  <arg name="input/frame" default="from_can_bus" />
+  <arg name="output/objects" default="objects_raw" />
+  <arg name="interface" default="can2"/>
+  <arg name="receiver_interval_sec" default="0.01"/>
+
+  <group>
+    <push-ros-namespace namespace="radar"/>
+
+    <group>
+      <push-ros-namespace namespace="ars408"/>
+
+      <!-- socket can -->
+      <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
+        <arg name="interface" value="$(var interface)"/>
+        <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
+      </include>
+
+      <!-- tf launch (temporary) -->
+      <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="4.0 0.0 0.0 0.0 0.0 0.0 base_link ars408" />
+
+      <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
+        <arg name="input/frame" value="$(var input/frame)" />
+        <arg name="output/objects" value="$(var output/objects)" />
+        <arg name="launch_driver" value="$(var launch_driver)" />
+      </include>
+
+    </group>
+  </group>
+</launch>
