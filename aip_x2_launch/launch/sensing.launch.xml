@@ -30,6 +30,11 @@
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
+    <!-- Radar Driver -->
+    <include file="$(find-pkg-share aip_x2_launch)/launch/radar.launch.xml">
+      <arg name="launch_driver" value="$(var launch_driver)" />
+    </include>
+
     <!-- Vehicle twist -->
     <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
       <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
