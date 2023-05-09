@@ -54,4 +54,18 @@
     fps="100"
   />
 
+  <!-- radar -->
+  <xacro:imu_macro
+    name="ars408_front"
+    parent="base_link"
+    namespace=""
+    x="5.6221"
+    y="0"
+    z="0.7547"
+    roll="0"
+    pitch="0"
+    yaw="0"
+    fps="100"
+  />
+
 </robot>
