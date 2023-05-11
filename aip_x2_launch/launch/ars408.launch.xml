@@ -21,7 +21,11 @@
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
   </group>
-  <!-- msgs converter for visualization -->
+
+  <!-- *** TEMPORARY ***
+    * Launching for visualization purposes.
+    * This should be launched from perception. ex) radar_based_detection.launch.xml
+  -->
   <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
     <arg name="input/radar_objects" value="$(var output/objects)" />
     <arg name="output/radar_detected_objects" value="debug/detected_objects"/>
