@@ -24,5 +24,7 @@
   <!-- msgs converter for visualization -->
   <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
     <arg name="input/radar_objects" value="$(var output/objects)" />
+    <arg name="output/radar_detected_objects" value="debug/detected_objects"/>
+    <arg name="output/radar_tracked_objects" value="debug/tracked_objects"/>
   </include>
 </launch>
