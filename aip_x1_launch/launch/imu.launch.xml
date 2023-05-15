@@ -1,8 +1,4 @@
 <launch>
-
-  <arg name="launch_driver" default="true" />
-  <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
-
   <group>
     <push-ros-namespace namespace="imu"/>
 
@@ -10,7 +6,7 @@
     <arg name="imu_corrector_param_file" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1/imu_corrector.param.yaml"/>
     <include file="$(find-pkg-share autoware_imu_corrector)/launch/imu_corrector.launch.xml">
       <arg name="input_topic" value="$(var imu_raw_name)"/>
-      <arg name="output_topic" value="imu_data"/>
+      <arg name="output_topic" value="imu_data" />
       <arg name="param_file" value="$(var imu_corrector_param_file)"/>
     </include>
 
@@ -19,7 +15,6 @@
       <arg name="input_imu_raw" value="$(var imu_raw_name)"/>
       <arg name="input_odom" value="/localization/kinematic_state"/>
       <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_file)"/>
-      <arg name="gyro_bias_estimator_param_file" value="$(var gyro_bias_estimator_param_file)"/>
     </include>
   </group>
 
