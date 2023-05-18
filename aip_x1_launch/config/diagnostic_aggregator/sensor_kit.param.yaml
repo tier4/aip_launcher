@@ -34,9 +34,9 @@
                       contains: [": velodyne_rpm"]
                       timeout: 3.0
 
-            livox:
+            front:
               type: diagnostic_aggregator/AnalyzerGroup
-              path: livox
+              path: front
               analyzers:
                 health_monitoring:
                   type: diagnostic_aggregator/AnalyzerGroup
