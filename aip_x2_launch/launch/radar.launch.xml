@@ -4,7 +4,7 @@
 
   <group>
     <push-ros-namespace namespace="radar" />
-    
+
     <group>
       <push-ros-namespace namespace="front_center" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/ars408.launch.xml">
