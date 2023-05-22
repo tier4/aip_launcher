@@ -4,6 +4,7 @@
     <xacro:include filename="$(find pandar_description)/urdf/pandar_40p.xacro"/>
     <xacro:include filename="$(find pandar_description)/urdf/pandar_qt.xacro"/>
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro"/>
+    <xacro:include filename="$(find aip_x2_description)/urdf/radar.xacro"/>
 
     <xacro:arg name="gpu" default="false"/>
     <xacro:arg name="config_dir" default="$(find aip_x2_description)/config"/>
@@ -22,7 +23,7 @@
     <!-- sensor -->
     <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/front_unit_calibration.yaml')}"/>
 
-    <!-- BFS7(LR) -->
+    <!-- camera -->
     <xacro:monocular_camera_macro
       name="camera6/camera"
       parent="front_unit_base_link"
@@ -60,6 +61,40 @@
       roll="${calibration['front_unit_base_link']['pandar_qt_front_base_link']['roll']}"
       pitch="${calibration['front_unit_base_link']['pandar_qt_front_base_link']['pitch']}"
       yaw="${calibration['front_unit_base_link']['pandar_qt_front_base_link']['yaw']}"
+    />
+
+    <!-- radar -->
+    <xacro:radar_macro
+      name="front_center/radar"
+      parent="front_unit_base_link"
+      x="${calibration['front_unit_base_link']['front_center/radar_link']['x']}"
+      y="${calibration['front_unit_base_link']['front_center/radar_link']['y']}"
+      z="${calibration['front_unit_base_link']['front_center/radar_link']['z']}"
+      roll="${calibration['front_unit_base_link']['front_center/radar_link']['roll']}"
+      pitch="${calibration['front_unit_base_link']['front_center/radar_link']['pitch']}"
+      yaw="${calibration['front_unit_base_link']['front_center/radar_link']['yaw']}"
+    />
+
+    <xacro:radar_macro
+      name="front_left/radar"
+      parent="front_unit_base_link"
+      x="${calibration['front_unit_base_link']['front_left/radar_link']['x']}"
+      y="${calibration['front_unit_base_link']['front_left/radar_link']['y']}"
+      z="${calibration['front_unit_base_link']['front_left/radar_link']['z']}"
+      roll="${calibration['front_unit_base_link']['front_left/radar_link']['roll']}"
+      pitch="${calibration['front_unit_base_link']['front_left/radar_link']['pitch']}"
+      yaw="${calibration['front_unit_base_link']['front_left/radar_link']['yaw']}"
+    />
+
+    <xacro:radar_macro
+      name="front_right/radar"
+      parent="front_unit_base_link"
+      x="${calibration['front_unit_base_link']['front_right/radar_link']['x']}"
+      y="${calibration['front_unit_base_link']['front_right/radar_link']['y']}"
+      z="${calibration['front_unit_base_link']['front_right/radar_link']['z']}"
+      roll="${calibration['front_unit_base_link']['front_right/radar_link']['roll']}"
+      pitch="${calibration['front_unit_base_link']['front_right/radar_link']['pitch']}"
+      yaw="${calibration['front_unit_base_link']['front_right/radar_link']['yaw']}"
     />
 
   </xacro:macro>
