@@ -5,18 +5,39 @@ rear_unit_base_link:
     z: 0.0
     roll: 0.0
     pitch: 0.0
-    yaw: 1.57079
+    yaw: 1.570796
   pandar_qt_rear_base_link:
-    x: 0.018
+    x: 0.0189
     y: 0.0
-    z: 0.130
+    z: 0.135
     roll: 0.0
     pitch: 0.0
-    yaw: 1.57079
+    yaw: 1.91986
   camera3/camera_link:
-    x: -0.004
-    y: -0.087
-    z: 0.110
-    roll: 3.141592
+    x: 0.002
+    y: 0.125
+    z: 0.17965
+    roll: 0.0
     pitch: 0.0
     yaw: 0.0
+  rear_center/radar_link:
+    x: 0.0
+    y: 0.0
+    z: -0.09819
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  rear_left/radar_link:
+    x: -0.01295
+    y: -1.11225 # todo
+    z: 0.092
+    roll: 0.0
+    pitch: 0.0
+    yaw: -1.2217 # 70[deg]
+  rear_right/radar_link:
+    x: -0.01295
+    y: 1.11225 # todo
+    z: 0.092
+    roll: 0.0
+    pitch: 0.0
+    yaw: 1.2217 # 70[deg]
