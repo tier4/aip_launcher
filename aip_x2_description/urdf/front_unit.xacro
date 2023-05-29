@@ -65,7 +65,7 @@
 
     <!-- radar -->
     <xacro:radar_macro
-      name="front_center/radar"
+      name="front_center/radar_link"
       parent="front_unit_base_link"
       x="${calibration['front_unit_base_link']['front_center/radar_link']['x']}"
       y="${calibration['front_unit_base_link']['front_center/radar_link']['y']}"
@@ -76,7 +76,7 @@
     />
 
     <xacro:radar_macro
-      name="front_left/radar"
+      name="front_left/radar_link"
       parent="front_unit_base_link"
       x="${calibration['front_unit_base_link']['front_left/radar_link']['x']}"
       y="${calibration['front_unit_base_link']['front_left/radar_link']['y']}"
@@ -87,7 +87,7 @@
     />
 
     <xacro:radar_macro
-      name="front_right/radar"
+      name="front_right/radar_link"
       parent="front_unit_base_link"
       x="${calibration['front_unit_base_link']['front_right/radar_link']['x']}"
       y="${calibration['front_unit_base_link']['front_right/radar_link']['y']}"
