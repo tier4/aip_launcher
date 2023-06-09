@@ -46,7 +46,7 @@ def launch_setup(context, *args, **kwargs):
                     "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
                 ],
                 "input_offset": [0.025, 0.025, 0.025, 0.0, 0.05, 0.05, 0.05, 0.05],
-                "timeout_sec": 0.075,
+                "timeout_sec": 0.1,
                 "output_frame": LaunchConfiguration("base_frame"),
             }
         ],
