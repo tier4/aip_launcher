@@ -49,7 +49,7 @@
                       path: gnss
                       startswith: ["gnss"]
                       contains: [": gnss"]
-                      timeout: 30.0
+                      timeout: 1.0
                 node_alive_monitoring:
                   type: diagnostic_aggregator/AnalyzerGroup
                   path: node_alive_monitoring
@@ -58,7 +58,7 @@
                       type: diagnostic_aggregator/GenericAnalyzer
                       path: topic_status
                       contains: [": septentrio_topic_status"]
-                      timeout: 30.0
+                      timeout: 1.0
 
         imu:
           type: diagnostic_aggregator/AnalyzerGroup
