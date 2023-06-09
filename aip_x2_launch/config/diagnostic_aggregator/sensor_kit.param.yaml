@@ -68,4 +68,4 @@
               type: diagnostic_aggregator/GenericAnalyzer
               path: yaw_rate
               contains: [": yaw_rate_status"]
-              timeout: 3.0
+              timeout: 5.0
