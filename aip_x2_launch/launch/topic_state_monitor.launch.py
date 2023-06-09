@@ -30,7 +30,7 @@ def generate_launch_description():
                 "diag_name": "septentrio_topic_status",
                 "warn_rate": 2.5,
                 "error_rate": 0.5,
-                "timeout": 1.0,
+                "timeout": 5.0,
                 "window_size": 10,
             },
         ],
