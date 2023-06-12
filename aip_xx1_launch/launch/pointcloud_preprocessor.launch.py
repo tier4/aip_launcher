@@ -42,11 +42,11 @@ def launch_setup(context, *args, **kwargs):
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
                 "input_offset": [
-                    0.055,
+                    0.035,
                     0.025,
                     0.025,
                     0.025,
-                ],  # each sensor will wait 20, 50, 50, 50ms
+                ],  # each sensor will wait 60, 70, 70, 70ms
                 "timeout_sec": 0.095,  # set shorter than 100ms
             }
         ],
