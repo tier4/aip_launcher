@@ -14,7 +14,7 @@
       <push-ros-namespace namespace="top" />
       <include file="$(find-pkg-share aip_xx1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
-        <arg name="frame_id" value="pandar_left" />
+        <arg name="frame_id" value="velodyne_top" />
         <arg name="device_ip" value="192.168.1.201" />
         <arg name="lidar_port" value="2368" />
         <arg name="gps_port" value="10121" />
@@ -22,7 +22,7 @@
         <arg name="angle_range" value="[0.0, 360.0]"/>
         <arg name="distance_range" value="[0.05, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
-        <!--arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1_1/xt32.csv" /-->
+        <arg name="calibration" value="$(find-pkg-share pandar_pointcloud)/config/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
     </group>
@@ -31,7 +31,7 @@
       <push-ros-namespace namespace="left" />
       <include file="$(find-pkg-share aip_xx1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
-        <arg name="frame_id" value="pandar_left" />
+        <arg name="frame_id" value="velodyne_left" />
         <arg name="device_ip" value="192.168.1.202" />
         <arg name="lidar_port" value="2369" />
         <arg name="gps_port" value="10121" />
@@ -39,7 +39,7 @@
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.05, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
-        <!--arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1_1/xt32.csv" /-->
+        <arg name="calibration" value="$(find-pkg-share pandar_pointcloud)/config/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
     </group>
@@ -48,7 +48,7 @@
       <push-ros-namespace namespace="right" />
       <include file="$(find-pkg-share aip_xx1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
-        <arg name="frame_id" value="pandar_right" />
+        <arg name="frame_id" value="velodyne_right" />
         <arg name="device_ip" value="192.168.1.203" />
         <arg name="lidar_port" value="2370" />
         <arg name="gps_port" value="10121" />
@@ -56,7 +56,7 @@
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.05, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
-        <!--arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1_1/xt32.csv" /-->
+        <arg name="calibration" value="$(find-pkg-share pandar_pointcloud)/config/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
     </group>
@@ -65,7 +65,7 @@
       <push-ros-namespace namespace="rear" />
       <include file="$(find-pkg-share aip_xx1_launch)/launch/pandar_node_container.launch.py">
         <arg name="model" value="PandarXT-32" />
-        <arg name="frame_id" value="pandar_rear" />
+        <arg name="frame_id" value="velodyne_rear" />
         <arg name="device_ip" value="192.168.1.204" />
         <arg name="lidar_port" value="2371" />
         <arg name="gps_port" value="10121" />
@@ -73,7 +73,7 @@
         <arg name="angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.05, 200.0]"/>
         <arg name="return_mode" value="Strongest" />
-        <!--arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1_1/xt32.csv" /-->
+        <arg name="calibration" value="$(find-pkg-share pandar_pointcloud)/config/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
     </group>
