@@ -1,7 +1,6 @@
 <launch>
   <arg name="launch_driver" default="true" />
   <arg name="input/frame" default="from_can_bus" />
-  <arg name="output/objects" default="objects_raw" />
   <arg name="output_frame" default="ars408_front_link" />
   <arg name="interface" default="can0"/>
   <arg name="receiver_interval_sec" default="0.01"/>
@@ -12,23 +11,10 @@
       <arg name="interface" value="$(var interface)"/>
       <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
     </include>
-
-    <!-- ars408 driver-->
-    <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
-      <arg name="input/frame" value="$(var input/frame)" />
-      <arg name="output/objects" value="$(var output/objects)" />
-      <arg name="output_frame" value="$(var output_frame)" />
-      <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
   </group>
 
-  <!-- *** TEMPORARY ***
-    * Launching for visualization purposes.
-    * This should be launched from perception. ex) radar_based_detection.launch.xml
-  -->
-  <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
-    <arg name="input/radar_objects" value="$(var output/objects)" />
-    <arg name="output/radar_detected_objects" value="debug/detected_objects"/>
-    <arg name="output/radar_tracked_objects" value="debug/tracked_objects"/>
+  <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+    <arg name="input/frame" value="$(var input/frame)" />
+    <arg name="output_frame" value="$(var output_frame)" />
   </include>
 </launch>
