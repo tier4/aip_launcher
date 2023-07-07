@@ -1,7 +1,6 @@
 <launch>
   <arg name="launch_driver" default="true" />
   <arg name="input/frame" default="from_can_bus" />
-  <arg name="output/objects" default="objects_raw" />
   <arg name="radar_can_device" default="canRadar" />
 
   <group>
@@ -9,6 +8,9 @@
 
     <group>
       <push-ros-namespace namespace="front_center"/>
+
+      <!-- tf launch (temporary) -->
+      <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="3.8 0.0 0.0 0.0 0.0 0.0 base_link ars408_front_center" />
 
       <!-- socket can -->
       <group>
@@ -19,15 +21,14 @@
         </include>
       </group>
 
-      <!-- tf launch (temporary) -->
-      <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="3.8 0.0 0.0 0.0 0.0 0.0 base_link ars408" />
-
       <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
         <arg name="input/frame" value="$(var input/frame)" />
-        <arg name="output/objects" value="$(var output/objects)" />
-        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="output_frame" value="ars408_front_center" />
       </include>
-
     </group>
+
+    <node pkg="topic_tools" exec="relay" name="radar_relay" output="log" args="front_center/detected_objects detected_objects"/>
+
   </group>
 </launch>
+
