@@ -1,9 +1,6 @@
 <launch>
-  <arg name="launch_driver" default="false" />
-  <!-- device parameter -->
-  <arg name="interface" default="can0"/>
-  <arg name="receiver_interval_sec" default="0.01"/>
   <!-- driver parameter -->
+  <arg name="input/frame" default="from_can_bus" />
   <arg name="output_frame" default="ars408_front" />
   <arg name="publish_radar_track" default="true" />
   <arg name="publish_radar_scan" default="false" />
@@ -14,18 +11,10 @@
   <!-- converter parameter -->
   <arg name="input/odometry" default="/localization/kinematic_state" />
 
-  <!-- Socket can -->
-  <group if="$(var launch_driver)">
-    <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
-      <arg name="interface" value="$(var interface)"/>
-      <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
-    </include>
-  </group>
-
   <!-- ARS408 driver-->
   <!-- Note: If the ARS408 driver is stable, continental_ars408.launch.xml move to group <if="$(var launch_driver)> -->
   <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
-    <arg name="input/frame" value="from_can_bus" />
+    <arg name="input/frame" value="$(var input/frame)" />
     <arg name="output/objects" value="objects_raw" />
     <arg name="output/scan" value="scan_raw" />
     <arg name="publish_radar_track" value="$(var publish_radar_track)" />
