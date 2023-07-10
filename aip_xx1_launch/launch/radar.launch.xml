@@ -12,20 +12,11 @@
       <!-- tf launch (temporary) -->
       <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_ars408" output="screen" args="3.8 0.0 0.0 0.0 0.0 0.0 base_link ars408_front_center" />
 
-      <!-- socket can -->
-      <group>
-        <include file="$(find-pkg-share pacmod3)/launch/pacmod3.launch.xml">
-          <arg name="use_socketcan" value="true" />
-          <arg name="socketcan_device" value="$(var radar_can_device)" />
-          <arg name="namespace" value="" />>
-        </include>
-      </group>
-
-      <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
-        <arg name="input/frame" value="$(var input/frame)" />
-        <arg name="output_frame" value="ars408_front_center" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+        <arg name="interface" value="can0" />
+        <arg name="input/frame" value="from_can_bus" />
+        <arg name="output_frame" value="ars408" />
       </include>
-    </group>
 
     <node pkg="topic_tools" exec="relay" name="radar_relay" output="log" args="front_center/detected_objects detected_objects"/>
 
