@@ -1,4 +1,7 @@
 <launch>
+  <!-- socket can interface parameter -->
+  <arg name="interface" default="can0" />
+  <arg name="receiver_interval_sec" default="0.01"/>
   <!-- driver parameter -->
   <arg name="input/frame" default="from_can_bus" />
   <arg name="output_frame" default="ars408_front" />
@@ -10,6 +13,14 @@
   <arg name="velocity_y_threshold" default="7.0" />
   <!-- converter parameter -->
   <arg name="input/odometry" default="/localization/kinematic_state" />
+
+  <!-- Socket CAN -->
+  <group if="$(var launch_driver)">
+    <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
+      <arg name="interface" value="$(var interface)"/>
+      <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
+    </include>
+  </group>
 
   <!-- ARS408 driver-->
   <!-- Note: If the ARS408 driver is stable, continental_ars408.launch.xml move to group <if="$(var launch_driver)> -->
