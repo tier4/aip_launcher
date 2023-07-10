@@ -59,5 +59,11 @@
       </include>
     </group>
 
+    <include file="$(find-pkg-share simple_object_merger)/launch/simple_object_merger.launch.xml">
+      <arg name="output/objects" value="detected_objects"/>
+      <arg name="update_rate_hz" value="20.0"/>
+      <arg name="input_topics" value="[/sensing/radar/front_center/detected_objects, /sensing/radar/front_left/detected_objects, /sensing/radar/read_left/detected_objects, /sensing/radar/read_center/detected_objects, /sensing/radar/read_right/detected_objects, /sensing/radar/front_right/detected_objects]"/>
+    </include>
+
   </group>
 </launch>
