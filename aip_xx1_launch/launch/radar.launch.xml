@@ -17,6 +17,7 @@
         <arg name="input/frame" value="from_can_bus" />
         <arg name="output_frame" value="ars408" />
       </include>
+    </group>
 
     <node pkg="topic_tools" exec="relay" name="radar_relay" output="log" args="front_center/detected_objects detected_objects"/>
 
