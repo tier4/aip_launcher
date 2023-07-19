@@ -15,7 +15,7 @@
       <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
         <arg name="interface" value="can0" />
         <arg name="input/frame" value="from_can_bus" />
-        <arg name="output_frame" value="ars408" />
+        <arg name="output_frame" value="ars408_front_center" />
       </include>
     </group>
 
