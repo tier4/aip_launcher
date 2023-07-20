@@ -1,4 +1,6 @@
 <launch>
+  <arg name="launch_driver" default="true" />
+
   <!-- socket can interface parameter -->
   <arg name="interface" default="can0" />
   <arg name="receiver_interval_sec" default="0.01"/>

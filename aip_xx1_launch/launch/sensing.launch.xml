@@ -32,7 +32,7 @@
     </include>
 
     <!-- Radar Driver -->
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml" if="$(eval '&quot;$(var perception_mode)&quot;==&quot;camera_lidar_radar_fusion&quot;')">
+    <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
