@@ -28,6 +28,7 @@ from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 import yaml
 
+
 def get_lidar_make(sensor_name):
     if sensor_name[:6].lower() == "pandar":
         return "Hesai", ".csv"
@@ -78,22 +79,33 @@ def launch_setup(context, *args, **kwargs):
     sensor_params_fp = LaunchConfiguration("config_file").perform(context)
     if sensor_params_fp == "":
         warnings.warn("No config file provided, using sensor model default", RuntimeWarning)
-        sensor_params_fp = os.path.join(nebula_ros_share_dir, "config", sensor_make.lower(), sensor_model + ".yaml")
-    sensor_calib_fp = os.path.join(nebula_decoders_share_dir, "calibration", sensor_make.lower(), sensor_model + sensor_extension)
+        sensor_params_fp = os.path.join(
+            nebula_ros_share_dir, "config", sensor_make.lower(), sensor_model + ".yaml"
+        )
+    sensor_calib_fp = os.path.join(
+        nebula_decoders_share_dir,
+        "calibration",
+        sensor_make.lower(),
+        sensor_model + sensor_extension,
+    )
     if not os.path.exists(sensor_params_fp):
         sensor_params_fp = os.path.join(nebula_ros_share_dir, "config", "BaseParams.yaml")
-    assert os.path.exists(sensor_params_fp), "Sensor params yaml file under config/ was not found: {}".format(sensor_params_fp)
-    assert os.path.exists(sensor_calib_fp), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
+    assert os.path.exists(
+        sensor_params_fp
+    ), "Sensor params yaml file under config/ was not found: {}".format(sensor_params_fp)
+    assert os.path.exists(
+        sensor_calib_fp
+    ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
     with open(sensor_params_fp, "r") as f:
-            sensor_params = yaml.safe_load(f)["/**"]["ros__parameters"]
+        sensor_params = yaml.safe_load(f)["/**"]["ros__parameters"]
 
     nodes = []
 
     nodes.append(
         ComposableNode(
             package="nebula_ros",
-            plugin=sensor_make+"DriverRosWrapper",
-            name=sensor_make.lower()+"_driver_ros_wrapper_node",
+            plugin=sensor_make + "DriverRosWrapper",
+            name=sensor_make.lower() + "_driver_ros_wrapper_node",
             parameters=[
                 sensor_params,
                 {
@@ -108,7 +120,7 @@ def launch_setup(context, *args, **kwargs):
                         "view_width",
                         "dual_return_distance_threshold",
                     ),
-                }
+                },
             ],
             remappings=[
                 ("aw_points", "pointcloud_raw"),
@@ -212,9 +224,9 @@ def launch_setup(context, *args, **kwargs):
 
     driver_component = ComposableNode(
         package="nebula_ros",
-        plugin=sensor_make+"HwInterfaceRosWrapper",
+        plugin=sensor_make + "HwInterfaceRosWrapper",
         # node is created in a global context, need to avoid name clash
-        name=sensor_make.lower()+"_hw_interface_ros_wrapper_node",
+        name=sensor_make.lower() + "_hw_interface_ros_wrapper_node",
         parameters=[
             {
                 "sensor_model": sensor_model,
