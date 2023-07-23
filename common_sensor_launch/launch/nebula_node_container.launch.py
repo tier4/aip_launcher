@@ -106,6 +106,7 @@ def launch_setup(context, *args, **kwargs):
                         "frame_id",
                         "scan_phase",
                         "view_width",
+                        "dual_return_distance_threshold",
                     ),
                 }
             ],
@@ -220,11 +221,14 @@ def launch_setup(context, *args, **kwargs):
                 "calibration_file": sensor_calib_fp,
                 **create_parameter_dict(
                     "sensor_ip",
+                    "host_ip",
                     "scan_phase",
                     "return_mode",
                     "frame_id",
                     "rotation_speed",
                     "data_port",
+                    "cloud_min_angle",
+                    "cloud_max_angle",
                 ),
             }
         ],
@@ -258,15 +262,18 @@ def generate_launch_description():
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
+    add_launch_arg("host_ip", "192.168.1.1", "host ip address")
     add_launch_arg("scan_phase", "0.0")
     add_launch_arg("base_frame", "base_link", "base frame id")
-    add_launch_arg("min_range", description="minimum view range")
-    add_launch_arg("max_range", description="maximum view range")
-    add_launch_arg("return_mode", "")
-    add_launch_arg("port", "2368", description="device port number")
+    add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
+    add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
+    add_launch_arg("cloud_min_angle", "0", "minimum view angle for Hesai sensors")
+    add_launch_arg("cloud_max_angle", "360", "maximum view angle for Hesai sensors")
+    add_launch_arg("data_port", "2368", "device port number")
     add_launch_arg("rotation_speed", "600.0", "rotational frequency")
+    add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
     add_launch_arg("frame_id", "lidar", "frame id")
-    add_launch_arg("view_width", description="lidar angle: 0~6.28 [rad]")
+    add_launch_arg("view_width", "6.28", "lidar angle: 0~6.28 [rad] for Velodyne sensors")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg(
