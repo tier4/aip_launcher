@@ -117,6 +117,7 @@ def launch_setup(context, *args, **kwargs):
                         "max_range",
                         "frame_id",
                         "scan_phase",
+                        "view_direction",
                         "view_width",
                         "dual_return_distance_threshold",
                     ),
@@ -285,6 +286,7 @@ def generate_launch_description():
     add_launch_arg("rotation_speed", "600.0", "rotational frequency")
     add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
     add_launch_arg("frame_id", "lidar", "frame id")
+    add_launch_arg("view_direction", "0.0", "lidar view direction: 0~6.28 [rad] for Velodyne sensors")
     add_launch_arg("view_width", "6.28", "lidar angle: 0~6.28 [rad] for Velodyne sensors")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
