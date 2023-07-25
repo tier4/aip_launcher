@@ -56,4 +56,17 @@
     yaw="${calibration['base_link']['livox_front_right_base_link']['yaw']}"
   />
 
+  <!-- radar -->
+  <xacro:include filename="$(find aip_xx1_description)/urdf/radar.xacro"/>
+  <xacro:radar_macro
+    name="ars408_front_center"
+    parent="base_link"
+    x="${calibration['base_link']['ars408_front_center']['x']}"
+    y="${calibration['base_link']['ars408_front_center']['y']}"
+    z="${calibration['base_link']['ars408_front_center']['z']}"
+    roll="${calibration['base_link']['ars408_front_center']['roll']}"
+    pitch="${calibration['base_link']['ars408_front_center']['pitch']}"
+    yaw="${calibration['base_link']['ars408_front_center']['yaw']}"
+  />
+
 </robot>
