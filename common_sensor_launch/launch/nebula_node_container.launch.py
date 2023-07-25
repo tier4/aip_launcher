@@ -121,7 +121,7 @@ def launch_setup(context, *args, **kwargs):
                         "view_width",
                         "dual_return_distance_threshold",
                     ),
-                },
+                }
             ],
             remappings=[
                 ("aw_points", "pointcloud_raw"),
