@@ -1,6 +1,7 @@
 <launch>
 
   <arg name="launch_driver" default="true" />
+  <arg name="host_ip" default="192.168.1.10" />
   <arg name="use_concat_filter" default="true" />
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
   <arg name="vehicle_mirror_param_file" />
@@ -16,7 +17,8 @@
         <arg name="max_range" value="250.0" />
         <arg name="sensor_frame" value="velodyne_top" />
         <arg name="device_ip" value="192.168.1.201"/>
-        <arg name="port" value="2368"/>
+        <arg name="host_ip" default="$(var host_ip)"/>
+        <arg name="data_port" value="2368"/>
         <arg name="scan_phase" value="300.0" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
@@ -31,7 +33,8 @@
         <arg name="max_range" value="5.0" />
         <arg name="sensor_frame" value="velodyne_left" />
         <arg name="device_ip" value="192.168.1.202"/>
-        <arg name="port" value="2369"/>
+        <arg name="host_ip" default="$(var host_ip)"/>
+        <arg name="data_port" value="2369"/>
         <arg name="scan_phase" value="180.0" />
         <arg name="view_direction" value="0.0" />
         <arg name="view_width" value="1.9" />
@@ -48,7 +51,8 @@
         <arg name="max_range" value="5.0" />
         <arg name="sensor_frame" value="velodyne_right" />
         <arg name="device_ip" value="192.168.1.203"/>
-        <arg name="port" value="2370"/>
+        <arg name="host_ip" default="$(var host_ip)"/>
+        <arg name="data_port" value="2370"/>
         <arg name="scan_phase" value="180.0" />
         <arg name="view_direction" value="0.0" />
         <arg name="view_width" value="1.9" />
@@ -65,7 +69,8 @@
         <arg name="max_range" value="1.5" />
         <arg name="sensor_frame" value="velodyne_rear" />
         <arg name="device_ip" value="192.168.1.204"/>
-        <arg name="port" value="2371"/>
+        <arg name="host_ip" default="$(var host_ip)"/>
+        <arg name="data_port" value="2371"/>
         <arg name="scan_phase" value="180.0" />
         <arg name="view_direction" value="0.0" />
         <arg name="view_width" value="1.9" />

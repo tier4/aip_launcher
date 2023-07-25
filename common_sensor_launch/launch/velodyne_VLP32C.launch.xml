@@ -9,8 +9,8 @@
   <arg name="sensor_frame" default="velodyne"/>
   <arg name="return_mode" default="SingleStrongest"/>
   <arg name="device_ip" default="192.168.1.201"/>
-  <arg name="host_ip" default="192.168.1.1"/>
-  <arg name="port" default="2368"/>
+  <arg name="host_ip" default="255.255.255.255"/>
+  <arg name="data_port" default="2368"/>
   <arg name="scan_phase" default="0.0"/>
   <arg name="view_direction" default="0.0"/>
   <arg name="view_width" default="6.28"/>
@@ -27,10 +27,10 @@
     <arg name="frame_id" value="$(var sensor_frame)"/>
     <arg name="sensor_ip" value="$(var device_ip)"/>
     <arg name="host_ip" value="$(var host_ip)"/>
-    <arg name="data_port" value="$(var port)"/>
+    <arg name="data_port" value="$(var data_port)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="view_direction" value="$(var view_direction)"/>
-    <arg name="view_width" value="$(var view_width)" />
+    <arg name="view_width" value="$(var view_width)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="false" />
     <arg name="use_multithread" value="false" />
