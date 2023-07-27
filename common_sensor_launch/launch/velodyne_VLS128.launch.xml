@@ -12,8 +12,8 @@
   <arg name="host_ip" default="255.255.255.255"/>
   <arg name="data_port" default="2368"/>
   <arg name="scan_phase" default="0.0"/>
-  <arg name="view_direction" default="0.0"/>
-  <arg name="view_width" default="6.28"/>
+  <arg name="cloud_min_angle" default="0"/>
+  <arg name="cloud_max_angle" default="360"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false"/>
   <arg name="container_name" default="velodyne_node_container"/>
@@ -29,8 +29,8 @@
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
-    <arg name="view_direction" value="$(var view_direction)"/>
-    <arg name="view_width" value="$(var view_width)"/>
+    <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
+    <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
