@@ -294,7 +294,7 @@ def generate_launch_description():
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
     add_launch_arg("use_multithread", "False", "use multithread")
-    add_launch_arg("use_intra_process", "False", "use ROS2 component container communication")
+    add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("use_pointcloud_container", "false")
     add_launch_arg("container_name", "nebula_node_container")
 
