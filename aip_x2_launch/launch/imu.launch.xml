@@ -6,6 +6,7 @@
     <arg name="launch_driver" default="true" />
     <arg name="interface" default="pcan1"/>
     <arg name="receiver_interval_sec" default="0.01"/>
+    <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
 
     <group>
       <push-ros-namespace namespace="tamagawa"/>
@@ -23,7 +24,7 @@
     <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
       <arg name="input_topic" value="tamagawa/imu_raw" />
       <arg name="output_topic" value="imu_data" />
-      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x2/imu_corrector.param.yaml" />
+      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/imu_corrector.param.yaml" />
     </include>
   </group>
 
