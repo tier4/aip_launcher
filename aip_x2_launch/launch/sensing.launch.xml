@@ -34,7 +34,7 @@
     <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
       <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
       <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x2/vehicle_velocity_converter.param.yaml" />
+      <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/vehicle_velocity_converter.param.yaml" />
     </include>
   </group>
 

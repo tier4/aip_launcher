@@ -8,7 +8,7 @@
     <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
       <arg name="input_topic" value="/sensing/lidar/front_center/livox/imu" />
       <arg name="output_topic" value="/sensing/imu/imu_data" />
-      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/aip_x1/imu_corrector.param.yaml" />
+      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1/imu_corrector.param.yaml" />
     </include>
 
   </group>
