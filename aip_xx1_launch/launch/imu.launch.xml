@@ -1,6 +1,7 @@
 <launch>
 
   <arg name="launch_driver" default="true" />
+  <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
 
   <group>
     <push-ros-namespace namespace="imu"/>
