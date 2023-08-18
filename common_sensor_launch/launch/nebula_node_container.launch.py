@@ -88,6 +88,14 @@ def launch_setup(context, *args, **kwargs):
         sensor_make.lower(),
         sensor_model + sensor_extension,
     )
+    sensor_correction_fp = os.path.join(
+        nebula_decoders_share_dir,
+        "calibration",
+        sensor_make.lower(),
+        sensor_model + ".dat"
+    )
+    if not os.path.exists(sensor_correction_fp):
+        sensor_correction_fp = ""
     if not os.path.exists(sensor_params_fp):
         sensor_params_fp = os.path.join(nebula_ros_share_dir, "config", "BaseParams.yaml")
     assert os.path.exists(
@@ -110,6 +118,7 @@ def launch_setup(context, *args, **kwargs):
                 sensor_params,
                 {
                     "calibration_file": sensor_calib_fp,
+                    "correction_file": sensor_correction_fp,
                     "sensor_model": sensor_model,
                     **create_parameter_dict(
                         "return_mode",
