@@ -6,7 +6,7 @@
   <arg name="model" default="PandarXT32"/>
   <arg name="sensor_frame" default="pandar"/>
   <arg name="return_mode" default="Strongest"/>
-  <arg name="device_ip" default="192.168.1.201"/>
+  <arg name="sensor_ip" default="192.168.1.201"/>
   <arg name="host_ip" default="255.255.255.255"/>
   <arg name="data_port" default="2368"/>
   <arg name="scan_phase" default="0.0"/>
@@ -22,7 +22,7 @@
     <arg name="sensor_model" value="$(var model)"/>
     <arg name="return_mode" value="$(var return_mode)"/>
     <arg name="frame_id" value="$(var sensor_frame)"/>
-    <arg name="device_ip" value="$(var device_ip)"/>
+    <arg name="sensor_ip" value="$(var sensor_ip)"/>
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
