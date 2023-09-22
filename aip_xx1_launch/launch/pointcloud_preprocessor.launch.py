@@ -31,16 +31,26 @@ def launch_setup(context, *args, **kwargs):
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
         name="concatenate_data",
-        remappings=[("output", "concatenated/pointcloud")],
+        remappings=[
+            ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+            ("output", "concatenated/pointcloud"),
+        ],
         parameters=[
             {
                 "input_topics": [
                     "/sensing/lidar/top/outlier_filtered/pointcloud",
-                    # "/sensing/lidar/left/outlier_filtered/pointcloud",
-                    # "/sensing/lidar/right/outlier_filtered/pointcloud",
+                    "/sensing/lidar/left/outlier_filtered/pointcloud",
+                    "/sensing/lidar/right/outlier_filtered/pointcloud",
                     "/sensing/lidar/rear/outlier_filtered/pointcloud",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
+                "input_offset": [
+                    0.035,
+                    0.025,
+                    0.025,
+                    0.025,
+                ],  # each sensor will wait 60, 70, 70, 70ms
+                "timeout_sec": 0.095,  # set shorter than 100ms
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],

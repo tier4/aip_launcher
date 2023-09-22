@@ -42,29 +42,15 @@ sensor_kit_base_link:
     pitch: -0.01
     yaw: 3.125
   camera6/camera_link:
-    x: 0.396865
-    y: -0.028041
-    z: -0.204267
-    roll: 0.000933
-    pitch: 0.007147
-    yaw: 0.025164
-  camera7/camera_link:
-    x: 0.383094
-    y: 0.020355
-    z: -0.205253
-    roll: 0.011505
-    pitch: -0.017980
-    yaw: 0.034071
-  traffic_light_right_camera/camera_link:
     x: 0.05
-    y: -0.0175
+    y: 0.0175
     z: -0.1
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
-  traffic_light_left_camera/camera_link:
+  camera7/camera_link:
     x: 0.05
-    y: 0.0175
+    y: -0.0175
     z: -0.1
     roll: 0.0
     pitch: 0.0
