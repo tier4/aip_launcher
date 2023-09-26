@@ -50,6 +50,7 @@ def launch_setup(context, *args, **kwargs):
                 "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
                 "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),
+                "input_twist_topic_type": "twist",
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
