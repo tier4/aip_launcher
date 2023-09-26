@@ -51,6 +51,7 @@ def launch_setup(context, *args, **kwargs):
                     0.025,
                 ],  # each sensor will wait 60, 70, 70, 70ms
                 "timeout_sec": 0.095,  # set shorter than 100ms
+                "input_twist_topic_type": "twist",
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
