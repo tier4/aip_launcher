@@ -33,7 +33,7 @@ def launch_setup(context, *args, **kwargs):
         name="concatenate_data",
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-            ("output", "concatenated/pointcloud"),
+            ("output", "concatenated/pointcloud_raw"),
         ],
         parameters=[
             {
@@ -51,6 +51,24 @@ def launch_setup(context, *args, **kwargs):
                     0.025,
                 ],  # each sensor will wait 60, 70, 70, 70ms
                 "timeout_sec": 0.095,  # set shorter than 100ms
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
+    concat_downsample = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::VoxelGridDownsampleFilterComponent",
+        name="voxel_grid_downsample_filter",
+        remappings=[
+            ("input", "concatenated/pointcloud_raw"),
+            ("output", "concatenated/pointcloud"),
+        ],
+        parameters=[
+            {
+                "voxel_size_x": LaunchConfiguration("voxel_size"),
+                "voxel_size_y": LaunchConfiguration("voxel_size"),
+                "voxel_size_z": LaunchConfiguration("voxel_size"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -75,7 +93,7 @@ def launch_setup(context, *args, **kwargs):
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
+        composable_node_descriptions=[concat_component, concat_downsample],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
@@ -94,6 +112,7 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("container_name", "pointcloud_preprocessor_container")
+    add_launch_arg("voxel_size", "0.1")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
