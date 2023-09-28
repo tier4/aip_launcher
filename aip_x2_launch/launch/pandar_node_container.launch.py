@@ -28,14 +28,8 @@ from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
-
-
-def get_dual_return_filter_info(context):
-    path = LaunchConfiguration("dual_return_filter_param_file").perform(context)
-    with open(path, "r") as f:
-        p = yaml.safe_load(f)["/**"]["ros__parameters"]
-    return p
 
 
 def get_pandar_monitor_info():
@@ -67,14 +61,11 @@ def get_vehicle_info(context):
     return p
 
 
-def get_vehicle_mirror_info(context):
-    path = LaunchConfiguration("vehicle_mirror_param_file").perform(context)
-    with open(path, "r") as f:
-        p = yaml.safe_load(f)["/**"]["ros__parameters"]
-    return p
-
-
 def launch_setup(context, *args, **kwargs):
+    def load_composable_node_param(param_path):
+        with open(LaunchConfiguration(param_path).perform(context), "r") as f:
+            return yaml.safe_load(f)["/**"]["ros__parameters"]
+
     def create_parameter_dict(*args):
         result = {}
         for x in args:
@@ -129,7 +120,6 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    dual_return_filter_info = get_dual_return_filter_info(context)
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
 
@@ -153,7 +143,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    mirror_info = get_vehicle_mirror_info(context)
+    mirror_info = load_composable_node_param("vehicle_mirror_param_file")
     right = mirror_info["right"]
     cropbox_parameters.update(
         min_x=right["min_longitudinal_offset"],
@@ -238,7 +228,7 @@ def launch_setup(context, *args, **kwargs):
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
             }
         ]
-        + [dual_return_filter_info],
+        + [load_composable_node_param("dual_return_filter_param_file")],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -254,14 +244,11 @@ def launch_setup(context, *args, **kwargs):
             {
                 "angle_range": LaunchConfiguration("angle_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
-                "blockage_ratio_threshold": LaunchConfiguration("blockage_ratio_threshold"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "model": LaunchConfiguration("model"),
-                "blockage_count_threshold": LaunchConfiguration("blockage_count_threshold"),
-                "buffering_frames": LaunchConfiguration("buffering_frames"),
-                "buffering_interval": LaunchConfiguration("buffering_interval"),
             }
-        ],
+        ]
+        + [load_composable_node_param("blockage_diagnostics_param_file")],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -335,15 +322,15 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg(
+        "blockage_diagnostics_param_file",
+        [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+    )
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
-    add_launch_arg("blockage_ratio_threshold", "0.1")
     add_launch_arg("horizontal_ring_id", "12")
-    add_launch_arg("blockage_count_threshold", "50")
-    add_launch_arg("buffering_frames", "2")
-    add_launch_arg("buffering_interval", "1")
 
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
