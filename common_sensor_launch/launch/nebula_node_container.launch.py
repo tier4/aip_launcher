@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -30,9 +27,9 @@ import yaml
 
 def get_lidar_make(sensor_name):
     if sensor_name[:6].lower() == "pandar":
-        return "Hesai", ".csv"
+        return "Hesai"
     elif sensor_name[:3].lower() in ["hdl", "vlp", "vls"]:
-        return "Velodyne", ".yaml"
+        return "Velodyne"
     return "unrecognized_sensor_model"
 
 
@@ -70,19 +67,7 @@ def launch_setup(context, *args, **kwargs):
 
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
-    sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
-
-    # Calibration file
-    sensor_calib_fp = os.path.join(
-        nebula_decoders_share_dir,
-        "calibration",
-        sensor_make.lower(),
-        sensor_model + sensor_extension,
-    )
-    assert os.path.exists(
-        sensor_calib_fp
-    ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
+    sensor_make = get_lidar_make(sensor_model)
 
     nodes = []
 
@@ -93,9 +78,10 @@ def launch_setup(context, *args, **kwargs):
             name=sensor_make.lower() + "_driver_ros_wrapper_node",
             parameters=[
                 {
-                    "calibration_file": sensor_calib_fp,
                     "sensor_model": sensor_model,
                     **create_parameter_dict(
+                        "calibration_file",
+                        "correction_file",
                         "host_ip",
                         "sensor_ip",
                         "data_port",
@@ -218,8 +204,9 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "sensor_model": sensor_model,
-                "calibration_file": sensor_calib_fp,
                 **create_parameter_dict(
+                    "calibration_file",
+                    "correction_file",
                     "sensor_ip",
                     "host_ip",
                     "scan_phase",
@@ -263,7 +250,8 @@ def generate_launch_description():
         )
 
     add_launch_arg("sensor_model", description="sensor model name")
-    add_launch_arg("config_file", "", description="sensor configuration file")
+    add_launch_arg("calibration_file", "", description="sensor calibration file")
+    add_launch_arg("correction_file", "", description="sensor correction file")
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
