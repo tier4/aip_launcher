@@ -287,6 +287,7 @@ def launch_setup(context, *args, **kwargs):
     blockage_diag_loader = LoadComposableNodes(
         composable_node_descriptions=[blockage_diag_component],
         target_container=container,
+        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
     return [
@@ -334,6 +335,7 @@ def generate_launch_description():
 
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
+    add_launch_arg("enable_blockage_diag", "true")
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
