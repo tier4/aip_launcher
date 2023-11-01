@@ -182,7 +182,7 @@ def launch_setup(context, *args, **kwargs):
         name="crop_box_filter_mirror_left",
         remappings=[
             ("input", "right_mirror_cropped/pointcloud_ex"),
-            ("output", "mirror_cropped/pointcloud_ex"),
+            ("output", "outlier_filtered/pointcloud"),
         ],
         parameters=[cropbox_parameters],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
