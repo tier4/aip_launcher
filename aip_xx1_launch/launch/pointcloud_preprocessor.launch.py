@@ -74,9 +74,15 @@ def launch_setup(context, *args, **kwargs):
         else LaunchConfiguration("container_name")
     )
 
+    glog_component = ComposableNode(
+        package="glog_component",
+        plugin="GlogComponent",
+        name="glog_component",
+    )
+
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
+        composable_node_descriptions=[concat_component, glog_component],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )

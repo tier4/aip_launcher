@@ -11,6 +11,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
   <exec_depend>dummy_diag_publisher</exec_depend>
+  <exec_depend>glog_component</exec_depend>
   <exec_depend>nebula_sensor_driver</exec_depend>
   <exec_depend>velodyne_monitor</exec_depend>
 
