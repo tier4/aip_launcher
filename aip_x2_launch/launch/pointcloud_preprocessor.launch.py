@@ -56,13 +56,19 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    glog_component = ComposableNode(
+        package="glog_component",
+        plugin="GlogComponent",
+        name="glog_component",
+    )
+
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[],
+        composable_node_descriptions=[glog_component],
         condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
         output="screen",
     )
@@ -73,15 +79,9 @@ def launch_setup(context, *args, **kwargs):
         else LaunchConfiguration("container_name")
     )
 
-    glog_component = ComposableNode(
-        package="glog_component",
-        plugin="GlogComponent",
-        name="glog_component",
-    )
-
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component, glog_component],
+        composable_node_descriptions=[concat_component],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
