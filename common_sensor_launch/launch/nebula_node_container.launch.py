@@ -193,14 +193,6 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    nodes.append(
-        ComposableNode(
-            package="glog_component",
-            plugin="GlogComponent",
-            name="glog_component",
-        )
-    )
-
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
