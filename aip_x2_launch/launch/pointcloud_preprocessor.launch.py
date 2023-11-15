@@ -19,7 +19,7 @@ from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
@@ -30,7 +30,7 @@ def launch_setup(context, *args, **kwargs):
     perception_concat_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
-        name="concatenate_data_for_perception",
+        name="concatenate_data",
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("output", "concatenated/pointcloud"),
@@ -95,7 +95,7 @@ def launch_setup(context, *args, **kwargs):
         namespace="",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[perception_concat_component, localization_concat_component],
+        composable_node_descriptions=[],
         condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
         output="screen",
     )
@@ -108,12 +108,25 @@ def launch_setup(context, *args, **kwargs):
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[perception_concat_component, localization_concat_component],
+        composable_node_descriptions=[perception_concat_component],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
-    return [container, concat_loader]
+    # Define the condition using PythonExpression
+    combined_condition = IfCondition(PythonExpression([
+        "'", LaunchConfiguration('use_concat_filter'), "' == 'true' and ", 
+        "'", LaunchConfiguration('use_localization_concat_filter'), "' == 'true'"
+    ]))
+
+    # load localiation concat or passthrough filter
+    localization_concat_loader = LoadComposableNodes(
+        composable_node_descriptions=[localization_concat_component],
+        target_container=target_container,
+        condition=combined_condition
+    )
+
+    return [container, concat_loader, localization_concat_loader]
 
 
 def generate_launch_description():
