@@ -246,12 +246,6 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    glog_component = ComposableNode(
-        package="glog_component",
-        plugin="GlogComponent",
-        name="glog_component",
-    )
-
     target_container = (
         container
         if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
@@ -259,7 +253,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     driver_component_loader = LoadComposableNodes(
-        composable_node_descriptions=[driver_component, glog_component],
+        composable_node_descriptions=[driver_component],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("launch_driver")),
     )
