@@ -36,7 +36,7 @@
       gprmc: false
       gpst : false
       measepoch: false
-      pvtcartesian: false
+      pvtcartesian: true
       pvtgeodetic: true
       poscovcartesian: false
       poscovgeodetic: true
