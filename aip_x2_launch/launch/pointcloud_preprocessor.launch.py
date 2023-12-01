@@ -19,7 +19,7 @@ from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
@@ -27,7 +27,7 @@ from launch_ros.descriptions import ComposableNode
 
 def launch_setup(context, *args, **kwargs):
     # set concat filter as a component
-    concat_component = ComposableNode(
+    perception_concat_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
         name="concatenate_data",
@@ -47,7 +47,40 @@ def launch_setup(context, *args, **kwargs):
                     "/sensing/lidar/rear_upper/outlier_filtered/pointcloud",
                     "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
                 ],
-                "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
+                "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05], # all
+                # "input_offset": [0.025, 0.01, 0.05, 0.05], # front_lower, left_upper, right_upper, rear_lower
+                # "input_offset": [0.01, 0.05], # front_lower, left_upper, right_upper, rear_lower
+                "timeout_sec": 0.075,
+                "output_frame": LaunchConfiguration("base_frame"),
+                "input_twist_topic_type": "twist",
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
+    localization_concat_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        name="concatenate_data_for_localization",
+        remappings=[
+            ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+            ("output", "localization/concatenated/pointcloud"),
+        ],
+        parameters=[
+            {
+                "input_topics": [
+                    #"/sensing/lidar/front_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/front_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/left_upper/outlier_filtered/pointcloud",
+                    #"/sensing/lidar/left_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/right_upper/outlier_filtered/pointcloud",
+                    #"/sensing/lidar/right_lower/outlier_filtered/pointcloud",
+                    #"/sensing/lidar/rear_upper/outlier_filtered/pointcloud",
+                    "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
+                ],
+                #"input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05], # all
+                "input_offset": [0.025, 0.01, 0.05, 0.05], # front_lower, left_upper, right_upper, rear_lower
+                # "input_offset": [0.01, 0.05], # left_upper, right_upper
                 "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),
                 "input_twist_topic_type": "twist",
@@ -75,12 +108,25 @@ def launch_setup(context, *args, **kwargs):
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
+        composable_node_descriptions=[perception_concat_component],
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
-    return [container, concat_loader]
+    # Define the condition using PythonExpression
+    combined_condition = IfCondition(PythonExpression([
+        "'", LaunchConfiguration('use_concat_filter'), "' == 'true' and ", 
+        "'", LaunchConfiguration('use_localization_concat_filter'), "' == 'true'"
+    ]))
+
+    # load localiation concat or passthrough filter
+    localization_concat_loader = LoadComposableNodes(
+        composable_node_descriptions=[localization_concat_component],
+        target_container=target_container,
+        condition=combined_condition
+    )
+
+    return [container, concat_loader, localization_concat_loader]
 
 
 def generate_launch_description():
