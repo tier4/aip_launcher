@@ -38,14 +38,14 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "input_topics": [
-                    "/sensing/lidar/front_upper/outlier_filtered/pointcloud",
-                    "/sensing/lidar/front_lower/outlier_filtered/pointcloud",
-                    "/sensing/lidar/left_upper/outlier_filtered/pointcloud",
-                    "/sensing/lidar/left_lower/outlier_filtered/pointcloud",
-                    "/sensing/lidar/right_upper/outlier_filtered/pointcloud",
-                    "/sensing/lidar/right_lower/outlier_filtered/pointcloud",
-                    "/sensing/lidar/rear_upper/outlier_filtered/pointcloud",
-                    "/sensing/lidar/rear_lower/outlier_filtered/pointcloud",
+                    "/sensing/lidar/front_upper/pointcloud",
+                    "/sensing/lidar/front_lower/pointcloud",
+                    "/sensing/lidar/left_upper/pointcloud",
+                    "/sensing/lidar/left_lower/pointcloud",
+                    "/sensing/lidar/right_upper/pointcloud",
+                    "/sensing/lidar/right_lower/pointcloud",
+                    "/sensing/lidar/rear_upper/pointcloud",
+                    "/sensing/lidar/rear_lower/pointcloud",
                 ],
                 "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
                 "timeout_sec": 0.075,
