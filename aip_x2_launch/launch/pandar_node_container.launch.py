@@ -208,7 +208,7 @@ def launch_setup(context, *args, **kwargs):
         name="ring_outlier_filter",
         remappings=[
             ("input", "rectified/pointcloud_ex"),
-            ("output", "outlier_filtered/pointcloud"),
+            ("output", "pointcloud"),
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -219,7 +219,7 @@ def launch_setup(context, *args, **kwargs):
         name="dual_return_filter",
         remappings=[
             ("input", "rectified/pointcloud_ex"),
-            ("output", "outlier_filtered/pointcloud"),
+            ("output", "pointcloud"),
         ],
         parameters=[
             {
