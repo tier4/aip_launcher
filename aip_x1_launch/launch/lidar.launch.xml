@@ -5,6 +5,7 @@
   <arg name="use_radius_search" default="false" />
   <arg name="vehicle_mirror_param_file" />
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_awsim" default="false" description="launch awsim"/>
 
   <!-- x1 additional setting -->
   <arg name="livox_min_range" default="1.5" />
@@ -25,7 +26,7 @@
       </include>
     </group>
 
-    <group>
+    <group unless="$(var use_awsim)">
       <group>
 	      <push-ros-namespace namespace="front_right"/>
         <include file="$(find-pkg-share aip_x1_launch)/launch/new_livox_horizon.launch.py">
@@ -52,13 +53,13 @@
       </group>
     </group>
 
-    <include file="$(find-pkg-share aip_x1_launch)/launch/pointcloud_preprocessor.launch.py">
+    <include file="$(find-pkg-share aip_x1_launch)/launch/pointcloud_preprocessor.launch.py" unless="$(var use_awsim)">
       <arg name="base_frame" value="base_link" />
       <arg name="use_intra_process" value="true" />
       <arg name="use_multithread" value="false" />
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
     </include>
 
-    <include file="$(find-pkg-share aip_x1_launch)/launch/topic_state_monitor.launch.py" />
+    <include file="$(find-pkg-share aip_x1_launch)/launch/topic_state_monitor.launch.py" unless="$(var use_awsim)" />
   </group>
 </launch>
