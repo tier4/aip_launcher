@@ -5,6 +5,9 @@
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <arg name="use_awsim" default="false"/>
+  <let name="imu_raw_name" value="tamagawa/imu_raw" if ="$(var use_awsim)"/>
+  <let name="imu_raw_name" value="/sensing/lidar/front_center/livox/imu" unless ="$(var use_awsim)"/>
 
   <group>
 
@@ -14,6 +17,7 @@
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)" />
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="use_awsim" value="$(var use_awsim)"/>
     </include>
 
     <!-- Camera Driver -->
@@ -24,6 +28,7 @@
     <!-- IMU Driver -->
     <include file="$(find-pkg-share aip_x1_launch)/launch/imu.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
+      <arg name="imu_raw_name" value="$(var imu_raw_name)" />
     </include>
 
     <!-- GNSS Driver -->
