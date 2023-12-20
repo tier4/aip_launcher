@@ -18,6 +18,15 @@
           type: diagnostic_aggregator/AnalyzerGroup
           path: lidar
           analyzers:
+            performance_monitoring:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: performance_monitoring
+              analyzers:
+                blockage:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: blockage
+                  contains: [": blockage_validation"]
+                  timeout: 1.0
             velodyne:
               type: diagnostic_aggregator/AnalyzerGroup
               path: velodyne

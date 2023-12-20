@@ -7,6 +7,7 @@
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="launch_blockage_diag" default="true"/>
 
   <group>
     <push-ros-namespace namespace="lidar"/>
@@ -24,6 +25,12 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="angle_range" value="[0.0, 360.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="64"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="launch_blockage_diag" value="$(var launch_blockage_diag)"/>
       </include>
     </group>
 
@@ -42,6 +49,12 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="angle_range" value="[306., 54.0]"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="launch_blockage_diag" value="$(var launch_blockage_diag)"/>
       </include>
     </group>
 
@@ -60,6 +73,12 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="angle_range" value="[306., 54.0]"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="launch_blockage_diag" value="$(var launch_blockage_diag)"/>
       </include>
     </group>
 
@@ -78,6 +97,12 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="angle_range" value="[306., 54.0]"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="launch_blockage_diag" value="$(var launch_blockage_diag)"/>
       </include>
     </group>
 
