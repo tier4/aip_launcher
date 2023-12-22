@@ -25,3 +25,6 @@
       velodyne_connection: default
       velodyne_temperature: default
       velodyne_rpm: default
+
+      # imu
+      gyro_bias_estimator: default
