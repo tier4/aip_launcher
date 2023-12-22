@@ -4,16 +4,26 @@
   <xacro:arg name="config_dir" default="$(find aip_x1_description)/config"/>
   <xacro:include filename="$(find aip_x1_description)/urdf/sensor_kit.xacro"/>
   <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+  <xacro:property name="rear_wheel_center" default="rear_wheel_center"/>
+
+  <joint name="${rear_wheel_center}_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="${rear_wheel_center}"/>
+  </joint>
+  <link name="${rear_wheel_center}">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </link>
 
   <!-- sensor kit -->
   <xacro:sensor_kit_macro
-    parent="base_link"
-    x="${calibration['base_link']['sensor_kit_base_link']['x']}"
-    y="${calibration['base_link']['sensor_kit_base_link']['y']}"
-    z="${calibration['base_link']['sensor_kit_base_link']['z']}"
-    roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
-    pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
-    yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
+    parent="rear_wheel_center"
+    x="${calibration['rear_wheel_center']['sensor_kit_base_link']['x']}"
+    y="${calibration['rear_wheel_center']['sensor_kit_base_link']['y']}"
+    z="${calibration['rear_wheel_center']['sensor_kit_base_link']['z']}"
+    roll="${calibration['rear_wheel_center']['sensor_kit_base_link']['roll']}"
+    pitch="${calibration['rear_wheel_center']['sensor_kit_base_link']['pitch']}"
+    yaw="${calibration['rear_wheel_center']['sensor_kit_base_link']['yaw']}"
   />
 
   <!-- embedded sensors -->
