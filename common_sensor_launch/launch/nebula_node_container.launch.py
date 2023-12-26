@@ -314,7 +314,7 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
-    
+
     add_launch_arg("enable_blockage_diag", "true")
     add_launch_arg("angle_range", "[0.0, 360]")
     add_launch_arg("horizontal_ring_id", "64")
