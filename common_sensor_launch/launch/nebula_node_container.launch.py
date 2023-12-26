@@ -55,12 +55,11 @@ def get_vehicle_info(context):
     return p
 
 
-
 def launch_setup(context, *args, **kwargs):
     def load_composable_node_param(param_path):
         with open(LaunchConfiguration(param_path).perform(context), "r") as f:
             return yaml.safe_load(f)["/**"]["ros__parameters"]
-    
+
     def create_parameter_dict(*args):
         result = {}
         for x in args:
@@ -274,10 +273,10 @@ def launch_setup(context, *args, **kwargs):
     blockage_diag_loader = LoadComposableNodes(
         composable_node_descriptions=[blockage_diag_component],
         target_container=target_container,
-        condition=IfCondition(LaunchConfiguration("launch_blockage_diag")),
+        condition=IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
-    return [container, driver_component_loader,blockage_diag_loader]
+    return [container, driver_component_loader, blockage_diag_loader]
 
 
 def generate_launch_description():
@@ -315,11 +314,13 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
-
+    
+    add_launch_arg("enable_blockage_diag", "true")
     add_launch_arg("angle_range", "[0.0, 360]")
     add_launch_arg("horizontal_ring_id", "64")
     add_launch_arg("vertical_bins", "128")
     add_launch_arg("is_channel_order_top2down", "true")
+    add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics_param_file.yaml"],

@@ -9,5 +9,3 @@
     dust_kernel_size: 2
     dust_buffering_frames: 10
     dust_buffering_interval: 1
-    distance_coefficient: 327.67
-    horizontal_resolution: 0.4
