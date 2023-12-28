@@ -247,7 +247,10 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             {
-                "angle_range": LaunchConfiguration("angle_range"),
+                "angle_range": [
+                    float(context.perform_substitution(LaunchConfiguration("cloud_min_angle"))),
+                    float(context.perform_substitution(LaunchConfiguration("cloud_max_angle"))),
+                ],
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
@@ -316,7 +319,6 @@ def generate_launch_description():
     add_launch_arg("container_name", "nebula_node_container")
 
     add_launch_arg("enable_blockage_diag", "true")
-    add_launch_arg("angle_range", "[0.0, 360]")
     add_launch_arg("horizontal_ring_id", "64")
     add_launch_arg("vertical_bins", "128")
     add_launch_arg("is_channel_order_top2down", "true")
