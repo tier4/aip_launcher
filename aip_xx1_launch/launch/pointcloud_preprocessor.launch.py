@@ -27,34 +27,129 @@ from launch_ros.descriptions import ComposableNode
 
 def launch_setup(context, *args, **kwargs):
     # set concat filter as a component
-    concat_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
-        name="concatenate_data",
-        remappings=[
-            ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-            ("output", "concatenated/pointcloud"),
-        ],
-        parameters=[
-            {
-                "input_topics": [
-                    "/sensing/lidar/top/outlier_filtered/pointcloud",
-                    "/sensing/lidar/left/outlier_filtered/pointcloud",
-                    "/sensing/lidar/right/outlier_filtered/pointcloud",
-                    "/sensing/lidar/rear/outlier_filtered/pointcloud",
-                ],
-                "output_frame": LaunchConfiguration("base_frame"),
-                "input_offset": [
-                    0.035,
-                    0.025,
-                    0.025,
-                    0.025,
-                ],  # each sensor will wait 60, 70, 70, 70ms
-                "timeout_sec": 0.095,  # set shorter than 100ms
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+
+    # separate components for backward compatibility
+    separate_pointcloud_sync_and_concatenate_nodes_str: str = (
+        LaunchConfiguration(
+            "concatenate_data__separate_pointcloud_sync_and_concatenate_nodes"
+        ).perform(context)
     )
+    separate_pointcloud_sync_and_concatenate_nodes: bool = (
+        separate_pointcloud_sync_and_concatenate_nodes_str.lower() == "true"
+    )
+
+    if not separate_pointcloud_sync_and_concatenate_nodes:
+        # legacy mode for backward compatibility. Not used in default.
+        sync_and_concat_component = ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+            name="concatenate_data",
+            remappings=[
+                (
+                    "~/input/twist",
+                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
+                ),
+                ("output", "concatenated/pointcloud"),
+            ],
+            parameters=[
+                {
+                    "input_topics": [
+                        "/sensing/lidar/top/outlier_filtered/pointcloud",
+                        "/sensing/lidar/left/outlier_filtered/pointcloud",
+                        "/sensing/lidar/right/outlier_filtered/pointcloud",
+                        "/sensing/lidar/rear/outlier_filtered/pointcloud",
+                    ],
+                    "output_frame": LaunchConfiguration("base_frame"),
+                    "input_offset": [
+                        0.035,
+                        0.025,
+                        0.025,
+                        0.025,
+                    ],  # each sensor will wait 60, 70, 70, 70ms
+                    "timeout_sec": 0.095,  # set shorter than 100ms
+                }
+            ],
+            extra_arguments=[
+                {
+                    "use_intra_process_comms": LaunchConfiguration(
+                        "use_intra_process"
+                    )
+                }
+            ],
+        )
+        concat_components = [sync_and_concat_component]
+    else:
+        time_sync_component = ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::PointCloudDataSynchronizerComponent",
+            name="synchronizer_filter",
+            remappings=[
+                (
+                    "~/input/twist",
+                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
+                ),
+            ],
+            parameters=[
+                {
+                    "input_topics": [
+                        "/sensing/lidar/top/outlier_filtered/pointcloud",
+                        "/sensing/lidar/left/outlier_filtered/pointcloud",
+                        "/sensing/lidar/right/outlier_filtered/pointcloud",
+                        "/sensing/lidar/rear/outlier_filtered/pointcloud",
+                    ],
+                    "output_frame": LaunchConfiguration("base_frame"),
+                    "approximate_sync": True,
+                    "input_offset": [
+                        0.035,
+                        0.025,
+                        0.025,
+                        0.025,
+                    ],  # each sensor will wait 60, 70, 70, 70ms
+                    "timeout_sec": 0.095,  # set shorter than 100ms
+                }
+            ],
+            extra_arguments=[
+                {
+                    "use_intra_process_comms": LaunchConfiguration(
+                        "use_intra_process"
+                    )
+                }
+            ],
+        )
+
+        concat_component = ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::PointCloudConcatenationComponent",
+            name="concatenate_filter",
+            remappings=[("output", "concatenated/pointcloud")],
+            parameters=[
+                {
+                    "input_topics": [
+                        "/sensing/lidar/top/outlier_filtered/pointcloud",
+                        "/sensing/lidar/left/outlier_filtered/pointcloud",
+                        "/sensing/lidar/right/outlier_filtered/pointcloud",
+                        "/sensing/lidar/rear/outlier_filtered/pointcloud",
+                    ],
+                    "output_frame": LaunchConfiguration("base_frame"),
+                    "approximate_sync": True,
+                    "input_offset": [
+                        0.035,
+                        0.025,
+                        0.025,
+                        0.025,
+                    ],  # each sensor will wait 60, 70, 70, 70ms
+                    "timeout_sec": 0.095,  # set shorter than 100ms
+                }
+            ],
+            extra_arguments=[
+                {
+                    "use_intra_process_comms": LaunchConfiguration(
+                        "use_intra_process"
+                    )
+                }
+            ],
+        )
+        concat_components = [time_sync_component, concat_component]
 
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
@@ -63,19 +158,23 @@ def launch_setup(context, *args, **kwargs):
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[],
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
+        condition=UnlessCondition(
+            LaunchConfiguration("use_pointcloud_container")
+        ),
         output="screen",
     )
 
     target_container = (
         container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
+        if UnlessCondition(
+            LaunchConfiguration("use_pointcloud_container")
+        ).evaluate(context)
         else LaunchConfiguration("container_name")
     )
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
+        composable_node_descriptions=concat_components,
         target_container=target_container,
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
@@ -87,13 +186,19 @@ def generate_launch_description():
     launch_arguments = []
 
     def add_launch_arg(name: str, default_value=None):
-        launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
+        launch_arguments.append(
+            DeclareLaunchArgument(name, default_value=default_value)
+        )
 
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("container_name", "pointcloud_preprocessor_container")
+    add_launch_arg(
+        "concatenate_data__separate_pointcloud_sync_and_concatenate_nodes",
+        "True",
+    )
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
