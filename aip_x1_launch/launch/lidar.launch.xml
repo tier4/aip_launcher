@@ -4,7 +4,7 @@
   <arg name="use_concat_filter" default="true" />
   <arg name="use_radius_search" default="false" />
   <arg name="vehicle_mirror_param_file" />
-  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container pointcloud_container"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
 
   <!-- x1 additional setting -->
