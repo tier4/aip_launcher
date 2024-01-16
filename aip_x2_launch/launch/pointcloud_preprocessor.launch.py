@@ -58,19 +58,19 @@ def launch_setup(context, *args, **kwargs):
 
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
-        name=LaunchConfiguration("container_name"),
+        name=LaunchConfiguration("individual_container_name"),
         namespace="",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[],
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
+        condition=UnlessCondition(LaunchConfiguration("include_concat_node_in_pointcloud_container")),
         output="screen",
     )
 
     target_container = (
         container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name")
+        if UnlessCondition(LaunchConfiguration("include_concat_node_in_pointcloud_container")).evaluate(context)
+        else LaunchConfiguration("pointcloud_container_name")
     )
 
     # load concat or passthrough filter
@@ -92,8 +92,9 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "True")
     add_launch_arg("use_intra_process", "True")
-    add_launch_arg("use_pointcloud_container", "False")
-    add_launch_arg("container_name", "pointcloud_preprocessor_container")
+    add_launch_arg("include_concat_node_in_pointcloud_container", "False")
+    add_launch_arg("pointcloud_container_name", "pointcloud_container")
+    add_launch_arg("individual_container_name", "concatenate_container")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
