@@ -63,17 +63,13 @@ def launch_setup(context, *args, **kwargs):
         namespace="",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
-        condition=UnlessCondition(
-            LaunchConfiguration("use_pointcloud_container")
-        ),
+        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
         output="screen",
     )
 
     target_container = (
         container
-        if UnlessCondition(
-            LaunchConfiguration("use_pointcloud_container")
-        ).evaluate(context)
+        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
         else LaunchConfiguration("pointcloud_container_name")
     )
 
