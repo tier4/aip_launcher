@@ -57,17 +57,13 @@ def launch_setup(context, *args, **kwargs):
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[],
-        condition=UnlessCondition(
-            LaunchConfiguration("include_concat_node_in_pointcloud_container")
-        ),
+        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
         output="screen",
     )
 
     target_container = (
         container
-        if UnlessCondition(
-            LaunchConfiguration("include_concat_node_in_pointcloud_container")
-        ).evaluate(context)
+        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
         else LaunchConfiguration("pointcloud_container_name")
     )
 
@@ -89,7 +85,7 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
-    add_launch_arg("include_concat_node_in_pointcloud_container", "False")
+    add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("individual_container_name", "concatenate_container")
 
