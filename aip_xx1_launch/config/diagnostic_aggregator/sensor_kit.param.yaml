@@ -114,5 +114,5 @@
                 gyro_bias_validator:
                   type: diagnostic_aggregator/GenericAnalyzer
                   path: gyro_bias_validator
-                  contains: [": gyro_bias_estimator"]
+                  contains: [": gyro_bias_validator"]
                   timeout: 1.0

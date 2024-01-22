@@ -198,14 +198,7 @@ def launch_setup(context, *args, **kwargs):
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=nodes,
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
         output="screen",
-    )
-
-    component_loader = LoadComposableNodes(
-        composable_node_descriptions=nodes,
-        target_container=LaunchConfiguration("container_name"),
-        condition=IfCondition(LaunchConfiguration("use_pointcloud_container")),
     )
 
     driver_component = ComposableNode(
@@ -269,7 +262,7 @@ def launch_setup(context, *args, **kwargs):
 
     driver_component_loader = LoadComposableNodes(
         composable_node_descriptions=[driver_component],
-        target_container=target_container,
+        target_container=container,
         condition=IfCondition(LaunchConfiguration("launch_driver")),
     )
     blockage_diag_loader = LoadComposableNodes(
@@ -278,7 +271,7 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
-    return [container, component_loader, driver_component_loader, blockage_diag_loader]
+    return [container, driver_component_loader, blockage_diag_loader]
 
 
 def generate_launch_description():
@@ -315,7 +308,6 @@ def generate_launch_description():
     )
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
-    add_launch_arg("use_pointcloud_container", "false")
     add_launch_arg("container_name", "nebula_node_container")
 
     add_launch_arg("enable_blockage_diag", "true")
