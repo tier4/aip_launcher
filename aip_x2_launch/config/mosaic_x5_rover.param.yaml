@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    device: tcp://192.168.100.101:28784
+    device: tcp://192.168.110.101:28784
 
     frame_id: gnss_link
     aux1_frame_id: aux1
