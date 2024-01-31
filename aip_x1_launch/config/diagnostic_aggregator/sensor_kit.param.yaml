@@ -110,7 +110,6 @@
                     #   path: time_sync
                     #   contains: [": livox_time_sync"]
                     #   timeout: 3.0
-
         imu:
           type: diagnostic_aggregator/AnalyzerGroup
           path: imu
