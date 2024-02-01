@@ -77,6 +77,7 @@ def launch_setup(context, *args, **kwargs):
 
     # Config
     sensor_params_fp = LaunchConfiguration("config_file").perform(context)
+    sensor_correction_fp = LaunchConfiguration("sensor_correction_file").perform(context)
     if sensor_params_fp == "":
         warnings.warn("No config file provided, using sensor model default", RuntimeWarning)
         sensor_params_fp = os.path.join(
@@ -88,12 +89,15 @@ def launch_setup(context, *args, **kwargs):
         sensor_make.lower(),
         sensor_model + sensor_extension,
     )
-    sensor_correction_fp = os.path.join(
-        nebula_decoders_share_dir,
-        "calibration",
-        sensor_make.lower(),
-        sensor_model + ".dat"
-    )
+
+    if sensor_correction_fp == "":
+        warnings.warn("No correction file provided, using sensor model default", RuntimeWarning)
+        sensor_correction_fp = os.path.join(
+            nebula_decoders_share_dir,
+            "calibration",
+            sensor_make.lower(),
+            sensor_model + ".dat"
+        )
     if not os.path.exists(sensor_correction_fp):
         sensor_correction_fp = ""
     if not os.path.exists(sensor_params_fp):
@@ -283,6 +287,7 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
+    add_launch_arg("sensor_correction_file", "", description="sensor sensor correction file")
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
