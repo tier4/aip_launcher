@@ -61,10 +61,7 @@
 
     <include file="$(find-pkg-share simple_object_merger)/launch/simple_object_merger.launch.xml">
       <arg name="output/objects" value="detected_objects"/>
-      <arg name="update_rate_hz" value="20.0"/>
-      <arg name="new_frame_id" value="base_link"/>
-      <arg name="timeout_threshold" value="1.0"/>
-      <arg name="input_topics" value="[/sensing/radar/front_center/detected_objects, /sensing/radar/front_left/detected_objects, /sensing/radar/rear_left/detected_objects, /sensing/radar/rear_center/detected_objects, /sensing/radar/rear_right/detected_objects, /sensing/radar/front_right/detected_objects]"/>
+      <arg name="param_path" value="$(find-pkg-share aip_x2_launch)/config/simple_object_merger.param.yaml"/>
     </include>
 
   </group>
