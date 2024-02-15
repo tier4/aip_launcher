@@ -14,7 +14,6 @@
     <group>
       <push-ros-namespace namespace="top"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLS128.launch.xml">
-        <!-- <arg name="max_range" value="250.0"/> -->
         <arg name="sensor_frame" value="hesai_top"/>
         <arg name="sensor_ip" value="192.168.1.201"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -29,7 +28,7 @@
     <group>
       <push-ros-namespace namespace="front_left"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launchxml">
-        <!-- <arg name="max_range" value="5.0"/> -->
+        <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_front_left"/>
         <arg name="sensor_ip" value="192.168.2.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -46,7 +45,7 @@
     <group>
       <push-ros-namespace namespace="front_right"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
-        <!-- <arg name="max_range" value="5.0"/> -->
+        <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_front_right"/>
         <arg name="sensor_ip" value="192.168.2.22"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -63,7 +62,7 @@
     <group>
       <push-ros-namespace namespace="side_left"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launchxml">
-        <!-- <arg name="max_range" value="5.0"/> -->
+        <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_left"/>
         <arg name="sensor_ip" value="192.168.2.23"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -80,7 +79,7 @@
     <group>
       <push-ros-namespace namespace="side_right"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
-        <!-- <arg name="max_range" value="5.0"/> -->
+        <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_right"/>
         <arg name="sensor_ip" value="192.168.2.24"/>
         <arg name="host_ip" value="$(var host_ip)"/>
