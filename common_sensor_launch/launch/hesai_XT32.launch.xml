@@ -25,8 +25,8 @@
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
-    <arg name="cloud_min_angle" value="0"/>
-    <arg name="cloud_max_angle" value="360"/>
+    <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
+    <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="true"/>
