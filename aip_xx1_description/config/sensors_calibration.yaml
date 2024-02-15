@@ -6,13 +6,6 @@ base_link:
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
-  hesai_front_right_base_link:
-    x: 3.373 # Design Value
-    y: -0.740 # Design Value
-    z: 0.5482
-    roll: 0.0 # Design Value
-    pitch: 0.0 # Design Value
-    yaw: -0.872665 # Design Value
   hesai_front_left_base_link:
     x: 3.373 # Design Value
     y: 0.740 # Design Value
@@ -20,7 +13,14 @@ base_link:
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: 0.872665 # Design Value
-  velodyne_rear_base_link:
+  hesai_front_right_base_link:
+    x: 3.373 # Design Value
+    y: -0.740 # Design Value
+    z: 0.5482
+    roll: 0.0 # Design Value
+    pitch: 0.0 # Design Value
+    yaw: -0.872665 # Design Value
+  velodyne_rear_base_link: #unused
     x: -0.358
     y: 0.0
     z: 1.631
