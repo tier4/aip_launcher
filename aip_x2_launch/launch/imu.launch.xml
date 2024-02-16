@@ -34,6 +34,10 @@
       <arg name="input_odom" value="/localization/kinematic_state"/>
       <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_file)"/>
     </include>
+
+    <include file="$(find-pkg-share imu_monitor)/launch/imu_monitor.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share imu_monitor)/config/imu_monitor.param.yaml"/>
+    </include>
   </group>
 
 </launch>

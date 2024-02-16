@@ -15,6 +15,9 @@
       # gnss
       gnss: default
 
+      # imu
+      yaw_rate_status: default
+
       # lidar
       pandar_connection: default
       pandar_temperature: default
