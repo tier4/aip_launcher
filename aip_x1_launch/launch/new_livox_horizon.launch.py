@@ -52,7 +52,7 @@ def get_crop_box_min_range_component(context, livox_frame_id):
         name="crop_box_filter_min_range",
         remappings=[
             ("input", "livox/tag_filtered/lidar" if use_tag_filter else "livox/lidar"),
-            ("output", "min_range_cropped/pointcloud_before_sync"),
+            ("output", "pointcloud"),
         ],
         parameters=[
             {

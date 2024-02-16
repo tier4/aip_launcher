@@ -99,7 +99,7 @@ def generate_launch_description():
         name="topic_state_monitor_livox_front_left_min_range_cropped",
         parameters=[
             {
-                "topic": "/sensing/lidar/front_left/min_range_cropped/pointcloud",
+                "topic": "/sensing/lidar/front_left/pointcloud",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
@@ -117,7 +117,7 @@ def generate_launch_description():
         name="topic_state_monitor_livox_front_right_min_range_cropped",
         parameters=[
             {
-                "topic": "/sensing/lidar/front_right/min_range_cropped/pointcloud",
+                "topic": "/sensing/lidar/front_right/pointcloud",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
@@ -135,7 +135,7 @@ def generate_launch_description():
         name="topic_state_monitor_livox_front_center_min_range_cropped",
         parameters=[
             {
-                "topic": "/sensing/lidar/front_center/min_range_cropped/pointcloud",
+                "topic": "/sensing/lidar/front_center/pointcloud",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
