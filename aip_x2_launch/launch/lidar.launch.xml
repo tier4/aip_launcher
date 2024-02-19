@@ -19,6 +19,7 @@
         <arg name="gps_port" value="10121" />
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
@@ -41,6 +42,7 @@
         <arg name="gps_port" value="10131" />
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
@@ -62,6 +64,7 @@
         <arg name="gps_port" value="10122" />
         <arg name="scan_phase" value="305.0" />
         <arg name="angle_range" value="[90.0, 305.0]"/>
+        <arg name="blockage_diag_angle_range" value="[90.0, 305.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
@@ -85,6 +88,7 @@
         <arg name="gps_port" value="10132" />
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[120.0, 240.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="54" />
@@ -106,6 +110,7 @@
         <arg name="gps_port" value="10123" />
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[55.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[55.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
@@ -129,6 +134,7 @@
         <arg name="gps_port" value="10133" />
         <arg name="scan_phase" value="270.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[120.0, 240.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="54" />
@@ -150,6 +156,7 @@
         <arg name="gps_port" value="10124" />
         <arg name="scan_phase" value="180.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
@@ -173,6 +180,7 @@
         <arg name="gps_port" value="10134" />
         <arg name="scan_phase" value="180.0" />
         <arg name="angle_range" value="[90.0, 270.0]"/>
+        <arg name="blockage_diag_angle_range" value="[90.0, 270.0]"/>
         <arg name="distance_range" value="[0.1, 7.5]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
