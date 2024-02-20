@@ -104,16 +104,30 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    # nodes.append(
+    #     ComposableNode(
+    #         package="pointcloud_preprocessor",
+    #         plugin="pointcloud_preprocessor::DistortionCorrectorComponent",
+    #         name="distortion_corrector_node",
+    #         remappings=[
+    #             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+    #             ("~/input/imu", "/sensing/imu/imu_data"),
+    #             ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
+    #             ("~/output/pointcloud", "rectified/pointcloud_ex"),
+    #         ],
+    #         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    #     )
+    # )
+
     nodes.append(
         ComposableNode(
             package="autoware_pointcloud_preprocessor",
             plugin="autoware::pointcloud_preprocessor::DistortionCorrectorComponent",
             name="distortion_corrector_node",
             remappings=[
-                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-                ("~/input/imu", "/sensing/imu/imu_data"),
-                ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
-                ("~/output/pointcloud", "rectified/pointcloud_ex"),
+                ("velodyne_points_ex", "self_cropped/pointcloud_ex"),
+                ("velodyne_points_interpolate", "rectified/pointcloud"),
+                ("velodyne_points_interpolate_ex", "rectified/pointcloud_ex"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
