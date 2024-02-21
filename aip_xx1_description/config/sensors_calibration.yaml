@@ -27,42 +27,42 @@ base_link:
   #   roll: -0.02
   #   pitch: 0.7281317
   #   yaw: 3.141592
-  ars548_front_center_base_link:
+  front_center/radar_link:
     x: 3.520 # Design Value
     y: 0.0 # Design Value
     z: 0.6352
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: 0.0 # Design Value
-  ars548_front_right_base_link:
+  front_right/radar_link:
     x: 3.384 # Design Value
     y: -0.7775 # Design Value
     z: 0.410
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: -1.22173 # Design Value
-  ars548_front_left_base_link:
+  front_left/radar_link:
     x: 3.384 # Design Value
     y: 0.7775 # Design Value
     z: 0.410
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: 1.22173 # Design Value
-  ars548_back_center_base_link:
+  rear_center/radar_link:
     x: -0.858 # Design Value
     y: 0.0 # Design Value
     z: 0.520
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: 3.141592 # Design Value
-  ars548_back_right_base_link:
+  rear_right/radar_link:
     x: -0.782 # Design Value
     y: -0.761 # Design Value
     z: 0.520
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: -2.0944 # Design Value
-  ars548_back_left_base_link:
+  rear_left/radar_link:
     x: -0.782 # Design Value
     y: 0.761 # Design Value
     z: 0.520
