@@ -234,6 +234,8 @@ def launch_setup(context, *args, **kwargs):
                     "packet_mtu_size",
                     "dual_return_distance_threshold",
                     "setup_sensor",
+                    "ptp_profile",
+                    "ptp_transport_type",
                 ),
             }
         ],
@@ -283,6 +285,9 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
+    add_launch_arg("ptp_profile", "1588v2")
+    add_launch_arg("ptp_transport_type", "L2")
+
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
