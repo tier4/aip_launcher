@@ -11,10 +11,11 @@
   <arg name="publish_radar_scan" default="false" />
   <arg name="size_x" default="1.8" />
   <arg name="size_y" default="1.8" />
-  <!-- noise filter parameter -->
-  <arg name="velocity_y_threshold" default="7.0" />
   <!-- converter parameter -->
   <arg name="input/odometry" default="/localization/kinematic_state" />
+  <!-- parameter path -->
+  <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share common_sensor_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
+  <arg name="radar_tracks_noise_filter_param_path" default="$(find-pkg-share common_sensor_launch)/config/radar_tracks_noise_filter.param.yaml"/>
 
   <!-- Socket CAN -->
   <group if="$(var launch_driver)">
@@ -43,7 +44,7 @@
     <arg name="input/tracks" value="objects_raw"/>
     <arg name="output/noise_tracks" value="noise_objects" />
     <arg name="output/filtered_tracks" value="filtered_objects" />
-    <arg name="velocity_y_threshold" value="$(var velocity_y_threshold)" />
+    <arg name="param_path" value="$(var radar_tracks_noise_filter_param_path)"/>
   </include>
 
   <!-- Message converter -->
@@ -52,7 +53,6 @@
     <arg name="input/odometry" value="$(var input/odometry)"/>
     <arg name="output/radar_detected_objects" value="detected_objects"/>
     <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-    <arg name="update_rate_hz" value="10.0"/>
-    <arg name="use_twist_compensation" value="true"/>
+    <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
   </include>
 </launch>
