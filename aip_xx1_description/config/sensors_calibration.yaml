@@ -20,13 +20,13 @@ base_link:
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
     yaw: -0.872665 # Design Value
-  velodyne_rear_base_link: #unused
-    x: -0.358
-    y: 0.0
-    z: 1.631
-    roll: -0.02
-    pitch: 0.7281317
-    yaw: 3.141592
+  # velodyne_rear_base_link: #unused
+  #   x: -0.358
+  #   y: 0.0
+  #   z: 1.631
+  #   roll: -0.02
+  #   pitch: 0.7281317
+  #   yaw: 3.141592
   ars548_front_center_base_link:
     x: 3.520 # Design Value
     y: 0.0 # Design Value

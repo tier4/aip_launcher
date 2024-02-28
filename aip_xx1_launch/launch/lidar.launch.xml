@@ -13,7 +13,7 @@
 
     <group>
       <push-ros-namespace namespace="top"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLS128.launch.xml">
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
         <arg name="sensor_frame" value="hesai_top"/>
         <arg name="sensor_ip" value="192.168.1.201"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -27,13 +27,13 @@
 
     <group>
       <push-ros-namespace namespace="front_left"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launchxml">
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
         <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_front_left"/>
-        <arg name="sensor_ip" value="192.168.2.21"/>
+        <arg name="sensor_ip" value="192.168.1.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2369"/>
-        <arg name="scan_phase" value="230.0"/>
+        <arg name="scan_phase" value="50.0"/>
         <arg name="cloud_min_angle" value="50"/>
         <arg name="cloud_max_angle" value="320"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -47,10 +47,10 @@
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
         <arg name="max_range" value="5.0"/>
         <arg name="sensor_frame" value="hesai_front_right"/>
-        <arg name="sensor_ip" value="192.168.2.22"/>
+        <arg name="sensor_ip" value="192.168.1.22"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2370"/>
-        <arg name="scan_phase" value="130.0"/>
+        <arg name="scan_phase" value="310.0"/>
         <arg name="cloud_min_angle" value="40"/>
         <arg name="cloud_max_angle" value="310"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -61,13 +61,13 @@
 
     <group>
       <push-ros-namespace namespace="side_left"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launchxml">
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
         <arg name="max_range" value="5.0"/>
-        <arg name="sensor_frame" value="hesai_left"/>
-        <arg name="sensor_ip" value="192.168.2.23"/>
+        <arg name="sensor_frame" value="hesai_side_left"/>
+        <arg name="sensor_ip" value="192.168.1.23"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2371"/>
-        <arg name="scan_phase" value="270.0"/>
+        <arg name="scan_phase" value="90.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -80,11 +80,11 @@
       <push-ros-namespace namespace="side_right"/>
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_XT32.launch.xml">
         <arg name="max_range" value="5.0"/>
-        <arg name="sensor_frame" value="hesai_right"/>
-        <arg name="sensor_ip" value="192.168.2.24"/>
+        <arg name="sensor_frame" value="hesai_side_right"/>
+        <arg name="sensor_ip" value="192.168.1.24"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2372"/>
-        <arg name="scan_phase" value="90.0"/>
+        <arg name="scan_phase" value="270.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>

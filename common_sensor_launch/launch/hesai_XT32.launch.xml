@@ -12,6 +12,7 @@
   <arg name="scan_phase" default="0.0"/>
   <arg name="cloud_min_angle" default="0"/>
   <arg name="cloud_max_angle" default="360"/>
+  <arg name="max_range" default="100.0"/>
   <arg name="dual_return_distance_threshold" default="0.1"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="container_name" default="hesai_node_container"/>
@@ -27,6 +28,7 @@
     <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
     <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
+    <arg name="max_range" value="$(var max_range)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="true"/>

@@ -23,19 +23,19 @@
     </include> -->
 
     <!-- IMU Driver -->
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/imu.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/imu.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- GNSS Driver -->
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- Radar Driver -->
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- Vehicle twist -->
     <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
