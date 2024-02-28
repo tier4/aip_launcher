@@ -82,21 +82,21 @@ sensor_kit_base_link:
     z: 0.0 # Design Value
     roll: 0.0 # Design Value
     pitch: 0.0 # Design Value
-    yaw: -0.349066 # Design Value
+    yaw: 1.22173032679 # Design Value
   hesai_left_base_link:
     x: 0.0 # Design Value
     y: 0.564 # Design Value
     z: -0.300 # Design Value
-    roll: 0.0 # Design Value
-    pitch: 0.872665 # Design Value
-    yaw: 1.5708 # Design Value
+    roll: 0.872665 # Design Value
+    pitch: 0.0 # Design Value
+    yaw: 3.14159265359 # Design Value
   hesai_right_base_link:
     x: 0.0 # Design Value
     y: -0.564 # Design Value
     z: -0.300 # Design Value
-    roll: 0.0 # Design Value
-    pitch: 0.872665 # Design Value
-    yaw: -1.5708 # Design Value
+    roll: 0.69813132679 # Design Value
+    pitch: 0.0 # Design Value
+    yaw: 0.0 # Design Value
   gnss_link:
     x: -0.279 # Design Value
     y: 0.0 # Design Value
