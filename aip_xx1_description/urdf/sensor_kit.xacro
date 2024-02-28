@@ -35,7 +35,7 @@
       yaw="${calibration['sensor_kit_base_link']['hesai_top_base_link']['yaw']}"
     />
     <xacro:PandarXT-32
-      name="hesai_right"
+      name="hesai_side_right"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['hesai_right_base_link']['x']}"
       y="${calibration['sensor_kit_base_link']['hesai_right_base_link']['y']}"
@@ -45,7 +45,7 @@
       yaw="${calibration['sensor_kit_base_link']['hesai_right_base_link']['yaw']}"
     />
     <xacro:PandarXT-32
-      name="hesai_left"
+      name="hesai_side_left"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['hesai_left_base_link']['x']}"
       y="${calibration['sensor_kit_base_link']['hesai_left_base_link']['y']}"
