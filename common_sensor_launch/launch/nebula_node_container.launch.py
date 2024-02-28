@@ -288,7 +288,6 @@ def generate_launch_description():
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
 
-
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
