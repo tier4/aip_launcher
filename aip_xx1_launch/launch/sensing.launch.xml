@@ -28,9 +28,9 @@
     </include>
 
     <!-- GNSS Driver -->
-    <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
+    <include file="$(find-pkg-share aip_xx1_launch)/launch/gnss.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include> -->
+    </include>
 
     <!-- Radar Driver -->
     <!-- <include file="$(find-pkg-share aip_xx1_launch)/launch/radar.launch.xml">
