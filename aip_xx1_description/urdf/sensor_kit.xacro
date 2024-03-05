@@ -24,7 +24,7 @@
     <!-- sensor -->
     <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
     <!-- lidar -->
-    <xacro:PandarXT-32
+    <xacro:PandarOT-128
       name="hesai_top"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['hesai_top_base_link']['x']}"
