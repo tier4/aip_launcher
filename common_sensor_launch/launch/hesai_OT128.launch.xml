@@ -34,5 +34,6 @@
     <arg name="container_name" value="$(var container_name)"/>
     <arg name="ptp_profile" value="802.1as"/>
     <arg name="ptp_transport_type" value="L2"/>
+    <arg name="setup_sensor" value="false"/>
   </include>
 </launch>
