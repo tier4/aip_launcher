@@ -242,7 +242,7 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             {
-                "angle_range": LaunchConfiguration("angle_range"),
+                "angle_range": LaunchConfiguration("blockage_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "model": LaunchConfiguration("model"),
@@ -332,6 +332,7 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("vertical_bins", "40")
     add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("blockage_range", "[270.0, 90.0]")
 
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
