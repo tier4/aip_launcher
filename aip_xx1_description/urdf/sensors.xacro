@@ -59,7 +59,7 @@
   <!-- embedded radar sensors -->
   <xacro:include filename="$(find radar_description)/urdf/radar.xacro"/>
   <xacro:radar_macro
-    name="radar_front_center"
+    name="front_center/radar_link"
     parent="base_link"
     x="${calibration['base_link']['front_center/radar_link']['x']}"
     y="${calibration['base_link']['front_center/radar_link']['y']}"
@@ -69,7 +69,7 @@
     yaw="${calibration['base_link']['front_center/radar_link']['yaw']}"
   />
   <xacro:radar_macro
-    name="radar_front_right"
+    name="front_right/radar_link"
     parent="base_link"
     x="${calibration['base_link']['front_right/radar_link']['x']}"
     y="${calibration['base_link']['front_right/radar_link']['y']}"
@@ -79,7 +79,7 @@
     yaw="${calibration['base_link']['front_right/radar_link']['yaw']}"
   />
   <xacro:radar_macro
-    name="radar_front_left"
+    name="front_left/radar_link"
     parent="base_link"
     x="${calibration['base_link']['front_left/radar_link']['x']}"
     y="${calibration['base_link']['front_left/radar_link']['y']}"
@@ -89,7 +89,7 @@
     yaw="${calibration['base_link']['front_left/radar_link']['yaw']}"
   />
   <xacro:radar_macro
-    name="radar_back_center"
+    name="rear_center/radar_link"
     parent="base_link"
     x="${calibration['base_link']['rear_center/radar_link']['x']}"
     y="${calibration['base_link']['rear_center/radar_link']['y']}"
@@ -99,7 +99,7 @@
     yaw="${calibration['base_link']['rear_center/radar_link']['yaw']}"
   />
   <xacro:radar_macro
-    name="radar_back_right"
+    name="rear_right/radar_link"
     parent="base_link"
     x="${calibration['base_link']['rear_right/radar_link']['x']}"
     y="${calibration['base_link']['rear_right/radar_link']['y']}"
@@ -109,7 +109,7 @@
     yaw="${calibration['base_link']['rear_right/radar_link']['yaw']}"
   />
   <xacro:radar_macro
-    name="radar_back_left"
+    name="rear_left/radar_link"
     parent="base_link"
     x="${calibration['base_link']['rear_left/radar_link']['x']}"
     y="${calibration['base_link']['rear_left/radar_link']['y']}"
