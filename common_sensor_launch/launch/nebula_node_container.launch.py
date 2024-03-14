@@ -115,12 +115,44 @@ def launch_setup(context, *args, **kwargs):
                         "cloud_min_angle",
                         "cloud_max_angle",
                         "dual_return_distance_threshold",
+                        "setup_sensor",
+                        "retry_hw",
                     ),
                 },
             ],
             remappings=[
                 ("aw_points", "pointcloud_raw"),
                 ("aw_points_ex", "pointcloud_raw_ex"),
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+
+    nodes.append(
+        ComposableNode(
+            package="nebula_ros",
+            plugin=sensor_make + "HwMonitorRosWrapper",
+            name=sensor_make.lower() + "_hw_monitor_ros_wrapper_node",
+            parameters=[
+                {
+                    "sensor_model": sensor_model,
+                    **create_parameter_dict(
+                        "return_mode",
+                        "frame_id",
+                        "scan_phase",
+                        "sensor_ip",
+                        "host_ip",
+                        "data_port",
+                        "gnss_port",
+                        "packet_mtu_size",
+                        "rotation_speed",
+                        "cloud_min_angle",
+                        "cloud_max_angle",
+                        "diag_span",
+                        "dual_return_distance_threshold",
+                        "delay_monitor_ms",
+                    ),
+                },
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
@@ -188,6 +220,13 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
+    if LaunchConfiguration("output_as_sensor_frame").perform(context):
+        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
+    else:
+        ring_outlier_filter_parameters = {
+            "output_frame": ""
+        }  # keep the output frame as the input frame
     nodes.append(
         ComposableNode(
             package="pointcloud_preprocessor",
@@ -195,8 +234,9 @@ def launch_setup(context, *args, **kwargs):
             name="ring_outlier_filter",
             remappings=[
                 ("input", "rectified/pointcloud_ex"),
-                ("output", "pointcloud"),
+                ("output", "pointcloud_before_sync"),
             ],
+            parameters=[ring_outlier_filter_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
@@ -236,6 +276,7 @@ def launch_setup(context, *args, **kwargs):
                     "setup_sensor",
                     "ptp_profile",
                     "ptp_transport_type",
+                    "retry_hw",
                 ),
             }
         ],
@@ -263,6 +304,7 @@ def generate_launch_description():
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
+    add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("scan_phase", "0.0")
@@ -287,6 +329,9 @@ def generate_launch_description():
     add_launch_arg("container_name", "nebula_node_container")
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
+    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+    add_launch_arg("diag_span", "1000", "")
+    add_launch_arg("delay_monitor_ms", "2000", "")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
