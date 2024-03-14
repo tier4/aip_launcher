@@ -22,6 +22,7 @@
 
           <arg name="sensor_ip" value="10.13.1.114"/>
           <arg name="frame_id" value="front_center/radar_link"/>
+          <arg name="object_frame" value="base_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
@@ -44,6 +45,7 @@
 
           <arg name="sensor_ip" value="10.13.1.115"/>
           <arg name="frame_id" value="front_left/radar_link"/>
+          <arg name="object_frame" value="front_left/radar_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
@@ -66,6 +68,7 @@
 
           <arg name="sensor_ip" value="10.13.1.116"/>
           <arg name="frame_id" value="front_right/radar_link"/>
+          <arg name="object_frame" value="front_right/radar_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
@@ -88,6 +91,7 @@
 
           <arg name="sensor_ip" value="10.13.1.117"/>
           <arg name="frame_id" value="rear_center/radar_link"/>
+          <arg name="object_frame" value="base_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
@@ -110,6 +114,7 @@
 
           <arg name="sensor_ip" value="10.13.1.118"/>
           <arg name="frame_id" value="rear_left/radar_link"/>
+          <arg name="object_frame" value="base_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
@@ -132,6 +137,7 @@
 
           <arg name="sensor_ip" value="10.13.1.119"/>
           <arg name="frame_id" value="rear_right/radar_link"/>
+          <arg name="object_frame" value="base_link"/>
 
           <arg name="sensor_model" value="ARS548"/>
           <arg name="host_ip" value="10.13.1.166"/>
