@@ -3,7 +3,7 @@
   <!-- Params -->
   <arg name="launch_driver" default="true"/>
 
-  <arg name="model" default="PandarXT32"/>
+  <arg name="model" default="Pandar128E4X"/>
   <arg name="sensor_frame" default="pandar"/>
   <arg name="return_mode" default="Strongest"/>
   <arg name="sensor_ip" default="192.168.1.201"/>
@@ -27,16 +27,15 @@
     <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
     <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
-    <arg name="max_range" value="$(var max_range)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
-    <arg name="ptp_profile" value="1588v2"/>
-    <arg name="ptp_switch_type" value="TSN"/>
-    <arg name="ptp_transport_type" value="UDP"/>
-    <arg name="setup_sensor" value="true"/>
-    <arg name="retry_hw" value="true"/>
     <arg name="container_name" value="$(var container_name)"/>
+    <arg name="ptp_profile" value="802.1as"/>
+    <arg name="ptp_transport_type" value="L2"/>
+    <arg name="ptp_switch_type" value="NON_TSN"/>
+    <arg name="ptp_domain" value="1"/>
+    <arg name="setup_sensor" value="false"/>
   </include>
 </launch>
