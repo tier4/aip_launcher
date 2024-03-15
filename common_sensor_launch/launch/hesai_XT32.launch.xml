@@ -33,6 +33,7 @@
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
     <arg name="ptp_profile" value="1588v2"/>
+    <arg name="ptp_switch_type" value="TSN"/>
     <arg name="ptp_transport_type" value="UDP"/>
     <arg name="setup_sensor" value="true"/>
     <arg name="retry_hw" value="true"/>

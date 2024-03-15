@@ -276,6 +276,8 @@ def launch_setup(context, *args, **kwargs):
                     "setup_sensor",
                     "ptp_profile",
                     "ptp_transport_type",
+                    "ptp_switch_type",
+                    "ptp_domain",
                     "retry_hw",
                 ),
             }
@@ -329,6 +331,8 @@ def generate_launch_description():
     add_launch_arg("container_name", "nebula_node_container")
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
+    add_launch_arg("ptp_switch_type", "TSN")
+    add_launch_arg("ptp_domain", "0")
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("diag_span", "1000", "")
     add_launch_arg("delay_monitor_ms", "2000", "")
