@@ -4,9 +4,9 @@
   <arg name="use_concat_filter" default="true" />
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
   <arg name="vehicle_mirror_param_file" />
-  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_launch)/config/dual_return_filter.param.yaml"/>
+  <arg name="enable_blockage_diag" default="true"/>
 
   <group>
     <push-ros-namespace namespace="lidar" />
@@ -27,6 +27,9 @@
         <arg name="return_mode" value="Strongest" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
@@ -48,6 +51,9 @@
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="return_mode" value="First" />
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.6"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
@@ -71,6 +77,9 @@
         <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -93,6 +102,9 @@
         <arg name="blockage_range" value="[120.0, 240.0]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="8" />
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.6"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/left_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -117,6 +129,9 @@
         <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="Dual" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -139,6 +154,9 @@
         <arg name="blockage_range" value="[150.0, 240.0]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="8" />
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.6"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/right_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -163,6 +181,9 @@
         <arg name="horizontal_ring_id" value="12" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="Strongest" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_lower.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -185,6 +206,9 @@
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.6"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="return_mode" value="First" />
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/rear_upper.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -197,8 +221,7 @@
       <arg name="base_frame" value="base_link" />
       <arg name="use_intra_process" value="true" />
       <arg name="use_multithread" value="true" />
-      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)" />
-      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
 
   </group>
