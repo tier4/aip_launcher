@@ -245,9 +245,7 @@ def launch_setup(context, *args, **kwargs):
                 "angle_range": LaunchConfiguration("angle_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
-                "max_distance_range": LaunchConfiguration("max_distance_range"),
-                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
+                "model": LaunchConfiguration("model"),
             }
         ]
         + [load_composable_node_param("blockage_diagnostics_param_file")],
@@ -325,8 +323,6 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("dual_return_filter_param_file")
-    add_launch_arg("horizontal_resolution", "0.4")
-    add_launch_arg("max_distance_range", "200.0")
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
