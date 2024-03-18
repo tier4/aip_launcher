@@ -9,3 +9,4 @@
     dust_kernel_size: 2
     dust_buffering_frames: 10
     dust_buffering_interval: 1
+    blockage_kernel: 10
