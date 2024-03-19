@@ -43,6 +43,10 @@ def get_pandar_monitor_info():
     return p
 
 
+def str2vector(string):
+    return [float(x) for x in string.strip("[]").split(",")]
+
+
 def get_vehicle_info(context):
     # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
     # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
@@ -232,6 +236,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    distance_range = str2vector(context.perform_substitution(LaunchConfiguration("distance_range")))
     blockage_diag_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::BlockageDiagComponent",
@@ -245,7 +250,9 @@ def launch_setup(context, *args, **kwargs):
                 "angle_range": LaunchConfiguration("blockage_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "model": LaunchConfiguration("model"),
+                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+                "max_distance_range": distance_range[1],
+                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
             }
         ]
         + [load_composable_node_param("blockage_diagnostics_param_file")],
@@ -323,6 +330,7 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
