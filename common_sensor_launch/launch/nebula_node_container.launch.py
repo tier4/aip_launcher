@@ -262,12 +262,6 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    target_container = (
-        container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name")
-    )
-
     driver_component_loader = LoadComposableNodes(
         composable_node_descriptions=[driver_component],
         target_container=container,
@@ -275,7 +269,7 @@ def launch_setup(context, *args, **kwargs):
     )
     blockage_diag_loader = LoadComposableNodes(
         composable_node_descriptions=[blockage_diag_component],
-        target_container=target_container,
+        target_container=container,
         condition=IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
