@@ -38,7 +38,7 @@
       <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/vehicle_velocity_converter.param.yaml" />
     </include>
 
-    <!-- Component state monitor for each sensor -->
+    <!-- Topic state monitor for each sensor -->
     <include file="$(find-pkg-share aip_x2_launch)/launch/topic_state_monitor.launch.xml"/>
 
   </group>
