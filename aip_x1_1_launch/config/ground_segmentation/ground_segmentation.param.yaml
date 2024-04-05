@@ -66,7 +66,7 @@
         min_trial: 200
         min_points: 400
         outlier_threshold: 0.1
-        plane_slope_threshold: 10.0      
+        plane_slope_threshold: 10.0
         voxel_size_x: 0.1
         voxel_size_y: 0.1
         voxel_size_z: 0.1
