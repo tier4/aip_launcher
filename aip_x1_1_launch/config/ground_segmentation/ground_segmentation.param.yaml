@@ -35,13 +35,18 @@
     # common_ground_filter:
     #   plugin: "ground_segmentation::RayGroundFilterComponent"
     #   parameters:
-    #     initial_max_slope: 10.0
+    #     min_x: -0.01
+    #     max_x: +0.01
+    #     min_y: -0.01
+    #     max_y: +0.01
+    #     use_vehicle_footprint: True
     #     general_max_slope: 10.0
     #     local_max_slope: 10.0
-    #     min_height_threshold: 0.3
+    #     initial_max_slope: 10.0
     #     radial_divider_angle: 1.0
+    #     min_height_threshold: 0.3
     #     concentric_divider_distance: 0.0
-    #     use_vehicle_footprint: True
+    #     reclass_distance_threshold: 0.1
 
     short_height_obstacle_detection_area_filter:
       parameters:
@@ -55,13 +60,15 @@
 
     ransac_ground_filter:
       parameters:
-        outlier_threshold: 0.1
-        min_points: 400
-        min_inliers: 200
+#        base_frame: base_link
+        unit_axis: "z"
         max_iterations: 50
-        height_threshold: 0.10
-        plane_slope_threshold: 10.0
+        min_trial: 200
+        min_points: 400
+        outlier_threshold: 0.1
+        plane_slope_threshold: 10.0      
         voxel_size_x: 0.1
         voxel_size_y: 0.1
         voxel_size_z: 0.1
+        height_threshold: 0.10
         debug: False
