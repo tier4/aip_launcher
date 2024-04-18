@@ -101,7 +101,7 @@
         <arg name="distance_range" value="[0.1, 20.0]"/>
         <arg name="blockage_range" value="[120.0, 240.0]"/>
         <arg name="vertical_bins" value ="64" />
-        <arg name="horizontal_ring_id" value="54" />
+        <arg name="horizontal_ring_id" value="24" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.6"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
@@ -153,7 +153,7 @@
         <arg name="distance_range" value="[0.1, 20.0]"/>
         <arg name="blockage_range" value="[150.0, 240.0]"/>
         <arg name="vertical_bins" value ="64" />
-        <arg name="horizontal_ring_id" value="54" />
+        <arg name="horizontal_ring_id" value="24" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.6"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
