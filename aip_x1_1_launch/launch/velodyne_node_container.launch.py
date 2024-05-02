@@ -31,10 +31,10 @@ def get_vehicle_info(context):
     p = {}
     p["vehicle_length"] = gp["front_overhang"] + gp["wheel_base"] + gp["rear_overhang"]
     p["vehicle_width"] = gp["wheel_tread"] + gp["left_overhang"] + gp["right_overhang"]
-    p["min_longitudinal_offset"] = -gp["rear_overhang"] - 5.0
+    p["min_longitudinal_offset"] = -gp["rear_overhang"]
     p["max_longitudinal_offset"] = gp["front_overhang"] + gp["wheel_base"]
-    p["min_lateral_offset"] = -(gp["wheel_tread"] / 2.0 + gp["right_overhang"]) - 1.0
-    p["max_lateral_offset"] = gp["wheel_tread"] / 2.0 + gp["left_overhang"] + 1.0
+    p["min_lateral_offset"] = -(gp["wheel_tread"] / 2.0 + gp["right_overhang"])
+    p["max_lateral_offset"] = gp["wheel_tread"] / 2.0 + gp["left_overhang"]
     p["min_height_offset"] = 0.0
     p["max_height_offset"] = gp["vehicle_height"]
     return p
