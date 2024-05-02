@@ -37,8 +37,6 @@ def launch_setup(context, *args, **kwargs):
             {
                 "input_topics": [
                     "/sensing/lidar/top/pointcloud",
-                    "/sensing/lidar/front_left/pointcloud",
-                    "/sensing/lidar/front_right/pointcloud",
                     "/sensing/lidar/front_center/pointcloud",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
@@ -54,6 +52,7 @@ def launch_setup(context, *args, **kwargs):
     concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
         target_container=LaunchConfiguration("pointcloud_container_name"),
+        condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
     return [concat_loader]
@@ -68,7 +67,7 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
-    add_launch_arg("pointcloud_container_name", "pointcloud_container")
+    add_launch_arg("container_name", "pointcloud_preprocessor_container")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

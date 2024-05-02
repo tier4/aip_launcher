@@ -18,50 +18,14 @@ from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
-    # Topic Monitor For Livox Raw PointCloud
-    topic_state_monitor_livox_front_center = ComposableNode(
+    # Topic Monitor For Front Lidar PointCloud
+    topic_state_monitor_pandar_front_center = ComposableNode(
         package="topic_state_monitor",
         plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_center",
+        name="topic_state_monitor_pandar_front_center",
         parameters=[
             {
-                "topic": "/sensing/lidar/front_center/livox/lidar",
-                "topic_type": "sensor_msgs/msg/PointCloud2",
-                "best_effort": True,
-                "diag_name": "sensing_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 1.0,
-                "window_size": 10,
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-    topic_state_monitor_livox_front_left = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_left",
-        parameters=[
-            {
-                "topic": "/sensing/lidar/front_left/livox/lidar",
-                "topic_type": "sensor_msgs/msg/PointCloud2",
-                "best_effort": True,
-                "diag_name": "sensing_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 1.0,
-                "window_size": 10,
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-    topic_state_monitor_livox_front_right = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_right",
-        parameters=[
-            {
-                "topic": "/sensing/lidar/front_right/livox/lidar",
+                "topic": "/sensing/lidar/front_center/pointcloud_raw",
                 "topic_type": "sensor_msgs/msg/PointCloud2",
                 "best_effort": True,
                 "diag_name": "sensing_topic_status",
@@ -93,46 +57,11 @@ def generate_launch_description():
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
     )
-    topic_state_monitor_livox_front_left_min_range_cropped = ComposableNode(
+
+    topic_state_monitor_pandar_front_center_outlier_filtered = ComposableNode(
         package="topic_state_monitor",
         plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_left_min_range_cropped",
-        parameters=[
-            {
-                "topic": "/sensing/lidar/front_left/pointcloud",
-                "topic_type": "sensor_msgs/msg/PointCloud2",
-                "best_effort": True,
-                "diag_name": "sensing_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 1.0,
-                "window_size": 10,
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-    topic_state_monitor_livox_front_right_min_range_cropped = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_right_min_range_cropped",
-        parameters=[
-            {
-                "topic": "/sensing/lidar/front_right/pointcloud",
-                "topic_type": "sensor_msgs/msg/PointCloud2",
-                "best_effort": True,
-                "diag_name": "sensing_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 1.0,
-                "window_size": 10,
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-    topic_state_monitor_livox_front_center_min_range_cropped = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_livox_front_center_min_range_cropped",
+        name="topic_state_monitor_pandar_front_center_outlier_filtered",
         parameters=[
             {
                 "topic": "/sensing/lidar/front_center/pointcloud",
@@ -167,15 +96,35 @@ def generate_launch_description():
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
     )
-    topic_state_monitor_short_height_no_ground = ComposableNode(
+    # topic_state_monitor_short_height_no_ground = ComposableNode(
+    #     package="topic_state_monitor",
+    #     plugin="topic_state_monitor::TopicStateMonitorNode",
+    #     name="topic_state_monitor_short_height_no_ground",
+    #     parameters=[
+    #         {
+    #             "topic": "/perception/obstacle_segmentation/plane_fitting/pointcloud",
+    #             "topic_type": "sensor_msgs/msg/PointCloud2",
+    #             "best_effort": True,
+    #             "diag_name": "sensing_topic_status",
+    #             "warn_rate": 5.0,
+    #             "error_rate": 1.0,
+    #             "timeout": 1.0,
+    #             "window_size": 10,
+    #         },
+    #     ],
+    #     extra_arguments=[{"use_intra_process_comms": True}],
+    # )
+
+    # topic monitor for tamagawa IMU
+    topic_state_monitor_imu_data = ComposableNode(
         package="topic_state_monitor",
         plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_short_height_no_ground",
+        name="topic_state_monitor_imu_data",
         parameters=[
             {
-                "topic": "/perception/obstacle_segmentation/plane_fitting/pointcloud",
-                "topic_type": "sensor_msgs/msg/PointCloud2",
-                "best_effort": True,
+                "topic": "/sensing/imu/imu_data",
+                "topic_type": "sensor_msgs/msg/Imu",
+                "best_effort": False,
                 "diag_name": "sensing_topic_status",
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
@@ -193,15 +142,12 @@ def generate_launch_description():
         package="rclcpp_components",
         executable="component_container",
         composable_node_descriptions=[
-            topic_state_monitor_livox_front_center,
-            topic_state_monitor_livox_front_left,
-            topic_state_monitor_livox_front_right,
+            topic_state_monitor_pandar_front_center,
             topic_state_monitor_top_outlier_filtered,
-            topic_state_monitor_livox_front_left_min_range_cropped,
-            topic_state_monitor_livox_front_right_min_range_cropped,
-            topic_state_monitor_livox_front_center_min_range_cropped,
+            topic_state_monitor_pandar_front_center_outlier_filtered,
             topic_state_monitor_rough_no_ground,
-            topic_state_monitor_short_height_no_ground,
+            # topic_state_monitor_short_height_no_ground,
+            topic_state_monitor_imu_data,
         ],
         output="screen",
     )
