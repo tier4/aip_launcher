@@ -42,9 +42,9 @@
                       path: rpm
                       contains: [": velodyne_rpm"]
                       timeout: 3.0
-            front:
+            pandar:
               type: diagnostic_aggregator/AnalyzerGroup
-              path: front
+              path: pandar
               analyzers:
                 health_monitoring:
                   type: diagnostic_aggregator/AnalyzerGroup
