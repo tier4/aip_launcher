@@ -16,7 +16,7 @@
   <arg name="view_width" default="6.28" />
   <arg name="vehicle_mirror_param_file" />
 
-  <include file="$(find-pkg-share aip_x1_1_launch)/launch/velodyne_node_container.launch.py">
+  <include file="$(find-pkg-share aip_x1_launch)/launch/velodyne_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="model" value="$(var model)"/>
     <arg name="calibration" value="$(var calibration)"/>
