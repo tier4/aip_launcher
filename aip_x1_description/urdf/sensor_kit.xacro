@@ -18,7 +18,7 @@
     </link>
 
     <!-- sensor -->
-    <xacro:property name="calibration" value="${load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
+    <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
     <!-- lidar -->
     <xacro:VLP-16
       parent="sensor_kit_base_link"

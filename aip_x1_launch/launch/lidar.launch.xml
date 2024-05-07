@@ -51,6 +51,5 @@
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
     </include>
 
-    <include file="$(find-pkg-share aip_x1_launch)/launch/topic_state_monitor.launch.py"/>
   </group>
 </launch>
