@@ -187,7 +187,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -206,7 +206,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -225,7 +225,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -244,7 +244,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -263,7 +263,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -282,7 +282,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -301,7 +301,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -320,7 +320,7 @@ def generate_launch_description():
                 "warn_rate": 5.0,
                 "error_rate": 1.0,
                 "timeout": 5.0,
-                "window_size": 10,
+                "window_size": 1,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
