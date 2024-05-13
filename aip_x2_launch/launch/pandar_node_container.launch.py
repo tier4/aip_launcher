@@ -344,7 +344,7 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
-    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+    add_launch_arg("output_as_sensor_frame", "True")
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
