@@ -38,19 +38,20 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "input_topics": [
-                    "/sensing/lidar/front_upper/pointcloud",
-                    "/sensing/lidar/front_lower/pointcloud",
-                    "/sensing/lidar/left_upper/pointcloud",
-                    "/sensing/lidar/left_lower/pointcloud",
-                    "/sensing/lidar/right_upper/pointcloud",
-                    "/sensing/lidar/right_lower/pointcloud",
-                    "/sensing/lidar/rear_upper/pointcloud",
-                    "/sensing/lidar/rear_lower/pointcloud",
+                    "/sensing/lidar/front_upper/pointcloud_before_sync",
+                    "/sensing/lidar/front_lower/pointcloud_before_sync",
+                    "/sensing/lidar/left_upper/pointcloud_before_sync",
+                    "/sensing/lidar/left_lower/pointcloud_before_sync",
+                    "/sensing/lidar/right_upper/pointcloud_before_sync",
+                    "/sensing/lidar/right_lower/pointcloud_before_sync",
+                    "/sensing/lidar/rear_upper/pointcloud_before_sync",
+                    "/sensing/lidar/rear_lower/pointcloud_before_sync",
                 ],
                 "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
                 "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),
                 "input_twist_topic_type": "twist",
+                "publish_synchronized_pointcloud": True,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
