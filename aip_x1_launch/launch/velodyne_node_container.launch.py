@@ -121,6 +121,13 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
+    if LaunchConfiguration("output_as_sensor_frame").perform(context):
+        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
+    else:
+        ring_outlier_filter_parameters = {
+            "output_frame": ""
+        }  # keep the output frame as the input frame
     nodes.append(
         ComposableNode(
             package="pointcloud_preprocessor",
@@ -128,8 +135,9 @@ def launch_setup(context, *args, **kwargs):
             name="ring_outlier_filter",
             remappings=[
                 ("input", "rectified/pointcloud_ex"),
-                ("output", "pointcloud"),
+                ("output", "pointcloud_before_sync"),
             ],
+            parameters=[ring_outlier_filter_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
@@ -218,6 +226,7 @@ def generate_launch_description():
     )
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS2 component container communication")
+    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
