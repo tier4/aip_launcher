@@ -235,7 +235,7 @@ def launch_setup(context, *args, **kwargs):
                     "dual_return_distance_threshold",
                     "setup_sensor",
                     "ptp_profile",
-                    "ptp_tranport_type",
+                    "ptp_transport_type",
                     "ptp_switch_type",
                     "ptp_domain",
                 ),
