@@ -21,7 +21,7 @@
 
       # imu
       ## /sensing/imu/001-monitor
-      "imu_monitor: yaw_rate_status": { is_active: "true", status: "Warn" }
+      "imu_monitor: yaw_rate_status": default
 
       ## /sensing/imu/002-connection
       "topic_state_monitor_imu_data: imu_topic_status": default
