@@ -20,8 +20,7 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import ComposableNodeContainer
-from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import LoadComposableNodes, ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
 
@@ -38,16 +37,18 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "input_topics": [
-                    "/sensing/lidar/front_upper/pointcloud",
-                    "/sensing/lidar/front_lower/pointcloud",
-                    "/sensing/lidar/left_upper/pointcloud",
-                    "/sensing/lidar/left_lower/pointcloud",
+                    # "/sensing/lidar/front_upper/pointcloud",
+                    # "/sensing/lidar/front_lower/pointcloud",
+                    # "/sensing/lidar/left_upper/pointcloud",
+                    # "/sensing/lidar/left_lower/pointcloud",
                     "/sensing/lidar/right_upper/pointcloud",
                     "/sensing/lidar/right_lower/pointcloud",
                     "/sensing/lidar/rear_upper/pointcloud",
                     "/sensing/lidar/rear_lower/pointcloud",
                 ],
-                "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
+                "input_offset": [
+                    # 0.005, 0.025, 0.050, 0.005,
+                    0.050, 0.005, 0.005, 0.025],
                 "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),
                 "input_twist_topic_type": "twist",
@@ -56,31 +57,33 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    # set container to run all required components in the same process
-    container = ComposableNodeContainer(
-        name=LaunchConfiguration("container_name"),
-        namespace="",
-        package="rclcpp_components",
-        executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[],
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
-        output="screen",
-    )
-
-    target_container = (
-        container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name")
-    )
+    measure_component = ComposableNode(
+            package="topic_delay",
+            plugin="TopicDelay",
+            name="measure_concat",
+            parameters=[
+                {
+                    "cloud_topic": "concatenated/pointcloud",
+                }
+            ]
+        )
 
     # load concat or passthrough filter
-    concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
-        target_container=target_container,
-        condition=IfCondition(LaunchConfiguration("use_concat_filter")),
+    # concat_loader = ComposableNodeContainer(
+    #     composable_node_descriptions=[concat_component, measure_component],
+    #     namespace="",
+    #     package='rclcpp_components',
+    #     executable='component_container_mt',
+    #     name=LaunchConfiguration("pointcloud_container_name"),
+    #     condition=IfCondition(LaunchConfiguration("use_concat_filter")),
+    # )
+
+    concat_loader = loader = LoadComposableNodes(
+        composable_node_descriptions=[concat_component, measure_component],
+        target_container=LaunchConfiguration("pointcloud_container_name"),
     )
 
-    return [container, concat_loader]
+    return [concat_loader]
 
 
 def generate_launch_description():
@@ -92,8 +95,7 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "True")
     add_launch_arg("use_intra_process", "True")
-    add_launch_arg("use_pointcloud_container", "False")
-    add_launch_arg("container_name", "pointcloud_preprocessor_container")
+    add_launch_arg("pointcloud_container_name", "pointcloud_container")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

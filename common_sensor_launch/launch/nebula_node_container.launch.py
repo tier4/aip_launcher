@@ -86,11 +86,19 @@ def launch_setup(context, *args, **kwargs):
 
     nodes = []
 
+    # nodes.append(
+    #     ComposableNode(
+    #         package="glog_component",
+    #         plugin="GlogComponent",
+    #         name="glog_component",
+    #     )
+    # )
+
     nodes.append(
         ComposableNode(
             package="nebula_ros",
-            plugin=sensor_make + "DriverRosWrapper",
-            name=sensor_make.lower() + "_driver_ros_wrapper_node",
+            plugin=sensor_make + "RosWrapper",
+            name=sensor_make.lower() + "_ros_wrapper_node",
             parameters=[
                 {
                     "calibration_file": sensor_calib_fp,
@@ -107,7 +115,15 @@ def launch_setup(context, *args, **kwargs):
                         "cloud_min_angle",
                         "cloud_max_angle",
                         "dual_return_distance_threshold",
+                        "gnss_port",
+                        "packet_mtu_size",
+                        "setup_sensor",
+                        "ptp_profile",
+                        "ptp_transport_type",
+                        "ptp_switch_type",
+                        "ptp_domain",
                     ),
+                    "launch_hw": True
                 },
             ],
             remappings=[
@@ -117,6 +133,20 @@ def launch_setup(context, *args, **kwargs):
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
+
+    # nodes.append(
+    #     ComposableNode(
+    #         package="topic_delay",
+    #         plugin="TopicDelay",
+    #         name="measure_nebula",
+    #         parameters=[
+    #             {
+    #                 "cloud_topic": "pointcloud_raw_ex",
+    #                 "packets_topic": "pandar_packets"
+    #             }
+    #         ]
+    #     )
+    # )
 
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
@@ -136,6 +166,50 @@ def launch_setup(context, *args, **kwargs):
             name="crop_box_filter_self",
             remappings=[
                 ("input", "pointcloud_raw_ex"),
+                ("output", "self_cropped_temp/pointcloud_ex"),
+            ],
+            parameters=[cropbox_parameters],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+
+    # nodes.append(
+    #     ComposableNode(
+    #         package="topic_delay",
+    #         plugin="TopicDelay",
+    #         name="measure_cropbox",
+    #         parameters=[
+    #             {
+    #                 "cloud_topic": "self_cropped_temp/pointcloud_ex",
+    #             }
+    #         ]
+    #     )
+    # )
+
+    # mirror_info = get_vehicle_mirror_info(context)
+    # cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"]
+    # cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"]
+    # cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"]
+    # cropbox_parameters["max_y"] = mirror_info["max_lateral_offset"]
+    # cropbox_parameters["min_z"] = mirror_info["min_height_offset"]
+    # cropbox_parameters["max_z"] = mirror_info["max_height_offset"]
+
+    # todo: miura 24/03/03 temporarily added
+    cropbox_parameters["negative"] = True
+    cropbox_parameters["min_x"] = -50.0
+    cropbox_parameters["max_x"] = 50.0
+    cropbox_parameters["min_y"] = -50.0
+    cropbox_parameters["max_y"] = 50.0
+    cropbox_parameters["min_z"] = 4.5
+    cropbox_parameters["max_z"] = 7.0
+
+    nodes.append(
+        ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+            name="crop_box_filter_ceiling",
+            remappings=[
+                ("input", "self_cropped_temp/pointcloud_ex"),
                 ("output", "self_cropped/pointcloud_ex"),
             ],
             parameters=[cropbox_parameters],
@@ -143,27 +217,18 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    mirror_info = get_vehicle_mirror_info(context)
-    cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"]
-    cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"]
-    cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"]
-    cropbox_parameters["max_y"] = mirror_info["max_lateral_offset"]
-    cropbox_parameters["min_z"] = mirror_info["min_height_offset"]
-    cropbox_parameters["max_z"] = mirror_info["max_height_offset"]
-
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
-            plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-            name="crop_box_filter_mirror",
-            remappings=[
-                ("input", "self_cropped/pointcloud_ex"),
-                ("output", "mirror_cropped/pointcloud_ex"),
-            ],
-            parameters=[cropbox_parameters],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
+    # nodes.append(
+    #     ComposableNode(
+    #         package="topic_delay",
+    #         plugin="TopicDelay",
+    #         name="measure_cropbox_ceiling",
+    #         parameters=[
+    #             {
+    #                 "cloud_topic": "self_cropped/pointcloud_ex",
+    #             }
+    #         ]
+    #     )
+    # )
 
     nodes.append(
         ComposableNode(
@@ -180,81 +245,102 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    # nodes.append(
+    #     ComposableNode(
+    #         package="topic_delay",
+    #         plugin="TopicDelay",
+    #         name="measure_distortion_corrector",
+    #         parameters=[
+    #             {
+    #                 "cloud_topic": "rectified/pointcloud_ex",
+    #             }
+    #         ]
+    #     )
+    # )
+
     nodes.append(
         ComposableNode(
             package="pointcloud_preprocessor",
             plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
             name="ring_outlier_filter",
             remappings=[
-                ("input", "rectified/pointcloud_ex"),
+                ("input", "self_cropped/pointcloud_ex"),    #todo: miura 24/03/03 temporarily input self_cropped/point
                 ("output", "pointcloud"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
 
-    # set container to run all required components in the same process
-    container = ComposableNodeContainer(
-        name=LaunchConfiguration("container_name"),
-        namespace="pointcloud_preprocessor",
-        package="rclcpp_components",
-        executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=nodes,
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
-        output="screen",
-    )
+    # nodes.append(
+    #     ComposableNode(
+    #         package="topic_delay",
+    #         plugin="TopicDelay",
+    #         name="measure_ring_outlier",
+    #         parameters=[
+    #             {
+    #                 "cloud_topic": "pointcloud",
+    #             }
+    #         ]
+    #     )
+    # )
 
-    component_loader = LoadComposableNodes(
+    # set container to run all required components in the same process
+    # container = ComposableNodeContainer(
+    #     name=LaunchConfiguration("container_name"),
+    #     namespace="",
+    #     package="rclcpp_components",
+    #     executable="component_container_mt",
+    #     composable_node_descriptions=nodes,
+    #     output="both",
+    # )
+
+    
+
+    # driver_component = ComposableNode(
+    #     package="nebula_ros",
+    #     plugin=sensor_make + "HwInterfaceRosWrapper",
+    #     # node is created in a global context, need to avoid name clash
+    #     name=sensor_make.lower() + "_hw_interface_ros_wrapper_node",
+    #     parameters=[
+    #         {
+    #             "sensor_model": sensor_model,
+    #             "calibration_file": sensor_calib_fp,
+    #             **create_parameter_dict(
+    #                 "sensor_ip",
+    #                 "host_ip",
+    #                 "scan_phase",
+    #                 "return_mode",
+    #                 "frame_id",
+    #                 "rotation_speed",
+    #                 "data_port",
+    #                 "cloud_min_angle",
+    #                 "cloud_max_angle",
+    #                 "dual_return_distance_threshold",
+    #                 "gnss_port",
+    #                 "packet_mtu_size",
+    #                 "setup_sensor",
+    #                 "ptp_profile",
+    #                 "ptp_transport_type",
+    #                 "ptp_switch_type",
+    #                 "ptp_domain",
+    #             ),
+    #         }
+    #     ],
+    # )
+
+    # driver_component_loader = LoadComposableNodes(
+    #     composable_node_descriptions=[driver_component],
+    #     target_container=container,
+    #     condition=IfCondition(LaunchConfiguration("launch_driver")),
+    # )
+
+    loader = LoadComposableNodes(
         composable_node_descriptions=nodes,
         target_container=LaunchConfiguration("container_name"),
-        condition=IfCondition(LaunchConfiguration("use_pointcloud_container")),
     )
 
-    driver_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "HwInterfaceRosWrapper",
-        # node is created in a global context, need to avoid name clash
-        name=sensor_make.lower() + "_hw_interface_ros_wrapper_node",
-        parameters=[
-            {
-                "sensor_model": sensor_model,
-                "calibration_file": sensor_calib_fp,
-                **create_parameter_dict(
-                    "sensor_ip",
-                    "host_ip",
-                    "scan_phase",
-                    "return_mode",
-                    "frame_id",
-                    "rotation_speed",
-                    "data_port",
-                    "gnss_port",
-                    "cloud_min_angle",
-                    "cloud_max_angle",
-                    "packet_mtu_size",
-                    "dual_return_distance_threshold",
-                    "setup_sensor",
-                    "ptp_profile",
-                    "ptp_tranport_type",
-                    "ptp_switch_type",
-                    "ptp_domain",
-                ),
-            }
-        ],
-    )
-
-    target_container = (
-        container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name")
-    )
-
-    driver_component_loader = LoadComposableNodes(
-        composable_node_descriptions=[driver_component],
-        target_container=target_container,
-        condition=IfCondition(LaunchConfiguration("launch_driver")),
-    )
-
-    return [container, component_loader, driver_component_loader]
+    # return [container]
+    return [loader]
 
 
 def generate_launch_description():
@@ -291,7 +377,6 @@ def generate_launch_description():
     )
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
-    add_launch_arg("use_pointcloud_container", "false")
     add_launch_arg("container_name", "nebula_node_container")
 
     set_container_executable = SetLaunchConfiguration(
