@@ -2,7 +2,7 @@
 
   <arg name="launch_driver" default="true" description="do launch driver"/>
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
-  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_containerE"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
 
   <group>
@@ -15,19 +15,19 @@
     </include>
 
     <!-- IMU Driver -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/imu.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/imu.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- GNSS Driver -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/gnss.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/gnss.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- Radar Driver -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/radar.launch.xml">
+    <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/radar.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include>
+    </include> -->
 
     <!-- Vehicle twist -->
     <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
