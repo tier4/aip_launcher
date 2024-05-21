@@ -37,17 +37,17 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "input_topics": [
-                    # "/sensing/lidar/front_upper/pointcloud",
-                    # "/sensing/lidar/front_lower/pointcloud",
-                    # "/sensing/lidar/left_upper/pointcloud",
-                    # "/sensing/lidar/left_lower/pointcloud",
+                    "/sensing/lidar/front_upper/pointcloud",
+                    "/sensing/lidar/front_lower/pointcloud",
+                    "/sensing/lidar/left_upper/pointcloud",
+                    "/sensing/lidar/left_lower/pointcloud",
                     "/sensing/lidar/right_upper/pointcloud",
                     "/sensing/lidar/right_lower/pointcloud",
                     "/sensing/lidar/rear_upper/pointcloud",
                     "/sensing/lidar/rear_lower/pointcloud",
                 ],
                 "input_offset": [
-                    # 0.005, 0.025, 0.050, 0.005,
+                    0.005, 0.025, 0.050, 0.005,
                     0.050, 0.005, 0.005, 0.025],
                 "timeout_sec": 0.075,
                 "output_frame": LaunchConfiguration("base_frame"),

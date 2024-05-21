@@ -25,10 +25,8 @@
         <arg name="sensor_frame" value="pandar_40p_right"/>
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2370"/>
+        <arg name="data_port" value="2372"/>
         <arg name="scan_phase" value="270.0"/>
-        <!-- <arg name="cloud_min_angle" value="55"/>
-        <arg name="cloud_max_angle" value="270"/> -->
         <arg name="cloud_min_angle" value="0"/>
         <arg name="cloud_max_angle" value="360"/>
         <arg name="return_mode" value="FirstStrongest"/>
@@ -46,7 +44,7 @@
         <arg name="sensor_frame" value="pandar_qt_right"/>
         <arg name="sensor_ip" value="192.168.1.213"/>
         <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2374"/>
+        <arg name="data_port" value="2376"/>
         <arg name="scan_phase" value="270.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
@@ -67,7 +65,7 @@
         <arg name="sensor_frame" value="pandar_40p_rear"/>
         <arg name="sensor_ip" value="192.168.1.204"/>
         <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2371"/>
+        <arg name="data_port" value="2373"/>
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
@@ -86,7 +84,7 @@
         <arg name="sensor_frame" value="pandar_qt_rear"/>
         <arg name="sensor_ip" value="192.168.1.214"/>
         <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2375"/>
+        <arg name="data_port" value="2377"/>
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
