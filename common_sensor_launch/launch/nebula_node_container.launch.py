@@ -163,7 +163,6 @@ def launch_setup(context, *args, **kwargs):
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
-
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
 
@@ -220,9 +219,6 @@ def launch_setup(context, *args, **kwargs):
     #         ],
     #         parameters=[cropbox_parameters],
     #         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    #     )
-    # )
-
     nodes.append(
         ComposableNode(
             package="pointcloud_preprocessor",
