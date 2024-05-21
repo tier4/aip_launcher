@@ -17,7 +17,6 @@
   <arg name="ptp_domain" default="0"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="container_name" default="hesai_node_container"/>
-  <!-- <arg name="setup_sensor" default="false"/> -->
   <arg name="setup_sensor" default="true"/>
 
   <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
