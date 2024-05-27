@@ -93,3 +93,4 @@
 
       ## /others/005-visibility_validation/front_lower
       "dual_return_filter: /sensing/lidar/front_lower: visibility_validation": default
+      "dual_return_filter: /sensing/lidar/left_upper: visibility_validation": default
