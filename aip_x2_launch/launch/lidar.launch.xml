@@ -39,28 +39,7 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="right_lower" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_QT128.launch.xml">
-        <arg name="sensor_frame" value="pandar_qt_right"/>
-        <arg name="sensor_ip" value="192.168.1.213"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2376"/>
-        <arg name="scan_phase" value="270.0"/>
-        <arg name="cloud_min_angle" value="90"/>
-        <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
-        <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="UDP"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="rear_lower" />
+      <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
         <arg name="sensor_frame" value="pandar_40p_rear"/>
         <arg name="sensor_ip" value="192.168.1.204"/>
@@ -79,7 +58,28 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="rear_upper" />
+      <push-ros-namespace namespace="right_lower" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_QT128.launch.xml">
+        <arg name="sensor_frame" value="pandar_qt_right"/>
+        <arg name="sensor_ip" value="192.168.1.213"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2376"/>
+        <arg name="scan_phase" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="Strongest"/>
+        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_switch_type" value="NON_TSN"/>
+        <arg name="ptp_domain" value="5"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="pointcloud_container"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="rear_lower" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_QT128.launch.xml">
         <arg name="sensor_frame" value="pandar_qt_rear"/>
         <arg name="sensor_ip" value="192.168.1.214"/>
@@ -90,12 +90,93 @@
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="Strongest"/>
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="UDP"/>
+        <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
+        <arg name="ptp_domain" value="5"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
+      </include>
+    </group>
+
+    <!-- LiDARs connected to Sub ECU -->
+    <group>
+      <push-ros-namespace namespace="left_upper" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="sensor_frame" value="pandar_40p_left"/>
+        <arg name="sensor_ip" value="192.168.1.201"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2374"/>
+        <arg name="scan_phase" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="Strongest"/>
+        <arg name="ptp_switch_type" value="NON_TSN"/>
+        <arg name="ptp_domain" value="3"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="front_upper" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="sensor_frame" value="pandar_40p_front"/>
+        <arg name="sensor_ip" value="192.168.1.202"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2375"/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="Strongest"/>
+        <arg name="ptp_switch_type" value="NON_TSN"/>
+        <arg name="ptp_domain" value="4"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="left_lower" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_QT128.launch.xml">
+        <arg name="sensor_frame" value="pandar_qt_left"/>
+        <arg name="sensor_ip" value="192.168.1.211"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2378"/>
+        <arg name="scan_phase" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="Strongest"/>
+        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_switch_type" value="NON_TSN"/>
+        <arg name="ptp_domain" value="5"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="front_lower" />
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_QT128.launch.xml">
+        <arg name="sensor_frame" value="pandar_qt_front"/>
+        <arg name="sensor_ip" value="192.168.1.212"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2379"/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="Strongest"/>
+        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_switch_type" value="NON_TSN"/>
+        <arg name="ptp_domain" value="5"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
       </include>
     </group>
 

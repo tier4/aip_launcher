@@ -12,43 +12,6 @@
     <!-- ros2 run topic_tools transform /vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float64 'std_msgs.msg.Float64(data=m.steering_tire_angle)'  \-\-import autoware_auto_vehicle_msgs std_msgs -->
 
     <group>
-      <push-ros-namespace namespace="can1"/>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml">
-          <arg name="odometry_topic" value="$(var odometry_topic)"/>
-          <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
-          <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
-          <arg name="frame_id" value="can1"/>
-          <arg name="interface" value="can1"/>
-          <arg name="sensor_model" value="SRR520"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="can2"/>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml">
-          <arg name="odometry_topic" value="$(var odometry_topic)"/>
-          <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
-          <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
-          <arg name="frame_id" value="can2"/>
-          <arg name="interface" value="can2"/>
-          <arg name="sensor_model" value="SRR520"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="can3"/>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml">
-          <arg name="odometry_topic" value="$(var odometry_topic)"/>
-          <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
-          <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
-          <arg name="frame_id" value="can3"/>
-          <arg name="interface" value="can3"/>
-          <arg name="sensor_model" value="SRR520"/>
-      </include>
-    </group>
-
-
-    <group>
       <push-ros-namespace namespace="front_center"/>
       <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
         <arg name="odometry_topic" value="$(var odometry_topic)"/>
