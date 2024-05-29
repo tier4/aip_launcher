@@ -15,9 +15,9 @@
     </include>
 
     <!-- IMU Driver -->
-    <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/imu.launch.xml">
+    <include file="$(find-pkg-share aip_x2_launch)/launch/imu.launch.xml">
       <arg name="launch_driver" value="$(var launch_driver)" />
-    </include> -->
+    </include>
 
     <!-- GNSS Driver -->
     <!-- <include file="$(find-pkg-share aip_x2_launch)/launch/gnss.launch.xml">
