@@ -43,7 +43,7 @@
     <group>
       <push-ros-namespace namespace="front_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
-        <arg name="sensor_model" value="PandarQT" />
+        <arg name="sensor_model" value="PandarQT64" />
         <arg name="frame_id" value="pandar_qt_front" />
         <arg name="sensor_ip" value="192.168.120.211" />
         <arg name="data_port" value="2331" />
@@ -101,7 +101,7 @@
     <group>
       <push-ros-namespace namespace="left_lower" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
-        <arg name="sensor_model" value="PandarQT" />
+        <arg name="sensor_model" value="PandarQT64" />
         <arg name="frame_id" value="pandar_qt_left" />
         <arg name="sensor_ip" value="192.168.120.212" />
         <arg name="data_port" value="2332" />
@@ -159,7 +159,7 @@
     <group>
       <push-ros-namespace namespace="right_lower" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
-        <arg name="sensor_model" value="PandarQT" />
+        <arg name="sensor_model" value="PandarQT64" />
         <arg name="frame_id" value="pandar_qt_right" />
         <arg name="sensor_ip" value="192.168.120.213" />
         <arg name="data_port" value="2333" />
@@ -217,7 +217,7 @@
     <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
-        <arg name="sensor_model" value="PandarQT" />
+        <arg name="sensor_model" value="PandarQT64" />
         <arg name="frame_id" value="pandar_qt_upper" />
         <arg name="sensor_ip" value="192.168.120.214" />
         <arg name="data_port" value="2334" />
