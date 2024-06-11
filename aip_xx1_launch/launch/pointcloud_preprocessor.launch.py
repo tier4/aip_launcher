@@ -23,7 +23,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-
+from launch.launch_description_sources import AnyLaunchDescriptionSource
 
 def launch_setup(context, *args, **kwargs):
     # set concat filter as a component
