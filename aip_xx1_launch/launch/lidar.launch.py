@@ -13,17 +13,32 @@
 # limitations under the License.
 
 
-from launch import LaunchDescription
 from copy import deepcopy
-from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription
-from launch.actions import OpaqueFunction
-from launch.substitutions import LaunchConfiguration, EnvironmentVariable
-from launch_ros.actions import PushRosNamespace
+import os
+from typing import Any
+from typing import List
+
 from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.actions import GroupAction
+from launch.actions import IncludeLaunchDescription
+from launch.actions import OpaqueFunction
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-import os
+from launch.substitutions import EnvironmentVariable
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import PushRosNamespace
 import yaml
+
+
+def join_list_of_arguments(arguments: List[Any]) -> str:
+    """Join a list of arguments into a string, used by Include Launch Description.
+
+    Example:
+        join_list_of_arguments([1,2,3]) -> "[1, 2, 3]"
+    """
+    return f"[{', '.join([str(arg) for arg in arguments])}]"
 
 
 def generate_launch_dictionary():
@@ -77,7 +92,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     path_dictionary = generate_launch_dictionary()
 
     base_parameters = {}
-    base_parameters["host_ip"] = LaunchConfiguration("host_ip").perform(context)
+    base_parameters["host_ip"] = LaunchConfiguration("host_ip")
     base_parameters["vehicle_mirror_param_file"] = LaunchConfiguration(
         "vehicle_mirror_param_file"
     ).perform(context)
@@ -86,15 +101,15 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     base_parameters["pointcloud_container_name"] = LaunchConfiguration(
         "pointcloud_container_name"
     ).perform(context)
-    base_parameters["enable_blockage_diag"] = LaunchConfiguration(
-        "enable_blockage_diag"
-    ).perform(context)
+    base_parameters["enable_blockage_diag"] = LaunchConfiguration("enable_blockage_diag").perform(
+        context
+    )
 
     sub_launch_actions = []
     for launch in config["launches"]:
         launch_parameters = deepcopy(base_parameters)
-        launch_parameters.update(launch["parameters"]) # dict
-        launch_parameter_list_tuple = [(str(k),str(v)) for k,v in launch_parameters.items()]
+        launch_parameters.update(launch["parameters"])  # dict
+        launch_parameter_list_tuple = [(str(k), str(v)) for k, v in launch_parameters.items()]
         sub_launch_action = GroupAction(
             [
                 PushRosNamespace(launch["namespace"]),
@@ -106,6 +121,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         )
         sub_launch_actions.append(sub_launch_action)
 
+    processor_dict = config["preprocessor"]
     sub_launch_actions.append(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -119,13 +135,17 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
                 ("base_frame", "base_link"),
                 ("use_multithread", "true"),
                 ("use_intra_process", "true"),
-                ("use_pointcloud_container", LaunchConfiguration(
-                    "use_pointcloud_container"
-                )),
-                ("pointcloud_container_name", LaunchConfiguration(
-                    "pointcloud_container_name"
-                ))
-            ]
+                ("use_pointcloud_container", LaunchConfiguration("use_pointcloud_container")),
+                ("pointcloud_container_name", LaunchConfiguration("pointcloud_container_name")),
+                ("input_topics", join_list_of_arguments(processor_dict["input_topics"])),
+                ("input_offset", join_list_of_arguments(processor_dict["input_offset"])),
+                ("timeout_sec", str(processor_dict["timeout_sec"])),
+                ("input_twist_topic_type", str(processor_dict["input_twist_topic_type"])),
+                (
+                    "publish_synchronized_pointcloud",
+                    str(processor_dict["publish_synchronized_pointcloud"]),
+                ),
+            ],
         )
     )
     return [
@@ -146,9 +166,7 @@ def generate_launch_description():
     launch_arguments.append(config_file_arg)
 
     def add_launch_arg(name: str, default_value=None, **kwargs):
-        launch_arguments.append(
-            DeclareLaunchArgument(name, default_value=default_value, **kwargs)
-        )
+        launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value, **kwargs))
 
     add_launch_arg("launch_driver", "true")
     add_launch_arg("host_ip", "192.168.1.10")
@@ -158,9 +176,7 @@ def generate_launch_description():
         default_value=EnvironmentVariable("VEHICLE_ID", default_value="default"),
     )
     add_launch_arg("vehicle_mirror_param_file")
-    add_launch_arg(
-        "use_pointcloud_container", "false", description="launch pointcloud container"
-    )
+    add_launch_arg("use_pointcloud_container", "false", description="launch pointcloud container")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("enable_blockage_diag", "false")
 
