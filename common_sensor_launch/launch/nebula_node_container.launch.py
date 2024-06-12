@@ -97,6 +97,34 @@ def launch_setup(context, *args, **kwargs):
     nodes.append(
         ComposableNode(
             package="nebula_ros",
+            plugin=sensor_make + "HwMonitorRosWrapper",
+            name=sensor_make.lower() + "_hardware_monitor_ros_wrapper_node",
+            parameters=[
+                {
+                    "sensor_model": LaunchConfiguration("sensor_model"),
+                    "return_mode": LaunchConfiguration("return_mode"),
+                    "frame_id": LaunchConfiguration("frame_id"),
+                    "scan_phase": LaunchConfiguration("scan_phase"),
+                    "sensor_ip": LaunchConfiguration("sensor_ip"),
+                    "host_ip": LaunchConfiguration("host_ip"),
+                    "data_port": LaunchConfiguration("data_port"),
+                    "gnss_port": LaunchConfiguration("gnss_port"),
+                    "packet_mtu_size": LaunchConfiguration("packet_mtu_size"),
+                    "rotation_speed": LaunchConfiguration("rotation_speed"),
+                    "cloud_min_angle": LaunchConfiguration("cloud_min_angle"),
+                    "cloud_max_angle": LaunchConfiguration("cloud_max_angle"),
+                    "diag_span": LaunchConfiguration("diag_span"),
+                    "dual_return_distance_threshold": LaunchConfiguration("dual_return_distance_threshold"),
+                    "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
+                },
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+
+    nodes.append(
+        ComposableNode(
+            package="nebula_ros",
             plugin=sensor_make + "DriverRosWrapper",
             name=sensor_make.lower() + "_driver_ros_wrapper_node",
             parameters=[
@@ -152,7 +180,8 @@ def launch_setup(context, *args, **kwargs):
             name="crop_box_filter_self",
             remappings=[
                 ("input", "pointcloud_raw_ex"),
-                ("output", "self_cropped_temp/pointcloud_ex"),
+                # ("output", "self_cropped_temp/pointcloud_ex"),
+                ("output", "self_cropped/pointcloud_ex"),
             ],
             parameters=[cropbox_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -173,22 +202,24 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["max_x"] = 50.0
     cropbox_parameters["min_y"] = -50.0
     cropbox_parameters["max_y"] = 50.0
+    # cropbox_parameters["min_z"] = 0.8
+    # cropbox_parameters["max_z"] = 5.0
     cropbox_parameters["min_z"] = 4.5
     cropbox_parameters["max_z"] = 7.0
 
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
-            plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-            name="crop_box_filter_ceiling",
-            remappings=[
-                ("input", "self_cropped_temp/pointcloud_ex"),
-                ("output", "self_cropped/pointcloud_ex"),
-            ],
-            parameters=[cropbox_parameters],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
+    # nodes.append(
+    #     ComposableNode(
+    #         package="pointcloud_preprocessor",
+    #         plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+    #         name="crop_box_filter_ceiling",
+    #         remappings=[
+    #             ("input", "self_cropped_temp/pointcloud_ex"),
+    #             ("output", "self_cropped/pointcloud_ex"),
+    #         ],
+    #         parameters=[cropbox_parameters],
+    #         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    #     )
+    # )
 
     nodes.append(
         ComposableNode(
@@ -301,6 +332,8 @@ def generate_launch_description():
     add_launch_arg(
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
+    add_launch_arg("diag_span", "1000")
+    add_launch_arg("delay_monitor_ms", "2000")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
