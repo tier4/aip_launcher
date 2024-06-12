@@ -1,7 +1,9 @@
 <launch>
 
   <arg name="launch_driver" default="true"/>
+  <arg name="setup_sensor" default="true"/>
   <arg name="host_ip" default="192.168.1.11"/>
+  <!-- <arg name="host_ip" default="255.255.255.255"/> -->
   <arg name="use_concat_filter" default="true"/>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
   <arg name="vehicle_mirror_param_file"/>
@@ -22,6 +24,7 @@
     <group>
       <push-ros-namespace namespace="right_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="sensor_frame" value="pandar_40p_right"/>
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -29,7 +32,7 @@
         <arg name="scan_phase" value="270.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
+        <arg name="return_mode" value="Dual"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="1"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -41,6 +44,7 @@
     <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="sensor_frame" value="pandar_40p_rear"/>
         <arg name="sensor_ip" value="192.168.1.204"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -48,7 +52,7 @@
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
+        <arg name="return_mode" value="Dual"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="2"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -88,7 +92,7 @@
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
+        <arg name="return_mode" value="Dual"/>
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
@@ -103,6 +107,7 @@
     <group>
       <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="sensor_frame" value="pandar_40p_left"/>
         <arg name="sensor_ip" value="192.168.1.201"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -110,7 +115,7 @@
         <arg name="scan_phase" value="270.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
+        <arg name="return_mode" value="Dual"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="3"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -122,6 +127,7 @@
     <group>
       <push-ros-namespace namespace="front_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_OT128.launch.xml">
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="sensor_frame" value="pandar_40p_front"/>
         <arg name="sensor_ip" value="192.168.1.202"/>
         <arg name="host_ip" value="$(var host_ip)"/>
@@ -129,7 +135,7 @@
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Strongest"/>
+        <arg name="return_mode" value="Dual"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="4"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
