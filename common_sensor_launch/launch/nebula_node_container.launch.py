@@ -25,6 +25,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -54,14 +55,11 @@ def get_vehicle_info(context):
     return p
 
 
-def get_vehicle_mirror_info(context):
-    path = LaunchConfiguration("vehicle_mirror_param_file").perform(context)
-    with open(path, "r") as f:
-        p = yaml.safe_load(f)["/**"]["ros__parameters"]
-    return p
-
-
 def launch_setup(context, *args, **kwargs):
+    def load_composable_node_param(param_path):
+        with open(LaunchConfiguration(param_path).perform(context), "r") as f:
+            return yaml.safe_load(f)["/**"]["ros__parameters"]
+
     def create_parameter_dict(*args):
         result = {}
         for x in args:
@@ -183,7 +181,7 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    mirror_info = get_vehicle_mirror_info(context)
+    mirror_info = load_composable_node_param("vehicle_mirror_param_file")
     cropbox_parameters["min_x"] = mirror_info["min_longitudinal_offset"]
     cropbox_parameters["max_x"] = mirror_info["max_longitudinal_offset"]
     cropbox_parameters["min_y"] = mirror_info["min_lateral_offset"]
@@ -284,13 +282,43 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
+    blockage_diag_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::BlockageDiagComponent",
+        name="blockage_diag",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "blockage_diag/pointcloud"),
+        ],
+        parameters=[
+            {
+                "angle_range": [
+                    float(context.perform_substitution(LaunchConfiguration("cloud_min_angle"))),
+                    float(context.perform_substitution(LaunchConfiguration("cloud_max_angle"))),
+                ],
+                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+                "max_distance_range": LaunchConfiguration("max_range"),
+                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
+            }
+        ]
+        + [load_composable_node_param("blockage_diagnostics_param_file")],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
     driver_component_loader = LoadComposableNodes(
         composable_node_descriptions=[driver_component],
         target_container=container,
         condition=IfCondition(LaunchConfiguration("launch_driver")),
     )
+    blockage_diag_loader = LoadComposableNodes(
+        composable_node_descriptions=[blockage_diag_component],
+        target_container=container,
+        condition=IfCondition(LaunchConfiguration("enable_blockage_diag")),
+    )
 
-    return [container, driver_component_loader]
+    return [container, driver_component_loader, blockage_diag_loader]
 
 
 def generate_launch_description():
@@ -336,6 +364,17 @@ def generate_launch_description():
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("diag_span", "1000", "")
     add_launch_arg("delay_monitor_ms", "2000", "")
+    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+
+    add_launch_arg("enable_blockage_diag", "true")
+    add_launch_arg("horizontal_ring_id", "64")
+    add_launch_arg("vertical_bins", "128")
+    add_launch_arg("is_channel_order_top2down", "true")
+    add_launch_arg("horizontal_resolution", "0.4")
+    add_launch_arg(
+        "blockage_diagnostics_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+    )
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

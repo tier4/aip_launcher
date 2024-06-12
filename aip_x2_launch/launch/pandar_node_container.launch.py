@@ -43,6 +43,10 @@ def get_pandar_monitor_info():
     return p
 
 
+def str2vector(string):
+    return [float(x) for x in string.strip("[]").split(",")]
+
+
 def get_vehicle_info(context):
     # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
     # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
@@ -202,14 +206,22 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
+    if LaunchConfiguration("output_as_sensor_frame").perform(context):
+        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
+    else:
+        ring_outlier_filter_parameters = {
+            "output_frame": ""
+        }  # keep the output frame as the input frame
     ring_outlier_filter_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
         name="ring_outlier_filter",
         remappings=[
             ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud"),
+            ("output", "pointcloud_before_sync"),
         ],
+        parameters=[ring_outlier_filter_parameters],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -219,7 +231,7 @@ def launch_setup(context, *args, **kwargs):
         name="dual_return_filter",
         remappings=[
             ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud"),
+            ("output", "pointcloud_before_sync"),
         ],
         parameters=[
             {
@@ -232,6 +244,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    distance_range = str2vector(context.perform_substitution(LaunchConfiguration("distance_range")))
     blockage_diag_component = ComposableNode(
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::BlockageDiagComponent",
@@ -245,7 +258,9 @@ def launch_setup(context, *args, **kwargs):
                 "angle_range": LaunchConfiguration("angle_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "model": LaunchConfiguration("model"),
+                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+                "max_distance_range": distance_range[1],
+                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
             }
         ]
         + [load_composable_node_param("blockage_diagnostics_param_file")],
@@ -323,6 +338,7 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"))
     add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
@@ -336,6 +352,7 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
+    add_launch_arg("output_as_sensor_frame", "True")
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",

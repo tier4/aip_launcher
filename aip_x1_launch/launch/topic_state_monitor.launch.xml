@@ -76,7 +76,7 @@
   <!-- Topic Monitor for Concat Filter -->
   <include file="$(find-pkg-share topic_state_monitor)/launch/topic_state_monitor.launch.xml">
     <arg name="node_name_suffix" value="rough_no_ground"/>
-    <arg name="topic" value="/perception/obstacle_segmentation/single_frame/pointcloud_raw"/>
+    <arg name="topic" value="/perception/obstacle_segmentation/single_frame/pointcloud"/>
     <arg name="topic_type" value="sensor_msgs/msg/PointCloud2"/>
     <arg name="best_effort" value="true"/>
     <arg name="diag_name" value="sensing_topic_status"/>
