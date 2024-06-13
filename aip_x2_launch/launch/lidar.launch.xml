@@ -92,7 +92,7 @@
         <arg name="scan_phase" value="180.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
+        <arg name="return_mode" value="Strongest"/>
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
