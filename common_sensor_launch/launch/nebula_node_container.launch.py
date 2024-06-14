@@ -203,16 +203,18 @@ def launch_setup(context, *args, **kwargs):
         max_z=right["max_height_offset"],
     )
 
-    right_mirror_crop_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_mirror_right",
-        remappings=[
-            ("input", "self_cropped/pointcloud_ex"),
-            ("output", "right_mirror_cropped/pointcloud_ex"),
-        ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    nodes.append(
+        ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+            name="crop_box_filter_mirror_right",
+            remappings=[
+                ("input", "self_cropped/pointcloud_ex"),
+                ("output", "right_mirror_cropped/pointcloud_ex"),
+            ],
+            parameters=[cropbox_parameters],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
     )
 
     left = mirror_info["left"]
@@ -225,16 +227,18 @@ def launch_setup(context, *args, **kwargs):
         max_z=left["max_height_offset"],
     )
 
-    left_mirror_crop_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_mirror_left",
-        remappings=[
-            ("input", "right_mirror_cropped/pointcloud_ex"),
-            ("output", "mirror_cropped/pointcloud_ex"),
-        ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    nodes.append(
+        ComposableNode(
+            package="pointcloud_preprocessor",
+            plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+            name="crop_box_filter_mirror_left",
+            remappings=[
+                ("input", "right_mirror_cropped/pointcloud_ex"),
+                ("output", "mirror_cropped/pointcloud_ex"),
+            ],
+            parameters=[cropbox_parameters],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
     )
 
     nodes.append(
@@ -252,14 +256,6 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
-    if LaunchConfiguration("output_as_sensor_frame").perform(context):
-        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
-    else:
-        ring_outlier_filter_parameters = {
-            "output_frame": ""
-        }  # keep the output frame as the input frame
-
     nodes.append(
         ComposableNode(
             package="pointcloud_preprocessor",
@@ -269,7 +265,6 @@ def launch_setup(context, *args, **kwargs):
                 ("input", "rectified/pointcloud_ex"), 
                 ("output", "pointcloud_before_sync"),
             ],
-            parameters=[ring_outlier_filter_parameters],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
@@ -277,18 +272,11 @@ def launch_setup(context, *args, **kwargs):
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
-        namespace="pointcloud_preprocessor",
+        namespace="",
         package="rclcpp_components",
-        executable=LaunchConfiguration("container_executable"),
+        executable="component_container_mt",
         composable_node_descriptions=nodes,
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
-        output="screen",
-    )
-
-    component_loader = LoadComposableNodes(
-        composable_node_descriptions=nodes,
-        target_container=LaunchConfiguration("container_name"),
-        condition=IfCondition(LaunchConfiguration("use_pointcloud_container")),
+        output="both",
     )
 
     driver_component = ComposableNode(
@@ -323,19 +311,13 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    target_container = (
-        container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("container_name")
-    )
-
     driver_component_loader = LoadComposableNodes(
         composable_node_descriptions=[driver_component],
-        target_container=target_container,
+        target_container=container,
         condition=IfCondition(LaunchConfiguration("launch_driver")),
     )
 
-    return [container, component_loader, driver_component_loader]
+    return [container, driver_component_loader]
 
 
 def generate_launch_description():
@@ -374,9 +356,7 @@ def generate_launch_description():
     add_launch_arg("delay_monitor_ms", "2000")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
-    add_launch_arg("use_pointcloud_container", "false")
     add_launch_arg("container_name", "nebula_node_container")
-    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
