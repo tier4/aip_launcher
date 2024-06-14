@@ -20,8 +20,8 @@
         <arg name="data_port" value="2321" />
         <arg name="gnss_port" value="10121" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.5"/>
         <arg name="max_range" value="200.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
@@ -29,7 +29,7 @@
         <!--arg name="horizontal_ring_id" value="12" /-->
         <arg name="return_mode" value="Strongest" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="1"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -53,16 +53,16 @@
         <arg name="data_port" value="2331" />
         <arg name="gnss_port" value="10131" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="20.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="5"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -86,16 +86,16 @@
         <arg name="data_port" value="2322" />
         <arg name="gnss_port" value="10122" />
         <arg name="scan_phase" value="305.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="305.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="305"/>
         <arg name="min_range" value="0.5"/>
         <arg name="max_range" value="200.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="2"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -119,16 +119,16 @@
         <arg name="data_port" value="2332" />
         <arg name="gnss_port" value="10132" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="20.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="5"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -152,8 +152,8 @@
         <arg name="data_port" value="2323" />
         <arg name="gnss_port" value="10121" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="cloud_min_angle" value="55.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="55"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.5"/>
         <arg name="max_range" value="200.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
@@ -161,7 +161,7 @@
         <!--arg name="horizontal_ring_id" value="12" /-->
         <arg name="return_mode" value="Strongest" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="3"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -185,16 +185,16 @@
         <arg name="data_port" value="2333" />
         <arg name="gnss_port" value="10133" />
         <arg name="scan_phase" value="270.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="20.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="5"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -218,17 +218,16 @@
         <arg name="data_port" value="2324" />
         <arg name="gnss_port" value="10124" />
         <arg name="scan_phase" value="180.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.5"/>
         <arg name="max_range" value="200.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
         <arg name="return_mode" value="Strongest" />
-        <arg name="return_mode" value="Strongest" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="4"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
@@ -252,16 +251,16 @@
         <arg name="data_port" value="2334" />
         <arg name="gnss_port" value="10134" />
         <arg name="scan_phase" value="180.0" />
-        <arg name="cloud_min_angle" value="90.0"/>
-        <arg name="cloud_max_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="20.0"/>
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
-        <arg name="ptp_transport_type" value="L2"/>
+        <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="5"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
