@@ -27,11 +27,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="1"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -60,11 +60,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Dual" />
+        <arg name="return_mode" value="First" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -97,7 +97,7 @@
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="2"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -126,11 +126,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Dual" />
+        <arg name="return_mode" value="First" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -159,11 +159,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="3"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -192,11 +192,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Dual" />
+        <arg name="return_mode" value="First" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -225,11 +225,11 @@
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <!--arg name="vertical_bins" value ="40" /-->
         <!--arg name="horizontal_ring_id" value="12" /-->
-        <arg name="return_mode" value="Strongest" />
+        <arg name="return_mode" value="Dual" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="4"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
@@ -262,7 +262,7 @@
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <!--arg name="min_azimuth_deg" value="135.0"/-->
         <!--arg name="max_azimuth_deg" value="225.0"/-->
         <!--arg name="is_channel_order_top2down" value="true"/-->
