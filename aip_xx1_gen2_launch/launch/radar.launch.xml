@@ -9,7 +9,6 @@
   <group>
     <push-ros-namespace namespace="radar"/>
 
-    <!--node pkg="tf2_ros" exec="static_transform_publisher" name="tf_broadcaster" output="screen" args="$(var wheel_base) 0 0 0 0 0 base_link autosar"/-->
     <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_auto_vehicle_msgs std_msgs --wait-for-start"/>
     <!-- ros2 run topic_tools transform /vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float64 'std_msgs.msg.Float64(data=m.steering_tire_angle)'  \-\-import autoware_auto_vehicle_msgs std_msgs -->
 
