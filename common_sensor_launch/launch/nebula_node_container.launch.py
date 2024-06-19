@@ -141,7 +141,7 @@ def launch_setup(context, *args, **kwargs):
             plugin="pointcloud_preprocessor::CropBoxFilterComponent",
             name="crop_box_filter_self",
             remappings=[
-                ("input", "pointcloud_raw_ex"),
+                ("input", "velodyne_points"),
                 ("output", "self_cropped/pointcloud_ex"),
             ],
             parameters=[cropbox_parameters],
@@ -250,7 +250,7 @@ def launch_setup(context, *args, **kwargs):
         plugin="pointcloud_preprocessor::BlockageDiagComponent",
         name="blockage_diag",
         remappings=[
-            ("input", "pointcloud_raw_ex"),
+            ("input", "velodyne_points"),
             ("output", "blockage_diag/pointcloud"),
         ],
         parameters=[
