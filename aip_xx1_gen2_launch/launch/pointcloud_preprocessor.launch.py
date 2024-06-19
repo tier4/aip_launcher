@@ -20,7 +20,6 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 
@@ -37,53 +36,29 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             {
-                "input_topics": [
-                    "/sensing/lidar/top/pointcloud_before_sync",
-                    "/sensing/lidar/side_left/pointcloud_before_sync",
-                    "/sensing/lidar/side_right/pointcloud_before_sync",
-                    "/sensing/lidar/front_left/pointcloud_before_sync",
-                    "/sensing/lidar/front_right/pointcloud_before_sync",
-                ],
+                "input_topics": LaunchConfiguration("input_topics"),
                 "output_frame": LaunchConfiguration("base_frame"),
-                "input_offset": [
-                    0.035,
-                    0.025,
-                    0.025,
-                    0.025,
-                    0.025,
-                ],  # each sensor will wait 60, 70, 70, 70ms
-                "timeout_sec": 0.095,  # set shorter than 100ms
-                "input_twist_topic_type": "twist",
-                "publish_synchronized_pointcloud": True,
+                "input_offset": LaunchConfiguration(
+                    "input_offset"
+                ),  # each sensor will wait 60, 70, 70, 70ms
+                "timeout_sec": LaunchConfiguration("timeout_sec"),  # set shorter than 100ms
+                "input_twist_topic_type": LaunchConfiguration("input_twist_topic_type"),
+                "publish_synchronized_pointcloud": LaunchConfiguration(
+                    "publish_synchronized_pointcloud"
+                ),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    # set container to run all required components in the same process
-    container = ComposableNodeContainer(
-        name=LaunchConfiguration("individual_container_name"),
-        namespace="",
-        package="rclcpp_components",
-        executable=LaunchConfiguration("container_executable"),
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
-        output="screen",
-    )
-
-    target_container = (
-        container
-        if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context)
-        else LaunchConfiguration("pointcloud_container_name")
-    )
-
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
-        target_container=target_container,
+        target_container=LaunchConfiguration("pointcloud_container_name"),
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
-    return [container, concat_loader]
+    return [concat_loader]
 
 
 def generate_launch_description():
@@ -95,9 +70,16 @@ def generate_launch_description():
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
-    add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("individual_container_name", "concatenate_container")
+    add_launch_arg(
+        "input_topics",
+        "[/sensing/lidar/top/pointcloud, /sensing/lidar/left/pointcloud, /sensing/lidar/right/pointcloud, /sensing/lidar/rear/pointcloud]",
+    )
+    add_launch_arg("input_offset", "[0.035, 0.025, 0.025, 0.025]")
+    add_launch_arg("timeout_sec", "0.095")
+    add_launch_arg("input_twist_topic_type", "twist")
+    add_launch_arg("publish_synchronized_pointcloud", "False")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

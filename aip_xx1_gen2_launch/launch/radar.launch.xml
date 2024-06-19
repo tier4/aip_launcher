@@ -1,12 +1,34 @@
 <launch>
-  <arg name="launch_driver" default="true" description="do launch driver"/>
+  <arg name="ars_version" default="$(env ARS_VERSION ars408)" description="ars408 or ars548" />
 
-  <let name="odometry_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-  <let name="acceleration_topic" value="/localization/acceleration"/>
-  <let name="steering_angle_topic" value="/vehicle/status/steering_status_scalar"/>
-  <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share common_sensor_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
 
-  <group>
+  <group if="$(eval &quot;'$(var ars_version)'=='ars408'&quot;)">
+    <arg name="launch_driver" default="true" />
+    <arg name="input/frame" default="from_can_bus" />
+    <arg name="radar_can_device" default="canRadar" />
+
+    <push-ros-namespace namespace="radar"/>
+
+    <group>
+      <push-ros-namespace namespace="front_center"/>
+
+      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="interface" value="$(var radar_can_device)" />
+        <arg name="input/frame" value="$(var input/frame)" />
+        <arg name="output_frame" value="ars408_front_center" />
+      </include>
+    </group>
+
+    <node pkg="topic_tools" exec="relay" name="radar_relay" output="log" args="front_center/detected_objects detected_objects"/>
+
+  </group>
+
+  <group if="$(eval &quot;'$(var ars_version)'=='ars548'&quot;)">
+    <let name="odometry_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+    <let name="acceleration_topic" value="/localization/acceleration"/>
+    <let name="steering_angle_topic" value="/vehicle/status/steering_status_scalar"/>
+    <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share common_sensor_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
     <push-ros-namespace namespace="radar"/>
 
     <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_auto_vehicle_msgs std_msgs --wait-for-start"/>
@@ -210,4 +232,5 @@
       <param from="$(var merger_param_path)"/>
     </node>
   </group>
+
 </launch>
