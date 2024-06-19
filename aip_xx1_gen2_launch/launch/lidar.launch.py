@@ -126,7 +126,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
-                    get_package_share_directory("aip_xx1_launch"),
+                    get_package_share_directory("aip_xx1_gen2_launch"),
                     "launch",
                     "pointcloud_preprocessor.launch.py",
                 )
@@ -159,7 +159,7 @@ def generate_launch_description():
     config_file_arg = DeclareLaunchArgument(
         "config_file",
         default_value=os.path.join(
-            get_package_share_directory("aip_xx1_launch"), "config", "lidar_launch.yaml"
+            get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_launch.yaml"
         ),
         description="Path to the configuration file",
     )

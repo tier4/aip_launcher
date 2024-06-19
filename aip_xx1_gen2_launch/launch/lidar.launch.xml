@@ -114,7 +114,7 @@
       </include>
     </group>
 
-    <include file="$(find-pkg-share aip_xx1_launch)/launch/pointcloud_preprocessor.launch.py">
+    <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/pointcloud_preprocessor.launch.py">
       <arg name="base_frame" value="base_link"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
