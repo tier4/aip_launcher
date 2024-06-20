@@ -246,7 +246,7 @@
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
         <arg name="sensor_model" value="PandarQT64" />
-        <arg name="frame_id" value="pandar_qt_upper" />
+        <arg name="frame_id" value="pandar_qt_rear" />
         <arg name="sensor_ip" value="192.168.120.214" />
         <arg name="data_port" value="2334" />
         <arg name="gnss_port" value="10134" />
