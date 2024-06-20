@@ -56,7 +56,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -88,7 +92,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -120,7 +128,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -152,7 +164,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -184,7 +200,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -216,7 +236,11 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
+<<<<<<< HEAD
       <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+=======
+      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -227,7 +251,11 @@
 
     <!-- merge radar objects -->
     <let name="merger_param_path" value="$(find-pkg-share aip_xx1_gen2_launch)/config/radar_simple_object_merger.param.yaml"/>
+<<<<<<< HEAD
     <node pkg="autoware_simple_object_merger" exec="simple_object_merger_node" name="simple_object_merger" output="screen">
+=======
+    <node pkg="simple_object_merger" exec="simple_object_merger_node" name="simple_object_merger" output="screen">
+>>>>>>> 0e294a7 (feat(aip_xx1_description): update for xx1 gen2 (#210))
       <remap from="~/output/objects" to="detected_objects"/>
       <param from="$(var merger_param_path)"/>
     </node>
