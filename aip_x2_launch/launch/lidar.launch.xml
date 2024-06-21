@@ -3,12 +3,15 @@
   <arg name="launch_driver" default="true"/>
   <arg name="setup_sensor" default="true"/>
   <arg name="host_ip" default="192.168.1.11"/>
-  <!-- <arg name="host_ip" default="255.255.255.255"/> -->
+  <!-- <arg name="host_ip" default="224.0.3.3"/> -->
   <arg name="use_concat_filter" default="true"/>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_launch)/config/dual_return_filter.param.yaml"/>
+  <arg name="enable_blockage_diag" default="true"/>
 
   <group>
     <push-ros-namespace namespace="lidar" />
@@ -30,7 +33,7 @@
         <arg name="sensor_ip" value="192.168.1.202"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
-        <arg name="scan_phase" value="270.0"/>
+        <arg name="scan_phase" value="90.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="Dual"/>
@@ -39,10 +42,21 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
+
+        <arg name="distance_range" value="[0.5, 200.0]"/>
+        <arg name="blockage_range" value="[90.0, 270.0]"/>
+        <arg name="vertical_bins" value ="40" />
+        <arg name="horizontal_ring_id" value="12" />
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2/pandar/front_lower.csv" />
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       </include>
     </group>
 
-    <group>
+    <!-- <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
@@ -50,7 +64,7 @@
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2322"/>
-        <arg name="scan_phase" value="180.0"/>
+        <arg name="scan_phase" value="0.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="Dual"/>
@@ -70,7 +84,7 @@
         <arg name="sensor_ip" value="192.168.1.212"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
-        <arg name="scan_phase" value="270.0"/>
+        <arg name="scan_phase" value="90.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="Strongest"/>
@@ -92,7 +106,7 @@
         <arg name="sensor_ip" value="192.168.1.213"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2377"/>
-        <arg name="scan_phase" value="180.0"/>
+        <arg name="scan_phase" value="0.0"/>
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="Strongest"/>
@@ -104,10 +118,10 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
       </include>
-    </group>
+    </group> -->
 
     <!-- LiDARs connected to Sub ECU -->
-    <group>
+    <!-- <group>
       <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
@@ -189,7 +203,7 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
       </include>
-    </group>
+    </group> -->
 
   </group>
 </launch>
