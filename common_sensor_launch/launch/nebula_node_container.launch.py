@@ -122,6 +122,7 @@ def launch_setup(context, *args, **kwargs):
                     "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
                 },
             ],
+            condition=IfCondition(LaunchConfiguration("launch_driver")),
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
