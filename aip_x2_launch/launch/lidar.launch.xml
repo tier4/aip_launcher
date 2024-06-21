@@ -56,7 +56,7 @@
       </include>
     </group>
 
-    <!-- <group>
+    <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
@@ -118,10 +118,10 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
       </include>
-    </group> -->
+    </group>
 
     <!-- LiDARs connected to Sub ECU -->
-    <!-- <group>
+    <group>
       <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
@@ -203,7 +203,7 @@
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
       </include>
-    </group> -->
+    </group>
 
   </group>
 </launch>
