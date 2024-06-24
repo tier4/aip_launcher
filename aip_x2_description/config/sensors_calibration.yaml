@@ -1,29 +1,17 @@
 base_link:
-  top_unit_base_link:
-    x: 4.6621
-    y: 1.079
-    z: 2.8087
+  sensor_kit_base_link:
+    x: 4.66244
+    y: 1.07589
+    z: 2.78926
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
-  front_unit_base_link:
-    x: 5.6221
-    y: 0.0
-    z: 0.7547
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
-  rear_unit_base_link:
-    x: -1.4271
-    y: 0.0
-    z: 0.4795
-    roll: 0
-    pitch: 0
-    yaw: -3.141500
-  gnss_link:
-    x: -0.3
-    y: 0.0
-    z: 2.689
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
+
+  # radar
+  # ars548/front_center/radar_link:
+  #   x: -0.01295
+  #   y: 0.0
+  #   z: -0.07554
+  #   roll: 0.0
+  #   pitch: 0.0
+  #   yaw: 0.0
