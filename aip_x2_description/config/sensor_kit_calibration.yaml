@@ -118,6 +118,21 @@ sensor_kit_base_link:
     yaw: 0.0
 
   # front lower
+  pandar/front/lidar_link:
+    x: 0.94058
+    y: -1.07589
+    z: -1.91826
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  pandar/front_bottom/lidar_link:
+    x: 0.96758
+    y: -1.07589
+    z: -2.15234
+    roll: 0.0
+    pitch: 0.6981 # 40[deg]
+    yaw: 0.0
+
 
   # rear lower
 

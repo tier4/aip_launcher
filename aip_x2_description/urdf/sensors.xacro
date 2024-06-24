@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find aip_x2_description)/urdf/radar.xacro"/>
-  <xacro:arg name="config_dir" default="$(find aip_x2_description)/config"/>
-  <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+  <xacro:include filename="$(find aip_x2_description)/urdf/radar.xacro" />
+  <xacro:arg name="config_dir" default="$(find aip_x2_description)/config" />
+  <xacro:property name="calibration"
+    value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}" />
 
   <!-- sensor kit -->
-  <xacro:include filename="sensor_kit.xacro"/>
+  <xacro:include filename="sensor_kit.xacro" />
   <xacro:sensor_kit_macro
     parent="base_link"
     x="${calibration['base_link']['sensor_kit_base_link']['x']}"
@@ -18,14 +19,14 @@
 
   <!-- radar -->
   <xacro:radar_macro
-  name="front_center/radar_link"
-  parent="front_unit_base_link"
-  x="${calibration['front_unit_base_link']['front_center/radar_link']['x']}"
-  y="${calibration['front_unit_base_link']['front_center/radar_link']['y']}"
-  z="${calibration['front_unit_base_link']['front_center/radar_link']['z']}"
-  roll="${calibration['front_unit_base_link']['front_center/radar_link']['roll']}"
-  pitch="${calibration['front_unit_base_link']['front_center/radar_link']['pitch']}"
-  yaw="${calibration['front_unit_base_link']['front_center/radar_link']['yaw']}"
-/>
+    name="ars548/front_center/radar"
+    parent="base_link"
+    x="${calibration['base_link']['ars548/front_center/radar_link']['x']}"
+    y="${calibration['base_link']['ars548/front_center/radar_link']['y']}"
+    z="${calibration['base_link']['ars548/front_center/radar_link']['z']}"
+    roll="${calibration['base_link']['ars548/front_center/radar_link']['roll']}"
+    pitch="${calibration['base_link']['ars548/front_center/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['ars548/front_center/radar_link']['yaw']}"
+  />
 
 </robot>

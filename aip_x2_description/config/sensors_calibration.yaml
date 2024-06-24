@@ -8,10 +8,10 @@ base_link:
     yaw: 0.0
 
   # radar
-  # ars548/front_center/radar_link:
-  #   x: -0.01295
-  #   y: 0.0
-  #   z: -0.07554
-  #   roll: 0.0
-  #   pitch: 0.0
-  #   yaw: 0.0
+  ars548/front_center/radar_link:
+    x: 5.69207
+    y: 0.0
+    z: 0.78894
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
