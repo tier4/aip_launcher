@@ -20,7 +20,6 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 
@@ -56,7 +55,7 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    concat_loader = loader = LoadComposableNodes(
+    concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
         target_container=LaunchConfiguration("pointcloud_container_name"),
     )

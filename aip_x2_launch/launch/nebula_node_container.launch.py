@@ -93,8 +93,6 @@ def launch_setup(context, *args, **kwargs):
         sensor_calib_fp
     ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
 
-    nodes = []
-
     glog_component = ComposableNode(
         package="glog_component",
         plugin="GlogComponent",
