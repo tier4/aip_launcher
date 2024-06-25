@@ -1,19 +1,19 @@
 sensor_kit_base_link:
   # left upper
-  pandar/top_left/lidar_link:
+  pandar/top_left/lidar_base_link:
     x: 0.0
     y: 0.0
     z: 0.0
     roll: 0.0
     pitch: 0.0
-    yaw: 1.570796 # 90 [deg]
-  pandar/top_left_bottom/lidar_link:
+    yaw: 3.141592 # 180 [deg] to turn the connector toward the vehicle
+  pandar/top_left_bottom/lidar_base_link:
     x: 0.0
     y: -0.025
     z: -0.115
-    roll: 0.0
-    pitch: 0.6981 # 40[deg]
-    yaw: 1.570796 # 90 [deg]
+    roll: 0.6981 # 40[deg]
+    pitch: 0.0
+    yaw: 3.141592 # 180 [deg] to turn the connector toward the vehicle
   camera/top_left_front/camera_link:
     x: 0.12758
     y: -0.04589
@@ -37,20 +37,20 @@ sensor_kit_base_link:
     yaw: 1.570796 # 90 [deg]
 
   # right upper
-  pandar/top_right/lidar_link:
+  pandar/top_right/lidar_base_link:
     x: 0.0
     y: -2.15178
     z: 0.0
     roll: 0.0
     pitch: 0.0
-    yaw: -1.570796 # -90 [deg]
-  pandar/top_right_bottom/lidar_link:
+    yaw: 0.0 # to turn the connector toward the vehicle
+  pandar/top_right_bottom/lidar_base_link:
     x: 0.0
     y: -2.12678
     z: -0.115
-    roll: 0.0
-    pitch: 0.6981 # 40 [deg]
-    yaw: -1.570796 # -90 [deg]
+    roll: 0.6981 # 40 [deg]
+    pitch: 0.0
+    yaw: 0.0 # to turn the connector toward the vehicle
   camera/top_right_front/camera_link:
     x: 0.12758
     y: -2.10589
@@ -116,24 +116,58 @@ sensor_kit_base_link:
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
+  gnss/front/gnss_link:
+    x: 0.30133
+    y: -1.07589
+    z: 0.02861
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+
+  # rear upper
+  camera/rear_center/camera_link:
+    x: -6.06359
+    y: -1.20389
+    z: -0.14078
+    roll: 0.0
+    pitch: 0.0
+    yaw: 3.141592 # 180 [deg] to turn the connector toward the vehicle
+  gnss/rear/gnss_link:
+    x: -5.77517
+    y: -1.07589
+    z: 0.02861
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
 
   # front lower
-  pandar/front/lidar_link:
+  pandar/front/lidar_base_link:
     x: 0.94058
     y: -1.07589
     z: -1.91826
     roll: 0.0
     pitch: 0.0
-    yaw: 0.0
-  pandar/front_bottom/lidar_link:
+    yaw: 1.570796 # 90 [deg] to turn the connector toward the vehicle
+  pandar/front_bottom/lidar_base_link:
     x: 0.96758
     y: -1.07589
     z: -2.15234
-    roll: 0.0
-    pitch: 0.6981 # 40[deg]
-    yaw: 0.0
-
+    roll: 0.6981 # 40[deg]
+    pitch: 0.0
+    yaw: 1.570796 # 90 [deg] to turn the connector toward the vehicle
 
   # rear lower
-
-  # GNSS
+  pandar/rear/lidar_base_link:
+    x: -6.08042
+    y: -1.07589
+    z: -1.91826
+    roll: 0.0
+    pitch: 0.0
+    yaw: -1.570796 # 90 [deg] to turn the connector toward the vehicle
+  pandar/rear_bottom/lidar_base_link:
+    x: -6.10742
+    y: -1.07589
+    z: -2.15234
+    roll: 0.6981 # 40[deg]
+    pitch: 0.0
+    yaw: -1.570796 # 90 [deg] to turn the connector toward the vehicle

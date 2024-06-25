@@ -4,6 +4,7 @@
     <xacro:include filename="$(find pandar_description)/urdf/pandar_qt.xacro" />
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro" />
     <xacro:include filename="$(find imu_description)/urdf/imu.xacro" />
+    <xacro:include filename="$(find aip_x2_description)/urdf/gnss.xacro" />
 
     <xacro:arg name="gpu" default="false" />
     <xacro:arg name="config_dir" default="$(find aip_x2_description)/config" />
@@ -25,23 +26,23 @@
     <xacro:PandarQT
       name="pandar/top_left/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/top_left/lidar_base_link']['yaw']}"
     />
 
     <xacro:PandarQT
       name="pandar/top_left_bottom/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/top_left_bottom/lidar_base_link']['yaw']}"
     />
 
     <xacro:monocular_camera_macro
@@ -96,23 +97,23 @@
     <xacro:PandarQT
       name="pandar/top_right/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/top_right/lidar_base_link']['yaw']}"
     />
 
     <xacro:PandarQT
       name="pandar/top_right_bottom/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/top_right_bottom/lidar_base_link']['yaw']}"
     />
 
     <xacro:monocular_camera_macro
@@ -254,27 +255,89 @@
       fov="1.3"
     />
 
+    <xacro:gnss_macro
+      name="gnss/front/gnss"
+      parent="sensor_kit_base_link"
+      x="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['gnss/front/gnss_link']['yaw']}"
+    />
+
+    <!-- rear upper -->
+    <xacro:monocular_camera_macro
+      name="camera/rear_center/camera"
+      parent="sensor_kit_base_link"
+      namespace=""
+      x="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['camera/rear_center/camera_link']['yaw']}"
+      fps="30"
+      width="800"
+      height="400"
+      fov="1.3"
+    />
+
+    <xacro:gnss_macro
+      name="gnss/rear/gnss"
+      parent="sensor_kit_base_link"
+      x="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['gnss/rear/gnss_link']['yaw']}"
+    />
+
     <!-- front lower -->
     <xacro:PandarQT
       name="pandar/front/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/front/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/front/lidar_base_link']['yaw']}"
     />
 
     <xacro:PandarQT
       name="pandar/front_bottom/lidar"
       parent="sensor_kit_base_link"
-      x="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_link']['yaw']}"
+      x="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/front_bottom/lidar_base_link']['yaw']}"
+    />
+
+    <!-- rear lower -->
+    <xacro:PandarQT
+      name="pandar/rear/lidar"
+      parent="sensor_kit_base_link"
+      x="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/rear/lidar_base_link']['yaw']}"
+    />
+
+    <xacro:PandarQT
+      name="pandar/rear_bottom/lidar"
+      parent="sensor_kit_base_link"
+      x="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['x']}"
+      y="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['y']}"
+      z="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['z']}"
+      roll="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['roll']}"
+      pitch="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['pitch']}"
+      yaw="${calibration['sensor_kit_base_link']['pandar/rear_bottom/lidar_base_link']['yaw']}"
     />
 
   </xacro:macro>
