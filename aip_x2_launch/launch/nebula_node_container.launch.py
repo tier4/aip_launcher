@@ -118,7 +118,9 @@ def launch_setup(context, *args, **kwargs):
                 "cloud_min_angle": LaunchConfiguration("cloud_min_angle"),
                 "cloud_max_angle": LaunchConfiguration("cloud_max_angle"),
                 "diag_span": LaunchConfiguration("diag_span"),
-                "dual_return_distance_threshold": LaunchConfiguration("dual_return_distance_threshold"),
+                "dual_return_distance_threshold": LaunchConfiguration(
+                    "dual_return_distance_threshold"
+                ),
                 "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
             },
         ],
@@ -511,7 +513,6 @@ def generate_launch_description():
     add_launch_arg("container_name", "nebula_node_container")
 
     add_launch_arg("dual_return_filter_param_file")
-
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
