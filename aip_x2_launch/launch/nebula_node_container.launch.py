@@ -176,7 +176,7 @@ def launch_setup(context, *args, **kwargs):
                     "scan_phase",
                     "dual_return_distance_threshold",
                 ),
-                "launch_hw": True
+                "launch_hw": True,
             },
         ],
         remappings=[
