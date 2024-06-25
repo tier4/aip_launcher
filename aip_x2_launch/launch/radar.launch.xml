@@ -1,3 +1,4 @@
+<!-- cSpell: ignore autosar -->
 <launch>
   <arg name="launch_driver" default="true" description="do launch driver"/>
 
