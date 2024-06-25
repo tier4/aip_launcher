@@ -20,13 +20,13 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
+from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-from launch.conditions import LaunchConfigurationNotEquals
-from launch.conditions import LaunchConfigurationEquals
 import yaml
 
 
@@ -120,7 +120,9 @@ def launch_setup(context, *args, **kwargs):
                 "cloud_min_angle": LaunchConfiguration("cloud_min_angle"),
                 "cloud_max_angle": LaunchConfiguration("cloud_max_angle"),
                 "diag_span": LaunchConfiguration("diag_span"),
-                "dual_return_distance_threshold": LaunchConfiguration("dual_return_distance_threshold"),
+                "dual_return_distance_threshold": LaunchConfiguration(
+                    "dual_return_distance_threshold"
+                ),
                 "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
             },
         ],
@@ -422,7 +424,6 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
-
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
