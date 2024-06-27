@@ -379,7 +379,7 @@ def generate_launch_description():
     add_launch_arg(
         "distortion_corrector_node_param_file",
         [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
-    )    
+    )
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
