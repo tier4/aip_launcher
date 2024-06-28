@@ -8,7 +8,7 @@ base_link:
     yaw: 0.0
 
   # radar
-  ars548/front_center/radar_link:
+  front_center/radar_link:
     x: 5.69207
     y: 0.0
     z: 0.78894
@@ -16,7 +16,7 @@ base_link:
     pitch: 0.0
     yaw: 0.0
 
-  ars548/front_left/radar_link:
+  front_left/radar_link:
     x: 5.37204
     y: 1.08537
     z: 0.73431
@@ -24,7 +24,7 @@ base_link:
     pitch: 0.0
     yaw: 1.2211 # 70 [deg]
 
-  ars548/front_right/radar_link:
+  front_right/radar_link:
     x: 5.37204
     y: -1.06642
     z: 0.73431
@@ -32,7 +32,7 @@ base_link:
     pitch: 0.0
     yaw: -1.2211 # 70 [deg]
 
-  ars548/rear_center/radar_link:
+  rear_center/radar_link:
     x: -1.50704
     y: 0.0
     z: 0.78894
@@ -40,7 +40,7 @@ base_link:
     pitch: 0.0
     yaw: 3.141592 # 180 [deg]
 
-  ars548/rear_left/radar_link:
+  rear_left/radar_link:
     x: -1.27564
     y: 1.07767
     z: 0.5487
@@ -48,7 +48,7 @@ base_link:
     pitch: 0.0
     yaw: 1.9189 # 110 [deg]
 
-  ars548/rear_right/radar_link:
+  rear_right/radar_link:
     x: -1.27564
     y: -1.07768
     z: 0.5487
