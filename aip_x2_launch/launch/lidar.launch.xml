@@ -19,7 +19,7 @@
         <arg name="sensor_ip" value="192.168.110.201" />
         <arg name="data_port" value="2321" />
         <arg name="gnss_port" value="10121" />
-        <arg name="scan_phase" value="270.0" />
+        <arg name="scan_phase" value="280.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.5"/>
@@ -52,7 +52,7 @@
         <arg name="sensor_ip" value="192.168.120.211" />
         <arg name="data_port" value="2331" />
         <arg name="gnss_port" value="10131" />
-        <arg name="scan_phase" value="270.0" />
+        <arg name="scan_phase" value="280.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
@@ -85,7 +85,7 @@
         <arg name="sensor_ip" value="192.168.110.202" />
         <arg name="data_port" value="2322" />
         <arg name="gnss_port" value="10122" />
-        <arg name="scan_phase" value="305.0" />
+        <arg name="scan_phase" value="315.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="305"/>
         <arg name="min_range" value="0.5"/>
@@ -118,7 +118,7 @@
         <arg name="sensor_ip" value="192.168.120.212" />
         <arg name="data_port" value="2332" />
         <arg name="gnss_port" value="10132" />
-        <arg name="scan_phase" value="270.0" />
+        <arg name="scan_phase" value="280.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="min_range" value="0.1"/>
