@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
     <xacro:include filename="$(find pandar_description)/urdf/pandar_qt.xacro" />
+    <xacro:include filename="$(find pandar_description)/urdf/pandar_ot128.xacro" />
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro" />
     <xacro:include filename="$(find imu_description)/urdf/imu.xacro" />
     <xacro:include filename="$(find aip_x2_description)/urdf/gnss.xacro" />
@@ -23,7 +24,7 @@
     </link>
 
     <!-- left upper-->
-    <xacro:PandarQT
+    <xacro:PandarOT-128
       name="left_upper/lidar"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['left_upper/lidar_base_link']['x']}"
@@ -94,7 +95,7 @@
     />
 
     <!-- right upper-->
-    <xacro:PandarQT
+    <xacro:PandarOT-128
       name="right_upper/lidar"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['right_upper/lidar_base_link']['x']}"
@@ -295,7 +296,7 @@
     />
 
     <!-- front lower -->
-    <xacro:PandarQT
+    <xacro:PandarOT-128
       name="front_upper/lidar"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['front_upper/lidar_base_link']['x']}"
@@ -318,7 +319,7 @@
     />
 
     <!-- rear lower -->
-    <xacro:PandarQT
+    <xacro:PandarOT-128
       name="rear_upper/lidar"
       parent="sensor_kit_base_link"
       x="${calibration['sensor_kit_base_link']['rear_upper/lidar_base_link']['x']}"
