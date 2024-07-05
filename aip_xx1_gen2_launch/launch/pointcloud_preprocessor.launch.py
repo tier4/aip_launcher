@@ -36,21 +36,16 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             {
-                "input_topics": [
-                    "/sensing/lidar/front_upper/pointcloud_before_sync",
-                    "/sensing/lidar/front_lower/pointcloud_before_sync",
-                    "/sensing/lidar/left_upper/pointcloud_before_sync",
-                    "/sensing/lidar/left_lower/pointcloud_before_sync",
-                    "/sensing/lidar/right_upper/pointcloud_before_sync",
-                    "/sensing/lidar/right_lower/pointcloud_before_sync",
-                    "/sensing/lidar/rear_upper/pointcloud_before_sync",
-                    "/sensing/lidar/rear_lower/pointcloud_before_sync",
-                ],
-                "input_offset": [0.025, 0.025, 0.01, 0.0, 0.05, 0.05, 0.05, 0.05],
-                "timeout_sec": 0.075,
+                "input_topics": LaunchConfiguration("input_topics"),
                 "output_frame": LaunchConfiguration("base_frame"),
-                "input_twist_topic_type": "twist",
-                "publish_synchronized_pointcloud": True,
+                "input_offset": LaunchConfiguration(
+                    "input_offset"
+                ),  # each sensor will wait 60, 70, 70, 70ms
+                "timeout_sec": LaunchConfiguration("timeout_sec"),  # set shorter than 100ms
+                "input_twist_topic_type": LaunchConfiguration("input_twist_topic_type"),
+                "publish_synchronized_pointcloud": LaunchConfiguration(
+                    "publish_synchronized_pointcloud"
+                ),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -73,9 +68,18 @@ def generate_launch_description():
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
     add_launch_arg("base_frame", "base_link")
-    add_launch_arg("use_multithread", "True")
-    add_launch_arg("use_intra_process", "True")
+    add_launch_arg("use_multithread", "False")
+    add_launch_arg("use_intra_process", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
+    add_launch_arg("individual_container_name", "concatenate_container")
+    add_launch_arg(
+        "input_topics",
+        "[/sensing/lidar/top/pointcloud, /sensing/lidar/left/pointcloud, /sensing/lidar/right/pointcloud, /sensing/lidar/rear/pointcloud]",
+    )
+    add_launch_arg("input_offset", "[0.035, 0.025, 0.025, 0.025]")
+    add_launch_arg("timeout_sec", "0.095")
+    add_launch_arg("input_twist_topic_type", "twist")
+    add_launch_arg("publish_synchronized_pointcloud", "False")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
