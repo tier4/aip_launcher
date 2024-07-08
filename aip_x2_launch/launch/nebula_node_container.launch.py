@@ -65,7 +65,7 @@ def launch_setup(context, *args, **kwargs):
     def load_composable_node_param(param_path):
         with open(LaunchConfiguration(param_path).perform(context), "r") as f:
             return yaml.safe_load(f)["/**"]["ros__parameters"]
-        
+
     def create_parameter_dict(*args):
         result = {}
         for x in args:
@@ -118,7 +118,9 @@ def launch_setup(context, *args, **kwargs):
                     "cloud_min_angle": LaunchConfiguration("cloud_min_angle"),
                     "cloud_max_angle": LaunchConfiguration("cloud_max_angle"),
                     "diag_span": LaunchConfiguration("diag_span"),
-                    "dual_return_distance_threshold": LaunchConfiguration("dual_return_distance_threshold"),
+                    "dual_return_distance_threshold": LaunchConfiguration(
+                        "dual_return_distance_threshold"
+                    ),
                     "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
                 },
             ],
@@ -156,7 +158,7 @@ def launch_setup(context, *args, **kwargs):
                         "ptp_switch_type",
                         "ptp_domain",
                     ),
-                    "launch_hw": True
+                    "launch_hw": True,
                 },
             ],
             remappings=[
@@ -263,7 +265,7 @@ def launch_setup(context, *args, **kwargs):
             plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
             name="ring_outlier_filter",
             remappings=[
-                ("input", "rectified/pointcloud_ex"), 
+                ("input", "rectified/pointcloud_ex"),
                 ("output", "pointcloud_before_sync"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
