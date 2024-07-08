@@ -216,6 +216,7 @@ def launch_setup(context, *args, **kwargs):
                 ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
                 ("~/output/pointcloud", "rectified/pointcloud_ex"),
             ],
+            parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
@@ -375,7 +376,11 @@ def generate_launch_description():
     add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
         "blockage_diagnostics_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+        [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
+    )
+    add_launch_arg(
+        "distortion_corrector_node_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
     )
 
     set_container_executable = SetLaunchConfiguration(
