@@ -27,6 +27,7 @@ from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 import yaml
 
+
 def get_lidar_make(sensor_name):
     if sensor_name[:6].lower() == "pandar":
         return "Hesai", ".csv"
@@ -143,7 +144,7 @@ def launch_setup(context, *args, **kwargs):
                         "ptp_transport_type",
                         "ptp_switch_type",
                         "ptp_domain",
-                        "calibration_file"
+                        "calibration_file",
                     ),
                     "launch_hw": True,
                 },
