@@ -26,16 +26,16 @@
 
     <!-- LiDARs connected to Main ECU -->
     <group>
-      <push-ros-namespace namespace="right_upper" />
+      <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="right_upper/lidar"/>
+        <arg name="sensor_frame" value="rear_upper/lidar"/>
         <arg name="sensor_ip" value="192.168.1.202"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
         <arg name="scan_phase" value="90.0"/>
-        <arg name="cloud_min_angle" value="350"/>
-        <arg name="cloud_max_angle" value="280"/>
+        <arg name="cloud_min_angle" value="87"/>
+        <arg name="cloud_max_angle" value="287"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="1"/>
@@ -57,16 +57,16 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="rear_upper" />
+      <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="rear_upper/lidar"/>
+        <arg name="sensor_frame" value="left_upper/lidar"/>
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2322"/>
         <arg name="scan_phase" value="0.0"/>
-        <arg name="cloud_min_angle" value="78"/>
-        <arg name="cloud_max_angle" value="284"/>
+        <arg name="cloud_min_angle" value="80"/>
+        <arg name="cloud_max_angle" value="10"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="2"/>
@@ -88,10 +88,10 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="right_lower" />
+      <push-ros-namespace namespace="rear_lower" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_QT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="right_lower/lidar"/>
+        <arg name="sensor_frame" value="rear_lower/lidar"/>
         <arg name="sensor_ip" value="192.168.1.212"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
@@ -121,10 +121,10 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="rear_lower" />
+      <push-ros-namespace namespace="left_lower" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_QT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="rear_lower/lidar"/>
+        <arg name="sensor_frame" value="left_lower/lidar"/>
         <arg name="sensor_ip" value="192.168.1.213"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2377"/>
@@ -155,16 +155,16 @@
 
     <!-- LiDARs connected to Sub ECU -->
     <group>
-      <push-ros-namespace namespace="left_upper" />
+      <push-ros-namespace namespace="front_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="left_upper/lidar"/>
+        <arg name="sensor_frame" value="front_upper/lidar"/>
         <arg name="sensor_ip" value="192.168.1.204"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2323"/>
         <arg name="scan_phase" value="270.0"/>
-        <arg name="cloud_min_angle" value="80"/>
-        <arg name="cloud_max_angle" value="10"/>
+        <arg name="cloud_min_angle" value="87"/>
+        <arg name="cloud_max_angle" value="287"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="3"/>
@@ -186,16 +186,16 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="front_upper" />
+      <push-ros-namespace namespace="right_upper" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_OT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="front_upper/lidar"/>
+        <arg name="sensor_frame" value="right_upper/lidar"/>
         <arg name="sensor_ip" value="192.168.1.205"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2324"/>
         <arg name="scan_phase" value="180.0"/>
-        <arg name="cloud_min_angle" value="87"/>
-        <arg name="cloud_max_angle" value="287"/>
+        <arg name="cloud_min_angle" value="350"/>
+        <arg name="cloud_max_angle" value="280"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="4"/>
@@ -217,10 +217,10 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="left_lower" />
+      <push-ros-namespace namespace="front_lower" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_QT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="left_lower/lidar"/>
+        <arg name="sensor_frame" value="front_lower/lidar"/>
         <arg name="sensor_ip" value="192.168.1.214"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2378"/>
@@ -250,10 +250,10 @@
     </group>
 
     <group>
-      <push-ros-namespace namespace="front_lower" />
+      <push-ros-namespace namespace="right_lower" />
       <include file="$(find-pkg-share aip_x2_launch)/launch/hesai_QT128.launch.xml">
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
-        <arg name="sensor_frame" value="front_lower/lidar"/>
+        <arg name="sensor_frame" value="right_lower/lidar"/>
         <arg name="sensor_ip" value="192.168.1.215"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2379"/>
