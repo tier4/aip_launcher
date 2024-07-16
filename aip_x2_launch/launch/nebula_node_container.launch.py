@@ -27,6 +27,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -260,6 +261,7 @@ def launch_setup(context, *args, **kwargs):
         package="pointcloud_preprocessor",
         plugin="pointcloud_preprocessor::DistortionCorrectorComponent",
         name="distortion_corrector_node",
+        parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("~/input/imu", "/sensing/imu/imu_data"),
@@ -406,6 +408,12 @@ def generate_launch_description():
     add_launch_arg(
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
+
+    add_launch_arg(
+        "distortion_corrector_node_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
+    )
+
     add_launch_arg("diag_span", "1000")
     add_launch_arg("delay_monitor_ms", "2000")
     add_launch_arg("use_multithread", "False", "use multithread")
