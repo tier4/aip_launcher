@@ -94,11 +94,11 @@ def launch_setup(context, *args, **kwargs):
         sensor_calib_fp
     ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
 
-    glog_component = ComposableNode(
+    """ glog_component = ComposableNode(
         package="glog_component",
         plugin="GlogComponent",
         name="glog_component",
-    )
+    ) """
 
     nebula_ros_hw_monitor_component = ComposableNode(
         package="nebula_ros",
@@ -140,6 +140,7 @@ def launch_setup(context, *args, **kwargs):
                     "sensor_ip",
                     "host_ip",
                     "scan_phase",
+                    "retry_hw",
                     "return_mode",
                     "frame_id",
                     "rotation_speed",
@@ -200,18 +201,6 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
     cropbox_parameters["max_z"] = vehicle_info["max_height_offset"]
 
-    self_crop_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_self",
-        remappings=[
-            ("input", "pointcloud_raw_ex"),
-            ("output", "self_cropped/pointcloud_ex"),
-        ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
     mirror_info = load_composable_node_param("vehicle_mirror_param_file")
     right = mirror_info["right"]
     cropbox_parameters.update(
@@ -221,18 +210,6 @@ def launch_setup(context, *args, **kwargs):
         max_y=right["max_lateral_offset"],
         min_z=right["min_height_offset"],
         max_z=right["max_height_offset"],
-    )
-
-    right_mirror_crop_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_mirror_right",
-        remappings=[
-            ("input", "self_cropped/pointcloud_ex"),
-            ("output", "right_mirror_cropped/pointcloud_ex"),
-        ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     left = mirror_info["left"]
@@ -245,87 +222,55 @@ def launch_setup(context, *args, **kwargs):
         max_z=left["max_height_offset"],
     )
 
-    left_mirror_crop_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_mirror_left",
+    adapter_component = ComposableNode(
+        package="cuda_organized_pointcloud_adapter",
+        plugin="cuda_organized_pointcloud_adapter::CudaOrganizedPointcloudAdapterNode",
+        name="cuda_organized_pointcloud_adapter_node",
         remappings=[
-            ("input", "right_mirror_cropped/pointcloud_ex"),
-            ("output", "mirror_cropped/pointcloud_ex"),
+            ("~/input/pointcloud", "pointcloud_raw_ex"),
+            ("~/output/pointcloud", "cuda_points"),
+            ("~/output/pointcloud/cuda", "cuda_points/cuda"),
         ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        # The whole node can not set use_intra_process due to type negotiation internal topics
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    undistort_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::DistortionCorrectorComponent",
-        name="distortion_corrector_node",
-        parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
+    vehicle_info = get_vehicle_info(context)
+    mirror_info = load_composable_node_param("vehicle_mirror_param_file")
+
+    preprocessor_parameters = {}
+    preprocessor_parameters["self_crop.min_x"] = vehicle_info["min_longitudinal_offset"]
+    preprocessor_parameters["self_crop.max_x"] = vehicle_info["max_longitudinal_offset"]
+    preprocessor_parameters["self_crop.min_y"] = vehicle_info["min_lateral_offset"]
+    preprocessor_parameters["self_crop.max_y"] = vehicle_info["max_lateral_offset"]
+    preprocessor_parameters["self_crop.min_z"] = vehicle_info["min_height_offset"]
+    preprocessor_parameters["self_crop.max_z"] = vehicle_info["max_height_offset"]
+    preprocessor_parameters["mirror_crop.min_x"] = mirror_info["right"]["min_longitudinal_offset"]
+    preprocessor_parameters["mirror_crop.max_x"] = mirror_info["right"]["max_longitudinal_offset"]
+    preprocessor_parameters["mirror_crop.min_y"] = mirror_info["right"]["min_lateral_offset"]
+    preprocessor_parameters["mirror_crop.max_y"] = mirror_info["right"]["max_lateral_offset"]
+    preprocessor_parameters["mirror_crop.min_z"] = mirror_info["right"]["min_height_offset"]
+    preprocessor_parameters["mirror_crop.max_z"] = mirror_info["right"]["max_height_offset"]
+    preprocessor_parameters["use_3d_undistortion"] = LaunchConfiguration("use_3d_undistortion")
+
+    processor_component = ComposableNode(
+        package="cuda_pointcloud_preprocessor",
+        plugin="cuda_pointcloud_preprocessor::CudaPointcloudPreprocessorNode",
+        name="pointcloud_preprocessor_node",
+        parameters=[preprocessor_parameters],
         remappings=[
+            ("~/input/pointcloud", "cuda_points"),
+            ("~/input/pointcloud/cuda", "cuda_points/cuda"),
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("~/input/imu", "/sensing/imu/imu_data"),
-            ("~/input/velocity_report", "/vehicle/status/velocity_status"),
-            ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
-            ("~/output/pointcloud", "rectified/pointcloud_ex"),
+            ("~/output/pointcloud", "pointcloud_before_sync"),
+            ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
         ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        # The whole node can not set use_intra_process due to type negotiation internal topics
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    ring_outlier_filter_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
-        name="ring_outlier_filter",
-        remappings=[
-            ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud"),
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    dual_return_filter_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-        name="dual_return_filter",
-        remappings=[
-            ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud"),
-        ],
-        parameters=[
-            {
-                "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
-                "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
-            }
-        ]
-        + [load_composable_node_param("dual_return_filter_param_file")],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    distance_range = str2vector(context.perform_substitution(LaunchConfiguration("distance_range")))
-    blockage_diag_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::BlockageDiagComponent",
-        name="blockage_return_diag",
-        remappings=[
-            ("input", "pointcloud_raw_ex"),
-            ("output", "blockage_diag/pointcloud"),
-        ],
-        parameters=[
-            {
-                "angle_range": LaunchConfiguration("blockage_range"),
-                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
-                "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
-                "max_distance_range": distance_range[1],
-                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
-            }
-        ]
-        + [load_composable_node_param("blockage_diagnostics_param_file")],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    container = ComposableNodeContainer(
+    """ container = ComposableNodeContainer(
         name="pandar_node_container",
         namespace="pointcloud_preprocessor",
         package="rclcpp_components",
@@ -333,10 +278,8 @@ def launch_setup(context, *args, **kwargs):
         composable_node_descriptions=[
             glog_component,
             nebula_ros_driver_component,
-            self_crop_component,
-            right_mirror_crop_component,
-            left_mirror_crop_component,
-            undistort_component,
+            adapter_component,
+            processor_component,
         ],
     )
 
@@ -349,31 +292,23 @@ def launch_setup(context, *args, **kwargs):
         condition=launch.conditions.IfCondition(LaunchConfiguration("launch_driver")),
     )
 
-    ring_outlier_filter_loader = LoadComposableNodes(
-        composable_node_descriptions=[ring_outlier_filter_component],
-        target_container=container,
-        condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
-    )
-
-    dual_return_filter_loader = LoadComposableNodes(
-        composable_node_descriptions=[dual_return_filter_component],
-        target_container=container,
-        condition=LaunchConfigurationEquals("return_mode", "Dual"),
-    )
-
-    blockage_diag_loader = LoadComposableNodes(
-        composable_node_descriptions=[blockage_diag_component],
-        target_container=container,
-        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_blockage_diag")),
-    )
-
     return [
         container,
         driver_loader,
-        ring_outlier_filter_loader,
-        dual_return_filter_loader,
-        blockage_diag_loader,
-    ]
+    ] """
+
+    loader = LoadComposableNodes(
+        composable_node_descriptions=[
+            # glog_component,
+            nebula_ros_hw_interface_component,
+            nebula_ros_driver_component,
+            adapter_component,
+            processor_component,
+        ],
+        target_container=LaunchConfiguration("container_name"),
+    )
+
+    return [loader]
 
 
 def generate_launch_description():
@@ -392,6 +327,7 @@ def generate_launch_description():
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("scan_phase", "0.0")
+    add_launch_arg("retry_hw", "False")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
@@ -409,27 +345,13 @@ def generate_launch_description():
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
 
-    add_launch_arg(
-        "distortion_corrector_node_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
-    )
-
     add_launch_arg("diag_span", "1000")
     add_launch_arg("delay_monitor_ms", "2000")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
 
-    add_launch_arg("dual_return_filter_param_file")
-    add_launch_arg("blockage_diagnostics_param_file")
-
-    add_launch_arg("vertical_bins", "40")
-    add_launch_arg("horizontal_ring_id", "12")
-    add_launch_arg("blockage_range", "[270.0, 90.0]")
-
-    add_launch_arg("min_azimuth_deg", "135.0")
-    add_launch_arg("max_azimuth_deg", "225.0")
-    add_launch_arg("enable_blockage_diag", "true")
+    add_launch_arg("use_3d_undistortion", "false")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

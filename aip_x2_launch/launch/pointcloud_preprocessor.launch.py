@@ -27,24 +27,25 @@ from launch_ros.descriptions import ComposableNode
 def launch_setup(context, *args, **kwargs):
     # set concat filter as a component
     concat_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        package="cuda_pointcloud_preprocessor",
+        plugin="cuda_pointcloud_preprocessor::CudaPointCloudConcatenateAndSyncNode",
         name="concatenate_data",
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("output", "concatenated/pointcloud"),
+            ("output/cuda", "concatenated/pointcloud/cuda"),
         ],
         parameters=[
             {
                 "input_topics": [
-                    "/sensing/lidar/front_upper/pointcloud",
-                    "/sensing/lidar/front_lower/pointcloud",
-                    "/sensing/lidar/left_upper/pointcloud",
-                    "/sensing/lidar/left_lower/pointcloud",
-                    "/sensing/lidar/right_upper/pointcloud",
-                    "/sensing/lidar/right_lower/pointcloud",
-                    "/sensing/lidar/rear_upper/pointcloud",
-                    "/sensing/lidar/rear_lower/pointcloud",
+                    "/sensing/lidar/front_upper/pointcloud_before_sync",
+                    "/sensing/lidar/front_lower/pointcloud_before_sync",
+                    "/sensing/lidar/left_upper/pointcloud_before_sync",
+                    "/sensing/lidar/left_lower/pointcloud_before_sync",
+                    "/sensing/lidar/right_upper/pointcloud_before_sync",
+                    "/sensing/lidar/right_lower/pointcloud_before_sync",
+                    "/sensing/lidar/rear_upper/pointcloud_before_sync",
+                    "/sensing/lidar/rear_lower/pointcloud_before_sync",
                 ],
                 "input_offset": [0.005, 0.025, 0.050, 0.005, 0.050, 0.005, 0.005, 0.025],
                 "timeout_sec": 0.075,
@@ -52,7 +53,8 @@ def launch_setup(context, *args, **kwargs):
                 "input_twist_topic_type": "twist",
             }
         ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        # The whole node can not set use_intra_process due to type negotiation internal topics
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     concat_loader = LoadComposableNodes(
