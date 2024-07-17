@@ -58,7 +58,9 @@ def launch_setup(context, *args, **kwargs):
     )
 
     concat_loader = LoadComposableNodes(
-        composable_node_descriptions=[concat_component],
+        composable_node_descriptions=[
+            concat_component
+        ],
         target_container=LaunchConfiguration("pointcloud_container_name"),
     )
 
@@ -76,7 +78,7 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
 
-    set_container_executable = SetLaunchConfiguration(
+    """ set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
@@ -86,10 +88,10 @@ def generate_launch_description():
         "container_executable",
         "component_container_mt",
         condition=IfCondition(LaunchConfiguration("use_multithread")),
-    )
+    ) """
 
     return launch.LaunchDescription(
         launch_arguments
-        + [set_container_executable, set_container_mt_executable]
+       # + [set_container_executable, set_container_mt_executable]
         + [OpaqueFunction(function=launch_setup)]
     )
