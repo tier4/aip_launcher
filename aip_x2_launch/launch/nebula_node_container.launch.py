@@ -38,8 +38,10 @@ def get_lidar_make(sensor_name):
         return "Velodyne", ".yaml"
     return "unrecognized_sensor_model"
 
+
 def str2vector(string):
     return [float(x) for x in string.strip("[]").split(",")]
+
 
 def get_vehicle_info(context):
     # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
@@ -380,7 +382,7 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         container,
-        driver_component_loader, 
+        driver_component_loader,
         ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
