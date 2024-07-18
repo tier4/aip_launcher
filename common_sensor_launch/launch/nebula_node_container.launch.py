@@ -27,8 +27,8 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -74,9 +74,9 @@ def launch_setup(context, *args, **kwargs):
     sensor_make = get_lidar_make(sensor_model)
 
     # Configuration file containing sensor model's default parameters
-    
+
     sensor_config = LaunchConfiguration("config_file").perform(context)
-    if (sensor_config == ""):
+    if sensor_config == "":
         sensor_config = (
             Path(get_package_share_directory("nebula_ros"))
             / "config"
@@ -142,9 +142,7 @@ def launch_setup(context, *args, **kwargs):
                 ("pandar_points", "pointcloud_raw_ex"),
                 ("velodyne_points", "pointcloud_raw_ex"),
             ],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
 
@@ -287,7 +285,11 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg("launch_driver", "true", "whether to connect to a sensor or to listen to packet replays instead")
+    add_launch_arg(
+        "launch_driver",
+        "true",
+        "whether to connect to a sensor or to listen to packet replays instead",
+    )
     add_launch_arg("setup_sensor", "true", "configure sensor")
     add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
