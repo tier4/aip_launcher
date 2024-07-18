@@ -14,6 +14,7 @@
   <arg name="cloud_max_angle" default="360"/>
   <arg name="dual_return_distance_threshold" default="0.1"/>
   <arg name="vehicle_mirror_param_file"/>
+  <arg name="use_intra_process" default="true"/>
   <arg name="container_name" default="hesai_node_container"/>
 
   <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
@@ -30,7 +31,7 @@
     <arg name="max_range" value="$(var max_range)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-    <arg name="use_intra_process" value="true"/>
+    <arg name="use_intra_process" value="$(var use_intra_process)"/>
     <arg name="use_multithread" value="true"/>
     <arg name="ptp_profile" value="1588v2"/>
     <arg name="ptp_switch_type" value="TSN"/>
