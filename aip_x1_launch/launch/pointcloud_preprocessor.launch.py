@@ -40,7 +40,11 @@ def launch_setup(context, *args, **kwargs):
                     "/sensing/lidar/front_center/pointcloud_before_sync",
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
-                "timeout_sec": 1.0,
+                "input_offset": [
+                    0.055,
+                    0.025,
+                ],                
+                "timeout_sec": 0.095,
                 "input_twist_topic_type": "twist",
                 "publish_synchronized_pointcloud": True,
             }
