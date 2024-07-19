@@ -41,6 +41,7 @@
         <arg name="config_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x1/xt32.csv" />
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+        <arg name="container_name" value="pointcloud_container"/>
       </include>
     </group>
 
