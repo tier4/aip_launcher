@@ -47,8 +47,8 @@ def get_livox_tag_filter_component():
 def get_crop_box_min_range_component(context, livox_frame_id):
     use_tag_filter = IfCondition(LaunchConfiguration("use_tag_filter")).evaluate(context)
     crop_box_min_range_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::CropBoxFilterComponent",
+        package="autoware_pointcloud_preprocessor",
+        plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
         name="crop_box_filter_min_range",
         remappings=[
             ("input", "livox/tag_filtered/lidar" if use_tag_filter else "livox/lidar"),
