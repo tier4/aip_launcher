@@ -4,12 +4,11 @@
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <arg name="scenario_simulation" default="false"/>
 
   <group>
-
     <!-- LiDAR Driver -->
-    <let name="launch_nebula" value="true" if="$(var scenario_simulation)"/>
-    <group if="$(var launch_nebula)">
+    <group unless="$(var scenario_simulation)">
       <include file="$(find-pkg-share aip_x2_launch)/launch/lidar.launch.xml">
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
@@ -17,7 +16,7 @@
       </include>
     </group>
 
-    <group unless="$(var launch_nebula)">
+    <group if="$(var scenario_simulation)">
       <include file="$(find-pkg-share aip_x2_launch)/launch/pandar.launch.xml">
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
