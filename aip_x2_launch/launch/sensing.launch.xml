@@ -8,11 +8,22 @@
   <group>
 
     <!-- LiDAR Driver -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/lidar.launch.xml">
-      <arg name="launch_driver" value="$(var launch_driver)" />
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
-      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    </include>
+    <let name="launch_nebula" value="true" if="$(var scenario_simulation)"/>
+    <group if="$(var launch_nebula)">
+      <include file="$(find-pkg-share aip_x2_launch)/launch/lidar.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <group unless="$(var launch_nebula)">
+      <include file="$(find-pkg-share aip_x2_launch)/launch/pandar.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
 
     <!-- IMU Driver -->
     <include file="$(find-pkg-share aip_x2_launch)/launch/imu.launch.xml">
