@@ -59,7 +59,7 @@
       </include>
     </group>
 
-    <include file="$(find-pkg-share simple_object_merger)/launch/simple_object_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_simple_object_merger)/launch/simple_object_merger.launch.xml">
       <arg name="output/objects" value="detected_objects"/>
       <arg name="param_path" value="$(find-pkg-share aip_x2_launch)/config/simple_object_merger.param.yaml"/>
     </include>
