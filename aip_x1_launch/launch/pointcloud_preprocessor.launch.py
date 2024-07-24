@@ -43,7 +43,7 @@ def launch_setup(context, *args, **kwargs):
                 "input_offset": [
                     0.055,
                     0.025,
-                ],                
+                ],
                 "timeout_sec": 0.095,
                 "input_twist_topic_type": "twist",
                 "publish_synchronized_pointcloud": True,
