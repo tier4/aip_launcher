@@ -20,11 +20,14 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
+from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -34,6 +37,10 @@ def get_lidar_make(sensor_name):
     elif sensor_name[:3].lower() in ["hdl", "vlp", "vls"]:
         return "Velodyne", ".yaml"
     return "unrecognized_sensor_model"
+
+
+def str2vector(string):
+    return [float(x) for x in string.strip("[]").split(",")]
 
 
 def get_vehicle_info(context):
@@ -247,19 +254,6 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
-            plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
-            name="ring_outlier_filter",
-            remappings=[
-                ("input", "rectified/pointcloud_ex"),
-                ("output", "pointcloud_before_sync"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
-
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
@@ -268,6 +262,44 @@ def launch_setup(context, *args, **kwargs):
         executable="component_container_mt",
         composable_node_descriptions=nodes,
         output="both",
+    )
+
+    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
+    if LaunchConfiguration("output_as_sensor_frame").perform(context):
+        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
+    else:
+        ring_outlier_filter_parameters = {
+            "output_frame": ""
+        }  # keep the output frame as the input frame
+    ring_outlier_filter_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
+        name="ring_outlier_filter",
+        remappings=[
+            ("input", "rectified/pointcloud_ex"),
+            ("output", "pointcloud_before_sync"),
+        ],
+        parameters=[ring_outlier_filter_parameters],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
+    dual_return_filter_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
+        name="dual_return_filter",
+        remappings=[
+            ("input", "rectified/pointcloud_ex"),
+            ("output", "pointcloud_before_sync"),
+        ],
+        parameters=[
+            {
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
+                "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+            }
+        ]
+        + [load_composable_node_param("dual_return_filter_param_file")],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     driver_component = ComposableNode(
@@ -302,13 +334,59 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
+    ring_outlier_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[ring_outlier_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
+    )
+
+    dual_return_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[dual_return_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationEquals("return_mode", "Dual"),
+    )
+
     driver_component_loader = LoadComposableNodes(
         composable_node_descriptions=[driver_component],
         target_container=container,
         condition=IfCondition(LaunchConfiguration("launch_driver")),
     )
 
-    return [container, driver_component_loader]
+    blockage_diag_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::BlockageDiagComponent",
+        name="blockage_return_diag",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "blockage_diag/pointcloud"),
+        ],
+        parameters=[
+            {
+                "angle_range": LaunchConfiguration("blockage_range"),
+                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                "vertical_bins": LaunchConfiguration("vertical_bins"),
+                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+                "max_distance_range": LaunchConfiguration("max_range"),
+                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
+            }
+        ]
+        + [load_composable_node_param("blockage_diagnostics_param_file")],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
+    blockage_diag_loader = LoadComposableNodes(
+        composable_node_descriptions=[blockage_diag_component],
+        target_container=container,
+        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_blockage_diag")),
+    )
+
+    return [
+        container,
+        driver_component_loader,
+        ring_outlier_filter_loader,
+        dual_return_filter_loader,
+        blockage_diag_loader,
+    ]
 
 
 def generate_launch_description():
@@ -327,6 +405,9 @@ def generate_launch_description():
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("scan_phase", "0.0")
+    add_launch_arg("angle_range", "[270.0, 90.0]")
+    add_launch_arg("distance_range", "[0.1, 200.0]")
+    add_launch_arg("return_mode", "Dual")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
@@ -343,12 +424,25 @@ def generate_launch_description():
     add_launch_arg(
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
+    add_launch_arg(
+        "blockage_diagnostics_param_file",
+        [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+    )
+    add_launch_arg("horizontal_resolution", "0.4")
+    add_launch_arg("vertical_bins", "40")
+    add_launch_arg("horizontal_ring_id", "12")
+    add_launch_arg("enable_blockage_diag", "true")
+    add_launch_arg("blockage_range", "[270.0, 90.0]")
+    add_launch_arg("is_channel_order_top2down", "True")
     add_launch_arg("diag_span", "1000")
     add_launch_arg("delay_monitor_ms", "2000")
     add_launch_arg("use_multithread", "True", "use multithread")
     add_launch_arg("use_intra_process", "True", "use ROS 2 component container communication")
     add_launch_arg("container_name", "nebula_node_container")
     add_launch_arg("calibration_file", "")
+    add_launch_arg("min_azimuth_deg", "135.0")
+    add_launch_arg("max_azimuth_deg", "225.0")
+    add_launch_arg("output_as_sensor_frame", "True")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
