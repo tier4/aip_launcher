@@ -56,7 +56,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -88,7 +88,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -120,7 +120,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -152,7 +152,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -184,7 +184,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
@@ -216,7 +216,7 @@
           <arg name="new_plug_orientation" value="0"/>
       </include>
 
-      <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
         <arg name="input/radar_objects" value="objects_raw"/>
         <arg name="input/odometry" value="$(var odometry_topic)"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
