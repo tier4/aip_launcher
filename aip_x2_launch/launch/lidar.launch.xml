@@ -155,7 +155,7 @@
         <arg name="blockage_range" value="[55.0, 270.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
-        <arg name="return_mode" value="Dual" />
+        <arg name="return_mode" value="Strongest" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
@@ -219,7 +219,7 @@
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="40" />
         <arg name="horizontal_ring_id" value="12" />
-        <arg name="return_mode" value="Dual" />
+        <arg name="return_mode" value="Strongest" />
         <arg name="ptp_profile" value="1588v2"/>
         <arg name="ptp_transport_type" value="UDP"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
