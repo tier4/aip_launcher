@@ -1,0 +1,95 @@
+# Description:
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # gnss
+      ## /sensing/gnss/001-connection
+      "topic_state_monitor_gnss_pose: gnss_topic_status": default
+
+      ## /sensing/gnss/002-quality
+      "septentrio_driver: Quality indicators": default
+
+      # imu
+      ## /sensing/imu/001-monitor
+      "imu_monitor: yaw_rate_status": default
+
+      ## /sensing/imu/002-connection
+      "topic_state_monitor_imu_data: imu_topic_status": default
+
+      ## /sensing/imu/003-gyro_bias
+      "gyro_bias_estimator: gyro_bias_validator": default
+
+      # lidar
+      ## /sensing/lidar/pndr/001-connection
+      "pandar_monitor: /sensing/lidar/front_lower: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/front_upper: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/left_lower: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/left_upper: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/right_lower: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/right_upper: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/rear_lower: pandar_connection": default
+      "pandar_monitor: /sensing/lidar/rear_upper: pandar_connection": default
+
+      ## /sensing/lidar/pndr/002-temperature
+      "pandar_monitor: /sensing/lidar/front_lower: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/front_upper: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/left_lower: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/left_upper: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/right_lower: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/right_upper: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/rear_lower: pandar_temperature": default
+      "pandar_monitor: /sensing/lidar/rear_upper: pandar_temperature": default
+
+      ## /sensing/lidar/pndr/003-ptp
+      "pandar_monitor: /sensing/lidar/front_lower: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/front_upper: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/left_lower: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/left_upper: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/right_lower: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/right_upper: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/rear_lower: pandar_ptp": default
+      "pandar_monitor: /sensing/lidar/rear_upper: pandar_ptp": default
+
+      ## /sensing/camera/001-connection
+      "topic_state_monitor_camera0: camera0_topic_status": default
+      "topic_state_monitor_camera1: camera1_topic_status": default
+      "topic_state_monitor_camera2: camera2_topic_status": default
+      "topic_state_monitor_camera3: camera3_topic_status": default
+      "topic_state_monitor_camera4: camera4_topic_status": default
+      "topic_state_monitor_camera5: camera5_topic_status": default
+      "topic_state_monitor_camera6: camera6_topic_status": default
+      "topic_state_monitor_camera7: camera7_topic_status": default
+
+      ## /sensing/radar/001-connection
+      "topic_state_monitor_radar_front_center: radar_front_center_topic_status": default
+      "topic_state_monitor_radar_front_left: radar_front_left_topic_status": default
+      "topic_state_monitor_radar_front_right: radar_front_right_topic_status": default
+      "topic_state_monitor_radar_rear_center: radar_rear_center_topic_status": default
+      "topic_state_monitor_radar_rear_left: radar_rear_left_topic_status": default
+      "topic_state_monitor_radar_rear_right: radar_rear_right_topic_status": default
+
+      ## /others/002-blockage_validation
+      "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/front_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation": default
+
+      ## /others/004-concat_status
+      "concatenate_data: concat_status": default
+
+      ## /others/005-visibility_validation/front_lower
+      "dual_return_filter: /sensing/lidar/front_lower: visibility_validation": default
