@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 import launch
@@ -27,16 +28,17 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
 def get_lidar_make(sensor_name):
     if sensor_name[:6].lower() == "pandar":
-        return "Hesai", ".csv"
-    elif sensor_name[:3].lower() in ["hdl", "vlp", "vls"]:
-        return "Velodyne", ".yaml"
-    return "unrecognized_sensor_model"
+        return "Hesai"
+    elif sensor_name[:3].lower() in ["vlp", "vls"]:
+        return "Velodyne"
+    raise ValueError("Unrecognized sensor model")
 
 
 def get_vehicle_info(context):
@@ -80,19 +82,25 @@ def launch_setup(context, *args, **kwargs):
 
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
-    sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
+    sensor_make = get_lidar_make(sensor_model)
 
-    # Calibration file
-    sensor_calib_fp = os.path.join(
-        nebula_decoders_share_dir,
-        "calibration",
-        sensor_make.lower(),
-        sensor_model + sensor_extension,
+    # Configuration file containing sensor model's default parameters
+
+    sensor_config = LaunchConfiguration("config_file").perform(context)
+    if sensor_config == "":
+        sensor_config = (
+            Path(get_package_share_directory("nebula_ros"))
+            / "config"
+            / "lidar"
+            / sensor_make.lower()
+            / (sensor_model + ".param.yaml")
+        )
+    else:
+        sensor_config = Path(sensor_config)
+
+    assert sensor_config.exists(), "Sensor configuration not found: {}".format(
+        sensor_config.absolute().as_posix()
     )
-    assert os.path.exists(
-        sensor_calib_fp
-    ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
 
     glog_component = ComposableNode(
         package="glog_component",
@@ -100,91 +108,44 @@ def launch_setup(context, *args, **kwargs):
         name="glog_component",
     )
 
-    nebula_ros_hw_monitor_component = ComposableNode(
+    nebula_component = ComposableNode(
         package="nebula_ros",
-        plugin=sensor_make + "HwMonitorRosWrapper",
-        name=sensor_make.lower() + "_hardware_monitor_ros_wrapper_node",
+        plugin=sensor_make + "RosWrapper",
+        name=sensor_make.lower() + "_ros_wrapper_node",
         parameters=[
-            {
-                "sensor_model": LaunchConfiguration("sensor_model"),
-                "return_mode": LaunchConfiguration("return_mode"),
-                "frame_id": LaunchConfiguration("frame_id"),
-                "scan_phase": LaunchConfiguration("scan_phase"),
-                "sensor_ip": LaunchConfiguration("sensor_ip"),
-                "host_ip": LaunchConfiguration("host_ip"),
-                "data_port": LaunchConfiguration("data_port"),
-                "gnss_port": LaunchConfiguration("gnss_port"),
-                "packet_mtu_size": LaunchConfiguration("packet_mtu_size"),
-                "rotation_speed": LaunchConfiguration("rotation_speed"),
-                "cloud_min_angle": LaunchConfiguration("cloud_min_angle"),
-                "cloud_max_angle": LaunchConfiguration("cloud_max_angle"),
-                "diag_span": LaunchConfiguration("diag_span"),
-                "dual_return_distance_threshold": LaunchConfiguration(
-                    "dual_return_distance_threshold"
-                ),
-                "delay_monitor_ms": LaunchConfiguration("delay_monitor_ms"),
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    nebula_ros_hw_interface_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "HwInterfaceRosWrapper",
-        name=sensor_make.lower() + "_hw_interface_ros_wrapper_node",
-        parameters=[
+            ParameterFile(sensor_config, allow_substs=True),
             {
                 "sensor_model": sensor_model,
-                "calibration_file": sensor_calib_fp,
+                "launch_hw": LaunchConfiguration("launch_driver"),
                 **create_parameter_dict(
-                    "sensor_ip",
                     "host_ip",
-                    "scan_phase",
-                    "return_mode",
-                    "frame_id",
-                    "rotation_speed",
+                    "sensor_ip",
                     "data_port",
-                    "cloud_min_angle",
-                    "cloud_max_angle",
-                    "dual_return_distance_threshold",
                     "gnss_port",
                     "packet_mtu_size",
                     "setup_sensor",
-                    "ptp_profile",
-                    "ptp_transport_type",
-                    "ptp_switch_type",
-                    "ptp_domain",
-                ),
-            },
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    nebula_ros_driver_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "DriverRosWrapper",
-        name=sensor_make.lower() + "_driver_ros_wrapper_node",
-        parameters=[
-            {
-                "calibration_file": sensor_calib_fp,
-                "sensor_model": sensor_model,
-                **create_parameter_dict(
-                    "host_ip",
-                    "sensor_ip",
-                    "data_port",
-                    "return_mode",
+                    "frame_id",
+                    "diag_span",
                     "min_range",
                     "max_range",
-                    "frame_id",
+                    "cloud_min_angle",
+                    "cloud_max_angle",
                     "scan_phase",
+                    "rotation_speed",
+                    "return_mode",
+                    "ptp_profile",
+                    "ptp_domain",
+                    "ptp_transport_type",
+                    "ptp_switch_type",
                     "dual_return_distance_threshold",
                 ),
                 "launch_hw": True,
             },
         ],
         remappings=[
-            ("aw_points", "pointcloud_raw"),
-            ("aw_points_ex", "pointcloud_raw_ex"),
+            # cSpell:ignore knzo25
+            # TODO(knzo25): fix the remapping once nebula gets updated
+            ("pandar_points", "pointcloud_raw_ex"),
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -332,21 +293,12 @@ def launch_setup(context, *args, **kwargs):
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[
             glog_component,
-            nebula_ros_driver_component,
+            nebula_component,
             self_crop_component,
             right_mirror_crop_component,
             left_mirror_crop_component,
             undistort_component,
         ],
-    )
-
-    driver_loader = LoadComposableNodes(
-        composable_node_descriptions=[
-            nebula_ros_hw_interface_component,
-            nebula_ros_hw_monitor_component,
-        ],
-        target_container=container,
-        condition=launch.conditions.IfCondition(LaunchConfiguration("launch_driver")),
     )
 
     ring_outlier_filter_loader = LoadComposableNodes(
@@ -369,7 +321,6 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         container,
-        driver_loader,
         ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
@@ -387,8 +338,8 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg("launch_driver", "True", "do launch driver")
-    add_launch_arg("setup_sensor", "True", "configure sensor")
+    add_launch_arg("launch_driver", "true", "do launch driver")
+    add_launch_arg("setup_sensor", "true", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("scan_phase", "0.0")
@@ -411,7 +362,7 @@ def generate_launch_description():
 
     add_launch_arg(
         "distortion_corrector_node_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
+        [FindPackageShare("pointcloud_preprocessor"), "/config/distortion_corrector_node.param.yaml"],
     )
 
     add_launch_arg("diag_span", "1000")
