@@ -204,7 +204,7 @@
     </group>
 
     <!-- merge radar objects -->
-    <let name="merger_param_path" value="$(find-pkg-share aip_x2_launch)/config/simple_object_merger.param.yaml"/>
+    <let name="merger_param_path" value="$(find-pkg-share aip_x2_gen2_launch)/config/simple_object_merger.param.yaml"/>
     <node pkg="simple_object_merger" exec="simple_object_merger_node" name="simple_object_merger" output="screen">
       <remap from="~/output/objects" to="detected_objects"/>
       <param from="$(var merger_param_path)"/>

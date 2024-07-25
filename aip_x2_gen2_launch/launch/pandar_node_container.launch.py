@@ -333,7 +333,7 @@ def generate_launch_description():
     add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
         "blockage_diagnostics_param_file",
-        [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+        [FindPackageShare("aip_x2_gen2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
     )
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
