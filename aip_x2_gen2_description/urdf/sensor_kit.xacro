@@ -5,10 +5,10 @@
     <xacro:include filename="$(find pandar_description)/urdf/pandar_ot128.xacro" />
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro" />
     <xacro:include filename="$(find imu_description)/urdf/imu.xacro" />
-    <xacro:include filename="$(find aip_x2_description)/urdf/gnss.xacro" />
+    <xacro:include filename="$(find aip_x2_gen2_description)/urdf/gnss.xacro" />
 
     <xacro:arg name="gpu" default="false" />
-    <xacro:arg name="config_dir" default="$(find aip_x2_description)/config" />
+    <xacro:arg name="config_dir" default="$(find aip_x2_gen2_description)/config" />
 
     <!-- base-->
     <xacro:property name="calibration"
