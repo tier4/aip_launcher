@@ -255,7 +255,7 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             {
-                "angle_range": LaunchConfiguration("angle_range"),
+                "angle_range": LaunchConfiguration("blockage_range"),
                 "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
@@ -327,6 +327,7 @@ def generate_launch_description():
     add_launch_arg("device_ip", "192.168.1.201")
     add_launch_arg("scan_phase", "0.0")
     add_launch_arg("angle_range", "[270.0, 90.0]")
+    add_launch_arg("blockage_range", "[270.0, 90.0]")
     add_launch_arg("distance_range", "[0.1, 200.0]")
     add_launch_arg("return_mode", "Dual")
     add_launch_arg("base_frame", "base_link")
