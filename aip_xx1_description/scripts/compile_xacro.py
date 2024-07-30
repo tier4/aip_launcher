@@ -1,9 +1,10 @@
-from jinja2 import Template
-import os
 import enum
 import functools
-import yaml
+import os
 from typing import Dict
+
+from jinja2 import Template
+import yaml
 
 
 def load_yaml(file_path: str) -> Dict:
@@ -13,6 +14,7 @@ def load_yaml(file_path: str) -> Dict:
         except yaml.YAMLError as exc:
             print(exc)
             return None
+
 
 class Transformation:
     def __init__(self, transformation: Dict, base_frame: str, child_frame: str):
@@ -38,7 +40,7 @@ class Transformation:
     def serialize(self) -> str:
         return f"""
         name=\"{self.name}\"
-        parant=\"{self.base_frame}\"
+        parent=\"{self.base_frame}\"
         x=\"{self.serialize_single('x')}\"
         y=\"{self.serialize_single('y')}\"
         z=\"{self.serialize_single('z')}\"
@@ -51,9 +53,7 @@ class Transformation:
 class Calibration:
     def __init__(self, calibration: Dict):
         self.base_dict: Dict = calibration
-        assert (
-            len(calibration.keys()) == 1
-        ), "Calibration file should have only one base frame"
+        assert len(calibration.keys()) == 1, "Calibration file should have only one base frame"
         assert isinstance(
             list(calibration.keys())[0], str
         ), "Calibration file should have only one base frame with key as a string"
@@ -63,7 +63,7 @@ class Calibration:
             calibration[self.base_frame], dict
         ), "Calibration file should have only one base frame with value as a dictionary"
 
-        self.transforms: Dict[str, Transformation] = dict()
+        self.transforms: Dict[str, Transformation] = {}
 
         for key in calibration[self.base_frame]:
             assert isinstance(key, str), "child frames should be strings"
@@ -77,9 +77,8 @@ class Calibration:
 
 
 class LinkType(enum.Enum):
-    """
-        Enum class for the type of the link
-    """
+    """Enum class for the type of the link."""
+
     CAMERA = "monocular_camera"
     IMU = "imu"
     LIVOX = "livox_horizon"
@@ -93,43 +92,45 @@ class LinkType(enum.Enum):
     RADAR = "radar"
     JOINT_UNITS = "units"
 
-def determine_link_type(link_name:str)->LinkType:
-    if 'cam' in link_name:
+
+def determine_link_type(link_name: str) -> LinkType:
+    if "cam" in link_name:
         return LinkType.CAMERA
-    
-    if 'imu' in link_name or 'gnss' in link_name:
+
+    if "imu" in link_name or "gnss" in link_name:
         return LinkType.IMU
-    
-    if 'livox' in link_name:
+
+    if "livox" in link_name:
         return LinkType.LIVOX
-    
-    if 'velodyne' in link_name:
-        if 'top' in link_name:
+
+    if "velodyne" in link_name:
+        if "top" in link_name:
             return LinkType.VLS128
         else:
             return LinkType.VELODYNE16
-    
-    if 'radar' in link_name or 'ars' in link_name:
+
+    if "radar" in link_name or "ars" in link_name:
         return LinkType.RADAR
-    
-    if 'pandar_40p' in link_name:
+
+    if "pandar_40p" in link_name:
         return LinkType.PANDAR_40P
-    
-    if 'pandar_qt' in link_name:
+
+    if "pandar_qt" in link_name:
         return LinkType.PANDAR_QT
-    
-    if 'hesai_top' in link_name:
+
+    if "hesai_top" in link_name:
         return LinkType.PANDAR_OT128
-    
-    if 'hesai_front' in link_name:
+
+    if "hesai_front" in link_name:
         return LinkType.PANDAR_XT32
 
-    if 'hesai' in link_name:
+    if "hesai" in link_name:
         return LinkType.PANDAR_XT32
-    
+
     else:
         print(f"Link type not found for {link_name}, suspected to be a joint unit")
         return LinkType.JOINT_UNITS
+
 
 BASE_STRING = """<xacro:{type}
         name=\"{child_frame}\"
@@ -154,93 +155,118 @@ VLD_STRING = """<xacro:{type} parent=\"{base_frame}\" name=\"{child_frame}\" top
     />
     </xacro:{type}>"""
 
-def base_string_func(type:str, transform:Transformation)->str:
-    if type == "monocular_camera_macro":
+
+def base_string_func(macro_type: str, transform: Transformation) -> str:
+    if macro_type == "monocular_camera_macro":
         extra = """fps=\"30\"
         width=\"800\"
         height=\"400\"
         namespace=\"\"
         fov=\"1.3\""""
-    elif type == "imu_macro":
+    elif macro_type == "imu_macro":
         extra = """fps=\"100\"
         namespace=\"\""""
     else:
         extra = ""
     return BASE_STRING.format(
-        type=type, base_frame=transform.base_frame, child_frame=transform.child_frame,
-        x=transform.serialize_single('x'), y=transform.serialize_single('y'), z=transform.serialize_single('z'),
-        roll=transform.serialize_single('roll'), pitch=transform.serialize_single('pitch'), yaw=transform.serialize_single('yaw'),
-        extra=extra)
-
-def VLP16_func(transform:Transformation)->str:
-    return VLD_STRING.format(
-        type="VLP-16", base_frame=transform.base_frame, child_frame=transform.child_frame,
-        x=transform.serialize_single('x'), y=transform.serialize_single('y'), z=transform.serialize_single('z'),
-        roll=transform.serialize_single('roll'), pitch=transform.serialize_single('pitch'), yaw=transform.serialize_single('yaw')
+        type=macro_type,
+        base_frame=transform.base_frame,
+        child_frame=transform.child_frame,
+        x=transform.serialize_single("x"),
+        y=transform.serialize_single("y"),
+        z=transform.serialize_single("z"),
+        roll=transform.serialize_single("roll"),
+        pitch=transform.serialize_single("pitch"),
+        yaw=transform.serialize_single("yaw"),
+        extra=extra,
     )
 
-def VLS128_func(transform:Transformation)->str:
+
+def VLP16_func(transform: Transformation) -> str:
     return VLD_STRING.format(
-        type="VLS-128", base_frame=transform.base_frame, child_frame=transform.child_frame,
-        x=transform.serialize_single('x'), y=transform.serialize_single('y'), z=transform.serialize_single('z'),
-        roll=transform.serialize_single('roll'), pitch=transform.serialize_single('pitch'), yaw=transform.serialize_single('yaw')
+        type="VLP-16",
+        base_frame=transform.base_frame,
+        child_frame=transform.child_frame,
+        x=transform.serialize_single("x"),
+        y=transform.serialize_single("y"),
+        z=transform.serialize_single("z"),
+        roll=transform.serialize_single("roll"),
+        pitch=transform.serialize_single("pitch"),
+        yaw=transform.serialize_single("yaw"),
     )
+
+
+def VLS128_func(transform: Transformation) -> str:
+    return VLD_STRING.format(
+        type="VLS-128",
+        base_frame=transform.base_frame,
+        child_frame=transform.child_frame,
+        x=transform.serialize_single("x"),
+        y=transform.serialize_single("y"),
+        z=transform.serialize_single("z"),
+        roll=transform.serialize_single("roll"),
+        pitch=transform.serialize_single("pitch"),
+        yaw=transform.serialize_single("yaw"),
+    )
+
 
 link_dicts = {
-    LinkType.CAMERA:{
+    LinkType.CAMERA: {
         "including_file": "$(find camera_description)/urdf/monocular_camera.xacro",
-        "string_api": functools.partial(base_string_func, "monocular_camera_macro")
+        "string_api": functools.partial(base_string_func, "monocular_camera_macro"),
     },
-    LinkType.IMU:{
+    LinkType.IMU: {
         "including_file": "$(find imu_description)/urdf/imu.xacro",
-        "string_api": functools.partial(base_string_func, "imu_macro")
+        "string_api": functools.partial(base_string_func, "imu_macro"),
     },
-    LinkType.VELODYNE16:{
+    LinkType.VELODYNE16: {
         "including_file": "$(find velodyne_description)/urdf/VLP-16.urdf.xacro",
-        "string_api": VLP16_func
+        "string_api": VLP16_func,
     },
-    LinkType.VLS128:{
+    LinkType.VLS128: {
         "including_file": "$(find vls_description)/urdf/VLS-128.urdf.xacro",
-        "string_api": VLS128_func
+        "string_api": VLS128_func,
     },
-    LinkType.PANDAR_40P:{
+    LinkType.PANDAR_40P: {
         "including_file": "$(find pandar_description)/urdf/pandar_40p.xacro",
-        "string_api": functools.partial(base_string_func, "Pandar40P")
+        "string_api": functools.partial(base_string_func, "Pandar40P"),
     },
-    LinkType.PANDAR_OT128:{
+    LinkType.PANDAR_OT128: {
         "including_file": "$(find pandar_description)/urdf/pandar_ot128.xacro",
-        "string_api": functools.partial(base_string_func, "PandarOT-128")
+        "string_api": functools.partial(base_string_func, "PandarOT-128"),
     },
-    LinkType.PANDAR_XT32:{
+    LinkType.PANDAR_XT32: {
         "including_file": "$(find pandar_description)/urdf/pandar_xt32.xacro",
-        "string_api": functools.partial(base_string_func, "PandarXT-32")
+        "string_api": functools.partial(base_string_func, "PandarXT-32"),
     },
-    LinkType.PANDAR_QT:{
+    LinkType.PANDAR_QT: {
         "including_file": "$(find pandar_description)/urdf/pandar_qt.xacro",
-        "string_api": functools.partial(base_string_func, "PandarQT")
+        "string_api": functools.partial(base_string_func, "PandarQT"),
     },
-    LinkType.PANDAR_QT128:{
+    LinkType.PANDAR_QT128: {
         "including_file": "$(find pandar_description)/urdf/pandar_qt128.xacro",
-        "string_api": functools.partial(base_string_func, "PandarQT-128")
+        "string_api": functools.partial(base_string_func, "PandarQT-128"),
     },
-    LinkType.LIVOX:{
+    LinkType.LIVOX: {
         "including_file": "$(find livox_description)/urdf/livox_horizon.xacro",
-        "string_api": functools.partial(base_string_func, "livox_horizon_macro")
+        "string_api": functools.partial(base_string_func, "livox_horizon_macro"),
     },
-    LinkType.RADAR:{
+    LinkType.RADAR: {
         "including_file": "$(find radar_description)/urdf/radar.xacro",
-        "string_api": functools.partial(base_string_func, "radar_macro")
+        "string_api": functools.partial(base_string_func, "radar_macro"),
     },
-    LinkType.JOINT_UNITS:{
+    LinkType.JOINT_UNITS: {
         "including_file": "{filename}.xacro",
-    }
+    },
 }
 
 
-def main(template_directory:str, calibration_directory:str, output_directory:str, project_name:str):
+def main(
+    template_directory: str, calibration_directory: str, output_directory: str, project_name: str
+):
     os.makedirs(output_directory, exist_ok=True)
     # Load the template
-    with open(os.path.join(template_directory, 'sensors.xacro.template'), 'r') as file:
+    with open(os.path.join(template_directory, "sensors.xacro.template"), "r") as file:
         base_template = Template(file.read())
 
     # Render the template
@@ -248,32 +274,35 @@ def main(template_directory:str, calibration_directory:str, output_directory:str
     calib_yaml = load_yaml(calibration_path)
     calib = Calibration(calib_yaml)
 
-    render_meta_data = dict()
-    render_meta_data['default_config_path'] = f"$(find {project_name})/config"
-    render_meta_data["sensor_calibration_yaml_path"] = f"$(find {project_name})/config/sensors_calibration.yaml"
+    render_meta_data = {}
+    render_meta_data["default_config_path"] = f"$(find {project_name})/config"
+    render_meta_data[
+        "sensor_calibration_yaml_path"
+    ] = f"$(find {project_name})/config/sensors_calibration.yaml"
     render_meta_data["sensor_units_includes"] = []
     render_meta_data["sensor_units"] = []
     render_meta_data["isolated_sensors_includes"] = []
     render_meta_data["isolated_sensors"] = []
 
-
     include_text = set()
     sensor_items = []
     for _, transform in calib.transforms.items():
-        link_type:LinkType = determine_link_type(transform.child_frame)
+        link_type: LinkType = determine_link_type(transform.child_frame)
         if link_type == LinkType.JOINT_UNITS:
-            render_meta_data["sensor_units_includes"].append(link_dicts[link_type]['including_file'].format(filename=transform.name))
+            render_meta_data["sensor_units_includes"].append(
+                link_dicts[link_type]["including_file"].format(filename=transform.name)
+            )
             render_meta_data["sensor_units"].append(
-                dict(
-                    base_frame=transform.base_frame,
-                    child_frame=transform.child_frame,
-                    macro_name=f"{transform.name}_macro",
-                    name = transform.name
-                )
+                {
+                    "base_frame": transform.base_frame,
+                    "child_frame": transform.child_frame,
+                    "macro_name": f"{transform.name}_macro",
+                    "name": transform.name,
+                }
             )
         else:
-            include_text.add(link_dicts[link_type]['including_file'])
-            sensor_items.append(link_dicts[link_type]['string_api'](transform))
+            include_text.add(link_dicts[link_type]["including_file"])
+            sensor_items.append(link_dicts[link_type]["string_api"](transform))
 
     render_meta_data["isolated_sensors_includes"] = list(include_text)
     render_meta_data["isolated_sensors"] = sensor_items
@@ -283,38 +312,42 @@ def main(template_directory:str, calibration_directory:str, output_directory:str
 
     print("=====================================")
     # Save the rendered template
-    with open(os.path.join(output_directory, 'sensors.xacro'), 'w') as file:
+    with open(os.path.join(output_directory, "sensors.xacro"), "w") as file:
         file.write(rendered)
 
-
-    ## Write Sensor Units into separate files
-    with open(os.path.join(template_directory, 'sensor_unit.xacro.template'), 'r') as file:
+    # Write Sensor Units into separate files
+    with open(os.path.join(template_directory, "sensor_unit.xacro.template"), "r") as file:
         sensor_units_template = Template(file.read())
 
     for i, sensor_unit in enumerate(render_meta_data["sensor_units"]):
-        sensor_unit_calib_path = os.path.join(calibration_directory, f"{sensor_unit['name']}_calibration.yaml")
+        sensor_unit_calib_path = os.path.join(
+            calibration_directory, f"{sensor_unit['name']}_calibration.yaml"
+        )
         sensor_unit_calib_yaml = load_yaml(sensor_unit_calib_path)
         sensor_unit_calib = Calibration(sensor_unit_calib_yaml)
-        sensor_unit_render_meta_data = dict()
-        sensor_unit_render_meta_data['unit_macro_name'] = sensor_unit['macro_name']
-        sensor_unit_render_meta_data['default_config_path'] = render_meta_data['default_config_path']
+        sensor_unit_render_meta_data = {}
+        sensor_unit_render_meta_data["unit_macro_name"] = sensor_unit["macro_name"]
+        sensor_unit_render_meta_data["default_config_path"] = render_meta_data[
+            "default_config_path"
+        ]
 
-        sensor_unit_render_meta_data['current_base_link'] = sensor_unit_calib.base_frame
+        sensor_unit_render_meta_data["current_base_link"] = sensor_unit_calib.base_frame
         sensor_unit_isolated_sensors = []
         for _, transform in sensor_unit_calib.transforms.items():
-            link_type:LinkType = determine_link_type(transform.child_frame)
-            include_text.add(link_dicts[link_type]['including_file'])
-            sensor_unit_isolated_sensors.append(link_dicts[link_type]['string_api'](transform))
+            link_type: LinkType = determine_link_type(transform.child_frame)
+            include_text.add(link_dicts[link_type]["including_file"])
+            sensor_unit_isolated_sensors.append(link_dicts[link_type]["string_api"](transform))
         sensor_unit_render_meta_data["isolated_sensors_includes"] = list(include_text)
         sensor_unit_render_meta_data["isolated_sensors"] = sensor_unit_isolated_sensors
 
         rendered = sensor_units_template.render(sensor_unit_render_meta_data)
         print(rendered)
-        with open(os.path.join(output_directory, f'{sensor_unit["name"]}.xacro'), 'w') as file:
+        with open(os.path.join(output_directory, f'{sensor_unit["name"]}.xacro'), "w") as file:
             file.write(rendered)
         print("=====================================")
-    
+
     return 0
+
 
 if __name__ == "__main__":
     # import argparse
@@ -325,5 +358,6 @@ if __name__ == "__main__":
     # parser.add_argument("--project_name", type=str, help="Name of the project", required=True)
     # args = parser.parse_args()
     from fire import Fire
+
     Fire(main)
     # main(args.template_directory, args.calibration_directory, args.output_directory, args.project_name)

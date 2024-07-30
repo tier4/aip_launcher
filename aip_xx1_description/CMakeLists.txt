@@ -6,7 +6,7 @@ find_package(ament_cmake_auto REQUIRED)
 
 ament_auto_find_build_dependencies()
 
-find_package(PythonInterp REQUIRED)
+find_package(PythonInterp REQUIRED) # cspell: ignore Interp
 # Specify the path to your Python script
 set(PYTHON_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/scripts/compile_xacro.py")
 set(PYTHON_TEMPLATE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/templates")
