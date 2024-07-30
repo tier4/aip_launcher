@@ -350,14 +350,16 @@ def main(
 
 
 if __name__ == "__main__":
-    # import argparse
-    # parser = argparse.ArgumentParser(description="Compile xacro files from calibration files")
-    # parser.add_argument("--template_directory", type=str, help="Path to the template directory", required=True)
-    # parser.add_argument("--calibration_directory", type=str, help="Path to the calibration directory", required=True)
-    # parser.add_argument("--output_directory", type=str, help="Path to the output directory", required=True)
-    # parser.add_argument("--project_name", type=str, help="Name of the project", required=True)
-    # args = parser.parse_args()
-    from fire import Fire
+    import argparse
+    parser = argparse.ArgumentParser(description="Process four positional arguments.")
+    
+    # Add four positional arguments
+    parser.add_argument('template_directory', type=str, help='The first argument')
+    parser.add_argument('calibration_directory', type=str, help='The second argument')
+    parser.add_argument('output_directory', type=str, help='The third argument')
+    parser.add_argument('project_name', type=str, help='The fourth argument')
 
-    Fire(main)
-    # main(args.template_directory, args.calibration_directory, args.output_directory, args.project_name)
+    # Parse the arguments
+    args = parser.parse_args()
+
+    main(args.template_directory, args.calibration_directory, args.output_directory, args.project_name)
