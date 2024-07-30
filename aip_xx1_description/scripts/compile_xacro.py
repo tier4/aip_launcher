@@ -238,7 +238,7 @@ link_dicts = {
 
 
 def main(template_directory:str, calibration_directory:str, output_directory:str, project_name:str):
-    os.path.mkdirs(output_directory, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
     # Load the template
     with open(os.path.join(template_directory, 'sensors.xacro.template'), 'r') as file:
         base_template = Template(file.read())
