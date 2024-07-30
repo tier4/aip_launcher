@@ -8,8 +8,8 @@
   <license>Apache 2</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
-  <buildtool_depend>python3-jinja2</buildtool_depend>
   <buildtool_depend>python3-fire</buildtool_depend>
+  <buildtool_depend>python3-jinja2</buildtool_depend>
 
   <depend>velodyne_description</depend>
 
