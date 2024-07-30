@@ -31,7 +31,7 @@ class Transformation:
             self.name = self.child_frame.replace("_base_link", "").replace("_link", "")
 
         except KeyError as e:
-            print(f"Error: Key {e} not found in transformation dictionary")
+            print(f"Error: Key {e} not in transformation dictionary")
             raise e
 
     def serialize_single(self, key: str) -> str:
@@ -72,7 +72,7 @@ class Calibration:
                     calibration[self.base_frame][key], self.base_frame, key
                 )
             except KeyError as e:
-                print(f"Error: Key {e} not found in calibration dictionary of {key}")
+                print(f"Error: Key {e} not in calibration dictionary of {key}")
                 raise e
 
 
