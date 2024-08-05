@@ -25,18 +25,12 @@
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
-    <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
-    <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
-    <arg name="max_range" value="$(var max_range)"/>
+    <arg name="cloud_min_angle" value="0"/>
+    <arg name="cloud_max_angle" value="360"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
-    <arg name="ptp_profile" value="1588v2"/>
-    <arg name="ptp_switch_type" value="TSN"/>
-    <arg name="ptp_transport_type" value="UDP"/>
-    <arg name="setup_sensor" value="true"/>
-    <arg name="retry_hw" value="true"/>
     <arg name="container_name" value="$(var container_name)"/>
   </include>
 </launch>
