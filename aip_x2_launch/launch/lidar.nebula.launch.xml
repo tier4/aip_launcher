@@ -62,7 +62,7 @@
         <!--arg name="cloud_max_angle" value="300"/-->
         <!--arg name="blockage_range" value="[90.0, 270.0]"/-->
         <arg name="min_range" value="0.1"/>
-        <arg name="max_range" value="20.0"/>        
+        <arg name="max_range" value="20.0"/>
         <arg name="vertical_bins" value ="64" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="return_mode" value="First" />
