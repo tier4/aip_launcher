@@ -13,7 +13,13 @@
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="enable_blockage_diag" default="false"/>
 
-  <arg name="ring_interval" default="2"/>
+  <!-- use 2/3 of points -->
+  <arg name="ring_interval" default="3"/>
+  <arg name="remove_interval_ring" default="true"/>
+
+  <!-- use 1/3 of points -->
+  <!-- <arg name="ring_interval" default="3"/>
+  <arg name="remove_interval_ring" default="false"/> -->
 
   <group>
     <push-ros-namespace namespace="lidar" />
@@ -61,6 +67,7 @@
 
         <arg name="enable_ring_filter" value="true" />
         <arg name="ring_interval" value="$(var ring_interval)" />
+        <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
       </include>
     </group>
 
@@ -98,6 +105,7 @@
 
         <arg name="enable_ring_filter" value="false" />
         <arg name="ring_interval" value="$(var ring_interval)" />
+        <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
       </include>
     </group>
 
@@ -204,6 +212,7 @@
 
         <arg name="enable_ring_filter" value="true" />
         <arg name="ring_interval" value="$(var ring_interval)" />
+        <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
       </include>
     </group>
 
@@ -241,6 +250,7 @@
 
         <arg name="enable_ring_filter" value="false" />
         <arg name="ring_interval" value="$(var ring_interval)" />
+        <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
       </include>
     </group>
 

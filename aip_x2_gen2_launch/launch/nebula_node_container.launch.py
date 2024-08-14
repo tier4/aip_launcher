@@ -296,6 +296,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {
                 "ring_interval": LaunchConfiguration("ring_interval"),
+                "remove_interval_ring": LaunchConfiguration("remove_interval_ring"),
             }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -404,8 +405,10 @@ def generate_launch_description():
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
 
+    # ring filter params
     add_launch_arg("enable_ring_filter", "true")
     add_launch_arg("ring_interval", "2")
+    add_launch_arg("remove_interval_ring", "true")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
