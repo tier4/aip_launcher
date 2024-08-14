@@ -31,6 +31,9 @@
   <arg name="vehicle_mirror_param_file" default="$(var vehicle_mirror_param_file)" />
   <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
 
+  <arg name="enable_ring_filter" default="true"/>
+  <arg name="ring_interval" default="2"/>
+
   <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
@@ -64,6 +67,9 @@
     <arg name="calibration" value="$(var calibration)"/>
     <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
     <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+
+    <arg name="enable_ring_filter" value="$(var enable_ring_filter)"/>
+    <arg name="ring_interval" value="$(var ring_interval)"/>
 
   </include>
 </launch>

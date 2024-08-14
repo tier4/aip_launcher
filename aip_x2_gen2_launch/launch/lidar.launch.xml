@@ -13,6 +13,8 @@
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="enable_blockage_diag" default="false"/>
 
+  <arg name="ring_interval" default="2"/>
+
   <group>
     <push-ros-namespace namespace="lidar" />
 
@@ -56,6 +58,9 @@
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+
+        <arg name="enable_ring_filter" value="true" />
+        <arg name="ring_interval" value="$(var ring_interval)" />
       </include>
     </group>
 
@@ -90,6 +95,9 @@
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+
+        <arg name="enable_ring_filter" value="false" />
+        <arg name="ring_interval" value="$(var ring_interval)" />
       </include>
     </group>
 
@@ -193,6 +201,9 @@
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+
+        <arg name="enable_ring_filter" value="true" />
+        <arg name="ring_interval" value="$(var ring_interval)" />
       </include>
     </group>
 
@@ -227,6 +238,9 @@
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+
+        <arg name="enable_ring_filter" value="false" />
+        <arg name="ring_interval" value="$(var ring_interval)" />
       </include>
     </group>
 
