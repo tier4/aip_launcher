@@ -41,8 +41,8 @@ def launch_setup(context, *args, **kwargs):
                 ],
                 "output_frame": LaunchConfiguration("base_frame"),
                 "input_offset": [
-                    0.055,
-                    0.025,
+                    0.0,
+                    0.05,
                 ],
                 "timeout_sec": 0.095,
                 "input_twist_topic_type": "twist",
