@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    roi_mode: "Fixed_azimuth_ROI" # description="options: `No_ROI`, `Fixed_xyz_ROI` or `Fixed_azimuth_ROI`"/>
+    roi_mode: "Fixed_xyz_ROI" # description="options: `No_ROI`, `Fixed_xyz_ROI` or `Fixed_azimuth_ROI`"/>
     weak_first_local_noise_threshold: 2 # description="for No_ROI roi_mode, recommended value is 10" />
     visibility_error_threshold: 0.95
     visibility_warn_threshold: 0.97
