@@ -4,8 +4,6 @@
     weak_first_local_noise_threshold: 2 # description="for No_ROI roi_mode, recommended value is 10" />
     visibility_error_threshold: 0.95
     visibility_warn_threshold: 0.97
-    min_azimuth_deg: 100.0
-    max_azimuth_deg: 260.0
     max_distance: 10.0
     x_max: 18.0
     x_min: -12.0
