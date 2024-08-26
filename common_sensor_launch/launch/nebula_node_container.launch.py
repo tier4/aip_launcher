@@ -161,8 +161,10 @@ def launch_setup(context, *args, **kwargs):
 
     # There is an issue where hw_monitor crashes due to data race,
     # so the monitor will now only be launched when explicitly specified with a launch command.
-    launch_hw_monitor: bool = context.perform_substitution(LaunchConfiguration("launch_hw_monitor"))
-    launch_driver: bool = context.perform_substitution(LaunchConfiguration("launch_driver"))
+    launch_hw_monitor: bool = IfCondition(LaunchConfiguration("launch_hw_monitor")).evaluate(
+        context
+    )
+    launch_driver: bool = IfCondition(LaunchConfiguration("launch_driver")).evaluate(context)
     if launch_hw_monitor and launch_driver:
         nodes.append(
             ComposableNode(

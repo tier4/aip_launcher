@@ -92,7 +92,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     path_dictionary = generate_launch_dictionary()
 
     base_parameters = {}
-    base_parameters["host_ip"] = LaunchConfiguration("host_ip")
+    base_parameters["host_ip"] = LaunchConfiguration("host_ip").perform(context)
     base_parameters["vehicle_mirror_param_file"] = LaunchConfiguration(
         "vehicle_mirror_param_file"
     ).perform(context)
