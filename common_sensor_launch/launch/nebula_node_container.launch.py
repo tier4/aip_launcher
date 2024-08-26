@@ -126,9 +126,11 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    # There is an issue where hw_monitor crashes due to data race, 
+    # There is an issue where hw_monitor crashes due to data race,
     # so the monitor will now only be launched when explicitly specified with a launch command.
-    if LaunchConfiguration("launch_hw_monitor").perform(context):
+    launch_hw_monitor: bool = context.perform_substitution(LaunchConfiguration("launch_hw_monitor"))
+    launch_driver: bool = context.perform_substitution(LaunchConfiguration("launch_driver"))
+    if launch_hw_monitor and launch_driver:
         nodes.append(
             ComposableNode(
                 package="nebula_ros",
@@ -155,7 +157,9 @@ def launch_setup(context, *args, **kwargs):
                         ),
                     },
                 ],
-                extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
             )
         )
 
@@ -339,7 +343,8 @@ def generate_launch_description():
     add_launch_arg(
         "launch_hw_monitor",
         "False",
-        "do launch hardware monitor. Due to an issue where hw_monitor crashes due to data conflicts, the monitor in launched only when explicitly specified")
+        "do launch hardware monitor. Due to an issue where hw_monitor crashes due to data conflicts, the monitor in launched only when explicitly specified",
+    )
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
