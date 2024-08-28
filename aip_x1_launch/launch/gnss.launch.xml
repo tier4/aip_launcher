@@ -1,10 +1,9 @@
 <launch>
 
-  <arg name="use_gnss" default="false" />
   <arg name="launch_driver" default="true" />
 
-  <group if="$(var use_gnss)">
-    <push-ros-namespace namespace="gnss"/>
+  <group>
+    <push-ros-namespace namespace="gnss" />
 
     <!-- Ublox Driver -->
     <node pkg="ublox_gps" name="ublox" exec="ublox_gps_node" if="$(var launch_driver)" respawn="true" respawn_delay="1.0">

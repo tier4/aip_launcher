@@ -20,7 +20,7 @@
     </include>
 
     <!-- GNSS Driver -->
-    <include file="$(find-pkg-share aip_x1_launch)/launch/gnss.launch.xml" unless="$(var use_awsim)">
+    <include file="$(find-pkg-share aip_x1_launch)/launch/gnss.launch.xml" if="$(var use_awsim)" >
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
