@@ -4,7 +4,7 @@
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
-  <arg name="use_awsim" default="false"/>
+  <arg name="use_gnss" default="false"/>
 
   <group>
     <!-- LiDAR Driver -->
@@ -20,7 +20,7 @@
     </include>
 
     <!-- GNSS Driver -->
-    <include file="$(find-pkg-share aip_x1_launch)/launch/gnss.launch.xml" if="$(var use_awsim)" >
+    <include file="$(find-pkg-share aip_x1_launch)/launch/gnss.launch.xml" if="$(var use_gnss)" >
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 
