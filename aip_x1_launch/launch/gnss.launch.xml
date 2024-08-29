@@ -13,7 +13,7 @@
 
     <!-- NavSatFix to MGRS Pose -->
     <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
-      <arg name="param_file" default="$(find-pkg-share aip_x1_launch)/config/gnss_poser.param.yaml" />
+      <arg name="param_file" value="$(find-pkg-share aip_x1_launch)/config/gnss_poser.param.yaml" />
       <arg name="input_topic_fix" value="ublox/nav_sat_fix" />
       <!-- Required if use_gnss_ins_orientation in gnss_poser.param.yaml is true -->
       <!-- <arg name="input_topic_orientation" value="" /> -->
