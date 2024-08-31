@@ -85,3 +85,16 @@
                       startswith: ["gnss"]
                       contains: [": gnss"]
                       timeout: 5.0
+        imu:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: imu
+          analyzers:
+            bias_monitoring:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: bias_monitoring
+              analyzers:
+                gyro_bias_validator:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: gyro_bias_validator
+                  contains: [": gyro_bias_validator"]
+                  timeout: 1.0
