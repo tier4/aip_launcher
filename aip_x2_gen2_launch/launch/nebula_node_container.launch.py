@@ -324,7 +324,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     container = ComposableNodeContainer(
-        name="pandar_node_container",
+        name="nebula_node_container",
         namespace="pointcloud_preprocessor",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
