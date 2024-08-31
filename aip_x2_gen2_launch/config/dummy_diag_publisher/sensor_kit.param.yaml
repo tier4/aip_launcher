@@ -38,7 +38,7 @@
       "pandar_monitor: /sensing/lidar/right_lower: pandar_ptp": default
       "pandar_monitor: /sensing/lidar/right_upper: pandar_ptp": default
       "pandar_monitor: /sensing/lidar/rear_lower: pandar_ptp": default
-      "pandar_monitor: /sensing/lidar/rear_upper: pandar_ptp": defaultlt
+      "pandar_monitor: /sensing/lidar/rear_upper: pandar_ptp": default
 
       "pandar_monitor: /sensing/lidar/front_lower: pandar_temperature": default
       "pandar_monitor: /sensing/lidar/front_upper: pandar_temperature": default
