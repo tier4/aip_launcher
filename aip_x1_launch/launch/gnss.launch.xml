@@ -13,7 +13,7 @@
     </node>
 
     <!-- NavSatFix to MGRS Pose -->
-    <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
+    <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
       <arg name="input_topic_fix" value="ublox/nav_sat_fix" />
       <arg name="input_topic_navpvt" value="ublox/navpvt" />
 
