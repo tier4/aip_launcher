@@ -415,7 +415,7 @@ def generate_launch_description():
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg("blockage_diagnostics_param_file")
 
-    add_launch_arg("vertical_bins", "40")
+    add_launch_arg("vertical_bins", "128")
     add_launch_arg("horizontal_ring_id", "12")
     add_launch_arg("blockage_range", "[270.0, 90.0]")
 
