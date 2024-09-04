@@ -324,7 +324,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     container = ComposableNodeContainer(
-        name="pandar_node_container",
+        name="nebula_node_container",
         namespace="pointcloud_preprocessor",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
@@ -415,7 +415,7 @@ def generate_launch_description():
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg("blockage_diagnostics_param_file")
 
-    add_launch_arg("vertical_bins", "40")
+    add_launch_arg("vertical_bins", "128")
     add_launch_arg("horizontal_ring_id", "12")
     add_launch_arg("blockage_range", "[270.0, 90.0]")
 
