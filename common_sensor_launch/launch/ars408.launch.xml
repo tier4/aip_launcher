@@ -3,7 +3,7 @@
 
   <!-- socket can interface parameter -->
   <arg name="interface" default="can0" />
-  <arg name="receiver_interval_sec" default="0.01"/>
+  <arg name="receiver_interval_sec" default="0.1"/>
   <!-- driver parameter -->
   <arg name="input/frame" default="from_can_bus" />
   <arg name="output_frame" default="ars408_front" />
