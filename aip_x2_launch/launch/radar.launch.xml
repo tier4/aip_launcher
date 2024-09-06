@@ -23,7 +23,7 @@
       </include>
     </group>
 
-    <group>
+    <!--group>
       <push-ros-namespace namespace="rear_left" />
       <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
         <arg name="interface" value="pcan4"/>
@@ -48,7 +48,7 @@
         <arg name="output_frame" value="rear_right/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
-    </group>
+    </group-->
 
     <group>
       <push-ros-namespace namespace="front_right" />
