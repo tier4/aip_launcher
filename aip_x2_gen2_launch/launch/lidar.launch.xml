@@ -33,7 +33,8 @@
         <arg name="sensor_ip" value="192.168.1.202"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
-        <arg name="scan_phase" value="90.0"/>
+        <arg name="sync_angle" value="90"/>
+        <arg name="cut_angle" value="274.0" />
         <arg name="cloud_min_angle" value="88"/>
         <arg name="cloud_max_angle" value="274"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -66,7 +67,8 @@
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2322"/>
-        <arg name="scan_phase" value="0.0"/>
+        <arg name="sync_angle" value="0"/>
+        <arg name="cut_angle" value="0.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="0"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -99,7 +101,8 @@
         <arg name="sensor_ip" value="192.168.1.212"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
-        <arg name="scan_phase" value="90.0"/>
+        <arg name="sync_angle" value="90"/>
+        <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -132,7 +135,8 @@
         <arg name="sensor_ip" value="192.168.1.213"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2377"/>
-        <arg name="scan_phase" value="0.0"/>
+        <arg name="sync_angle" value="0"/>
+        <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -166,7 +170,8 @@
         <arg name="sensor_ip" value="192.168.1.204"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2323"/>
-        <arg name="scan_phase" value="270.0"/>
+        <arg name="sync_angle" value="270"/>
+        <arg name="cut_angle" value="277.0" />
         <arg name="cloud_min_angle" value="97"/>
         <arg name="cloud_max_angle" value="277"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -199,7 +204,8 @@
         <arg name="sensor_ip" value="192.168.1.205"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2324"/>
-        <arg name="scan_phase" value="180.0"/>
+        <arg name="sync_angle" value="180"/>
+        <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="0"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -232,7 +238,8 @@
         <arg name="sensor_ip" value="192.168.1.214"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2378"/>
-        <arg name="scan_phase" value="270.0"/>
+        <arg name="sync_angle" value="270"/>
+        <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -265,7 +272,8 @@
         <arg name="sensor_ip" value="192.168.1.215"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2379"/>
-        <arg name="scan_phase" value="180.0"/>
+        <arg name="sync_angle" value="180"/>
+        <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
