@@ -118,6 +118,7 @@ def launch_setup(context, *args, **kwargs):
                     "frame_id",
                     "sync_angle",
                     "cut_angle",
+                    "point_filters",
                     "dual_return_distance_threshold",
                     "rotation_speed",
                     "cloud_min_angle",
@@ -335,6 +336,7 @@ def generate_launch_description():
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("sync_angle", "0")
     add_launch_arg("cut_angle", "0.0")
+    add_launch_arg("point_filters", "{}", "point filter definitions in JSON format")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
