@@ -110,6 +110,7 @@ def launch_setup(context, *args, **kwargs):
                 **create_parameter_dict(
                     "host_ip",
                     "sensor_ip",
+                    "multicast_ip",
                     "data_port",
                     "return_mode",
                     "min_range",
@@ -330,6 +331,7 @@ def generate_launch_description():
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
+    add_launch_arg("multicast_ip", "", "the multicast group the sensor shall broadcast to. leave empty to disable multicast")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("sync_angle", "0")
     add_launch_arg("cut_angle", "0.0")
