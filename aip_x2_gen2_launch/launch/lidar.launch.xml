@@ -37,8 +37,10 @@
         <arg name="cloud_min_angle" value="87"/>
         <arg name="cloud_max_angle" value="287"/>
         <arg name="return_mode" value="LastStrongest"/>
+        <arg name="ptp_profile" value="automotive"/>
+        <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="1"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
@@ -68,8 +70,10 @@
         <arg name="cloud_min_angle" value="80"/>
         <arg name="cloud_max_angle" value="10"/>
         <arg name="return_mode" value="LastStrongest"/>
+        <arg name="ptp_profile" value="automotive"/>
+        <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="2"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
@@ -99,10 +103,10 @@
         <arg name="cloud_min_angle" value="75"/>
         <arg name="cloud_max_angle" value="285"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
@@ -132,10 +136,10 @@
         <arg name="cloud_min_angle" value="75"/>
         <arg name="cloud_max_angle" value="285"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="pointcloud_container"/>
@@ -166,8 +170,10 @@
         <arg name="cloud_min_angle" value="87"/>
         <arg name="cloud_max_angle" value="287"/>
         <arg name="return_mode" value="LastStrongest"/>
+        <arg name="ptp_profile" value="automotive"/>
+        <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="3"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -197,8 +203,10 @@
         <arg name="cloud_min_angle" value="350"/>
         <arg name="cloud_max_angle" value="280"/>
         <arg name="return_mode" value="LastStrongest"/>
+        <arg name="ptp_profile" value="automotive"/>
+        <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="4"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -228,10 +236,10 @@
         <arg name="cloud_min_angle" value="75"/>
         <arg name="cloud_max_angle" value="285"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -261,10 +269,10 @@
         <arg name="cloud_min_angle" value="75"/>
         <arg name="cloud_max_angle" value="285"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="ptp_profile" value="1588v2"/>
+        <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="5"/>
+        <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
