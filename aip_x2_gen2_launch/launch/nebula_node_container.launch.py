@@ -107,6 +107,7 @@ def launch_setup(context, *args, **kwargs):
             {
                 "calibration_file": sensor_calib_fp,
                 "sensor_model": sensor_model,
+                "point_filters": "{}",
                 **create_parameter_dict(
                     "host_ip",
                     "sensor_ip",
@@ -118,7 +119,6 @@ def launch_setup(context, *args, **kwargs):
                     "frame_id",
                     "sync_angle",
                     "cut_angle",
-                    "point_filters",
                     "dual_return_distance_threshold",
                     "rotation_speed",
                     "cloud_min_angle",
@@ -133,6 +133,7 @@ def launch_setup(context, *args, **kwargs):
                     "diag_span"
                 ),
                 "launch_hw": True,
+                "retry_hw": True,
             },
         ],
         remappings=[
@@ -219,21 +220,21 @@ def launch_setup(context, *args, **kwargs):
             ("~/input/imu", "/sensing/imu/imu_data"),
             ("~/input/velocity_report", "/vehicle/status/velocity_status"),
             ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
-            ("~/output/pointcloud", "rectified/pointcloud_ex"),
+            ("~/output/pointcloud", "pointcloud"),
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    ring_outlier_filter_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
-        name="ring_outlier_filter",
-        remappings=[
-            ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud"),
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
+    # ring_outlier_filter_component = ComposableNode(
+    #     package="pointcloud_preprocessor",
+    #     plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
+    #     name="ring_outlier_filter",
+    #     remappings=[
+    #         ("input", "rectified/pointcloud_ex"),
+    #         ("output", "pointcloud"),
+    #     ],
+    #     extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    # )
 
     dual_return_filter_component = ComposableNode(
         package="pointcloud_preprocessor",
@@ -292,11 +293,11 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    ring_outlier_filter_loader = LoadComposableNodes(
-        composable_node_descriptions=[ring_outlier_filter_component],
-        target_container=container,
-        condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
-    )
+    # ring_outlier_filter_loader = LoadComposableNodes(
+    #     composable_node_descriptions=[ring_outlier_filter_component],
+    #     target_container=container,
+    #     condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
+    # )
 
     dual_return_filter_loader = LoadComposableNodes(
         composable_node_descriptions=[dual_return_filter_component],
@@ -312,7 +313,7 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         container,
-        ring_outlier_filter_loader,
+        # ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
     ]
@@ -336,7 +337,7 @@ def generate_launch_description():
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("sync_angle", "0")
     add_launch_arg("cut_angle", "0.0")
-    add_launch_arg("point_filters", "{}", "point filter definitions in JSON format")
+    # add_launch_arg("point_filters", "{}", "point filter definitions in JSON format")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
