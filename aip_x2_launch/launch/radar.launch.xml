@@ -7,7 +7,7 @@
 
     <group>
       <push-ros-namespace namespace="front_center" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan2"/>
         <arg name="output_frame" value="front_center/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -16,7 +16,7 @@
 
     <group>
       <push-ros-namespace namespace="front_left" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan3"/>
         <arg name="output_frame" value="front_left/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -25,7 +25,7 @@
 
     <group>
       <push-ros-namespace namespace="rear_left" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan4"/>
         <arg name="output_frame" value="rear_left/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -34,7 +34,7 @@
 
     <group>
       <push-ros-namespace namespace="rear_center" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan5"/>
         <arg name="output_frame" value="rear_center/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -43,7 +43,7 @@
 
     <group>
       <push-ros-namespace namespace="rear_right" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan6"/>
         <arg name="output_frame" value="rear_right/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
@@ -52,20 +52,12 @@
 
     <group>
       <push-ros-namespace namespace="front_right" />
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share radar_monitor)/launch/radar_monitor.launch.xml">
         <arg name="interface" value="pcan7"/>
         <arg name="output_frame" value="front_right/radar_link" />
         <arg name="launch_driver" value="$(var launch_driver)" />
       </include>
     </group>
-
-    <include file="$(find-pkg-share simple_object_merger)/launch/simple_object_merger.launch.xml">
-      <arg name="output/objects" value="detected_objects"/>
-      <arg name="update_rate_hz" value="20.0"/>
-      <arg name="new_frame_id" value="base_link"/>
-      <arg name="timeout_threshold" value="1.0"/>
-      <arg name="input_topics" value="[/sensing/radar/front_center/detected_objects, /sensing/radar/front_left/detected_objects, /sensing/radar/rear_left/detected_objects, /sensing/radar/rear_center/detected_objects, /sensing/radar/rear_right/detected_objects, /sensing/radar/front_right/detected_objects]"/>
-    </include>
 
   </group>
 </launch>
