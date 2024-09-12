@@ -17,7 +17,7 @@
       <node pkg="tamagawa_imu_driver" name="tag_can_driver" exec="tag_can_driver" if="$(var launch_driver)">
         <remap from="/can/imu" to="from_can_bus"/>
         <remap from="imu/data_raw" to="imu_raw"/>
-        <param name="imu_frame_id" value="tamagawa/imu_link"/>
+        <param name="imu_frame_id" value="top_front_left/imu_link"/>
       </node>
     </group>
 
