@@ -27,6 +27,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -218,10 +219,10 @@ def launch_setup(context, *args, **kwargs):
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("~/input/imu", "/sensing/imu/imu_data"),
-            ("~/input/velocity_report", "/vehicle/status/velocity_status"),
             ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
             ("~/output/pointcloud", "pointcloud"),
         ],
+        parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -364,8 +365,14 @@ def generate_launch_description():
     add_launch_arg("container_name", "nebula_node_container")
 
     add_launch_arg("dual_return_filter_param_file")
-    add_launch_arg("blockage_diagnostics_param_file")
-
+    add_launch_arg(
+        "blockage_diagnostics_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
+    )
+    add_launch_arg(
+        "distortion_corrector_node_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
+    )
     add_launch_arg("vertical_bins", "128")
     add_launch_arg("horizontal_ring_id", "12")
     add_launch_arg("blockage_range", "[270.0, 90.0]")
