@@ -161,7 +161,13 @@ def launch_setup(context, *args, **kwargs):
         plugin="pointcloud_preprocessor::CropBoxFilterComponent",
         name="crop_box_filter_self",
         remappings=[
-            ("input", "pointcloud_raw_ex"),
+            ("input",
+              (
+                  "ring_filtered/pointcloud"
+                  if LaunchConfiguration("enable_ring_filter").perform(context) == "true"
+                  else "pointcloud_raw_ex"
+              ),
+            ),
             ("output", "self_cropped/pointcloud_ex"),
         ],
         parameters=[cropbox_parameters],
@@ -280,6 +286,23 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    ring_filter_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::RingFilterComponent",
+        name="ring_filter",
+        remappings=[
+            ("input", "pointcloud_raw_ex"),
+            ("output", "ring_filtered/pointcloud"),
+        ],
+        parameters=[
+            {
+                "ring_interval": LaunchConfiguration("ring_interval"),
+                "remove_interval_ring": LaunchConfiguration("remove_interval_ring"),
+            }
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
+
     container = ComposableNodeContainer(
         name="nebula_node_container",
         namespace="pointcloud_preprocessor",
@@ -313,11 +336,18 @@ def launch_setup(context, *args, **kwargs):
         condition=launch.conditions.IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
+    ring_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[ring_filter_component],
+        target_container=container,
+        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_ring_filter")),
+    )
+
     return [
         container,
         # ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
+        ring_filter_loader,
     ]
 
 
@@ -381,6 +411,12 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
+
+    # ring filter params
+    add_launch_arg("enable_ring_filter", "true")
+    add_launch_arg("ring_interval", "2")
+    add_launch_arg("remove_interval_ring", "true")
+
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

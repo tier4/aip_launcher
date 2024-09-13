@@ -9,7 +9,6 @@
   <arg name="sensor_ip" default="192.168.1.201"/>
   <arg name="host_ip" default="255.255.255.255"/>
   <arg name="data_port" default="2368"/>
-  <arg name="scan_phase" default="0.0"/>
   <arg name="cloud_min_angle" default="90"/>
   <arg name="cloud_max_angle" default="270"/>
   <arg name="dual_return_distance_threshold" default="0.1"/>
@@ -31,6 +30,11 @@
   <arg name="vehicle_mirror_param_file" default="$(var vehicle_mirror_param_file)" />
   <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
 
+  <!-- ring filter params -->
+  <arg name="enable_ring_filter" default="true"/>
+  <arg name="ring_interval" default="2"/>
+  <arg name="remove_interval_ring" default="true"/>
+
   <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
@@ -39,7 +43,6 @@
     <arg name="sensor_ip" value="$(var sensor_ip)"/>
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
-    <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
     <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
@@ -64,6 +67,9 @@
     <arg name="calibration" value="$(var calibration)"/>
     <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
     <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+    <arg name="enable_ring_filter" value="$(var enable_ring_filter)"/>
+    <arg name="ring_interval" value="$(var ring_interval)"/>
+    <arg name="remove_interval_ring" value="$(var remove_interval_ring)"/>
 
   </include>
 </launch>
