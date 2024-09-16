@@ -15,9 +15,9 @@
       heading: 0.0
       pitch: 0.0
 
-    ant_type: "AERAT1675_382 NONE"
+    ant_type: "SEPPOLANT_MC.V2 NONE"
     ant_serial_nr: Unknown
-    ant_aux1_type: "AERAT1675_382 NONE"
+    ant_aux1_type: "SEPPOLANT_MC.V2 NONE"
     ant_aux1_serial_nr: Unknown
 
     polling_period:
