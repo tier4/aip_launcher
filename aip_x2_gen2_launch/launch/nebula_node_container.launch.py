@@ -22,7 +22,7 @@ from launch.actions import SetLaunchConfiguration
 
 # from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import IfCondition
-from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationEquals, LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
@@ -221,22 +221,22 @@ def launch_setup(context, *args, **kwargs):
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("~/input/imu", "/sensing/imu/imu_data"),
             ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
-            ("~/output/pointcloud", "pointcloud"),
+            ("~/output/pointcloud", "rectified/pointcloud_ex"),
         ],
         parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    # ring_outlier_filter_component = ComposableNode(
-    #     package="pointcloud_preprocessor",
-    #     plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
-    #     name="ring_outlier_filter",
-    #     remappings=[
-    #         ("input", "rectified/pointcloud_ex"),
-    #         ("output", "pointcloud"),
-    #     ],
-    #     extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    # )
+    ring_outlier_filter_component = ComposableNode(
+        package="pointcloud_preprocessor",
+        plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
+        name="ring_outlier_filter",
+        remappings=[
+            ("input", "rectified/pointcloud_ex"),
+            ("output", "pointcloud"),
+        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    )
 
     dual_return_filter_component = ComposableNode(
         package="pointcloud_preprocessor",
@@ -295,11 +295,11 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    # ring_outlier_filter_loader = LoadComposableNodes(
-    #     composable_node_descriptions=[ring_outlier_filter_component],
-    #     target_container=container,
-    #     condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
-    # )
+    ring_outlier_filter_loader = LoadComposableNodes(
+        composable_node_descriptions=[ring_outlier_filter_component],
+        target_container=container,
+        condition=LaunchConfigurationNotEquals("return_mode", "Dual"),
+    )
 
     dual_return_filter_loader = LoadComposableNodes(
         composable_node_descriptions=[dual_return_filter_component],
@@ -315,7 +315,7 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         container,
-        # ring_outlier_filter_loader,
+        ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
     ]
