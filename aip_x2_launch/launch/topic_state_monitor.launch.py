@@ -58,121 +58,6 @@ def generate_launch_description():
         extra_arguments=[{"use_intra_process_comms": True}],
     )
 
-    # Radar topic monitors
-    radar_front_center_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_center",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_center/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_front_center_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_front_left_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_left",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_left/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_front_left_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_front_right_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_right",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_right/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_front_right_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_center_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_center",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_center/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_rear_center_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_left_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_left",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_left/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_rear_left_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_right_monitor = ComposableNode(
-        package="topic_state_monitor",
-        plugin="topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_right",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_right/objects_raw",
-                "topic_type": "radar_msgs/msg/RadarTracks",
-                "best_effort": True,
-                "diag_name": "radar_rear_right_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
     # ComposableNodeContainer to run all ComposableNodes
     container = ComposableNodeContainer(
         name="topic_state_monitor_container",
@@ -182,12 +67,6 @@ def generate_launch_description():
         composable_node_descriptions=[
             gnss_topic_monitor,
             imu_topic_monitor,
-            radar_front_center_monitor,
-            radar_front_left_monitor,
-            radar_front_right_monitor,
-            radar_rear_center_monitor,
-            radar_rear_left_monitor,
-            radar_rear_right_monitor,
         ],
         output="screen",
     )
