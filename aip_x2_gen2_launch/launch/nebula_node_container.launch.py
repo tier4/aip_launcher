@@ -22,7 +22,8 @@ from launch.actions import SetLaunchConfiguration
 
 # from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import IfCondition
-from launch.conditions import LaunchConfigurationEquals, LaunchConfigurationNotEquals
+from launch.conditions import LaunchConfigurationEquals
+from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
