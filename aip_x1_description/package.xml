@@ -9,7 +9,7 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <depend>livox_description</depend>
+  <depend>pandar_description</depend>
   <depend>velodyne_description</depend>
 
   <export>
