@@ -2,9 +2,9 @@
 <package format="2">
   <name>aip_x1_description</name>
   <version>0.1.0</version>
-  <description>The aip_xx1_description package</description>
+  <description>The aip_x1_description package</description>
 
-  <maintainer email="yukihiro.saito@tier4.jp">Yukihiro Saito</maintainer>
+  <maintainer email="takeshi.miura@tier4.jp">Takeshi Miuraks</maintainer>
   <license>Apache 2</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
