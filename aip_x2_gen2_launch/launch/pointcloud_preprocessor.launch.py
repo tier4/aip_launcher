@@ -27,12 +27,13 @@ from launch_ros.descriptions import ComposableNode
 def launch_setup(context, *args, **kwargs):
     # set concat filter as a component
     concat_component = ComposableNode(
-        package="pointcloud_preprocessor",
-        plugin="pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        package="cuda_pointcloud_preprocessor",
+        plugin="cuda_pointcloud_preprocessor::CudaPointCloudConcatenateAndSyncNode",
         name="concatenate_data",
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("output", "concatenated/pointcloud"),
+            ("output/cuda", "concatenated/pointcloud/cuda"),
         ],
         parameters=[
             {
@@ -52,7 +53,8 @@ def launch_setup(context, *args, **kwargs):
                 "input_twist_topic_type": "twist",
             }
         ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        # The whole node can not set use_intra_process due to type negotiation internal topics
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     concat_loader = LoadComposableNodes(
