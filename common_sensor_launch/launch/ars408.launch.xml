@@ -3,7 +3,7 @@
 
   <!-- socket can interface parameter -->
   <arg name="interface" default="can0" />
-  <arg name="receiver_interval_sec" default="0.01"/>
+  <arg name="receiver_interval_sec" default="0.1"/>
   <!-- driver parameter -->
   <arg name="input/frame" default="from_can_bus" />
   <arg name="output_frame" default="ars408_front" />
@@ -16,17 +16,10 @@
   <!-- converter parameter -->
   <arg name="input/odometry" default="/localization/kinematic_state" />
 
-  <!-- Socket CAN -->
-  <group if="$(var launch_driver)">
-    <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
-      <arg name="interface" value="$(var interface)"/>
-      <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
-    </include>
-  </group>
-
   <!-- ARS408 driver-->
-  <!-- Note: If the ARS408 driver is stable, continental_ars408.launch.xml move to group <if="$(var launch_driver)> -->
-  <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
+  <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.py">
+    <arg name="interface" value="$(var interface)"/>
+    <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
     <arg name="input/frame" value="$(var input/frame)" />
     <arg name="output/objects" value="objects_raw" />
     <arg name="output/scan" value="scan_raw" />
@@ -38,21 +31,4 @@
     <arg name="size_y" value="$(var size_y)" />
   </include>
 
-  <!-- Noise filter -->
-  <include file="$(find-pkg-share radar_tracks_noise_filter)/launch/radar_tracks_noise_filter.launch.xml">
-    <arg name="input/tracks" value="objects_raw"/>
-    <arg name="output/noise_tracks" value="noise_objects" />
-    <arg name="output/filtered_tracks" value="filtered_objects" />
-    <arg name="velocity_y_threshold" value="$(var velocity_y_threshold)" />
-  </include>
-
-  <!-- Message converter -->
-  <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
-    <arg name="input/radar_objects" value="filtered_objects"/>
-    <arg name="input/odometry" value="$(var input/odometry)"/>
-    <arg name="output/radar_detected_objects" value="detected_objects"/>
-    <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-    <arg name="update_rate_hz" value="10.0"/>
-    <arg name="use_twist_compensation" value="true"/>
-  </include>
 </launch>
