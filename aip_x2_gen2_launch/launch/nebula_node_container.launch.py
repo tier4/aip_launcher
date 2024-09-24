@@ -110,7 +110,6 @@ def launch_setup(context, *args, **kwargs):
             {
                 "calibration_file": sensor_calib_fp,
                 "sensor_model": sensor_model,
-                "point_filters": "{}",
                 **create_parameter_dict(
                     "host_ip",
                     "sensor_ip",
@@ -138,7 +137,8 @@ def launch_setup(context, *args, **kwargs):
                 "launch_hw": True,
                 "retry_hw": True,
             },
-        ],
+        ]
+        + [load_composable_node_param("point_filters_param_file")],
         remappings=[
             # ("aw_points", "pointcloud_raw"),
             ("pandar_points", "pointcloud_raw_ex"),
@@ -382,6 +382,7 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
+    add_launch_arg("point_filters_param_file")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
