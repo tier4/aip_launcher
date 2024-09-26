@@ -203,6 +203,7 @@ def launch_setup(context, *args, **kwargs):
             ("~/input/pointcloud", "mirror_cropped/pointcloud_ex"),
             ("~/output/pointcloud", "rectified/pointcloud_ex"),
         ],
+        parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -342,6 +343,10 @@ def generate_launch_description():
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [FindPackageShare("aip_x2_launch"), "/config/blockage_diagnostics_param_file.yaml"],
+    )
+    add_launch_arg(
+        "distortion_corrector_node_param_file",
+        [FindPackageShare("aip_x2_launch"), "/config/distortion_corrector_node.param.yaml"],
     )
     add_launch_arg("vehicle_mirror_param_file")
     add_launch_arg("use_multithread", "true")
