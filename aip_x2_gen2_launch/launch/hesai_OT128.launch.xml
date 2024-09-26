@@ -30,7 +30,7 @@
   <arg name="dual_return_filter_param_file" default="$(var dual_return_filter_param_file)" />
   <arg name="vehicle_mirror_param_file" default="$(var vehicle_mirror_param_file)" />
   <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
-  <arg name="point_filters_param_file" default="$(var point_filters_param_file)" />
+  <arg name="point_filters_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_full.param.yaml" />
 
   <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
