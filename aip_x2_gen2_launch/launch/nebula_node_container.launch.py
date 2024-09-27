@@ -141,7 +141,8 @@ def launch_setup(context, *args, **kwargs):
         ],
         remappings=[
             # ("aw_points", "pointcloud_raw"),
-            ("pandar_points", "pointcloud_raw_ex"),
+            ("pandar_points", "cuda_points"),
+            ("pandar_points/cuda", "cuda_points/cuda"),
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -353,19 +354,6 @@ def launch_setup(context, *args, **kwargs):
         max_z=left["max_height_offset"],
     )
 
-    adapter_component = ComposableNode(
-        package="cuda_organized_pointcloud_adapter",
-        plugin="cuda_organized_pointcloud_adapter::CudaOrganizedPointcloudAdapterNode",
-        name="cuda_organized_pointcloud_adapter_node",
-        remappings=[
-            ("~/input/pointcloud", "pointcloud_raw_ex"),
-            ("~/output/pointcloud", "cuda_points"),
-            ("~/output/pointcloud/cuda", "cuda_points/cuda"),
-        ],
-        # The whole node can not set use_intra_process due to type negotiation internal topics
-        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
     vehicle_info = get_vehicle_info(context)
     mirror_info = load_composable_node_param("vehicle_mirror_param_file")
 
@@ -406,7 +394,6 @@ def launch_setup(context, *args, **kwargs):
             # glog_component,
             processor_component,
             nebula_component,
-            adapter_component,
             
         ],
         target_container=LaunchConfiguration("container_name"),
