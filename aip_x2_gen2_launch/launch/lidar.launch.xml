@@ -88,7 +88,7 @@
         <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="enable_ring_filter" value="false" />
+        <arg name="enable_ring_filter" value="true" />
         <arg name="ring_interval" value="$(var ring_interval)" />
         <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -227,7 +227,7 @@
         <arg name="ptp_domain" value="0"/>
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="enable_ring_filter" value="false" />
+        <arg name="enable_ring_filter" value="true" />
         <arg name="ring_interval" value="$(var ring_interval)" />
         <arg name="remove_interval_ring" value="$(var remove_interval_ring)" />
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
