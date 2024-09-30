@@ -14,12 +14,12 @@
   <arg name="enable_blockage_diag" default="false"/>
 
   <!-- use 2/3 of points -->
-  <arg name="ring_interval" default="3"/>
-  <arg name="remove_interval_ring" default="true"/>
+  <!--<arg name="ring_interval" default="3"/>
+  <arg name="remove_interval_ring" default="true"/>-->
 
   <!-- use 1/3 of points -->
-  <!-- <arg name="ring_interval" default="3"/>
-  <arg name="remove_interval_ring" default="false"/> -->
+  <arg name="ring_interval" default="3"/>
+  <arg name="remove_interval_ring" default="false"/>
 
   <group>
     <push-ros-namespace namespace="lidar" />
