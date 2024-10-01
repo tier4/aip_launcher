@@ -12,19 +12,25 @@
 /**:
   ros__parameters:
     required_diags:
-      # gnss
-      gnss_connection: default
-      gnss_data: default
-      gnss_antenna: default
-      gnss_tx_usage: default
-      gnss_spoofing: default
-      gnss_jamming: default
-      fix topic status: default
+      # node_alive_monitoring
+      "topic_status: sensing_topic_status": default
+
+      # performance monitoring
+      "blockage: blockage_validation": default
 
       # velodyne
-      velodyne_connection: default
-      velodyne_temperature: default
-      velodyne_rpm: default
+      "connection: velodyne_connection": default
+      "temperature: velodyne_temperature": default
+      "rpm: velodyne_rpm": default
+
+      # gnss
+      "connection: gnss_connection": default
+      "data: gnss_data": default
+      "antenna: gnss_antenna": default
+      "tx_usage: gnss_tx_usage": default
+      "spoofing: gnss_spoofing": default
+      "jamming: gnss_jamming": default
+      "fix_topic_status: fix topic status": default
 
       # imu
-      gyro_bias_estimator: default
+      "gyro_bias_validator: gyro_bias_validator": default
