@@ -55,7 +55,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_full.param.yaml" />
+        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_two_third.param.yaml" />
       </include>
     </group>
 
@@ -190,7 +190,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_full.param.yaml" />
+        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_two_third.param.yaml" />
       </include>
     </group>
 
