@@ -85,17 +85,6 @@ def launch_setup(context, *args, **kwargs):
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
     nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
 
-    # Calibration file
-    sensor_calib_fp = os.path.join(
-        nebula_decoders_share_dir,
-        "calibration",
-        sensor_make.lower(),
-        sensor_model + sensor_extension,
-    )
-    assert os.path.exists(
-        sensor_calib_fp
-    ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
-
     glog_component = ComposableNode(
         package="glog_component",
         plugin="GlogComponent",
@@ -108,7 +97,6 @@ def launch_setup(context, *args, **kwargs):
         name=sensor_make.lower() + "_ros_wrapper_node",
         parameters=[
             {
-                "calibration_file": sensor_calib_fp,
                 "sensor_model": sensor_model,
                 "point_filters": "{}",
                 **create_parameter_dict(
@@ -134,6 +122,7 @@ def launch_setup(context, *args, **kwargs):
                     "ptp_switch_type",
                     "ptp_domain",
                     "diag_span",
+                    "calibration_file",
                 ),
                 "launch_hw": True,
                 "retry_hw": True,
@@ -382,6 +371,8 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
+
+    add_launch_arg("calibration_file", "")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
