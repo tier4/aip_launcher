@@ -34,7 +34,7 @@
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
         <arg name="sync_angle" value="0"/>
-        <arg name="cut_angle" value="274.0" />
+        <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="88"/>
         <arg name="cloud_max_angle" value="274"/>
         <arg name="return_mode" value="LastStrongest"/>
@@ -100,7 +100,7 @@
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
         <arg name="sync_angle" value="0"/>
-        <arg name="cut_angle" value="270.0" />
+        <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
