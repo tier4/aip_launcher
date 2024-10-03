@@ -383,6 +383,10 @@ def generate_launch_description():
         "distortion_corrector_node_param_file",
         [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
     )
+    add_launch_arg(
+        "ring_outlier_filter_node_param_file",
+        [FindPackageShare("common_sensor_launch"), "/config/ring_outlier_filter_node.param.yaml"],
+    )
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
