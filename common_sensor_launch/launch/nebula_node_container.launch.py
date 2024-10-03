@@ -25,8 +25,8 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
-from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -223,9 +223,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(
-            context
-        ),
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
         allow_substs=True,
     )
 
