@@ -25,6 +25,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
 import yaml
 
@@ -222,13 +223,18 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
+    ring_outlier_filter_node_param = ParameterFile(
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
+        allow_substs=True,
+    )
+
     # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
-    if LaunchConfiguration("output_as_sensor_frame").perform(context):
-        ring_outlier_filter_parameters = {"output_frame": LaunchConfiguration("frame_id")}
+    if LaunchConfiguration("output_as_sensor_frame").perform(context).lower() == "true":
+        ring_outlier_output_frame = {"output_frame": LaunchConfiguration("frame_id")}
     else:
-        ring_outlier_filter_parameters = {
-            "output_frame": ""
-        }  # keep the output frame as the input frame
+        # keep the output frame as the input frame
+        ring_outlier_output_frame = {"output_frame": ""}
+
     nodes.append(
         ComposableNode(
             package="autoware_pointcloud_preprocessor",
@@ -238,7 +244,7 @@ def launch_setup(context, *args, **kwargs):
                 ("input", "rectified/pointcloud_ex"),
                 ("output", "pointcloud_before_sync"),
             ],
-            parameters=[ring_outlier_filter_parameters],
+            parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
