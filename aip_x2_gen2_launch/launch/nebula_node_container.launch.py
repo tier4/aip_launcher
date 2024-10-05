@@ -119,7 +119,7 @@ def launch_setup(context, *args, **kwargs):
                     "ptp_domain",
                     "diag_span",
                     "calibration_file",
-                    "launch_hw"
+                    "launch_hw",
                 ),
                 "retry_hw": True,
             },
