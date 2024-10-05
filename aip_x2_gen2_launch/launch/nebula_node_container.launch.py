@@ -119,8 +119,8 @@ def launch_setup(context, *args, **kwargs):
                     "ptp_domain",
                     "diag_span",
                     "calibration_file",
+                    "launch_hw",
                 ),
-                "launch_hw": True,
                 "retry_hw": True,
             },
         ],
@@ -318,7 +318,7 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg("launch_driver", "True", "do launch driver")
+    add_launch_arg("launch_hw", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(

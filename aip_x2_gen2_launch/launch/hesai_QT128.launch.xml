@@ -33,7 +33,7 @@
   <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
 
   <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
-    <arg name="launch_driver" value="$(var launch_driver)"/>
+    <arg name="launch_hw" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
     <arg name="return_mode" value="$(var return_mode)"/>
     <arg name="frame_id" value="$(var sensor_frame)"/>
