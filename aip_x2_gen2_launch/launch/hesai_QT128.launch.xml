@@ -27,13 +27,13 @@
   <arg name="is_channel_order_top2down" default="true"/>
   <arg name="horizontal_resolution" default="0.4"/>
   <arg name="enable_blockage_diag" default="$(var enable_blockage_diag)"/>
-  <arg name="calibration" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
+  <arg name="calibration_file" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
   <arg name="dual_return_filter_param_file" default="$(var dual_return_filter_param_file)" />
   <arg name="vehicle_mirror_param_file" default="$(var vehicle_mirror_param_file)" />
   <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
 
   <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
-    <arg name="launch_driver" value="$(var launch_driver)"/>
+    <arg name="launch_hw" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
     <arg name="return_mode" value="$(var return_mode)"/>
     <arg name="frame_id" value="$(var sensor_frame)"/>
@@ -61,7 +61,7 @@
     <arg name="is_channel_order_top2down" value="$(var is_channel_order_top2down)"/>
     <arg name="horizontal_resolution" value="$(var horizontal_resolution)"/>
     <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
-    <arg name="calibration" value="$(var calibration)"/>
+    <arg name="calibration_file" value="$(var calibration_file)"/>
     <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
     <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
   </include>

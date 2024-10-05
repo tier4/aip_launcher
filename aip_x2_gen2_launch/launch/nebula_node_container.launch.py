@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -83,18 +80,6 @@ def launch_setup(context, *args, **kwargs):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
-
-    # Calibration file
-    sensor_calib_fp = os.path.join(
-        nebula_decoders_share_dir,
-        "calibration",
-        sensor_make.lower(),
-        sensor_model + sensor_extension,
-    )
-    assert os.path.exists(
-        sensor_calib_fp
-    ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
 
     glog_component = ComposableNode(
         package="glog_component",
@@ -108,7 +93,6 @@ def launch_setup(context, *args, **kwargs):
         name=sensor_make.lower() + "_ros_wrapper_node",
         parameters=[
             {
-                "calibration_file": sensor_calib_fp,
                 "sensor_model": sensor_model,
                 "point_filters": "{}",
                 **create_parameter_dict(
@@ -134,8 +118,9 @@ def launch_setup(context, *args, **kwargs):
                     "ptp_switch_type",
                     "ptp_domain",
                     "diag_span",
+                    "calibration_file",
+                    "launch_hw",
                 ),
-                "launch_hw": True,
                 "retry_hw": True,
             },
         ],
@@ -333,7 +318,7 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg("launch_driver", "True", "do launch driver")
+    add_launch_arg("launch_hw", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(
@@ -382,6 +367,8 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
+
+    add_launch_arg("calibration_file", "")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
