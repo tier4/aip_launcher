@@ -32,13 +32,13 @@
       "ublox: fix": default
 
       # camera
-      "topic_state_monitor_camera0: sensing_topic_status" default
-      "topic_state_monitor_camera1: sensing_topic_status" default
-      "topic_state_monitor_camera2: sensing_topic_status" default
-      "topic_state_monitor_camera3: sensing_topic_status" default
-      "topic_state_monitor_camera4: sensing_topic_status" default
-      "topic_state_monitor_camera5: sensing_topic_status" default
-      "topic_state_monitor_camera6: sensing_topic_status" default
+      "topic_state_monitor_camera0: sensing_topic_status": default
+      "topic_state_monitor_camera1: sensing_topic_status": default
+      "topic_state_monitor_camera2: sensing_topic_status": default
+      "topic_state_monitor_camera3: sensing_topic_status": default
+      "topic_state_monitor_camera4: sensing_topic_status": default
+      "topic_state_monitor_camera5: sensing_topic_status": default
+      "topic_state_monitor_camera6: sensing_topic_status": default
 
       # imu
       "topic_state_monitor_imu: sensing_topic_status": default
