@@ -12,7 +12,7 @@
 /**:
   ros__parameters:
     required_diags:
-      # performance monitoring
+      # performance monitoring  ----> To be confirmed in v0.47.0
       # "blockage: blockage_validation": default
 
       # velodyne
