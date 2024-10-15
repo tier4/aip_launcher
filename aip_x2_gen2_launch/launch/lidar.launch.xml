@@ -35,8 +35,8 @@
         <arg name="data_port" value="2321"/>
         <arg name="sync_angle" value="0"/>
         <arg name="cut_angle" value="180.0" />
-        <arg name="cloud_min_angle" value="88"/>
-        <arg name="cloud_max_angle" value="274"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
@@ -55,7 +55,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters_full.param.yaml" />
+        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/point_filters_full.param.yaml" />
       </include>
     </group>
 
