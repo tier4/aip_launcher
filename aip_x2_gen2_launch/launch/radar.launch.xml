@@ -28,8 +28,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
 
@@ -61,8 +59,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
       <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
@@ -93,8 +89,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
       <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
@@ -125,8 +119,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
       <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
@@ -157,8 +149,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
       <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
@@ -189,8 +179,6 @@
         <arg name="data_port" value="42102"/>
         <arg name="configuration_host_port" value="42401"/>
         <arg name="configuration_sensor_port" value="42101"/>
-
-        <arg name="new_plug_orientation" value="0"/>
       </include>
 
       <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
