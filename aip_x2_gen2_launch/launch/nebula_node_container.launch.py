@@ -281,6 +281,10 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
+    environment_variables = os.environ
+    if 'CARET_IGNORE_NODES' in environment_variables.keys():
+        del environment_variables['CARET_IGNORE_NODES']
+
     container = ComposableNodeContainer(
         name="nebula_node_container",
         namespace="pointcloud_preprocessor",
@@ -294,6 +298,7 @@ def launch_setup(context, *args, **kwargs):
             left_mirror_crop_component,
             undistort_component,
         ],
+        env=environment_variables,
     )
 
     ring_outlier_filter_loader = LoadComposableNodes(
