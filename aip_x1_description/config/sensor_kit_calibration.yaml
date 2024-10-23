@@ -8,22 +8,22 @@ sensor_kit_base_link:
     yaw: 0.000
   velodyne_front_center_base_link:
     x: 1.130
-    y: 0.038
+    y: 0.000
     z: -1.400
     roll: -0.000
     pitch: -0.00
-    yaw: 1.6225
+    yaw: 0.000
   tamagawa/imu_link:
-    x: 0.0
+    x: -0.500
     y: 0.0
-    z: 0.0
-    roll: 3.14159
+    z: -1.2
+    roll: 0.000
     pitch: 0.0
     yaw: 0.0
   gnss_link:
-    x: 0.0
+    x: -0.200
     y: 0.0
-    z: 0.0
+    z: -0.100
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
