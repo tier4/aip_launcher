@@ -38,8 +38,8 @@
       />
     </xacro:VLP-16>
 
-    <xacro:include filename="$(find velodyne_description)/urdf/VLP-32C.urdf.xacro"/>
-    <xacro:VLP-32C
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <xacro:VLP-16
       parent="sensor_kit_base_link"
       name="velodyne_front_center"
       topic="/points_raw"
@@ -55,7 +55,7 @@
              ${calibration['sensor_kit_base_link']['velodyne_front_center_base_link']['pitch']}
              ${calibration['sensor_kit_base_link']['velodyne_front_center_base_link']['yaw']}"
       />
-    </xacro:VLP-32C>
+    </xacro:VLP-16>
 
     <!-- gnss -->
     <xacro:imu_macro
