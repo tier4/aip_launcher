@@ -110,7 +110,6 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
-        <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -143,7 +142,6 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
-        <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -241,7 +239,6 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
-        <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -274,7 +271,6 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
-        <arg name="distance_range" value="[0.5, 200.0]"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
