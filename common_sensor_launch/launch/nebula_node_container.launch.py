@@ -259,40 +259,6 @@ def launch_setup(context, *args, **kwargs):
         output="both",
     )
 
-    driver_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "HwInterfaceRosWrapper",
-        # node is created in a global context, need to avoid name clash
-        name=sensor_make.lower() + "_hw_interface_ros_wrapper_node",
-        parameters=[
-            {
-                "sensor_model": sensor_model,
-                "calibration_file": sensor_calib_fp,
-                **create_parameter_dict(
-                    "sensor_ip",
-                    "host_ip",
-                    "scan_phase",
-                    "return_mode",
-                    "frame_id",
-                    "rotation_speed",
-                    "data_port",
-                    "gnss_port",
-                    "cloud_min_angle",
-                    "cloud_max_angle",
-                    "packet_mtu_size",
-                    "dual_return_distance_threshold",
-                    "setup_sensor",
-                    "ptp_profile",
-                    "ptp_transport_type",
-                    "ptp_switch_type",
-                    "ptp_domain",
-                    "ptp_lock_threshold",
-                    "retry_hw",
-                ),
-            }
-        ],
-    )
-
     blockage_diag_component = ComposableNode(
         package="autoware_pointcloud_preprocessor",
         plugin="autoware::pointcloud_preprocessor::BlockageDiagComponent",
@@ -318,18 +284,13 @@ def launch_setup(context, *args, **kwargs):
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
-    driver_component_loader = LoadComposableNodes(
-        composable_node_descriptions=[driver_component],
-        target_container=container,
-        condition=IfCondition(LaunchConfiguration("launch_driver")),
-    )
     blockage_diag_loader = LoadComposableNodes(
         composable_node_descriptions=[blockage_diag_component],
         target_container=container,
         condition=IfCondition(LaunchConfiguration("enable_blockage_diag")),
     )
 
-    return [container, driver_component_loader, blockage_diag_loader]
+    return [container, blockage_diag_loader]
 
 
 def generate_launch_description():
