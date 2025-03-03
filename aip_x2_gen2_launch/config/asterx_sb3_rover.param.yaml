@@ -2,8 +2,8 @@
   ros__parameters:
     device: tcp://192.168.20.102:28784
 
-    frame_id: gnss_link
-    aux1_frame_id: aux1
+    frame_id: top_rear/gnss_link
+    aux1_frame_id: top_front/gnss_link
     get_spatial_config_from_tf: false
     use_ros_axis_orientation: false
     receiver_type: gnss
