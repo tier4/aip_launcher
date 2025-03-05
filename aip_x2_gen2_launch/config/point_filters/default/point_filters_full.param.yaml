@@ -1,7 +1,0 @@
-/**:
-  ros__parameters:
-    point_filters: |
-      {
-        "ring_section_filter": [
-        ]
-      }
