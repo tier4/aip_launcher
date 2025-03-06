@@ -301,7 +301,7 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         container,
-        ring_outlier_filter_loader,
+        # ring_outlier_filter_loader,
         dual_return_filter_loader,
         blockage_diag_loader,
     ]
