@@ -1,4 +1,19 @@
 /**:
+  # cspell: ignore ntrip
+  # cspell: ignore gpsfix
+  # cspell: ignore gpgga
+  # cspell: ignore gprmc
+  # cspell: ignore gpst
+  # cspell: ignore measepoch
+  # cspell: ignore pvtcartesian
+  # cspell: ignore basevectorcart
+  # cspell: ignore basevectorgeod
+  # cspell: ignore poscovcartesian
+  # cspell: ignore velcovgeodetic
+  # cspell: ignore atteuler
+  # cspell: ignore attcoveuler
+  # cspell: ignore gpgsa
+  # cspell: ignore gpgsv
   ros__parameters:
     device: tcp://192.168.20.102:28784
 
