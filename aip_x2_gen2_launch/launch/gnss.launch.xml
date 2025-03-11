@@ -8,6 +8,18 @@
     <!-- Septentrio Mosaic Driver -->
     <node pkg="septentrio_gnss_driver" name="septentrio" exec="septentrio_gnss_driver_node" if="$(var launch_driver)">
       <param from="$(find-pkg-share aip_x2_gen2_launch)/config/asterx_sb3_rover.param.yaml"/>
+      <param name="ntrip_1.id" value="$(env NTRIP_ID)"/>
+      <param name="ntrip_1.caster" value="$(env NTRIP_CASTER)"/>
+      <param name="ntrip_1.caster_port" value="$(env NTRIP_CASTER_PORT 2101)"/>
+      <param name="ntrip_1.username" value="$(env NTRIP_USERNAME)"/>
+      <param name="ntrip_1.password" value="$(env NTRIP_PASSWORD)"/>
+      <param name="ntrip_1.mountpoint" value="$(env NTRIP_MOUNTPOINT)"/>
+      <param name="ntrip_1.version" value="$(env NTRIP_VERSION v2)"/>
+      <param name="ntrip_1.tls" value="$(env NTRIP_TLS false)"/>
+      <param name="ntrip_1.fingerprint" value="$(env NTRIP_FINGERPRINT)"/>
+      <param name="ntrip_1.rtk_standard" value="$(env NTRIP_RTK_STANDARD auto)"/>
+      <param name="ntrip_1.send_gga" value="$(env NTRIP_SEND_GGA auto)"/>
+      <param name="ntrip_1.keep_open" value="$(env NTRIP_KEEP_OPEN true)"/>
       <remap from="navsatfix" to="~/nav_sat_fix"/>
       <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
       <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
