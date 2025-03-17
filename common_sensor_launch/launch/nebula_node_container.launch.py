@@ -127,20 +127,31 @@ def launch_setup(context, *args, **kwargs):
                     **create_parameter_dict(
                         "host_ip",
                         "sensor_ip",
+                        "multicast_ip",
+                        "advanced_diagnostics",
                         "data_port",
-                        "gnss_port",
                         "return_mode",
                         "min_range",
                         "max_range",
                         "frame_id",
                         "scan_phase",
-                        "cloud_min_angle",
-                        "cloud_max_angle",
                         "dual_return_distance_threshold",
                         "rotation_speed",
+                        "cloud_min_angle",
+                        "cloud_max_angle",
+                        "gnss_port",
                         "packet_mtu_size",
                         "setup_sensor",
                         "udp_only",
+                        "ptp_profile",
+                        "ptp_transport_type",
+                        "ptp_switch_type",
+                        "ptp_domain",
+                        "ptp_lock_threshold",
+                        "diag_span",
+                        "sync_angle",
+                        "cut_angle",
+                        "retry_hw",
                     ),
                 },
             ],
@@ -339,8 +350,14 @@ def generate_launch_description():
     add_launch_arg("udp_only", "False", "use UDP only")
     add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
+    add_launch_arg(
+        "multicast_ip",
+        "",
+        "the multicast group the sensor shall broadcast to. leave empty to disable multicast",
+    )
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
-    add_launch_arg("scan_phase", "0.0")
+    add_launch_arg("sync_angle", "0")
+    add_launch_arg("cut_angle", "0.0")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
@@ -354,6 +371,8 @@ def generate_launch_description():
     add_launch_arg("frame_id", "lidar", "frame id")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
+    add_launch_arg("diag_span", "1000")
+    add_launch_arg("advanced_diagnostics", "false")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("lidar_container_name", "nebula_node_container")
