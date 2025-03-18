@@ -172,7 +172,7 @@ def generate_launch_description():
 
     add_launch_arg("launch_driver", "true")
     add_launch_arg("launch_hw_monitor", "true", description="launch hardware monitor")
-    add_launch_arg("host_ip", "192.168.1.10")
+    add_launch_arg("host_ip", "192.168.1.11")
     add_launch_arg("use_concat_filter", "true")
     add_launch_arg(
         "vehicle_id",
