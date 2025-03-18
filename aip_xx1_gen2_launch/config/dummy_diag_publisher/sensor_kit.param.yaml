@@ -15,19 +15,20 @@
       # imu
       "topic_state_monitor_imu: sensing_topic_status": default
 
-      #gyro_odometer
-      "gyro_odometer: gyro_odometer_status": default
+      #gyro_bias_validator
+      "gyro_bias_validator: gyro_bias_validator": default
 
       #camera
+      #camera 1, 7 and 8 on the addon ECU are not currently not in use
       "topic_state_monitor_camera0: sensing_topic_status": default
-      "topic_state_monitor_camera1: sensing_topic_status": default
+      # "topic_state_monitor_camera1: sensing_topic_status": default
       "topic_state_monitor_camera2: sensing_topic_status": default
       "topic_state_monitor_camera3: sensing_topic_status": default
       "topic_state_monitor_camera4: sensing_topic_status": default
       "topic_state_monitor_camera5: sensing_topic_status": default
       "topic_state_monitor_camera6: sensing_topic_status": default
-      "topic_state_monitor_camera7: sensing_topic_status": default
-      "topic_state_monitor_camera8: sensing_topic_status": default
+      # "topic_state_monitor_camera7: sensing_topic_status": default
+      # "topic_state_monitor_camera8: sensing_topic_status": default
       "topic_state_monitor_camera9: sensing_topic_status": default
       "topic_state_monitor_camera10: sensing_topic_status": default
 
