@@ -12,44 +12,34 @@
 /**:
   ros__parameters:
     required_diags:
-      "topic_state_monitor_imu: sensing_topic_status": default,
+      # performance monitoring  ----> To be confirmed in v0.47.0
+      # "blockage: blockage_validation": default
 
-      "gyro_odometer: gyro_odometer_status": default,
+      # velodyne
+      "velodyne_monitor: velodyne_connection": default
+      "velodyne_monitor: velodyne_temperature": default
+      "velodyne_monitor: velodyne_rpm": default
 
-      "topic_state_monitor_camera0: sensing_topic_status": default,
-      "topic_state_monitor_camera1: sensing_topic_status": default,
-      "topic_state_monitor_camera2: sensing_topic_status": default,
-      "topic_state_monitor_camera3: sensing_topic_status": default,
-      "topic_state_monitor_camera4: sensing_topic_status": default,
-      "topic_state_monitor_camera5: sensing_topic_status": default,
-      "topic_state_monitor_camera6: sensing_topic_status": default,
-      "topic_state_monitor_camera7: sensing_topic_status": default,
-      "topic_state_monitor_camera8: sensing_topic_status": default,
-      "topic_state_monitor_camera9: sensing_topic_status": default,
-      "topic_state_monitor_camera10: sensing_topic_status": default,
+      # gnss
+      # "connection: gnss_connection": default
+      # "data: gnss_data": default
+      # "antenna: gnss_antenna": default
+      # "tx_usage: gnss_tx_usage": default
+      # "spoofing: gnss_spoofing": default
+      # "jamming: gnss_jamming": default
+      # "fix_topic_status: fix topic status": default
+      "ublox: fix topic status": default
+      "ublox: fix": default
 
-      "concatenate_data: concat_status": default,
+      # camera
+      "topic_state_monitor_camera0: sensing_topic_status": default
+      "topic_state_monitor_camera1: sensing_topic_status": default
+      "topic_state_monitor_camera2: sensing_topic_status": default
+      "topic_state_monitor_camera3: sensing_topic_status": default
+      "topic_state_monitor_camera4: sensing_topic_status": default
+      "topic_state_monitor_camera5: sensing_topic_status": default
+      "topic_state_monitor_camera6: sensing_topic_status": default
 
-      "/sensing/lidar/side_left/hesai_ros_wrapper_node: hesai_status": default,
-      "/sensing/lidar/side_left/hesai_ros_wrapper_node: hesai_ptp": default,
-      "/sensing/lidar/side_left/hesai_ros_wrapper_node: hesai_temperature": default,
-      
-      "/sensing/lidar/side_right/hesai_ros_wrapper_node: hesai_status": default,
-      "/sensing/lidar/side_right/hesai_ros_wrapper_node: hesai_ptp": default,
-      "/sensing/lidar/side_right/hesai_ros_wrapper_node: hesai_temperature": default,
-      
-      "/sensing/lidar/front_left/hesai_ros_wrapper_node: hesai_status": default,
-      "/sensing/lidar/front_left/hesai_ros_wrapper_node: hesai_ptp": default,
-      "/sensing/lidar/front_left/hesai_ros_wrapper_node: hesai_temperature": default,
-      
-      "/sensing/lidar/front_right/hesai_ros_wrapper_node: hesai_status": default,
-      "/sensing/lidar/front_right/hesai_ros_wrapper_node: hesai_ptp": default,
-      "/sensing/lidar/front_right/hesai_ros_wrapper_node: hesai_temperature": default,
-      
-      "/sensing/lidar/top/hesai_ros_wrapper_node: hesai_status": default,
-      "/sensing/lidar/top/hesai_ros_wrapper_node: hesai_ptp": default,
-      "/sensing/lidar/top/hesai_ros_wrapper_node: hesai_temperature": default
-      
-      # "/sensing/lidar/rear/hesai_ros_wrapper_node: hesai_status": default,
-      # "/sensing/lidar/rear/hesai_ros_wrapper_node: hesai_ptp": default,
-      # "/sensing/lidar/rear/hesai_ros_wrapper_node: hesai_temperature": default
+      # imu
+      "topic_state_monitor_imu: sensing_topic_status": default
+      "gyro_bias_validator: gyro_bias_validator": default
