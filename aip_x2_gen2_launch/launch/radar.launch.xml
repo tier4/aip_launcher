@@ -5,7 +5,7 @@
   <let name="odometry_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
   <let name="acceleration_topic" value="/localization/acceleration"/>
   <let name="steering_angle_topic" value="/vehicle/status/steering_status_scalar"/>
-  <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share common_sensor_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
+  <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share aip_x2_gen2_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
 
   <let name="odometry_throttled_topic" value="$(var odometry_topic)_throttled"/>
   <let name="acceleration_throttled_topic" value="$(var acceleration_topic)_throttled"/>
