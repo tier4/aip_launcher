@@ -45,7 +45,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
@@ -75,7 +74,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
@@ -105,7 +103,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
@@ -135,7 +132,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
@@ -165,7 +161,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
@@ -195,7 +190,6 @@
         <arg name="input/odometry" value="/localization/kinematic_state"/>
         <arg name="output/radar_detected_objects" value="detected_objects"/>
         <arg name="output/radar_tracked_objects" value="tracked_objects"/>
-        <arg name="use_twist_compensation" value="false"/>
         <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
       </include>
     </group>
