@@ -116,6 +116,8 @@ def launch_setup(context, *args, **kwargs):
                     "point_filters.downsample_mask.path",
                 ),
                 "retry_hw": True,
+                "sync_diagnostics.master_ip": "192.168.20.11",
+                "sync_diagnostics.master_port": 16161,
             },
         ],
         remappings=[

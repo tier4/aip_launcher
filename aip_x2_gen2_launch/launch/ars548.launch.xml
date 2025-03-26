@@ -14,6 +14,9 @@
         <param name="launch_hw" value="$(var launch_hw)"/>
         <param name="frame_id" value="$(var frame_id)"/>
         <param name="sensor_ip" value="$(var sensor_ip)"/>
+        <param name="sync_diagnostics.master_ip" value="192.168.20.11"/>
+        <param name="sync_diagnostics.master_port" value="16161"/>
+        <param name="sensor_ip" value="$(var sensor_ip)"/>
         <remap from="odometry_input" to="$(var odometry_topic)"/>
         <remap from="acceleration_input" to="$(var acceleration_topic)"/>
         <remap from="steering_angle_input" to="$(var steering_angle_topic)"/>
