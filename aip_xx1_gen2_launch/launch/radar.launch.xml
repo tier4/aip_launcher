@@ -38,11 +38,12 @@
     <group>
       <push-ros-namespace namespace="front_center"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
-
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+          <!-- in  -->
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.114"/>
           <arg name="frame_id" value="front_center/radar_link"/>
@@ -54,8 +55,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
@@ -74,11 +73,12 @@
     <group>
       <push-ros-namespace namespace="front_left"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.115"/>
           <arg name="frame_id" value="front_left/radar_link"/>
@@ -90,8 +90,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
@@ -110,11 +108,12 @@
     <group>
       <push-ros-namespace namespace="front_right"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.116"/>
           <arg name="frame_id" value="front_right/radar_link"/>
@@ -126,8 +125,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
@@ -146,11 +143,12 @@
     <group>
       <push-ros-namespace namespace="rear_center"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.117"/>
           <arg name="frame_id" value="rear_center/radar_link"/>
@@ -162,8 +160,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
@@ -182,11 +178,12 @@
     <group>
       <push-ros-namespace namespace="rear_left"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.118"/>
           <arg name="frame_id" value="rear_left/radar_link"/>
@@ -198,8 +195,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
@@ -218,11 +213,12 @@
     <group>
       <push-ros-namespace namespace="rear_right"/>
       <group>
-        <include file="$(find-pkg-share nebula_ros)/launch/continental_launch_all_hw.xml" if="$(var launch_driver)">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
           <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.119"/>
           <arg name="frame_id" value="rear_right/radar_link"/>
@@ -234,8 +230,6 @@
           <arg name="data_port" value="42102"/>
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
-
-          <arg name="new_plug_orientation" value="0"/>
         </include>
       </group>
 
