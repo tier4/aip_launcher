@@ -38,7 +38,7 @@
     <group>
       <push-ros-namespace namespace="front_center"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
           <!-- in  -->
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
@@ -73,7 +73,7 @@
     <group>
       <push-ros-namespace namespace="front_left"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
@@ -108,7 +108,7 @@
     <group>
       <push-ros-namespace namespace="front_right"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
@@ -143,7 +143,7 @@
     <group>
       <push-ros-namespace namespace="rear_center"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
@@ -178,7 +178,7 @@
     <group>
       <push-ros-namespace namespace="rear_left"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
@@ -213,7 +213,7 @@
     <group>
       <push-ros-namespace namespace="rear_right"/>
       <group>
-        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.xml">
+        <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
           <arg name="odometry_topic" value="$(var twist_topic)"/>
           <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
