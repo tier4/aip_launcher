@@ -3,7 +3,7 @@
   <!-- Params -->
   <arg name="launch_driver" default="true"/>
 
-  <arg name="model" default="PandarXT32"/>
+  <arg name="model" default="Pandar128E4X"/>
   <arg name="sensor_frame" default="pandar"/>
   <arg name="return_mode" default="Strongest"/>
   <arg name="sensor_ip" default="192.168.1.201"/>
@@ -12,7 +12,6 @@
   <arg name="scan_phase" default="0.0"/>
   <arg name="cloud_min_angle" default="0"/>
   <arg name="cloud_max_angle" default="360"/>
-  <arg name="max_range" default="120.0"/>
   <arg name="dual_return_distance_threshold" default="0.1"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="container_name" default="hesai_node_container"/>
@@ -21,7 +20,7 @@
   <arg name="use_cuda_preprocessor" default="false"/>
   <arg name="udp_only" default="false"/>
 
-  <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
+  <include file="$(find-pkg-share aip_common_sensor_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
     <arg name="frame_id" value="$(var sensor_frame)"/>
@@ -32,7 +31,6 @@
     <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
     <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
-    <arg name="max_range" value="$(var max_range)"/>
     <arg name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="container_name" value="$(var container_name)"/>
@@ -42,11 +40,11 @@
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
     <arg name="ptp_profile" value="automotive"/>
-    <arg name="ptp_switch_type" value="NON_TSN"/>
     <arg name="ptp_transport_type" value="L2"/>
+    <arg name="ptp_switch_type" value="NON_TSN"/>
+    <arg name="ptp_domain" value="0"/>
     <arg name="ptp_lock_threshold" value="100"/>
     <arg name="setup_sensor" value="true"/>
     <arg name="udp_only" value="$(var udp_only)"/>
-    <arg name="retry_hw" value="true"/>
   </include>
 </launch>

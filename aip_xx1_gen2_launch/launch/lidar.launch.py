@@ -45,35 +45,35 @@ def generate_launch_dictionary():
     path_dictionary = {
         "hesai_OT128": AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("common_sensor_launch"),
+                get_package_share_directory("aip_common_sensor_launch"),
                 "launch",
                 "hesai_OT128.launch.xml",
             )
         ),
         "hesai_XT32": AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("common_sensor_launch"),
+                get_package_share_directory("aip_common_sensor_launch"),
                 "launch",
                 "hesai_XT32.launch.xml",
             )
         ),
         "velodyne_VLS128": AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("common_sensor_launch"),
+                get_package_share_directory("aip_common_sensor_launch"),
                 "launch",
                 "velodyne_VLS128.launch.xml",
             )
         ),
         "velodyne_VLP16": AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("common_sensor_launch"),
+                get_package_share_directory("aip_common_sensor_launch"),
                 "launch",
                 "velodyne_VLP16.launch.xml",
             )
         ),
         "livox_horizon": AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("common_sensor_launch"),
+                get_package_share_directory("aip_common_sensor_launch"),
                 "launch",
                 "livox_horizon.launch.py",
             )
