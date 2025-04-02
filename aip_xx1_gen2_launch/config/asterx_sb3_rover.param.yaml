@@ -22,7 +22,7 @@
     get_spatial_config_from_tf: false
     use_ros_axis_orientation: false
     receiver_type: gnss
-    multi_antenna: false
+    multi_antenna: true
 
     datum: Default
 
@@ -30,9 +30,9 @@
       heading: -90.0
       pitch: 0.0
 
-    ant_type: Unknown
+    ant_type: "SEPPOLANT_MC.V2 NONE"
     ant_serial_nr: Unknown
-    ant_aux1_type: Unknown
+    ant_aux1_type: "SEPPOLANT_MC.V2 NONE"
     ant_aux1_serial_nr: Unknown
 
     polling_period:

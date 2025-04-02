@@ -11,18 +11,20 @@
       <remap from="navsatfix" to="~/nav_sat_fix"/>
       <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
       <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
+      <remap from="atteuler" to="~/atteuler"/>
     </node>
+
+    <!-- Septentrio Heading Converter -->
+    <node pkg="aip_common_sensor_launch" name="septentrio_heading_converter" exec="septentrio_heading_converter.py"/>
 
     <!-- NavSatFix to MGRS Pose -->
     <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
       <arg name="input_topic_fix" value="septentrio/nav_sat_fix" />
-      <arg name="input_topic_navpvt" value="septentrio/navpvt/unused" />
+      <arg name="input_topic_orientation" value="septentrio/orientation"/>
 
       <arg name="output_topic_gnss_pose" value="pose" />
       <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance" />
       <arg name="output_topic_gnss_fixed" value="fixed" />
-
-      <arg name="use_ublox_receiver" value="true" />
     </include>
 
   </group>

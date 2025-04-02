@@ -113,11 +113,11 @@ def launch_setup(context, *args, **kwargs):
                     "calibration_file",
                     "launch_hw",
                     "udp_only",
+                    "point_filters.downsample_mask.path",
                 ),
                 "retry_hw": True,
             },
-        ]
-        + [load_composable_node_param("point_filters_param_file")],
+        ],
         remappings=[
             # ("aw_points", "pointcloud_raw"),
             ("pandar_points", "pointcloud_raw_ex"),
@@ -290,7 +290,6 @@ def generate_launch_description():
     add_launch_arg("cut_angle", "0.0")
     add_launch_arg("ptp_lock_threshold", "100")
     add_launch_arg("udp_only", "false")
-    # add_launch_arg("point_filters", "{}", "point filter definitions in JSON format")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
     add_launch_arg("max_range", "300.0", "maximum view range for Velodyne sensors")
@@ -335,11 +334,11 @@ def generate_launch_description():
     add_launch_arg("min_azimuth_deg", "135.0")
     add_launch_arg("max_azimuth_deg", "225.0")
     add_launch_arg("enable_blockage_diag", "true")
-    add_launch_arg("point_filters_param_file")
 
     add_launch_arg("calibration_file", "")
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
+    add_launch_arg("point_filters.downsample_mask.path", "")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

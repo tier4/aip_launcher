@@ -9,7 +9,7 @@
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-
+  <arg name="udp_only" default="false"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
 
@@ -38,15 +38,15 @@
         <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="88"/>
         <arg name="cloud_max_angle" value="274"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.05"/>
-        <arg name="max_range" value="50.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -58,7 +58,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/point_filters_one_third.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/point_filters_one_third.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -80,15 +80,15 @@
         <arg name="cut_angle" value="359.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="359"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.05"/>
-        <arg name="max_range" value="50.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -100,7 +100,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/point_filters_one_third.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/point_filters_one_third.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
@@ -122,15 +122,15 @@
         <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.3"/>
-        <arg name="max_range" value="230.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.08"/>
+        <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -142,7 +142,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/point_filters_full.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/point_filters_full.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -164,15 +164,15 @@
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.3"/>
-        <arg name="max_range" value="230.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.08"/>
+        <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -184,7 +184,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/point_filters_full.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/point_filters_full.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
@@ -207,15 +207,15 @@
         <arg name="cut_angle" value="275.0" />
         <arg name="cloud_min_angle" value="85"/>
         <arg name="cloud_max_angle" value="275"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.05"/>
-        <arg name="max_range" value="50.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -227,7 +227,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/point_filters_one_third.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/point_filters_one_third.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -249,15 +249,15 @@
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="0"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.05"/>
-        <arg name="max_range" value="50.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -269,7 +269,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/point_filters_one_third.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/point_filters_one_third.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
@@ -291,15 +291,15 @@
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.3"/>
-        <arg name="max_range" value="230.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.08"/>
+        <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -311,7 +311,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/point_filters_full.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/point_filters_full.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -333,15 +333,15 @@
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
-        <arg name="return_mode" value="Dual"/>
-        <arg name="min_range" value="0.3"/>
-        <arg name="max_range" value="230.0"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.08"/>
+        <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
         <arg name="ptp_switch_type" value="NON_TSN"/>
         <arg name="ptp_domain" value="0"/>
         <arg name="ptp_lock_threshold" value="100"/>
-        <arg name="udp_only" value="false"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -353,7 +353,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/point_filters_full.param.yaml" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/point_filters_full.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>

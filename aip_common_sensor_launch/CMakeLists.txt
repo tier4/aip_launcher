@@ -14,3 +14,8 @@ ament_auto_package(INSTALL_TO_SHARE
   launch
   config
 )
+
+install(PROGRAMS
+  scripts/septentrio_heading_converter.py
+  DESTINATION lib/${PROJECT_NAME}
+)
