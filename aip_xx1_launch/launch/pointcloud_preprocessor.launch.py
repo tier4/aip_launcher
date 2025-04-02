@@ -37,32 +37,35 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # set concat filter as a component
-    if LaunchConfiguration("use_cuda_preprocessor").perform(context):
-        concat_component = ComposableNode(
-            package="autoware_cuda_pointcloud_preprocessor",
-            plugin="autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent",
-            name="concatenate_data",
-            remappings=[
-                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-                ("output", "concatenated/pointcloud"),
-                ("output/cuda", "concatenated/pointcloud/cuda"),
-            ],
-            parameters=[concatenate_and_time_sync_node_param],
-            # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
-            # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
+    concat_remappings = [
+        ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+        ("output", "concatenated/pointcloud"),
+    ]
+    concat_extra_arguments = []
+
+    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+        concat_package = "autoware_cuda_pointcloud_preprocessor"
+        concat_plugin = "autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent"
+        # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        concat_remappings.append(("output/cuda", "concatenated/pointcloud/cuda"))
     else:
-        concat_component = ComposableNode(
-            package="autoware_pointcloud_preprocessor",
-            plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
-            name="concatenate_data",
-            remappings=[
-                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-                ("output", "concatenated/pointcloud"),
-            ],
-            parameters=[concatenate_and_time_sync_node_param],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        concat_package = "autoware_pointcloud_preprocessor"
+        concat_plugin = (
+            "autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent"
         )
+        concat_extra_arguments.append(
+            {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+        )
+
+    concat_component = ComposableNode(
+        package=concat_package,
+        plugin=concat_plugin,
+        name="concatenate_data",
+        remappings=concat_remappings,
+        parameters=[concatenate_and_time_sync_node_param],
+        extra_arguments=concat_extra_arguments,
+    )
 
     # load concat or passthrough filter
     concat_loader = LoadComposableNodes(
