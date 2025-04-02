@@ -16,7 +16,7 @@
     </node>
 
     <!-- Septentrio Heading Converter -->
-    <node pkg="common_sensor_launch" name="septentrio_heading_converter" exec="septentrio_heading_converter.py"/>
+    <node pkg="aip_common_sensor_launch" name="septentrio_heading_converter" exec="septentrio_heading_converter.py"/>
 
     <!-- NavSatFix to MGRS Pose -->
     <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
