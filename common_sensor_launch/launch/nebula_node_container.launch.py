@@ -94,6 +94,12 @@ def launch_setup(context, *args, **kwargs):
     else:  # Robosense
         sensor_calib_fp = ""
 
+    # Check that the cuda preprocessor is only used with a shared container
+    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+        assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
+            context
+        ), "The cuda preprocessor should only be used with a shared container."
+
     # Pointcloud preprocessor parameters
     distortion_corrector_node_param = ParameterFile(
         param_file=LaunchConfiguration("distortion_correction_node_param_path").perform(context),
