@@ -411,10 +411,26 @@ def generate_launch_description():
     add_launch_arg("advanced_diagnostics", "false")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
-    add_launch_arg("lidar_container_name", "nebula_node_container")
-    add_launch_arg("shared_container_name", "pointcloud_container")
-    add_launch_arg("use_shared_container", "False")
-    add_launch_arg("use_cuda_preprocessor", "False")
+    add_launch_arg(
+        "lidar_container_name",
+        "nebula_node_container",
+        "Name of the new container to be created when use_shared_container is false",
+    )
+    add_launch_arg(
+        "shared_container_name",
+        "pointcloud_container",
+        "Name of the existing container to be used when use_shared_container is true",
+    )
+    add_launch_arg(
+        "use_shared_container",
+        "False",
+        "Whether to use a new container for this lidar or use an existing one",
+    )
+    add_launch_arg(
+        "use_cuda_preprocessor",
+        "False",
+        "Use the cuda implementation of the pointcloud preprocessor. Requires use_shared_container to be enabled",
+    )
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
     add_launch_arg("ptp_switch_type", "TSN")
