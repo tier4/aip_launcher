@@ -9,7 +9,7 @@
 ├── aip_***_description # AI.Pilot *** package
 │   └── ...
 ├── ... # other AI.Pilot packages...
-└── common_sensor_launch # common sensor driver package
+└── aip_common_sensor_launch # common sensor driver package
     └── ... # some directories and files
 ```
 
@@ -131,7 +131,7 @@ The GNSS output name is specified as `/sensing/gnss/pose_with_covariance` to ref
 
 There are no constraints now.
 
-## Description for common_sensor_launch
+## Description for aip_common_sensor_launch
 
 This is the package that contains some sensor driver launch files for reasons such as performing autoware's own processing.
 
@@ -139,7 +139,7 @@ This is the package that contains some sensor driver launch files for reasons su
 
 ```bash
 .
-└── common_sensor_launch
+└── aip_common_sensor_launch
     ├── CMakeLists.txt
     └── launch
     │   ├── velodyne_node_container.launch.py

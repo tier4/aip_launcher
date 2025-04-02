@@ -9,7 +9,7 @@
     <group>
       <push-ros-namespace namespace="front_center"/>
 
-      <include file="$(find-pkg-share common_sensor_launch)/launch/ars408.launch.xml">
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/ars408.launch.xml">
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="interface" value="$(var radar_can_device)" />
         <arg name="input/frame" value="$(var input/frame)" />
