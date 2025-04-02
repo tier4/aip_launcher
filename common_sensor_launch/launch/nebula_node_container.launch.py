@@ -106,7 +106,7 @@ def launch_setup(context, *args, **kwargs):
 
     nodes = []
 
-    if UnlessCondition(LaunchConfiguration("use_pointcloud_container")).evaluate(context):
+    if UnlessCondition(LaunchConfiguration("use_shared_container")).evaluate(context):
         nodes.append(
             ComposableNode(
                 package="autoware_glog_component",
@@ -350,13 +350,13 @@ def launch_setup(context, *args, **kwargs):
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=nodes,
         output="both",
-        condition=UnlessCondition(LaunchConfiguration("use_pointcloud_container")),
+        condition=UnlessCondition(LaunchConfiguration("use_shared_container")),
     )
 
     load_composable_nodes = LoadComposableNodes(
         composable_node_descriptions=nodes,
-        target_container=LaunchConfiguration("pointcloud_container_name"),
-        condition=IfCondition(LaunchConfiguration("use_pointcloud_container")),
+        target_container=LaunchConfiguration("shared_container_name"),
+        condition=IfCondition(LaunchConfiguration("use_shared_container")),
     )
 
     return [container, load_composable_nodes]
@@ -406,8 +406,8 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("lidar_container_name", "nebula_node_container")
-    add_launch_arg("pointcloud_container_name", "pointcloud_container")
-    add_launch_arg("use_pointcloud_container", "False")
+    add_launch_arg("shared_container_name", "pointcloud_container")
+    add_launch_arg("use_shared_container", "False")
     add_launch_arg("use_cuda_preprocessor", "False")
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
