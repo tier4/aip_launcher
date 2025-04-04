@@ -114,6 +114,7 @@ def launch_setup(context, *args, **kwargs):
                     "launch_hw",
                     "udp_only",
                     "point_filters.downsample_mask.path",
+                    "hires_mode",
                 ),
                 "retry_hw": True,
             },
@@ -339,6 +340,7 @@ def generate_launch_description():
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
+    add_launch_arg("hires_mode", "true")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
