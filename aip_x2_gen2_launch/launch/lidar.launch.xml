@@ -1,5 +1,5 @@
 <launch>
-  <arg name="agnocast_heaphook_path" description="Path to the agnocast heaphook library"/>
+  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
 
   <arg name="launch_driver" default="true"/>
   <arg name="setup_sensor" default="true"/>
