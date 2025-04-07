@@ -34,7 +34,7 @@
     "**/log/**",
     "**/package-lock.json",
     "**/public/**",
-    "**/reports*/**",
+    "**/reports*/**"
   ],
   "ignoreRegExpList": [
     "\\[.*/.*\\]\\(https://github.com",
@@ -119,9 +119,5 @@
     }
   ],
   "flagWords": [],
-  "ignoreWords": [
-    "asterx",
-    "ntrip",
-    "NTRIP"
-  ]
+  "ignoreWords": ["asterx", "ntrip", "NTRIP"]
 }
