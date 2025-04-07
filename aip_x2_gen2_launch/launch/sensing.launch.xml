@@ -1,4 +1,5 @@
 <launch>
+  <arg name="agnocast_heaphook_path" description="Path to the agnocast heaphook library"/>
 
   <arg name="launch_driver" default="true" description="do launch driver"/>
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
@@ -9,6 +10,7 @@
 
     <!-- LiDAR Driver -->
     <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/lidar.launch.xml">
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="launch_driver" value="$(var launch_driver)" />
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>

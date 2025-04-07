@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -68,6 +70,8 @@ def launch_setup(context, *args, **kwargs):
 
     def str2vector(string):
         return [float(x) for x in string.strip("[]").split(",")]
+
+    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
 
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
@@ -239,6 +243,10 @@ def launch_setup(context, *args, **kwargs):
             self_crop_component,
             undistort_component,
         ],
+        additional_env=({
+            'LD_PRELOAD': f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",
+            'AGNOCAST_MEMPOOL_SIZE': '1073741824',  # 1GB
+        } if os.getenv("ENABLE_AGNOCAST") == "1" else {})
     )
 
     ring_outlier_filter_loader = LoadComposableNodes(
