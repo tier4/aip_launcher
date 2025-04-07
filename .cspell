@@ -119,7 +119,7 @@
     }
   ],
   "flagWords": [],
-  "words": [
+  "ignoreWords": [
     "asterx",
     "ntrip",
     "NTRIP"
