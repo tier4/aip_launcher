@@ -290,7 +290,11 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg("agnocast_heaphook_path", "/opt/ros/humble/lib/libagnocast_heaphook.so", "Path to the agnocast heaphook library")
+    add_launch_arg(
+        "agnocast_heaphook_path",
+        "/opt/ros/humble/lib/libagnocast_heaphook.so",
+        "Path to the agnocast heaphook library",
+    )
     add_launch_arg("launch_hw", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
