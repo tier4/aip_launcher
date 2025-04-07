@@ -243,10 +243,14 @@ def launch_setup(context, *args, **kwargs):
             self_crop_component,
             undistort_component,
         ],
-        additional_env=({
-            'LD_PRELOAD': f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",
-            'AGNOCAST_MEMPOOL_SIZE': '1073741824',  # 1GB
-        } if os.getenv("ENABLE_AGNOCAST") == "1" else {})
+        additional_env=(
+            {
+                "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",
+                "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
+            }
+            if os.getenv("ENABLE_AGNOCAST") == "1"
+            else {}
+        ),
     )
 
     ring_outlier_filter_loader = LoadComposableNodes(
