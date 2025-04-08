@@ -187,7 +187,11 @@ def launch_setup(context, *args, **kwargs):
             ("input", "rectified/pointcloud_ex"),
             ("output", "pointcloud_before_sync"),
         ],
-        parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame, {"is_agnocast_publish_node": True}],
+        parameters=[
+            ring_outlier_filter_node_param,
+            ring_outlier_output_frame,
+            {"is_agnocast_publish_node": True},
+        ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
