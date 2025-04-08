@@ -187,7 +187,7 @@ def launch_setup(context, *args, **kwargs):
             ("input", "rectified/pointcloud_ex"),
             ("output", "pointcloud_before_sync"),
         ],
-        parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame],
+        parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame, {"is_agnocast_publish_node": True}],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -204,6 +204,7 @@ def launch_setup(context, *args, **kwargs):
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+                "is_agnocast_publish_node": True,
             }
         ]
         + [load_composable_node_param("dual_return_filter_param_file")],
