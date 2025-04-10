@@ -55,3 +55,19 @@ base_link:
     roll: 0.0
     pitch: 0.0
     yaw: -1.9189 # 110 [deg]
+
+  # gnss
+  top_rear/gnss_link:
+    x: -1.11273
+    y: 0.00
+    z: 2.81787
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  top_front/gnss_link:
+    x: 4.96377
+    y: 0.0
+    z: 2.81787
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
