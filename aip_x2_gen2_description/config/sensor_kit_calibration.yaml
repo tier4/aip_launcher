@@ -116,13 +116,6 @@ sensor_kit_base_link:
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
-  top_front/gnss_link:
-    x: 0.30133
-    y: -1.07589
-    z: 0.02861
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
 
   # rear upper
   top_rear_center/camera_link:
@@ -130,15 +123,8 @@ sensor_kit_base_link:
     y: -1.20389
     z: -0.14078
     roll: 0.0
-    pitch: 0.0
+    pitch: 0.933278 # 53.50 [deg]
     yaw: 3.141592 # 180 [deg] to turn the connector toward the vehicle
-  top_rear/gnss_link:
-    x: -5.77517
-    y: -1.07589
-    z: 0.02861
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
 
   # front lower
   front_upper/lidar_base_link:
