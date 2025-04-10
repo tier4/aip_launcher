@@ -334,15 +334,21 @@ def generate_launch_description():
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg(
         "blockage_diagnostics_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
+        [FindPackageShare("aip_common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
     )
     add_launch_arg(
         "ring_outlier_filter_node_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/ring_outlier_filter_node.param.yaml"],
+        [
+            FindPackageShare("aip_common_sensor_launch"),
+            "/config/ring_outlier_filter_node.param.yaml",
+        ],
     )
     add_launch_arg(
         "distortion_corrector_node_param_file",
-        [FindPackageShare("common_sensor_launch"), "/config/distortion_corrector_node.param.yaml"],
+        [
+            FindPackageShare("aip_common_sensor_launch"),
+            "/config/distortion_corrector_node.param.yaml",
+        ],
     )
     add_launch_arg("vertical_bins", "128")
     add_launch_arg("horizontal_ring_id", "12")

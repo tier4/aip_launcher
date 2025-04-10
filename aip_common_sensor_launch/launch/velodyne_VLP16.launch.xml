@@ -3,9 +3,9 @@
   <!-- Params -->
   <arg name="launch_driver" default="true"/>
 
-  <arg name="model" default="VLS128"/>
-  <arg name="max_range" default="250.0"/>
-  <arg name="min_range" default="0.5"/>
+  <arg name="model" default="VLP16"/>
+  <arg name="max_range" default="130.0"/>
+  <arg name="min_range" default="0.4"/>
   <arg name="sensor_frame" default="velodyne"/>
   <arg name="return_mode" default="SingleStrongest"/>
   <arg name="sensor_ip" default="192.168.1.201"/>
@@ -16,14 +16,14 @@
   <arg name="cloud_max_angle" default="360"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="container_name" default="velodyne_node_container"/>
-  <arg name="vertical_bins" default="128"/>
-  <arg name="horizontal_ring_id" default="64"/>
+  <arg name="vertical_bins" default="16"/>
+  <arg name="horizontal_ring_id" default="0"/>
   <arg name="is_channel_order_top2down" default="false"/>
   <arg name="horizontal_resolution" default="0.4"/>
-  <arg name="enable_blockage_diag" default="false"/>
+  <arg name="enable_blockage_diag" default="true"/>
   <arg name="udp_only" default="false"/>
 
-  <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
+  <include file="$(find-pkg-share aip_common_sensor_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="sensor_model" value="$(var model)"/>
     <arg name="return_mode" value="$(var return_mode)"/>
