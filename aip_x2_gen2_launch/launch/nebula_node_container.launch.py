@@ -250,7 +250,7 @@ def launch_setup(context, *args, **kwargs):
         ],
         additional_env=(
             {
-                "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",
+                "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
                 "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
             }
             if os.getenv("ENABLE_AGNOCAST") == "1"
