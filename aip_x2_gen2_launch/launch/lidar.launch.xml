@@ -1,4 +1,5 @@
 <launch>
+  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
 
   <arg name="launch_driver" default="true"/>
   <arg name="setup_sensor" default="true"/>
@@ -28,6 +29,7 @@
     <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_upper/lidar"/>
@@ -71,6 +73,7 @@
     <group>
       <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_upper/lidar"/>
@@ -114,6 +117,7 @@
     <group>
       <push-ros-namespace namespace="rear_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_lower/lidar"/>
@@ -156,6 +160,7 @@
     <group>
       <push-ros-namespace namespace="left_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_lower/lidar"/>
@@ -199,6 +204,7 @@
     <group>
       <push-ros-namespace namespace="front_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_upper/lidar"/>
@@ -242,6 +248,7 @@
     <group>
       <push-ros-namespace namespace="right_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_upper/lidar"/>
@@ -285,6 +292,7 @@
     <group>
       <push-ros-namespace namespace="front_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_lower/lidar"/>
@@ -327,6 +335,7 @@
     <group>
       <push-ros-namespace namespace="right_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_lower/lidar"/>
