@@ -6,8 +6,8 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="use_shared_container" default="true"/>
-  <arg name="use_cuda_preprocessor" default="true"/>
+  <arg name="use_shared_container" default="false"/>
+  <arg name="use_cuda_preprocessor" default="false"/>
   <arg name="enable_blockage_diag" default="true"/>
   <arg name="udp_only" default="false"/>
 
@@ -26,8 +26,7 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="shared_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="use_shared_container" value="$(var use_shared_container)"/>
         <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="vertical_bins" value="128"/>
@@ -52,8 +51,7 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="shared_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="use_shared_container" value="$(var use_shared_container)"/>
         <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="vertical_bins" value="16"/>
@@ -78,8 +76,7 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="shared_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="use_shared_container" value="$(var use_shared_container)"/>
         <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="vertical_bins" value="16"/>
@@ -104,8 +101,7 @@
         <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="shared_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="use_shared_container" value="$(var use_shared_container)"/>
         <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="vertical_bins" value="16"/>

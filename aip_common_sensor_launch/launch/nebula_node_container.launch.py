@@ -383,7 +383,7 @@ def launch_setup(context, *args, **kwargs):
 
     load_composable_nodes = LoadComposableNodes(
         composable_node_descriptions=nodes,
-        target_container=LaunchConfiguration("shared_container_name"),
+        target_container=LaunchConfiguration("container_name"),
         condition=IfCondition(LaunchConfiguration("use_shared_container")),
     )
 
@@ -437,11 +437,6 @@ def generate_launch_description():
         "lidar_container_name",
         "nebula_node_container",
         "Name of the new container to be created when use_shared_container is false",
-    )
-    add_launch_arg(
-        "shared_container_name",
-        "pointcloud_container",
-        "Name of the existing container to be used when use_shared_container is true",
     )
     add_launch_arg(
         "use_shared_container",
