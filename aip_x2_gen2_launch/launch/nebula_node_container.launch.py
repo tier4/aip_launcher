@@ -87,60 +87,56 @@ def make_nebula_nodes(context):
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
 
-    glog_component = ComposableNode(
-        package="autoware_glog_component",
-        plugin="autoware::glog_component::GlogComponent",
-        name="glog_component",
-    )
-
-    nebula_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "RosWrapper",
-        name=sensor_make.lower() + "_ros_wrapper_node",
-        parameters=[
-            ParameterFile(
-                LaunchConfiguration("nebula_common_config_file").perform(context),
-                allow_substs=True,
-            ),
-            {
-                "sensor_model": sensor_model,
-                **create_parameter_dict(
-                    "host_ip",
-                    "sensor_ip",
-                    "multicast_ip",
-                    "data_port",
-                    "return_mode",
-                    "min_range",
-                    "max_range",
-                    "frame_id",
-                    "sync_angle",
-                    "cut_angle",
-                    "dual_return_distance_threshold",
-                    "rotation_speed",
-                    "cloud_min_angle",
-                    "cloud_max_angle",
-                    "gnss_port",
-                    "packet_mtu_size",
-                    "setup_sensor",
-                    "diag_span",
-                    "calibration_file",
-                    "launch_hw",
-                    "udp_only",
-                    "point_filters.downsample_mask.path",
-                    "hires_mode",
-                    "diagnostics.packet_loss.error_threshold",
+    return [
+        ComposableNode(
+            package="nebula_ros",
+            plugin=sensor_make + "RosWrapper",
+            name=sensor_make.lower() + "_ros_wrapper_node",
+            parameters=[
+                ParameterFile(
+                    LaunchConfiguration("nebula_common_config_file").perform(context),
+                    allow_substs=True,
                 ),
-                "retry_hw": True,
-            },
-        ],
-        remappings=[
-            # ("aw_points", "pointcloud_raw"),
-            ("pandar_points", "pointcloud_raw_ex"),
-        ],
-        extra_arguments=[
-            {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-        ],
-    )
+                {
+                    "sensor_model": sensor_model,
+                    **create_parameter_dict(
+                        "host_ip",
+                        "sensor_ip",
+                        "multicast_ip",
+                        "data_port",
+                        "return_mode",
+                        "min_range",
+                        "max_range",
+                        "frame_id",
+                        "sync_angle",
+                        "cut_angle",
+                        "dual_return_distance_threshold",
+                        "rotation_speed",
+                        "cloud_min_angle",
+                        "cloud_max_angle",
+                        "gnss_port",
+                        "packet_mtu_size",
+                        "setup_sensor",
+                        "diag_span",
+                        "calibration_file",
+                        "launch_hw",
+                        "udp_only",
+                        "point_filters.downsample_mask.path",
+                        "hires_mode",
+                        "diagnostics.packet_loss.error_threshold",
+                    ),
+                    "retry_hw": True,
+                },
+            ],
+            remappings=[
+                # ("aw_points", "pointcloud_raw"),
+                ("pandar_points", "pointcloud_raw_ex"),
+            ],
+            extra_arguments=[
+                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+            ],
+        )
+    ]
 
 
 def make_preprocessor_nodes(context):
