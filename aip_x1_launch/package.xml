@@ -22,7 +22,7 @@
   <exec_depend>rclcpp_components</exec_depend>
   <exec_depend>ros2_socketcan</exec_depend>
   <exec_depend>tamagawa_imu_driver</exec_depend>
-  <exec_depend>topic_state_monitor</exec_depend>
+  <exec_depend>autoware_topic_state_monitor</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>autoware_lint_common</test_depend>
