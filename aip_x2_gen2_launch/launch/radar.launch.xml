@@ -11,9 +11,9 @@
   <let name="acceleration_throttled_topic" value="$(var acceleration_topic)_throttled"/>
   <let name="steering_angle_throttled_topic" value="$(var steering_angle_topic)_throttled"/>
 
-  <!-- <node pkg="topic_tools" exec="throttle" name="odometry_throttler" output="screen" args="messages $(var odometry_topic) 25.0 $(var odometry_throttled_topic)"/>
+  <node pkg="topic_tools" exec="throttle" name="odometry_throttler" output="screen" args="messages $(var odometry_topic) 25.0 $(var odometry_throttled_topic)"/>
   <node pkg="topic_tools" exec="throttle" name="acceleration_throttler" output="screen" args="messages $(var acceleration_topic) 25.0 $(var acceleration_throttled_topic)"/>
-  <node pkg="topic_tools" exec="throttle" name="steering_angle_throttler" output="screen" args="messages $(var steering_angle_topic) 25.0 $(var steering_angle_throttled_topic)"/> -->
+  <node pkg="topic_tools" exec="throttle" name="steering_angle_throttler" output="screen" args="messages $(var steering_angle_topic) 25.0 $(var steering_angle_throttled_topic)"/>
 
   <group>
     <push-ros-namespace namespace="radar"/>
