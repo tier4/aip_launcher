@@ -1,4 +1,5 @@
 <launch>
+  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
 
   <arg name="launch_driver" default="true"/>
   <arg name="setup_sensor" default="true"/>
@@ -28,6 +29,7 @@
     <group>
       <push-ros-namespace namespace="rear_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_upper/lidar"/>
@@ -58,18 +60,20 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/point_filters_one_third.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
-        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="use_dual_return_filter" value="true"/>
+        <arg name="hires_mode" value="false"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="left_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_upper/lidar"/>
@@ -100,18 +104,20 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/point_filters_one_third.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="true"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="rear_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_lower/lidar"/>
@@ -142,7 +148,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/point_filters_full.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -154,6 +160,7 @@
     <group>
       <push-ros-namespace namespace="left_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_lower/lidar"/>
@@ -184,7 +191,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/point_filters_full.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
@@ -197,6 +204,7 @@
     <group>
       <push-ros-namespace namespace="front_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_upper/lidar"/>
@@ -227,18 +235,20 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/point_filters_one_third.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="true"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="right_upper" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_upper/lidar"/>
@@ -269,18 +279,20 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_upper.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/point_filters_one_third.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="true"/>
+        <arg name="hires_mode" value="true"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="front_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_lower/lidar"/>
@@ -311,18 +323,19 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/point_filters_full.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
-        <arg name="use_dual_return_filter" value="true"/>
+        <arg name="use_dual_return_filter" value="false"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="right_lower" />
       <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_lower/lidar"/>
@@ -353,7 +366,7 @@
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_lower.csv" />
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/point_filters_full.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>

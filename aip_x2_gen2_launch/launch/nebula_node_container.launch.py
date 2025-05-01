@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -69,6 +71,8 @@ def launch_setup(context, *args, **kwargs):
     def str2vector(string):
         return [float(x) for x in string.strip("[]").split(",")]
 
+    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
+
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
@@ -114,6 +118,7 @@ def launch_setup(context, *args, **kwargs):
                     "launch_hw",
                     "udp_only",
                     "point_filters.downsample_mask.path",
+                    "hires_mode",
                 ),
                 "retry_hw": True,
             },
@@ -182,7 +187,11 @@ def launch_setup(context, *args, **kwargs):
             ("input", "rectified/pointcloud_ex"),
             ("output", "pointcloud_before_sync"),
         ],
-        parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame],
+        parameters=[
+            ring_outlier_filter_node_param,
+            ring_outlier_output_frame,
+            {"is_agnocast_publish_node": True},
+        ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -199,6 +208,7 @@ def launch_setup(context, *args, **kwargs):
                 "vertical_bins": LaunchConfiguration("vertical_bins"),
                 "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
                 "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+                "is_agnocast_publish_node": True,
             }
         ]
         + [load_composable_node_param("dual_return_filter_param_file")],
@@ -238,6 +248,14 @@ def launch_setup(context, *args, **kwargs):
             self_crop_component,
             undistort_component,
         ],
+        additional_env=(
+            {
+                "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
+                "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
+            }
+            if os.getenv("ENABLE_AGNOCAST") == "1"
+            else {}
+        ),
     )
 
     ring_outlier_filter_loader = LoadComposableNodes(
@@ -277,6 +295,11 @@ def generate_launch_description():
 
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
+    add_launch_arg(
+        "agnocast_heaphook_path",
+        "/opt/ros/humble/lib/libagnocast_heaphook.so",
+        "Path to the agnocast heaphook library",
+    )
     add_launch_arg("launch_hw", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
@@ -333,6 +356,7 @@ def generate_launch_description():
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
+    add_launch_arg("hires_mode", "true")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
