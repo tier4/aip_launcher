@@ -11,4 +11,3 @@
     vertical_bins: 128
     horizontal_bins: 36
     noise_threshold: 2
-    num_points_threshold: 4
