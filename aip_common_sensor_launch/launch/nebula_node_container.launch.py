@@ -235,6 +235,7 @@ def make_preprocessor_nodes(context):
 
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
+    cropbox_parameters["processing_time_threshold"] = 0.01
 
     vehicle_info = get_vehicle_info(context)
     cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"]
