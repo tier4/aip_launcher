@@ -61,6 +61,10 @@ class OrientationConverter(Node):
         if attitude_msg.heading < 0:
             return
 
+        # When heading is NaN, it means the heading is not available.
+        if np.isnan(attitude_msg.heading):
+            return
+
         orientation_msg = GnssInsOrientationStamped()
         orientation_msg.header = attitude_msg.header
 
