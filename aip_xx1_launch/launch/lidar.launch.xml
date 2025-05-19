@@ -6,8 +6,16 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <!-- PLEASE BE VERY CAREFUL!
+
+    On XX1, only the CUDA-based pointcloud preprocessor is used.
+    The concatenation node remains the traditional CPU-based version.
+
+    Although use_shared_container is normally required to be true when use_cuda_preprocessor is true,
+    in this case, we are intentionally setting them to true and false respectively.
+  -->
   <arg name="use_shared_container" default="false"/>
-  <arg name="use_cuda_preprocessor" default="false"/>
+  <arg name="use_cuda_preprocessor" default="true"/>
   <arg name="enable_blockage_diag" default="true"/>
   <arg name="udp_only" default="false"/>
 
@@ -136,7 +144,8 @@
       <arg name="base_frame" value="base_link"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
-      <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
+      <!-- <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/> -->
+      <arg name="use_cuda_preprocessor" value="false"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
 

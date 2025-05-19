@@ -351,11 +351,12 @@ def make_blockage_diag_nodes(context):
 
 
 def launch_setup(context, *args, **kwargs):
+    # TODO(KYabuuchi): explain the reason of the following code
     # Check that the cuda preprocessor is only used with a shared container
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
-        assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
-            context
-        ), "The cuda preprocessor should only be used with a shared container."
+    # if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+    #     assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
+    #         context
+    #     ), "The cuda preprocessor should only be used with a shared container."
 
     nodes = []
 
