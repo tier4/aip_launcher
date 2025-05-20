@@ -351,12 +351,6 @@ def make_blockage_diag_nodes(context):
 
 
 def launch_setup(context, *args, **kwargs):
-    # TODO(KYabuuchi): explain the reason of the following code
-    # Check that the cuda preprocessor is only used with a shared container
-    # if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
-    #     assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
-    #         context
-    #     ), "The cuda preprocessor should only be used with a shared container."
 
     nodes = []
 
@@ -447,7 +441,7 @@ def generate_launch_description():
     add_launch_arg(
         "use_cuda_preprocessor",
         "False",
-        "Use the cuda implementation of the pointcloud preprocessor. Requires use_shared_container to be enabled",
+        "Use the cuda implementation of the pointcloud preprocessor. When using the CUDA implementations for both concatenation and the preprocessor, requires use_shared_container to be enabled",
     )
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
