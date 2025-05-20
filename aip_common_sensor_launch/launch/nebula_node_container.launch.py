@@ -351,7 +351,6 @@ def make_blockage_diag_nodes(context):
 
 
 def launch_setup(context, *args, **kwargs):
-
     nodes = []
 
     nodes.extend(make_common_nodes(context))

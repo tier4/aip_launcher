@@ -9,14 +9,14 @@
   <!-- ====================================================================================
     PLEASE NOTE!
 
-    In XX1, only the pointcloud preprocessor uses the CUDA implementation, 
+    In XX1, only the pointcloud preprocessor uses the CUDA implementation,
     while concatenation uses the CPU implementation.
 
     Although `use_shared_container` is normally required to be true when `use_cuda_preprocessor` is true,
-    in this case, we are intentionally setting them to true and false respectively.  
+    in this case, we are intentionally setting them to true and false respectively.
 
-    For <lidar name>.launch.xml, `use_cuda_preprocessor` is passed as this definition, 
-    but for the pointcloud_preprocessor.launch.py included at the bottom, it is always passed as **FALSE**. 
+    For <lidar name>.launch.xml, `use_cuda_preprocessor` is passed as this definition,
+    but for the pointcloud_preprocessor.launch.py included at the bottom, it is always passed as **FALSE**.
   -->
   <arg name="use_shared_container" default="false"/>
   <arg name="use_cuda_preprocessor" default="true"/>
