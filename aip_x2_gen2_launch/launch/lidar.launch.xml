@@ -68,7 +68,7 @@
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="true"/>
-        <arg name="hires_mode" value="false"/>
+        <arg name="hires_mode" value="true"/>
       </include>
     </group>
 
