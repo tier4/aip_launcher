@@ -129,7 +129,7 @@
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="min_range" value="0.08"/>
+        <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
@@ -172,7 +172,7 @@
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="min_range" value="0.08"/>
+        <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
@@ -304,7 +304,7 @@
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="min_range" value="0.08"/>
+        <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
@@ -347,7 +347,7 @@
         <arg name="cloud_min_angle" value="90"/>
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
-        <arg name="min_range" value="0.08"/>
+        <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
         <arg name="ptp_profile" value="automotive"/>
         <arg name="ptp_transport_type" value="L2"/>
