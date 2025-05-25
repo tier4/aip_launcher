@@ -168,7 +168,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_path").perform(context),
         allow_substs=True,
     )
 
@@ -337,7 +337,7 @@ def generate_launch_description():
         [FindPackageShare("common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
     )
     add_launch_arg(
-        "ring_outlier_filter_node_param_file",
+        "ring_outlier_filter_node_param_path",
         [FindPackageShare("common_sensor_launch"), "/config/ring_outlier_filter_node.param.yaml"],
     )
     add_launch_arg(
