@@ -16,3 +16,18 @@
     configuration_vehicle_width: 2.2916 # wheel_tread + left_overhang + right_overhang
     configuration_vehicle_height: 3.08
     configuration_vehicle_wheelbase: 4.76012
+    diagnostics:
+      blockage:
+        status_level:
+          ok: 2
+          warn: 1
+        test_level:
+          ok: 1
+          warn: 1
+      rate_bound_status:
+        frequency_ok:
+          min_hz: 9.0
+          max_hz: 11.0
+        frequency_warn:
+          min_hz: 8.0
+          max_hz: 12.0
