@@ -95,3 +95,43 @@
     # logger
 
     activate_debug_log: false
+
+    # topic rate diagnostics
+    diagnostics:
+      rate_bound_status:
+        pvt:
+          period_ok:
+            min_ms: 195
+            max_ms: 205
+          period_warn:
+            min_ms: 190
+            max_ms: 210
+        rest:
+          period_ok:
+            min_ms: 195
+            max_ms: 205
+          period_warn:
+            min_ms: 190
+            max_ms: 210
+      monitor_topics:
+        # For both GNSS and INS Rxs
+        navsatfix: true
+        gpsfix: false
+        gpgga: false
+        gprmc: false
+        gpst: false
+        measepoch: false
+        pvtcartesian: false
+        pvtgeodetic: true
+        basevectorcart: false
+        basevectorgeod: false
+        poscovcartesian: false
+        poscovgeodetic: true
+        velcovgeodetic: false
+        atteuler: true
+        attcoveuler: false
+        pose: false
+        twist: false
+        # For GNSS Rx only
+        gpgsa: false
+        gpgsv: false
