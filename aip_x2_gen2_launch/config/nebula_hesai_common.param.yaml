@@ -1,0 +1,7 @@
+/**:
+  ros__parameters:
+    ptp_profile: automotive
+    ptp_domain: 0
+    ptp_transport_type: L2
+    ptp_switch_type: NON_TSN
+    ptp_lock_threshold: 100
