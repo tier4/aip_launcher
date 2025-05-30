@@ -43,11 +43,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.3"/>
         <arg name="max_range" value="230.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -87,11 +82,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.3"/>
         <arg name="max_range" value="230.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -131,11 +121,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -174,11 +159,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -218,11 +198,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.3"/>
         <arg name="max_range" value="230.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -262,11 +237,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.3"/>
         <arg name="max_range" value="230.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -306,11 +276,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
@@ -349,11 +314,6 @@
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.1"/>
         <arg name="max_range" value="50.0"/>
-        <arg name="ptp_profile" value="automotive"/>
-        <arg name="ptp_transport_type" value="L2"/>
-        <arg name="ptp_switch_type" value="NON_TSN"/>
-        <arg name="ptp_domain" value="0"/>
-        <arg name="ptp_lock_threshold" value="100"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
