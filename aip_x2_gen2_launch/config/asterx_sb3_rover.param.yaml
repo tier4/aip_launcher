@@ -14,6 +14,7 @@
   # cspell: ignore attcoveuler
   # cspell: ignore gpgsa
   # cspell: ignore gpgsv
+  # cspell: ignore SEPPOLANT
   ros__parameters:
     device: tcp://192.168.20.102:28784
 
