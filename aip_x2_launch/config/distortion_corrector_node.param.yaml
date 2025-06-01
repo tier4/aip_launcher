@@ -6,4 +6,4 @@
     update_azimuth_and_distance: false
     has_static_tf_only: true
     processing_time_threshold: 0.01
-    mismatch_fraction_threshold: 0.01
+    timestamp_mismatch_fraction_threshold: 0.01
