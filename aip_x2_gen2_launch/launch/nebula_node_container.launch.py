@@ -386,7 +386,7 @@ def launch_setup(context, *args, **kwargs):
     nodes = []
 
     nodes.extend(make_common_nodes(context))
-    # nodes.extend(make_nebula_nodes(context))
+    nodes.extend(make_nebula_nodes(context))
 
     if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
         nodes.extend(make_cuda_preprocessor_nodes(context))
