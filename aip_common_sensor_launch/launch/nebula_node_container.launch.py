@@ -160,37 +160,35 @@ def make_cuda_preprocessor_nodes(context):
     mirror_info = load_composable_node_param(context, "vehicle_mirror_param_file")
 
     # Pointcloud preprocessor parameters
-    distortion_corrector_node_param = ParameterFile(
-        param_file=LaunchConfiguration("distortion_correction_node_param_path").perform(context),
-        allow_substs=True,
-    )
-    ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_path").perform(context),
+    cuda_pointcloud_preprocessor_node_param = ParameterFile(
+        param_file=LaunchConfiguration("cuda_pointcloud_preprocessor_node_param_path").perform(
+            context
+        ),
         allow_substs=True,
     )
 
-    preprocessor_parameters = {}
-    preprocessor_parameters["crop_box.min_x"] = [
+    override_parameters = {}
+    override_parameters["crop_box.min_x"] = [
         vehicle_info["min_longitudinal_offset"],
         mirror_info["min_longitudinal_offset"],
     ]
-    preprocessor_parameters["crop_box.max_x"] = [
+    override_parameters["crop_box.max_x"] = [
         vehicle_info["max_longitudinal_offset"],
         mirror_info["max_longitudinal_offset"],
     ]
-    preprocessor_parameters["crop_box.min_y"] = [
+    override_parameters["crop_box.min_y"] = [
         vehicle_info["min_lateral_offset"],
         mirror_info["min_lateral_offset"],
     ]
-    preprocessor_parameters["crop_box.max_y"] = [
+    override_parameters["crop_box.max_y"] = [
         vehicle_info["max_lateral_offset"],
         mirror_info["max_lateral_offset"],
     ]
-    preprocessor_parameters["crop_box.min_z"] = [
+    override_parameters["crop_box.min_z"] = [
         vehicle_info["min_height_offset"],
         mirror_info["min_height_offset"],
     ]
-    preprocessor_parameters["crop_box.max_z"] = [
+    override_parameters["crop_box.max_z"] = [
         vehicle_info["max_height_offset"],
         mirror_info["max_height_offset"],
     ]
@@ -201,9 +199,8 @@ def make_cuda_preprocessor_nodes(context):
             plugin="autoware::cuda_pointcloud_preprocessor::CudaPointcloudPreprocessorNode",
             name="cuda_pointcloud_preprocessor_node",
             parameters=[
-                preprocessor_parameters,
-                distortion_corrector_node_param,
-                ring_outlier_filter_node_param,
+                cuda_pointcloud_preprocessor_node_param,
+                override_parameters,
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -465,6 +462,15 @@ def generate_launch_description():
     add_launch_arg(
         "vehicle_mirror_param_file",
         description="path to the file of vehicle mirror position yaml",
+    )
+    add_launch_arg(
+        "cuda_pointcloud_preprocessor_node_param_path",
+        os.path.join(
+            common_sensor_share_dir,
+            "config",
+            "cuda_pointcloud_preprocessor.param.yaml",
+        ),
+        description="path to parameter file of cuda_pointcloud_preprocessor node",
     )
     add_launch_arg(
         "distortion_correction_node_param_path",
