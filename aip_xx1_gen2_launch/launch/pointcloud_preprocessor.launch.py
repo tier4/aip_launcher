@@ -30,7 +30,6 @@ import yaml
 
 
 def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str) -> dict:
-
     # Only NO. 8 vehicle does not have a rear lidar, so we erase the rear lidar entry.
     if vehicle_id != "8":
         return config
