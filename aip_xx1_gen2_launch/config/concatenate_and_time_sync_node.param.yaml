@@ -5,21 +5,22 @@
     rosbag_length: 10.0
     maximum_queue_size: 5
     timeout_sec: 0.2
-    is_motion_compensated: false # no need to compensate for motion as lidar scan at the same time.
+    is_motion_compensated: true # no need to compensate for motion as lidar scan at the same time.
     publish_synchronized_pointcloud: true
     keep_input_frame_in_synchronized_pointcloud: true
     publish_previous_but_late_pointcloud: false
     synchronized_pointcloud_postfix: pointcloud
     input_twist_topic_type: twist
     input_topics: [
-                    "/sensing/lidar/top/pointcloud_before_sync", # 0.99
-                    "/sensing/lidar/front_left/pointcloud_before_sync",  # 0.99
-                    "/sensing/lidar/front_right/pointcloud_before_sync", # 0.99
-                    "/sensing/lidar/side_left/pointcloud_before_sync",   # 0.99
-                    "/sensing/lidar/side_right/pointcloud_before_sync",  # 0.99
+                    "/sensing/lidar/top/pointcloud_before_sync",
+                    "/sensing/lidar/front_left/pointcloud_before_sync",
+                    "/sensing/lidar/front_right/pointcloud_before_sync",
+                    "/sensing/lidar/side_left/pointcloud_before_sync",
+                    "/sensing/lidar/side_right/pointcloud_before_sync",
+                    "/sensing/lidar/rear/pointcloud_before_sync",
                 ]
     output_frame: base_link
     matching_strategy:
       type: advanced
-      lidar_timestamp_offsets: [0.0, 0.0, 0.025, 0.0, 0.05]
-      lidar_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01]
+      lidar_timestamp_offsets: [0.0, 0.0, 0.025, 0.0, 0.05, -0.025]
+      lidar_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]

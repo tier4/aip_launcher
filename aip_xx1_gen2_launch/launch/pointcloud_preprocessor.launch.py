@@ -27,6 +27,31 @@ from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 
 
+def erase_rear_lidar_entry_depending_on_vehicle_id(config):
+    # Check environment variable `$VEHICLE_ID`. If it is not set, set it to 5.
+    vehicle_id = os.environ.get("VEHICLE_ID", "5")
+
+    # Only NO. 8 vehicle does not have a rear lidar, so we erase the rear lidar entry.
+    if vehicle_id != "8":
+        print("Has rear lidar")
+        return config
+
+    # Aquire the index of the rear lidar entry
+    rear_lidar_index = config["ros__parameters"]["input_topics"].index(
+        "/sensing/lidar/rear/pointcloud_before_sync"
+    )
+
+    print(config)
+
+    # Remove all items related to the rear lidar
+    config["ros__parameters"]["input_topics"].pop(rear_lidar_index)
+    config["ros__parameters"]["matching_strategy"]["lidar_timestamp_offsets"].pop(rear_lidar_index)
+    config["ros__parameters"]["matching_strategy"]["lidar_timestamp_noise_window"].pop(
+        rear_lidar_index
+    )
+    return config
+
+
 def launch_setup(context, *args, **kwargs):
     # concatenate node parameters
     concatenate_and_time_sync_node_param = ParameterFile(
@@ -34,6 +59,10 @@ def launch_setup(context, *args, **kwargs):
             context
         ),
         allow_substs=True,
+    )
+    # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
+    concatenate_and_time_sync_node_param = erase_rear_lidar_entry_depending_on_vehicle_id(
+        concatenate_and_time_sync_node_param
     )
 
     # set concat filter as a component

@@ -52,20 +52,14 @@ launches:
       cut_angle: 270.0
       cloud_min_angle: 90
       cloud_max_angle: 270
-
-preprocessor:
-  input_topics:
-    - /sensing/lidar/top/pointcloud_before_sync
-    - /sensing/lidar/side_left/pointcloud_before_sync
-    - /sensing/lidar/side_right/pointcloud_before_sync
-    - /sensing/lidar/front_left/pointcloud_before_sync
-    - /sensing/lidar/front_right/pointcloud_before_sync
-  input_offset:
-    - 0.035
-    - 0.025
-    - 0.025
-    - 0.025
-    - 0.025
-  timeout_sec: 0.095
-  input_twist_topic_type: twist
-  publish_synchronized_pointcloud: true
+  - sensor_type: hesai_XT32
+    namespace: rear
+    parameters:
+      max_range: 1.5
+      sensor_frame: hesai_rear
+      sensor_ip: 192.168.1.25
+      data_port: 2373
+      sync_angle: 180
+      cut_angle: 270.0
+      cloud_min_angle: 90
+      cloud_max_angle: 270
