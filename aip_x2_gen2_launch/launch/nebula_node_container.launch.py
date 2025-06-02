@@ -118,6 +118,7 @@ def launch_setup(context, *args, **kwargs):
                     "udp_only",
                     "point_filters.downsample_mask.path",
                     "hires_mode",
+                    "diagnostics.packet_loss.error_threshold",
                 ),
                 "retry_hw": True,
             },
@@ -375,6 +376,7 @@ def generate_launch_description():
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
+    add_launch_arg("diagnostics.packet_loss.error_threshold")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
