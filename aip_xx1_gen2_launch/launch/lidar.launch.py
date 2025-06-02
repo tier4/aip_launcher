@@ -82,10 +82,7 @@ def generate_launch_dictionary():
     return path_dictionary
 
 
-def erase_rear_lidar_entry_depending_on_vehicle_id(config):
-    # Check environment variable `$VEHICLE_ID`. If it is not set, set it to 5.
-    vehicle_id = os.environ.get("VEHICLE_ID", "5")
-
+def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str) -> dict:
     # Only NO. 8 vehicle does not have a rear lidar, so we erase the rear lidar entry.
     if vehicle_id != "8":
         return config
@@ -100,7 +97,10 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
             return yaml.safe_load(f)
 
     config = load_yaml("config_file")
-    config = erase_rear_lidar_entry_depending_on_vehicle_id(config)
+
+    # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
+    vehicle_id = LaunchConfiguration("vehicle_id").perform(context)
+    config = erase_rear_lidar_entry_depending_on_vehicle_id(config, vehicle_id)
 
     path_dictionary = generate_launch_dictionary()
 
@@ -149,6 +149,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
                 ("base_frame", "base_link"),
                 ("use_multithread", "true"),
                 ("use_intra_process", "true"),
+                ("vehicle_id", LaunchConfiguration("vehicle_id")),
                 ("use_pointcloud_container", LaunchConfiguration("use_pointcloud_container")),
                 ("pointcloud_container_name", LaunchConfiguration("pointcloud_container_name")),
             ],
