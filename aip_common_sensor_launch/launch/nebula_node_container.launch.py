@@ -140,6 +140,7 @@ def make_nebula_nodes(context):
                         "ptp_switch_type",
                         "ptp_domain",
                         "diag_span",
+                        "hires_mode",
                     ),
                 },
             ],
@@ -424,6 +425,7 @@ def generate_launch_description():
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("diag_span", "1000")
+    add_launch_arg("hires_mode", "true", "enable high resolution mode in OT128")
     add_launch_arg("advanced_diagnostics", "false")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
