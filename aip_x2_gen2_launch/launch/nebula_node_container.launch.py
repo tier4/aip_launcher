@@ -147,6 +147,8 @@ def make_nebula_node(context, as_composable_node, env=None):
             package="nebula_ros",
             executable="hesai_ros_wrapper_node",
             name=node_name,
+            parameters=parameters,
+            remappings=remappings,
             additional_env=env,
         )
 
@@ -415,11 +417,11 @@ def launch_setup(context, *args, **kwargs):
     nodes.extend(make_common_nodes(context))
 
     if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
-        nodes.append(make_nebula_node(context, True))
         nodes.extend(make_cuda_preprocessor_nodes(context))
-    else:
         standalone_nodes.append(make_nebula_node(context, False, env))
+    else:
         nodes.extend(make_preprocessor_nodes(context))
+        nodes.append(make_nebula_node(context, True))
 
     if IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context):
         nodes.extend(make_blockage_diag_nodes(context))
