@@ -91,6 +91,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
 
     path_dictionary = generate_launch_dictionary()
 
+    # Create base parameters which is common for all lidars
     base_parameters = {}
     base_parameters["host_ip"] = LaunchConfiguration("host_ip").perform(context)
     base_parameters["vehicle_mirror_param_file"] = LaunchConfiguration(
@@ -107,6 +108,15 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     )
     base_parameters["return_mode"] = LaunchConfiguration("return_mode").perform(context)
 
+    # Set CUDA-related parameters
+    base_parameters["use_shared_container"] = LaunchConfiguration("use_shared_container").perform(
+        context
+    )
+    base_parameters["use_cuda_preprocessor"] = LaunchConfiguration("use_cuda_preprocessor").perform(
+        context
+    )
+
+    # Create launch actions for each lidar
     sub_launch_actions = []
     for launch in config["launches"]:
         launch_parameters = deepcopy(base_parameters)
@@ -123,6 +133,7 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         )
         sub_launch_actions.append(sub_launch_action)
 
+    # Create launch action for pointcloud preprocessor, which contains only the pointcloud concatenation
     processor_dict = config["preprocessor"]
     sub_launch_actions.append(
         IncludeLaunchDescription(
@@ -147,6 +158,10 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
                     "publish_synchronized_pointcloud",
                     str(processor_dict["publish_synchronized_pointcloud"]),
                 ),
+                # PLEASE NOTE!
+                # We intentionally set `use_cuda_preprocessor` to **FALSE**,
+                # because we do not want to use GPU implementation for pointcloud concatenation.
+                ("use_cuda_preprocessor", "False"),
             ],
         )
     )
@@ -183,6 +198,25 @@ def generate_launch_description():
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("enable_blockage_diag", "false")
     add_launch_arg("return_mode", "Dual")
+
+    # ====================================================================================
+    # PLEASE NOTE!
+
+    # In XX1, only the pointcloud preprocessor uses the CUDA implementation,
+    # while concatenation uses the CPU implementation.
+
+    # Although `use_shared_container` is normally required to be true when `use_cuda_preprocessor` is true,
+    # in this case, we are intentionally setting them to true and false respectively.
+
+    # For <lidar name>.launch.xml, `use_cuda_preprocessor` is passed as this definition in `load_sub_launches_from_yaml()`,
+    # but for the pointcloud_preprocessor.launch.py, it is always passed as **FALSE**.
+
+    # Currently, to perform all pre-processing including concatenation on the GPU,
+    # all nodes must be placed in a single container.
+    # However, this approach lacks fault tolerance, so will not be adopted for a while.
+    add_launch_arg("use_shared_container", "false")
+    add_launch_arg("use_cuda_preprocessor", "true")
+    # ====================================================================================
 
     # Create launch description with the config_file argument
     ld = LaunchDescription(launch_arguments)
