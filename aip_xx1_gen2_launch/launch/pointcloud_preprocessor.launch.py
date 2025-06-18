@@ -34,7 +34,7 @@ def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str
     if vehicle_id != "8":
         return config
 
-    # Aquire the index of the rear lidar entry
+    # Acquire the index of the rear lidar entry
     rear_lidar_index = config["input_topics"].index("/sensing/lidar/rear/pointcloud_before_sync")
 
     # Remove all items related to the rear lidar
