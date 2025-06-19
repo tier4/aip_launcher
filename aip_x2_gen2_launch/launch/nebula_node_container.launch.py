@@ -25,8 +25,8 @@ from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
-from launch_ros.descriptions import ComposableNode
 from launch_ros.actions import Node
+from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
 import yaml
@@ -137,9 +137,7 @@ def make_nebula_node(context, as_composable_node, env=None):
             name=node_name,
             parameters=parameters,
             remappings=remappings,
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
 
     else:
@@ -178,9 +176,7 @@ def make_preprocessor_nodes(context):
                 ("output", "self_cropped/pointcloud_ex"),
             ],
             parameters=[cropbox_parameters],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
 
@@ -199,20 +195,14 @@ def make_preprocessor_nodes(context):
                 ("~/output/pointcloud", "rectified/pointcloud_ex"),
             ],
             parameters=[
-                load_composable_node_param(
-                    context, "distortion_corrector_node_param_file"
-                )
+                load_composable_node_param(context, "distortion_corrector_node_param_file")
             ],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
 
     ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(
-            context
-        ),
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
         allow_substs=True,
     )
 
@@ -223,9 +213,9 @@ def make_preprocessor_nodes(context):
         # keep the output frame as the input frame
         ring_outlier_output_frame = {"output_frame": ""}
 
-    use_dual_return_filter = IfCondition(
-        LaunchConfiguration("use_dual_return_filter")
-    ).evaluate(context)
+    use_dual_return_filter = IfCondition(LaunchConfiguration("use_dual_return_filter")).evaluate(
+        context
+    )
 
     if not use_dual_return_filter:
         nodes.append(
@@ -243,11 +233,7 @@ def make_preprocessor_nodes(context):
                     {"is_agnocast_publish_node": True},
                 ],
                 extra_arguments=[
-                    {
-                        "use_intra_process_comms": LaunchConfiguration(
-                            "use_intra_process"
-                        )
-                    }
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
                 ],
             )
         )
@@ -269,15 +255,9 @@ def make_preprocessor_nodes(context):
                         "is_agnocast_publish_node": True,
                     }
                 ]
-                + [
-                    load_composable_node_param(context, "dual_return_filter_param_file")
-                ],
+                + [load_composable_node_param(context, "dual_return_filter_param_file")],
                 extra_arguments=[
-                    {
-                        "use_intra_process_comms": LaunchConfiguration(
-                            "use_intra_process"
-                        )
-                    }
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
                 ],
             )
         )
@@ -291,15 +271,11 @@ def make_cuda_preprocessor_nodes(context):
 
     # Pointcloud preprocessor parameters
     distortion_corrector_node_param = ParameterFile(
-        param_file=LaunchConfiguration("distortion_corrector_node_param_file").perform(
-            context
-        ),
+        param_file=LaunchConfiguration("distortion_corrector_node_param_file").perform(context),
         allow_substs=True,
     )
     ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(
-            context
-        ),
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
         allow_substs=True,
     )
 
@@ -364,42 +340,32 @@ def make_blockage_diag_nodes(context):
                     "angle_range": LaunchConfiguration("blockage_range"),
                     "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
                     "vertical_bins": LaunchConfiguration("vertical_bins"),
-                    "is_channel_order_top2down": LaunchConfiguration(
-                        "is_channel_order_top2down"
-                    ),
+                    "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
                     "max_distance_range": LaunchConfiguration("max_range"),
-                    "horizontal_resolution": LaunchConfiguration(
-                        "horizontal_resolution"
-                    ),
+                    "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
                 }
             ]
             + [load_composable_node_param(context, "blockage_diagnostics_param_file")],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     ]
 
 
 def make_agnocast_env(context):
-    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(
-        context
-    )
+    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
 
     if os.getenv("ENABLE_AGNOCAST") == "1":
         return {
             "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
             "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
         }
-    
+
     return {}
 
 
 def launch_setup(context, *args, **kwargs):
     def str2vector(string):
         return [float(x) for x in string.strip("[]").split(",")]
-
-
 
     # Start
 
@@ -453,9 +419,7 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None, description=None):
         # a default_value of None is equivalent to not passing that kwarg at all
         launch_arguments.append(
-            DeclareLaunchArgument(
-                name, default_value=default_value, description=description
-            )
+            DeclareLaunchArgument(name, default_value=default_value, description=description)
         )
 
     add_launch_arg("sensor_model", description="sensor model name")
@@ -494,17 +458,13 @@ def generate_launch_description():
     add_launch_arg("gnss_port", "2380", "device gnss port number")
     add_launch_arg("packet_mtu_size", "1500", "packet mtu size")
     add_launch_arg("rotation_speed", "600", "rotational frequency")
-    add_launch_arg(
-        "dual_return_distance_threshold", "0.1", "dual return distance threshold"
-    )
+    add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
     add_launch_arg("frame_id", "lidar", "frame id")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("diag_span", "1000")
     add_launch_arg("use_multithread", "False", "use multithread")
-    add_launch_arg(
-        "use_intra_process", "False", "use ROS 2 component container communication"
-    )
+    add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("container_name", "pointcloud_container")
     add_launch_arg(
         "use_shared_container",
@@ -548,9 +508,7 @@ def generate_launch_description():
     add_launch_arg("enable_blockage_diag", "true")
 
     add_launch_arg("calibration_file", "")
-    add_launch_arg(
-        "output_as_sensor_frame", "True", "output final pointcloud in sensor frame"
-    )
+    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
