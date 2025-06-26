@@ -52,6 +52,17 @@ launches:
       cut_angle: 270.0
       cloud_min_angle: 90
       cloud_max_angle: 270
+  - sensor_type: hesai_XT32
+    namespace: rear
+    parameters:
+      max_range: 1.5
+      sensor_frame: hesai_rear
+      sensor_ip: 192.168.1.25
+      data_port: 2373
+      sync_angle: 270
+      cut_angle: 270.0
+      cloud_min_angle: 90
+      cloud_max_angle: 270
 
 preprocessor:
   input_topics:
