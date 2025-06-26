@@ -16,9 +16,21 @@
       # "blockage: blockage_validation": default
 
       # velodyne
-      "velodyne_monitor: velodyne_connection": default
-      "velodyne_monitor: velodyne_temperature": default
-      "velodyne_monitor: velodyne_rpm": default
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_rpm": default
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_temperature": default
+
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_rpm": default
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_temperature": default
+
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_rpm": default
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_temperature": default
+
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_rpm": default
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_temperature": default
 
       # gnss
       # "connection: gnss_connection": default
