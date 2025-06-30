@@ -17,9 +17,10 @@
                     "/sensing/lidar/front_right/pointcloud_before_sync", # 0.99
                     "/sensing/lidar/side_left/pointcloud_before_sync",   # 0.99
                     "/sensing/lidar/side_right/pointcloud_before_sync",  # 0.99
-                ]
+                    "/sensing/lidar/rear/pointcloud_before_sync",  # 0.99
+  ]
     output_frame: base_link
     matching_strategy:
       type: advanced
-      lidar_timestamp_offsets: [0.0, 0.0, 0.025, 0.0, 0.05]
-      lidar_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01]
+      lidar_timestamp_offsets: [0.0, 0.0, 0.025, 0.0, 0.05, 0.05]
+      lidar_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
