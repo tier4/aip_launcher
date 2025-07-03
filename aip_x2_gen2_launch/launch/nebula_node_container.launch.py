@@ -25,6 +25,7 @@ from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
@@ -82,59 +83,71 @@ def make_common_nodes(context):
     return []
 
 
-def make_nebula_nodes(context):
+def make_nebula_node(context, as_composable_node, env=None):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
 
-    return [
-        ComposableNode(
+    parameters = [
+        ParameterFile(
+            LaunchConfiguration("nebula_common_config_file").perform(context),
+            allow_substs=True,
+        ),
+        {
+            "sensor_model": sensor_model,
+            **create_parameter_dict(
+                "host_ip",
+                "sensor_ip",
+                "multicast_ip",
+                "data_port",
+                "return_mode",
+                "min_range",
+                "max_range",
+                "frame_id",
+                "sync_angle",
+                "cut_angle",
+                "dual_return_distance_threshold",
+                "rotation_speed",
+                "cloud_min_angle",
+                "cloud_max_angle",
+                "gnss_port",
+                "packet_mtu_size",
+                "setup_sensor",
+                "diag_span",
+                "calibration_file",
+                "launch_hw",
+                "udp_only",
+                "point_filters.downsample_mask.path",
+                "hires_mode",
+                "diagnostics.packet_loss.error_threshold",
+            ),
+            "retry_hw": True,
+        },
+    ]
+
+    node_name = sensor_make.lower() + "_ros_wrapper_node"
+    remappings = [
+        ("pandar_points", "pointcloud_raw_ex"),
+    ]
+
+    if as_composable_node:
+        return ComposableNode(
             package="nebula_ros",
             plugin=sensor_make + "RosWrapper",
-            name=sensor_make.lower() + "_ros_wrapper_node",
-            parameters=[
-                ParameterFile(
-                    LaunchConfiguration("nebula_common_config_file").perform(context),
-                    allow_substs=True,
-                ),
-                {
-                    "sensor_model": sensor_model,
-                    **create_parameter_dict(
-                        "host_ip",
-                        "sensor_ip",
-                        "multicast_ip",
-                        "data_port",
-                        "return_mode",
-                        "min_range",
-                        "max_range",
-                        "frame_id",
-                        "sync_angle",
-                        "cut_angle",
-                        "dual_return_distance_threshold",
-                        "rotation_speed",
-                        "cloud_min_angle",
-                        "cloud_max_angle",
-                        "gnss_port",
-                        "packet_mtu_size",
-                        "setup_sensor",
-                        "diag_span",
-                        "calibration_file",
-                        "launch_hw",
-                        "udp_only",
-                        "point_filters.downsample_mask.path",
-                        "hires_mode",
-                        "diagnostics.packet_loss.error_threshold",
-                    ),
-                    "retry_hw": True,
-                },
-            ],
-            remappings=[
-                # ("aw_points", "pointcloud_raw"),
-                ("pandar_points", "pointcloud_raw_ex"),
-            ],
+            name=node_name,
+            parameters=parameters,
+            remappings=remappings,
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
-    ]
+    else:
+        return Node(
+            package="nebula_ros",
+            executable="hesai_ros_wrapper_node",
+            name=node_name,
+            parameters=parameters,
+            remappings=remappings,
+            additional_env=env,
+        )
 
 
 def make_preprocessor_nodes(context):
@@ -337,11 +350,21 @@ def make_blockage_diag_nodes(context):
     ]
 
 
+def make_agnocast_env(context):
+    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
+
+    if os.getenv("ENABLE_AGNOCAST") == "1":
+        return {
+            "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
+            "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
+        }
+
+    return {}
+
+
 def launch_setup(context, *args, **kwargs):
     def str2vector(string):
         return [float(x) for x in string.strip("[]").split(",")]
-
-    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
 
     # Start
 
@@ -351,15 +374,19 @@ def launch_setup(context, *args, **kwargs):
             context
         ), "The cuda preprocessor should only be used with a shared container."
 
+    env = make_agnocast_env(context)
+
     nodes = []
+    standalone_nodes = []
 
     nodes.extend(make_common_nodes(context))
-    nodes.extend(make_nebula_nodes(context))
 
     if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
         nodes.extend(make_cuda_preprocessor_nodes(context))
+        standalone_nodes.append(make_nebula_node(context, False, env))
     else:
         nodes.extend(make_preprocessor_nodes(context))
+        nodes.append(make_nebula_node(context, True))
 
     if IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context):
         nodes.extend(make_blockage_diag_nodes(context))
@@ -373,14 +400,7 @@ def launch_setup(context, *args, **kwargs):
         composable_node_descriptions=nodes,
         output="both",
         condition=UnlessCondition(LaunchConfiguration("use_shared_container")),
-        additional_env=(
-            {
-                "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
-                "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
-            }
-            if os.getenv("ENABLE_AGNOCAST") == "1"
-            else {}
-        ),
+        additional_env=env,
     )
 
     load_composable_nodes = LoadComposableNodes(
@@ -389,7 +409,7 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(LaunchConfiguration("use_shared_container")),
     )
 
-    return [container, load_composable_nodes]
+    return [container, load_composable_nodes] + standalone_nodes
 
 
 def generate_launch_description():

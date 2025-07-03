@@ -1,0 +1,11 @@
+/**:
+  ros__parameters:
+    frequency_reference: 200.0
+    diagnostics:
+      rate_bound_status:
+        frequency_ok:
+          min_hz: 175.0
+          max_hz: 225.0
+        frequency_warn:
+          min_hz: 150.0
+          max_hz: 250.0
