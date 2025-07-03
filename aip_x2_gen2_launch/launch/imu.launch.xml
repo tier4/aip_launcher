@@ -18,6 +18,7 @@
         <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
       </include>
       <node pkg="tamagawa_imu_driver" name="tag_can_driver" exec="tag_can_driver" if="$(var launch_driver)">
+        <param from="$(var imu_driver_param_file)"/>
         <remap from="/can/imu" to="from_can_bus"/>
         <remap from="imu/data_raw" to="imu_raw"/>
         <param name="imu_frame_id" value="$(var imu_frame_id)"/>
