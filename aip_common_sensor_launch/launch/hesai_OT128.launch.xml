@@ -18,6 +18,7 @@
   <arg name="use_shared_container" default="false"/>
   <arg name="use_cuda_preprocessor" default="false"/>
   <arg name="udp_only" default="false"/>
+  <arg name="hires_mode" default="false"/>
 
   <include file="$(find-pkg-share aip_common_sensor_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -44,5 +45,6 @@
     <arg name="ptp_lock_threshold" value="100"/>
     <arg name="setup_sensor" value="true"/>
     <arg name="udp_only" value="$(var udp_only)"/>
+    <arg name="hires_mode" value="$(var hires_mode)"/>
   </include>
 </launch>
