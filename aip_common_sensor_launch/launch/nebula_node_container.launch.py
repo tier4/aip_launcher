@@ -135,6 +135,7 @@ def make_nebula_nodes(context):
                         "packet_mtu_size",
                         "setup_sensor",
                         "udp_only",
+                        "hires_mode",
                         "ptp_profile",
                         "ptp_transport_type",
                         "ptp_switch_type",
