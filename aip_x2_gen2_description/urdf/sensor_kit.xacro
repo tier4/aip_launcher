@@ -4,7 +4,6 @@
     <xacro:include filename="$(find pandar_description)/urdf/pandar_qt128.xacro" />
     <xacro:include filename="$(find pandar_description)/urdf/pandar_ot128.xacro" />
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro" />
-    <xacro:include filename="$(find imu_description)/urdf/imu.xacro" />
 
     <xacro:arg name="gpu" default="false" />
     <xacro:arg name="config_dir" default="$(find aip_x2_gen2_description)/config" />
@@ -165,32 +164,6 @@
     />
 
     <!-- front upper-->
-    <xacro:imu_macro
-      name="top_front_left/imu"
-      parent="sensor_kit_base_link"
-      namespace=""
-      x="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['top_front_left/imu_link']['yaw']}"
-      fps="100"
-    />
-
-    <xacro:imu_macro
-      name="top_front_right/imu"
-      parent="sensor_kit_base_link"
-      namespace=""
-      x="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['top_front_right/imu_link']['yaw']}"
-      fps="100"
-    />
-
     <xacro:monocular_camera_macro
       name="top_front_right/camera"
       parent="sensor_kit_base_link"
