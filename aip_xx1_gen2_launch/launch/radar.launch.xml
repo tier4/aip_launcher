@@ -64,6 +64,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
@@ -96,6 +97,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
@@ -128,6 +130,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
@@ -160,6 +163,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
@@ -192,6 +196,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
@@ -224,6 +229,7 @@
           <arg name="output_tracks" value="tracked_objects"/>
           <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
         </include>
+
       </group>
     </group>
 
