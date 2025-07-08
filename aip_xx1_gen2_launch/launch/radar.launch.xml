@@ -88,7 +88,7 @@
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
         </include>
-        
+
         <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
           <arg name="input_radar_objects" value="radar_objects"/>
           <arg name="input_radar_info" value="radar_info"/>
@@ -120,7 +120,7 @@
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
         </include>
-        
+
         <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
           <arg name="input_radar_objects" value="radar_objects"/>
           <arg name="input_radar_info" value="radar_info"/>
@@ -152,7 +152,7 @@
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
         </include>
-        
+
         <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
           <arg name="input_radar_objects" value="radar_objects"/>
           <arg name="input_radar_info" value="radar_info"/>
@@ -184,7 +184,7 @@
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
         </include>
-        
+
         <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
           <arg name="input_radar_objects" value="radar_objects"/>
           <arg name="input_radar_info" value="radar_info"/>
@@ -216,7 +216,7 @@
           <arg name="configuration_host_port" value="42401"/>
           <arg name="configuration_sensor_port" value="42101"/>
         </include>
-        
+
         <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
           <arg name="input_radar_objects" value="radar_objects"/>
           <arg name="input_radar_info" value="radar_info"/>
