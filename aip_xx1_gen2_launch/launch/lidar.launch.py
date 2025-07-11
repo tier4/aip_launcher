@@ -28,6 +28,7 @@ from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PythonExpression
 from launch_ros.actions import PushRosNamespace
 import yaml
 
@@ -179,9 +180,19 @@ def generate_launch_description():
     launch_arguments = []
     config_file_arg = DeclareLaunchArgument(
         "config_file",
-        default_value=os.path.join(
-            get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
-        ),
+        default_value=PythonExpression([
+            "'",
+            os.path.join(
+                get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
+            ),
+            "' if (lambda x: x.isdigit() and int(x) in [1, 5, 8])('",
+            EnvironmentVariable("VEHICLE_ID", default_value="0"),
+            "') else '",
+            os.path.join(
+                get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2_1.yaml"
+            ),
+            "'"
+        ]),
         description="Path to the configuration file",
     )
     launch_arguments.append(config_file_arg)
