@@ -71,3 +71,19 @@ base_link:
     roll: 0.0
     pitch: 0.0
     yaw: 0.0
+
+  # imu
+  top_front_left/imu_link:
+    x: 5.22444
+    y: 0.07615
+    z: 2.72762
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  top_front_right/imu_link:
+    x: 5.22444
+    y: -0.06385
+    z: 2.72762
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
