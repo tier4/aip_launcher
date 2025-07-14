@@ -136,7 +136,6 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         )
         sub_launch_actions.append(sub_launch_action)
 
-    processor_dict = config["preprocessor"]
     sub_launch_actions.append(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -153,14 +152,6 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
                 ("vehicle_id", LaunchConfiguration("vehicle_id")),
                 ("use_pointcloud_container", LaunchConfiguration("use_pointcloud_container")),
                 ("pointcloud_container_name", LaunchConfiguration("pointcloud_container_name")),
-                ("input_topics", join_list_of_arguments(processor_dict["input_topics"])),
-                ("input_offset", join_list_of_arguments(processor_dict["input_offset"])),
-                ("timeout_sec", str(processor_dict["timeout_sec"])),
-                ("input_twist_topic_type", str(processor_dict["input_twist_topic_type"])),
-                (
-                    "publish_synchronized_pointcloud",
-                    str(processor_dict["publish_synchronized_pointcloud"]),
-                ),
             ],
         )
     )
