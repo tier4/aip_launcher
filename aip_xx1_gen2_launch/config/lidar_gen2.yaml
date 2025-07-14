@@ -63,20 +63,3 @@ launches:
       cut_angle: 270.0
       cloud_min_angle: 90
       cloud_max_angle: 270
-
-preprocessor:
-  input_topics:
-    - /sensing/lidar/top/pointcloud_before_sync
-    - /sensing/lidar/side_left/pointcloud_before_sync
-    - /sensing/lidar/side_right/pointcloud_before_sync
-    - /sensing/lidar/front_left/pointcloud_before_sync
-    - /sensing/lidar/front_right/pointcloud_before_sync
-  input_offset:
-    - 0.035
-    - 0.025
-    - 0.025
-    - 0.025
-    - 0.025
-  timeout_sec: 0.095
-  input_twist_topic_type: twist
-  publish_synchronized_pointcloud: true
