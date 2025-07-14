@@ -28,7 +28,6 @@ from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
-from launch.substitutions import PythonExpression
 from launch_ros.actions import PushRosNamespace
 import yaml
 
@@ -178,25 +177,17 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
 def generate_launch_description():
     # Define launch arguments
     launch_arguments = []
+
+    is_gen_2_0 = EnvironmentVariable("VEHICLE_ID", default_value="0") not in ["1", "5", "8"]
+    default_config_file_name = "lidar_gen2.yaml" if is_gen_2_0 else "lidar_gen2_1.yaml"
+
+    default_config_file_path = os.path.join(
+        get_package_share_directory("aip_xx1_gen2_launch"), "config", default_config_file_name
+    )
+
     config_file_arg = DeclareLaunchArgument(
         "config_file",
-        default_value=PythonExpression(
-            [
-                "'",
-                os.path.join(
-                    get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
-                ),
-                "' if (lambda x: x.isdigit() and int(x) in [1, 5, 8])('",
-                EnvironmentVariable("VEHICLE_ID", default_value="0"),
-                "') else '",
-                os.path.join(
-                    get_package_share_directory("aip_xx1_gen2_launch"),
-                    "config",
-                    "lidar_gen2_1.yaml",
-                ),
-                "'",
-            ]
-        ),
+        default_value=default_config_file_path,
         description="Path to the configuration file",
     )
     launch_arguments.append(config_file_arg)
