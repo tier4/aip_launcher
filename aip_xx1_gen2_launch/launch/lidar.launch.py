@@ -179,7 +179,7 @@ def generate_launch_description():
     launch_arguments = []
 
     default_config_file_path = os.path.join(
-        get_package_share_directory("aip_xx1_gen2_launch"), "config", "ldiar_gen2.yaml"
+        get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
     )
 
     def add_launch_arg(name: str, default_value=None, **kwargs):
