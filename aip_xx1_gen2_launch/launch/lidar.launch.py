@@ -28,7 +28,6 @@ from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
-from launch.substitutions import PythonExpression
 from launch_ros.actions import PushRosNamespace
 import yaml
 
@@ -178,32 +177,19 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
 def generate_launch_description():
     # Define launch arguments
     launch_arguments = []
-    config_file_arg = DeclareLaunchArgument(
-        "config_file",
-        default_value=PythonExpression(
-            [
-                "'",
-                os.path.join(
-                    get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
-                ),
-                "' if (lambda x: x.isdigit() and int(x) in [1, 5, 8])('",
-                EnvironmentVariable("VEHICLE_ID", default_value="0"),
-                "') else '",
-                os.path.join(
-                    get_package_share_directory("aip_xx1_gen2_launch"),
-                    "config",
-                    "lidar_gen2_1.yaml",
-                ),
-                "'",
-            ]
-        ),
-        description="Path to the configuration file",
+
+    default_config_file_path = os.path.join(
+        get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
     )
-    launch_arguments.append(config_file_arg)
 
     def add_launch_arg(name: str, default_value=None, **kwargs):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value, **kwargs))
 
+    add_launch_arg(
+        "config_file",
+        default_config_file_path,
+        description="Path to the configuration file",
+    )
     add_launch_arg("launch_driver", "true")
     add_launch_arg("launch_hw_monitor", "true", description="launch hardware monitor")
     add_launch_arg("host_ip", "192.168.1.11")
