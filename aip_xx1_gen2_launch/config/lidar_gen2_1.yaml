@@ -1,0 +1,65 @@
+launches:
+  - sensor_type: hesai_OT128
+    namespace: top
+    parameters:
+      max_range: 300.0
+      sensor_frame: hesai_top
+      sensor_ip: 192.168.1.201
+      data_port: 2368
+      sync_angle: 180
+      cut_angle: 180.0
+  - sensor_type: hesai_XT32
+    namespace: front_left
+    parameters:
+      max_range: 80.0
+      sensor_frame: hesai_front_left
+      sensor_ip: 192.168.1.21
+      data_port: 2369
+      sync_angle: 50
+      cut_angle: 320.0
+      cloud_min_angle: 50
+      cloud_max_angle: 320
+  - sensor_type: hesai_XT32
+    namespace: front_right
+    parameters:
+      max_range: 80.0
+      sensor_frame: hesai_front_right
+      sensor_ip: 192.168.1.22
+      data_port: 2370
+      sync_angle: 310
+      cut_angle: 310.0
+      cloud_min_angle: 40
+      cloud_max_angle: 310
+  - sensor_type: hesai_XT32
+    namespace: side_left
+    parameters:
+      max_range: 10.0
+      sensor_frame: hesai_side_left
+      sensor_ip: 192.168.1.23
+      data_port: 2371
+      sync_angle: 90
+      cut_angle: 270.0
+      cloud_min_angle: 90
+      cloud_max_angle: 270
+  - sensor_type: hesai_XT32
+    namespace: side_right
+    parameters:
+      max_range: 10.0
+      sensor_frame: hesai_side_right
+      sensor_ip: 192.168.1.24
+      data_port: 2372
+      sync_angle: 270
+      cut_angle: 270.0
+      cloud_min_angle: 90
+      cloud_max_angle: 270
+  - sensor_type: hesai_XT32
+    namespace: rear
+    parameters:
+      max_range: 1.5
+      sensor_frame: hesai_rear
+      sensor_ip: 192.168.1.25
+      data_port: 2373
+      sync_angle: 270
+      cut_angle: 270.0
+      cloud_min_angle: 90
+      cloud_max_angle: 270

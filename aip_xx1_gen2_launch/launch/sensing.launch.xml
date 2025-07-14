@@ -9,10 +9,17 @@
   <group>
 
     <!-- LiDAR Driver -->
+    <let name="is_gen2_0" value="$(eval &quot;'$(var vehicle_id)' in ['1', '5', '8']&quot;)"/>
+    <let name="lidar_config_file" value="$(find-pkg-share aip_xx1_gen2_launch)/config/lidar_gen2.yaml" if="$(var is_gen2_0)"/>
+    <let name="lidar_config_file" value="$(find-pkg-share aip_xx1_gen2_launch)/config/lidar_gen2_1.yaml" unless="$(var is_gen2_0)"/>
+    <log message="lidar_config_file: $(var lidar_config_file)"/>
+
     <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/lidar.launch.py">
       <arg name="launch_driver" value="$(var launch_driver)" />
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="config_file" value="$(var lidar_config_file)"/>
     </include>
 
     <!-- Camera Driver -->
