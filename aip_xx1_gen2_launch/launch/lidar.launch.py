@@ -178,23 +178,18 @@ def generate_launch_description():
     # Define launch arguments
     launch_arguments = []
 
-    is_gen_2_0 = EnvironmentVariable("VEHICLE_ID", default_value="0") not in ["1", "5", "8"]
-    default_config_file_name = "lidar_gen2.yaml" if is_gen_2_0 else "lidar_gen2_1.yaml"
-
     default_config_file_path = os.path.join(
-        get_package_share_directory("aip_xx1_gen2_launch"), "config", default_config_file_name
+        get_package_share_directory("aip_xx1_gen2_launch"), "config", "ldiar_gen2.yaml"
     )
-
-    config_file_arg = DeclareLaunchArgument(
-        "config_file",
-        default_value=default_config_file_path,
-        description="Path to the configuration file",
-    )
-    launch_arguments.append(config_file_arg)
 
     def add_launch_arg(name: str, default_value=None, **kwargs):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value, **kwargs))
 
+    add_launch_arg(
+        "config_file",
+        default_config_file_path,
+        description="Path to the configuration file",
+    )
     add_launch_arg("launch_driver", "true")
     add_launch_arg("launch_hw_monitor", "true", description="launch hardware monitor")
     add_launch_arg("host_ip", "192.168.1.11")
