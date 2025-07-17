@@ -88,6 +88,10 @@ def launch_setup(context, *args, **kwargs):
         plugin=sensor_make + "RosWrapper",
         name=sensor_make.lower() + "_ros_wrapper_node",
         parameters=[
+            ParameterFile(
+                LaunchConfiguration("nebula_common_config_file").perform(context),
+                allow_substs=True,
+            ),
             {
                 "sensor_model": sensor_model,
                 **create_parameter_dict(
@@ -108,17 +112,13 @@ def launch_setup(context, *args, **kwargs):
                     "gnss_port",
                     "packet_mtu_size",
                     "setup_sensor",
-                    "ptp_profile",
-                    "ptp_transport_type",
-                    "ptp_switch_type",
-                    "ptp_domain",
-                    "ptp_lock_threshold",
                     "diag_span",
                     "calibration_file",
                     "launch_hw",
                     "udp_only",
                     "point_filters.downsample_mask.path",
                     "hires_mode",
+                    "diagnostics.packet_loss.error_threshold",
                 ),
                 "retry_hw": True,
             },
@@ -159,7 +159,10 @@ def launch_setup(context, *args, **kwargs):
         plugin="autoware::pointcloud_preprocessor::DistortionCorrectorComponent",
         name="distortion_corrector_node",
         remappings=[
-            ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+            (
+                "~/input/twist",
+                "/sensing/vehicle_velocity_converter/twist_with_covariance",
+            ),
             ("~/input/imu", "/sensing/imu/imu_data"),
             ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
             ("~/output/pointcloud", "rectified/pointcloud_ex"),
@@ -295,6 +298,14 @@ def generate_launch_description():
         )
 
     add_launch_arg("sensor_model", description="sensor model name")
+    add_launch_arg(
+        "nebula_common_config_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/nebula_hesai_common.param.yaml",
+        ],
+        description="file containing parameters common to all Nebula instances",
+    )
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg(
         "agnocast_heaphook_path",
@@ -312,7 +323,6 @@ def generate_launch_description():
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
     add_launch_arg("sync_angle", "0")
     add_launch_arg("cut_angle", "0.0")
-    add_launch_arg("ptp_lock_threshold", "100")
     add_launch_arg("udp_only", "false")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
@@ -364,6 +374,7 @@ def generate_launch_description():
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
+    add_launch_arg("diagnostics.packet_loss.error_threshold")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
