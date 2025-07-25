@@ -402,7 +402,7 @@ def generate_launch_description():
     add_launch_arg(
         "nebula_common_config_file",
         [
-            FindPackageShare("aip_x1_launch"),
+            FindPackageShare("aip_common_sensor_launch"),
             "/config/nebula_hesai_common.param.yaml",
         ],
         description="file containing parameters common to all Nebula instances",
