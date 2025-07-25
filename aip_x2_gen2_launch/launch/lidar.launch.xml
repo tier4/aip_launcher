@@ -10,6 +10,8 @@
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_shared_container" default="false"/>
+  <arg name="use_cuda_preprocessor" default="false"/>
   <arg name="udp_only" default="false"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
@@ -23,6 +25,7 @@
       <arg name="use_intra_process" value="true" />
       <arg name="use_multithread" value="true" />
       <arg name="use_pointcloud_container" value="true"/>
+      <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
 
@@ -89,6 +92,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="40" />
@@ -130,6 +135,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[130.0, 230.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -170,6 +177,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[140.0, 230.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -211,6 +220,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="40" />
@@ -252,6 +263,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="40" />
@@ -293,6 +306,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[130.0, 230.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
@@ -333,6 +348,8 @@
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
         <arg name="blockage_range" value="[150.0, 220.0]"/>
         <arg name="vertical_bins" value ="128" />
         <arg name="horizontal_ring_id" value="118" />
