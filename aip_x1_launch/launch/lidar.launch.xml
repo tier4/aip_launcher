@@ -28,7 +28,7 @@
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
         <arg name="container_name" value="pointcloud_container"/>
-        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="10"/>
       </include>
     </group>
     <group>
@@ -48,7 +48,7 @@
         <arg name="launch_driver" value="$(var launch_driver)" />
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
         <arg name="container_name" value="pointcloud_container"/>
-        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="10"/>
       </include>
     </group>
 
