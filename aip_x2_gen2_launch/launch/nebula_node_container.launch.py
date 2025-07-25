@@ -57,79 +57,87 @@ def get_vehicle_info(context):
     return p
 
 
-def launch_setup(context, *args, **kwargs):
-    def load_composable_node_param(param_path):
-        with open(LaunchConfiguration(param_path).perform(context), "r") as f:
-            return yaml.safe_load(f)["/**"]["ros__parameters"]
+def load_composable_node_param(context, param_path):
+    with open(LaunchConfiguration(param_path).perform(context), "r") as f:
+        return yaml.safe_load(f)["/**"]["ros__parameters"]
 
-    def create_parameter_dict(*args):
-        result = {}
-        for x in args:
-            result[x] = LaunchConfiguration(x)
-        return result
 
-    def str2vector(string):
-        return [float(x) for x in string.strip("[]").split(",")]
+def create_parameter_dict(*args):
+    result = {}
+    for x in args:
+        result[x] = LaunchConfiguration(x)
+    return result
 
-    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
 
+def make_common_nodes(context):
+    if UnlessCondition(LaunchConfiguration("use_shared_container")).evaluate(context):
+        return [
+            ComposableNode(
+                package="autoware_glog_component",
+                plugin="autoware::glog_component::GlogComponent",
+                name="glog_component",
+            )
+        ]
+
+    return []
+
+
+def make_nebula_nodes(context):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
 
-    glog_component = ComposableNode(
-        package="autoware_glog_component",
-        plugin="autoware::glog_component::GlogComponent",
-        name="glog_component",
-    )
-
-    nebula_component = ComposableNode(
-        package="nebula_ros",
-        plugin=sensor_make + "RosWrapper",
-        name=sensor_make.lower() + "_ros_wrapper_node",
-        parameters=[
-            ParameterFile(
-                LaunchConfiguration("nebula_common_config_file").perform(context),
-                allow_substs=True,
-            ),
-            {
-                "sensor_model": sensor_model,
-                **create_parameter_dict(
-                    "host_ip",
-                    "sensor_ip",
-                    "multicast_ip",
-                    "data_port",
-                    "return_mode",
-                    "min_range",
-                    "max_range",
-                    "frame_id",
-                    "sync_angle",
-                    "cut_angle",
-                    "dual_return_distance_threshold",
-                    "rotation_speed",
-                    "cloud_min_angle",
-                    "cloud_max_angle",
-                    "gnss_port",
-                    "packet_mtu_size",
-                    "setup_sensor",
-                    "diag_span",
-                    "calibration_file",
-                    "launch_hw",
-                    "udp_only",
-                    "point_filters.downsample_mask.path",
-                    "hires_mode",
-                    "diagnostics.packet_loss.error_threshold",
+    return [
+        ComposableNode(
+            package="nebula_ros",
+            plugin=sensor_make + "RosWrapper",
+            name=sensor_make.lower() + "_ros_wrapper_node",
+            parameters=[
+                ParameterFile(
+                    LaunchConfiguration("nebula_common_config_file").perform(context),
+                    allow_substs=True,
                 ),
-                "retry_hw": True,
-            },
-        ],
-        remappings=[
-            # ("aw_points", "pointcloud_raw"),
-            ("pandar_points", "pointcloud_raw_ex"),
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
+                {
+                    "sensor_model": sensor_model,
+                    **create_parameter_dict(
+                        "host_ip",
+                        "sensor_ip",
+                        "multicast_ip",
+                        "data_port",
+                        "return_mode",
+                        "min_range",
+                        "max_range",
+                        "frame_id",
+                        "sync_angle",
+                        "cut_angle",
+                        "dual_return_distance_threshold",
+                        "rotation_speed",
+                        "cloud_min_angle",
+                        "cloud_max_angle",
+                        "gnss_port",
+                        "packet_mtu_size",
+                        "setup_sensor",
+                        "diag_span",
+                        "calibration_file",
+                        "launch_hw",
+                        "udp_only",
+                        "point_filters.downsample_mask.path",
+                        "hires_mode",
+                        "diagnostics.packet_loss.error_threshold",
+                    ),
+                    "retry_hw": True,
+                },
+            ],
+            remappings=[
+                # ("aw_points", "pointcloud_raw"),
+                ("pandar_points", "pointcloud_raw_ex"),
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    ]
 
+
+def make_preprocessor_nodes(context):
     cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters["negative"] = True
     cropbox_parameters["processing_time_threshold_sec"] = 0.01
@@ -142,33 +150,41 @@ def launch_setup(context, *args, **kwargs):
     cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
     cropbox_parameters["max_z"] = vehicle_info["max_height_offset"]
 
-    self_crop_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
-        name="crop_box_filter_self",
-        remappings=[
-            ("input", "pointcloud_raw_ex"),
-            ("output", "self_cropped/pointcloud_ex"),
-        ],
-        parameters=[cropbox_parameters],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    nodes = []
+
+    nodes.append(
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
+            name="crop_box_filter_self",
+            remappings=[
+                ("input", "pointcloud_raw_ex"),
+                ("output", "self_cropped/pointcloud_ex"),
+            ],
+            parameters=[cropbox_parameters],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
     )
 
-    undistort_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::DistortionCorrectorComponent",
-        name="distortion_corrector_node",
-        remappings=[
-            (
-                "~/input/twist",
-                "/sensing/vehicle_velocity_converter/twist_with_covariance",
-            ),
-            ("~/input/imu", "/sensing/imu/imu_data"),
-            ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
-            ("~/output/pointcloud", "rectified/pointcloud_ex"),
-        ],
-        parameters=[load_composable_node_param("distortion_corrector_node_param_file")],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    nodes.append(
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::DistortionCorrectorComponent",
+            name="distortion_corrector_node",
+            remappings=[
+                (
+                    "~/input/twist",
+                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
+                ),
+                ("~/input/imu", "/sensing/imu/imu_data"),
+                ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
+                ("~/output/pointcloud", "rectified/pointcloud_ex"),
+            ],
+            parameters=[
+                load_composable_node_param(context, "distortion_corrector_node_param_file")
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
     )
 
     ring_outlier_filter_node_param = ParameterFile(
@@ -183,75 +199,180 @@ def launch_setup(context, *args, **kwargs):
         # keep the output frame as the input frame
         ring_outlier_output_frame = {"output_frame": ""}
 
-    ring_outlier_filter_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent",
-        name="ring_outlier_filter",
-        remappings=[
-            ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud_before_sync"),
-        ],
-        parameters=[
-            ring_outlier_filter_node_param,
-            ring_outlier_output_frame,
-            {"is_agnocast_publish_node": True},
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    use_dual_return_filter = IfCondition(LaunchConfiguration("use_dual_return_filter")).evaluate(
+        context
     )
 
-    dual_return_filter_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-        name="dual_return_filter",
-        remappings=[
-            ("input", "rectified/pointcloud_ex"),
-            ("output", "pointcloud_before_sync"),
-        ],
-        parameters=[
-            {
-                "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
-                "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
-                "is_agnocast_publish_node": True,
-            }
-        ]
-        + [load_composable_node_param("dual_return_filter_param_file")],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    if not use_dual_return_filter:
+        nodes.append(
+            ComposableNode(
+                package="autoware_pointcloud_preprocessor",
+                plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent",
+                name="ring_outlier_filter",
+                remappings=[
+                    ("input", "rectified/pointcloud_ex"),
+                    ("output", "pointcloud_before_sync"),
+                ],
+                parameters=[
+                    ring_outlier_filter_node_param,
+                    ring_outlier_output_frame,
+                    {"is_agnocast_publish_node": True},
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            )
+        )
+    else:
+        nodes.append(
+            ComposableNode(
+                package="autoware_pointcloud_preprocessor",
+                plugin="autoware::pointcloud_preprocessor::DualReturnOutlierFilterComponent",
+                name="dual_return_filter",
+                remappings=[
+                    ("input", "rectified/pointcloud_ex"),
+                    ("output", "pointcloud_before_sync"),
+                ],
+                parameters=[
+                    {
+                        "vertical_bins": LaunchConfiguration("vertical_bins"),
+                        "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
+                        "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+                        "is_agnocast_publish_node": True,
+                    }
+                ]
+                + [load_composable_node_param(context, "dual_return_filter_param_file")],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            )
+        )
+
+    return nodes
+
+
+def make_cuda_preprocessor_nodes(context):
+    # Vehicle parameters
+    vehicle_info = get_vehicle_info(context)
+
+    # Pointcloud preprocessor parameters
+    distortion_corrector_node_param = ParameterFile(
+        param_file=LaunchConfiguration("distortion_corrector_node_param_file").perform(context),
+        allow_substs=True,
+    )
+    ring_outlier_filter_node_param = ParameterFile(
+        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
+        allow_substs=True,
     )
 
-    blockage_diag_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::BlockageDiagComponent",
-        name="blockage_return_diag",
-        remappings=[
-            ("input", "pointcloud_raw_ex"),
-            ("output", "blockage_diag/pointcloud"),
-        ],
-        parameters=[
-            {
-                "angle_range": LaunchConfiguration("blockage_range"),
-                "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
-                "vertical_bins": LaunchConfiguration("vertical_bins"),
-                "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
-                "max_distance_range": LaunchConfiguration("max_range"),
-                "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
-            }
-        ]
-        + [load_composable_node_param("blockage_diagnostics_param_file")],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
+    preprocessor_parameters = {}
+    preprocessor_parameters["crop_box.min_x"] = [
+        vehicle_info["min_longitudinal_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_x"] = [
+        vehicle_info["max_longitudinal_offset"],
+    ]
+    preprocessor_parameters["crop_box.min_y"] = [
+        vehicle_info["min_lateral_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_y"] = [
+        vehicle_info["max_lateral_offset"],
+    ]
+    preprocessor_parameters["crop_box.min_z"] = [
+        vehicle_info["min_height_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_z"] = [
+        vehicle_info["max_height_offset"],
+    ]
 
+    return [
+        ComposableNode(
+            package="autoware_cuda_pointcloud_preprocessor",
+            plugin="autoware::cuda_pointcloud_preprocessor::CudaPointcloudPreprocessorNode",
+            name="cuda_pointcloud_preprocessor_node",
+            parameters=[
+                preprocessor_parameters,
+                distortion_corrector_node_param,
+                ring_outlier_filter_node_param,
+            ],
+            remappings=[
+                ("~/input/pointcloud", "pointcloud_raw_ex"),
+                (
+                    "~/input/twist",
+                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
+                ),
+                ("~/input/imu", "/sensing/imu/imu_data"),
+                ("~/output/pointcloud", "pointcloud_before_sync"),
+                ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+            ],
+            # The whole node can not set use_intra_process due to type negotiation internal topics
+            # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    ]
+
+
+def make_blockage_diag_nodes(context):
+    return [
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::BlockageDiagComponent",
+            name="blockage_return_diag",
+            remappings=[
+                ("input", "pointcloud_raw_ex"),
+                ("output", "blockage_diag/pointcloud"),
+            ],
+            parameters=[
+                {
+                    "angle_range": LaunchConfiguration("blockage_range"),
+                    "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+                    "vertical_bins": LaunchConfiguration("vertical_bins"),
+                    "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+                    "max_distance_range": LaunchConfiguration("max_range"),
+                    "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
+                }
+            ]
+            + [load_composable_node_param(context, "blockage_diagnostics_param_file")],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    ]
+
+
+def launch_setup(context, *args, **kwargs):
+    def str2vector(string):
+        return [float(x) for x in string.strip("[]").split(",")]
+
+    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
+
+    # Start
+
+    # Check that the cuda preprocessor is only used with a shared container
+    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+        assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
+            context
+        ), "The cuda preprocessor should only be used with a shared container."
+
+    nodes = []
+
+    nodes.extend(make_common_nodes(context))
+    nodes.extend(make_nebula_nodes(context))
+
+    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+        nodes.extend(make_cuda_preprocessor_nodes(context))
+    else:
+        nodes.extend(make_preprocessor_nodes(context))
+
+    if IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context):
+        nodes.extend(make_blockage_diag_nodes(context))
+
+    # set container to run all required components in the same process
     container = ComposableNodeContainer(
-        name="nebula_node_container",
-        namespace="autoware_pointcloud_preprocessor",
+        name=LaunchConfiguration("container_name"),
+        namespace="pointcloud_preprocessor",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[
-            glog_component,
-            nebula_component,
-            self_crop_component,
-            undistort_component,
-        ],
+        composable_node_descriptions=nodes,
+        output="both",
+        condition=UnlessCondition(LaunchConfiguration("use_shared_container")),
         additional_env=(
             {
                 "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
@@ -262,30 +383,13 @@ def launch_setup(context, *args, **kwargs):
         ),
     )
 
-    ring_outlier_filter_loader = LoadComposableNodes(
-        composable_node_descriptions=[ring_outlier_filter_component],
-        target_container=container,
-        condition=launch.conditions.UnlessCondition(LaunchConfiguration("use_dual_return_filter")),
+    load_composable_nodes = LoadComposableNodes(
+        composable_node_descriptions=nodes,
+        target_container=LaunchConfiguration("container_name"),
+        condition=IfCondition(LaunchConfiguration("use_shared_container")),
     )
 
-    dual_return_filter_loader = LoadComposableNodes(
-        composable_node_descriptions=[dual_return_filter_component],
-        target_container=container,
-        condition=launch.conditions.IfCondition(LaunchConfiguration("use_dual_return_filter")),
-    )
-
-    blockage_diag_loader = LoadComposableNodes(
-        composable_node_descriptions=[blockage_diag_component],
-        target_container=container,
-        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_blockage_diag")),
-    )
-
-    return [
-        container,
-        ring_outlier_filter_loader,
-        dual_return_filter_loader,
-        blockage_diag_loader,
-    ]
+    return [container, load_composable_nodes]
 
 
 def generate_launch_description():
@@ -340,12 +444,25 @@ def generate_launch_description():
     add_launch_arg("diag_span", "1000")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
-    add_launch_arg("container_name", "nebula_node_container")
+    add_launch_arg("container_name", "pointcloud_container")
+    add_launch_arg(
+        "use_shared_container",
+        "False",
+        "Whether to use a new container for this lidar or use an existing one",
+    )
+    add_launch_arg(
+        "use_cuda_preprocessor",
+        "False",
+        "Use the cuda implementation of the pointcloud preprocessor. Requires use_shared_container to be enabled",
+    )
 
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg(
         "blockage_diagnostics_param_file",
-        [FindPackageShare("aip_common_sensor_launch"), "/config/blockage_diagnostics.param.yaml"],
+        [
+            FindPackageShare("aip_common_sensor_launch"),
+            "/config/blockage_diagnostics.param.yaml",
+        ],
     )
     add_launch_arg(
         "ring_outlier_filter_node_param_file",
