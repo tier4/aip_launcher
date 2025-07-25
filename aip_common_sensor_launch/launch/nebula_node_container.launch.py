@@ -108,6 +108,10 @@ def make_nebula_nodes(context):
             plugin=sensor_make + "RosWrapper",
             name=sensor_make.lower() + "_ros_wrapper_node",
             parameters=[
+                    ParameterFile(
+                    LaunchConfiguration("nebula_common_config_file").perform(context),
+                    allow_substs=True,
+                ),
                 {
                     "calibration_file": sensor_calib_fp,
                     "sensor_model": sensor_model,
@@ -123,7 +127,6 @@ def make_nebula_nodes(context):
                         "max_range",
                         "cut_angle",
                         "sync_angle",
-                        "ptp_lock_threshold",
                         "frame_id",
                         "retry_hw",
                         "scan_phase",
@@ -135,10 +138,6 @@ def make_nebula_nodes(context):
                         "packet_mtu_size",
                         "setup_sensor",
                         "udp_only",
-                        "ptp_profile",
-                        "ptp_transport_type",
-                        "ptp_switch_type",
-                        "ptp_domain",
                         "diag_span",
                     ),
                 },
@@ -207,7 +206,10 @@ def make_cuda_preprocessor_nodes(context):
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
-                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+                (
+                    "~/input/twist",
+                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
+                ),
                 ("~/input/imu", "/sensing/imu/imu_data"),
                 ("~/output/pointcloud", "pointcloud_before_sync"),
                 ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
@@ -397,6 +399,14 @@ def generate_launch_description():
     common_sensor_share_dir = get_package_share_directory("aip_common_sensor_launch")
 
     add_launch_arg("sensor_model", description="sensor model name")
+    add_launch_arg(
+        "nebula_common_config_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/nebula_hesai_common.param.yaml",
+        ],
+        description="file containing parameters common to all Nebula instances",
+    )
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
@@ -443,11 +453,6 @@ def generate_launch_description():
         "False",
         "Use the cuda implementation of the pointcloud preprocessor. When using the CUDA implementations for both concatenation and the preprocessor, requires use_shared_container to be enabled",
     )
-    add_launch_arg("ptp_profile", "1588v2")
-    add_launch_arg("ptp_transport_type", "L2")
-    add_launch_arg("ptp_switch_type", "TSN")
-    add_launch_arg("ptp_domain", "0")
-    add_launch_arg("ptp_lock_threshold", "100")
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
     add_launch_arg("enable_blockage_diag", "true")
     add_launch_arg("horizontal_ring_id", "64")
