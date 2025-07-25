@@ -37,16 +37,34 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # set concat filter as a component
+    concat_remappings = [
+        ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+        ("output", "concatenated/pointcloud"),
+    ]
+    concat_extra_arguments = []
+
+    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+        concat_package = "autoware_cuda_pointcloud_preprocessor"
+        concat_plugin = "autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent"
+        # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
+        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        concat_remappings.append(("output/cuda", "concatenated/pointcloud/cuda"))
+    else:
+        concat_package = "autoware_pointcloud_preprocessor"
+        concat_plugin = (
+            "autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent"
+        )
+        concat_extra_arguments.append(
+            {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+        )
+
     concat_component = ComposableNode(
-        package="autoware_pointcloud_preprocessor",
-        plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent",
+        package=concat_package,
+        plugin=concat_plugin,
         name="concatenate_data",
-        remappings=[
-            ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-            ("output", "concatenated/pointcloud"),
-        ],
+        remappings=concat_remappings,
         parameters=[concatenate_and_time_sync_node_param],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        extra_arguments=concat_extra_arguments,
     )
 
     # load concat or passthrough filter
@@ -69,6 +87,7 @@ def generate_launch_description():
 
     add_launch_arg("use_multithread", "True")
     add_launch_arg("use_intra_process", "True")
+    add_launch_arg("use_cuda_preprocessor", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg(
         "concatenate_and_time_sync_node_param_path",
