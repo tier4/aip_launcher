@@ -108,7 +108,7 @@ def make_nebula_nodes(context):
             plugin=sensor_make + "RosWrapper",
             name=sensor_make.lower() + "_ros_wrapper_node",
             parameters=[
-                    ParameterFile(
+                ParameterFile(
                     LaunchConfiguration("nebula_common_config_file").perform(context),
                     allow_substs=True,
                 ),
