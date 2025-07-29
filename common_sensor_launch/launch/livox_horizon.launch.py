@@ -85,6 +85,7 @@ def get_crop_box_min_range_component(ns, context):
                 "min_z": -2.0,
                 "max_z": 2.0,
                 "negative": True,
+                "processing_time_threshold_sec": 0.01,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
