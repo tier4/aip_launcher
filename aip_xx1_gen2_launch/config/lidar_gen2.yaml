@@ -1,3 +1,4 @@
+# This setting is for the second generation ADK but which is mounted on the first generation vehicle.
 launches:
   - sensor_type: hesai_OT128
     namespace: top
