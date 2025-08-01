@@ -440,7 +440,11 @@ def generate_launch_description():
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
 
-    add_launch_arg("diagnostics.packet_loss.error_threshold", ": 10", "packet_loss error_threshold for diagnostics")
+    add_launch_arg(
+        "diagnostics.packet_loss.error_threshold",
+        ": 10",
+        "packet_loss error_threshold for diagnostics",
+    )
 
     add_launch_arg(
         "lidar_container_name",
