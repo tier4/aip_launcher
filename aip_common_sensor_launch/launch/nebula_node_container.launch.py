@@ -442,7 +442,7 @@ def generate_launch_description():
 
     add_launch_arg(
         "diagnostics.packet_loss.error_threshold",
-        ": 10",
+        "10",
         "packet_loss error_threshold for diagnostics",
     )
 
