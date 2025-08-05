@@ -1,3 +1,4 @@
+# This setting is for the second generation ADK and which is mounted on the second generation vehicle.
 launches:
   - sensor_type: hesai_OT128
     namespace: top
@@ -8,6 +9,7 @@ launches:
       data_port: 2368
       sync_angle: 180
       cut_angle: 180.0
+      diagnostics.packet_loss.error_threshold: 20
   - sensor_type: hesai_XT32
     namespace: front_left
     parameters:
