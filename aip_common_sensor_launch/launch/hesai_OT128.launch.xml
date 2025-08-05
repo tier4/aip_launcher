@@ -38,13 +38,9 @@
     <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
-    <arg name="ptp_profile" value="automotive"/>
-    <arg name="ptp_transport_type" value="L2"/>
-    <arg name="ptp_switch_type" value="NON_TSN"/>
-    <arg name="ptp_domain" value="0"/>
-    <arg name="ptp_lock_threshold" value="100"/>
     <arg name="setup_sensor" value="true"/>
     <arg name="udp_only" value="$(var udp_only)"/>
     <arg name="hires_mode" value="$(var hires_mode)"/>
+    <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
   </include>
 </launch>
