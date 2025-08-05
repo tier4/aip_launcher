@@ -141,6 +141,7 @@ def make_nebula_nodes(context):
                         "udp_only",
                         "hires_mode",
                         "diag_span",
+                        "diagnostics.packet_loss.error_threshold",
                     ),
                 },
             ],
@@ -441,6 +442,12 @@ def generate_launch_description():
     add_launch_arg("advanced_diagnostics", "false")
     add_launch_arg("use_multithread", "False", "use multithread")
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
+
+    add_launch_arg(
+        "diagnostics.packet_loss.error_threshold",
+        "10",
+        "packet_loss error_threshold for diagnostics",
+    )
     add_launch_arg(
         "lidar_container_name",
         "nebula_node_container",
