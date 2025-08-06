@@ -218,7 +218,7 @@ def make_preprocessor_nodes(context):
     )
 
     voxel_outlier_filter_arg = LaunchConfiguration("polar_voxel_filter").perform(context)
-    use_voxel_outlier_filter = (voxel_outlier_filter_arg in ['cpu', 'cuda'])
+    use_voxel_outlier_filter = voxel_outlier_filter_arg in ["cpu", "cuda"]
 
     if not use_voxel_outlier_filter:
         if not use_dual_return_filter:
@@ -304,9 +304,11 @@ def make_cuda_preprocessor_nodes(context):
     ]
 
     voxel_outlier_filter_arg = LaunchConfiguration("polar_voxel_filter").perform(context)
-    use_voxel_outlier_filter = (voxel_outlier_filter_arg in ['cpu', 'cuda'])
-    enable_ring_outlier_fileter  = False if use_voxel_outlier_filter else True
-    output_topic = "pointcloud_before_sync" if enable_ring_outlier_fileter else "rectified/pointcloud_ex"
+    use_voxel_outlier_filter = voxel_outlier_filter_arg in ["cpu", "cuda"]
+    enable_ring_outlier_fileter = False if use_voxel_outlier_filter else True
+    output_topic = (
+        "pointcloud_before_sync" if enable_ring_outlier_fileter else "rectified/pointcloud_ex"
+    )
 
     return [
         ComposableNode(
@@ -317,7 +319,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {'enable_ring_outlier_filter': enable_ring_outlier_fileter},
+                {"enable_ring_outlier_filter": enable_ring_outlier_fileter},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -333,6 +335,7 @@ def make_cuda_preprocessor_nodes(context):
             # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     ]
+
 
 def make_polar_voxel_outlier_filter_node(context):
     parameters = [
@@ -356,8 +359,8 @@ def make_polar_voxel_outlier_filter_node(context):
                 name="polar_voxel_outlier_filter_CPU",
                 parameters=parameters,
                 remappings=[
-                    ('input', 'rectified/pointcloud_ex'),
-                    ('output', 'pointcloud_before_sync')
+                    ("input", "rectified/pointcloud_ex"),
+                    ("output", "pointcloud_before_sync"),
                 ],
             )
         ]
@@ -380,6 +383,7 @@ def make_polar_voxel_outlier_filter_node(context):
         ]
     else:
         return []
+
 
 def make_blockage_diag_nodes(context):
     return [
