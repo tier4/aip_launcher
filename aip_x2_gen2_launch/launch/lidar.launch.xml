@@ -16,6 +16,13 @@
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
+  <!-- <arg name="polar_voxel_filter" default="disable"> -->
+  <arg name="polar_voxel_filter" default="cuda">
+    <choice value="disable"/>
+    <choice value="cpu"/>
+    <choice value="cuda"/>
+  </arg>
+  <arg name="polar_voxel_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_outlier_filter_node.param.yaml"/>
 
   <group>
     <push-ros-namespace namespace="lidar" />
