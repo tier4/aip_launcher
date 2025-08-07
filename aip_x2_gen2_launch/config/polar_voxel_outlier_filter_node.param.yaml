@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    radius_resolution_m: 0.2        # Resolution in radial direction (meters)
+    radial_resolution_m: 0.2        # Resolution in radial direction (meters)
     azimuth_resolution_rad: 0.025    # Resolution in azimuth direction (radians, ~1 degree)
     elevation_resolution_rad: 0.05  # Resolution in elevation direction (radians, ~1 degree)
     voxel_points_threshold: 2     # Minimum points required per voxel
