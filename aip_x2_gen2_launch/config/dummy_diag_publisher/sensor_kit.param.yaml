@@ -51,14 +51,14 @@
       "concatenate_data: concat_status": default
 
       # camera
-      "v4l2_camera_camera0: capture_status": default
-      "v4l2_camera_camera1: capture_status": default
-      "v4l2_camera_camera2: capture_status": default
-      "v4l2_camera_camera3: capture_status": default
-      "v4l2_camera_camera4: capture_status": default
-      "v4l2_camera_camera5: capture_status": default
-      "v4l2_camera_camera6: capture_status": default
-      "v4l2_camera_camera7: capture_status": default
+      "v4l2_camera_camera0: camera0_diagnostics": default
+      "v4l2_camera_camera1: camera1_diagnostics": default
+      "v4l2_camera_camera2: camera2_diagnostics": default
+      "v4l2_camera_camera3: camera3_diagnostics": default
+      "v4l2_camera_camera4: camera4_diagnostics": default
+      "v4l2_camera_camera5: camera5_diagnostics": default
+      "v4l2_camera_camera6: camera6_diagnostics": default
+      "v4l2_camera_camera7: camera7_diagnostics": default
 
       # radar
       "topic_state_monitor_radar_front_center: radar_front_center_topic_status": default
