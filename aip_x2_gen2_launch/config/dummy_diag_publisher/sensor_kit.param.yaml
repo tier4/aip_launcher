@@ -72,14 +72,8 @@
       "tier4_camera_sync_doctor7: camera7_sync_status": default
 
       # /sensing/camera/004-image
-      "v4l2_camera_camera0: image_diagnostics": default
-      "v4l2_camera_camera1: image_diagnostics": default
-      "v4l2_camera_camera2: image_diagnostics": default
-      "v4l2_camera_camera3: image_diagnostics": default
-      "v4l2_camera_camera4: image_diagnostics": default
-      "v4l2_camera_camera5: image_diagnostics": default
-      "v4l2_camera_camera6: image_diagnostics": default
-      "v4l2_camera_camera7: image_diagnostics": default
+      "image_diagnostics3: camera3": default
+      "image_diagnostics5: camera5": default
 
       # /sensing/camera/006-hw-diag
       "uevent_diagnostics_publisher_0: camera0_uevent_diag": default
