@@ -43,4 +43,17 @@
 
   </group>
 
+  <group>
+    <push-ros-namespace namespace="calibration"/>
+    <!-- Deviation Estimator -->
+    <include file="$(find-pkg-share autoware_deviation_estimator)/launch/deviation_estimator.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="in_pose_with_cov_name" value="/localization/pose_estimator/pose_with_covariance"/>
+      <arg name="in_wheel_odometry" value="/vehicle/status/velocity_status"/>
+      <arg name="in_imu" value="/sensing/imu/tamagawa/imu_raw"/>
+      <arg name="initial_vehicle_velocity_converter_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/vehicle_velocity_converter.param.yaml"/>
+      <arg name="results_dir" value="/tmp"/>
+    </include>
+  </group>
+
 </launch>
