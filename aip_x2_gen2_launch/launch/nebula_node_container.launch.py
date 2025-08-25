@@ -411,10 +411,12 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
     launch_arguments = []
 
-    def add_launch_arg(name: str, default_value=None, description=None):
+    def add_launch_arg(name: str, default_value=None, description=None, **kwargs):
         # a default_value of None is equivalent to not passing that kwarg at all
         launch_arguments.append(
-            DeclareLaunchArgument(name, default_value=default_value, description=description)
+            DeclareLaunchArgument(
+                name, default_value=default_value, description=description, **kwargs
+            )
         )
 
     # Agnocast parameters
