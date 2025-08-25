@@ -364,11 +364,6 @@ def make_agnocast_env(context):
 
 
 def launch_setup(context, *args, **kwargs):
-    def str2vector(string):
-        return [float(x) for x in string.strip("[]").split(",")]
-
-    # Start
-
     # Check that the cuda preprocessor is only used with a shared container
     if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
         assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
