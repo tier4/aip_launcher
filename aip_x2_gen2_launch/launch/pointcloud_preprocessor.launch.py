@@ -43,7 +43,7 @@ def launch_setup(context, *args, **kwargs):
     ]
     concat_extra_arguments = []
 
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+    if IfCondition(LaunchConfiguration("use_cuda")).evaluate(context):
         concat_package = "autoware_cuda_pointcloud_preprocessor"
         concat_plugin = "autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent"
         # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
