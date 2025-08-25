@@ -417,6 +417,14 @@ def generate_launch_description():
             DeclareLaunchArgument(name, default_value=default_value, description=description)
         )
 
+    # Agnocast parameters
+    add_launch_arg(
+        "agnocast_heaphook_path",
+        "/opt/ros/humble/lib/libagnocast_heaphook.so",
+        "Path to the agnocast heaphook library",
+    )
+
+    # Nebula parameters
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg(
         "nebula_common_config_file",
@@ -427,13 +435,8 @@ def generate_launch_description():
         description="file containing parameters common to all Nebula instances",
     )
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg(
-        "agnocast_heaphook_path",
-        "/opt/ros/humble/lib/libagnocast_heaphook.so",
-        "Path to the agnocast heaphook library",
-    )
-    add_launch_arg("launch_hw", "True", "do launch driver")
-    add_launch_arg("setup_sensor", "True", "configure sensor")
+    add_launch_arg("launch_hw", "true", "do launch driver")
+    add_launch_arg("setup_sensor", "true", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(
         "multicast_ip",
@@ -455,11 +458,11 @@ def generate_launch_description():
     add_launch_arg("rotation_speed", "600", "rotational frequency")
     add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
     add_launch_arg("frame_id", "lidar", "frame id")
+    add_launch_arg("diag_span", "1000")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
-    add_launch_arg("diag_span", "1000")
-    add_launch_arg("use_multithread", "False", "use multithread")
-    add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
+    add_launch_arg("use_multithread", "true", "use multithread")
+    add_launch_arg("use_intra_process", "true", "use intra-process communication in containers")
     add_launch_arg("container_name", "pointcloud_container")
     add_launch_arg(
         "use_shared_container",
@@ -503,7 +506,7 @@ def generate_launch_description():
     add_launch_arg("enable_blockage_diag", "true")
 
     add_launch_arg("calibration_file", "")
-    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+    add_launch_arg("output_as_sensor_frame", "true", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
