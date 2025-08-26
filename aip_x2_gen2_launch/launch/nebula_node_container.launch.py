@@ -370,6 +370,23 @@ def launch_setup(context, *args, **kwargs):
     lidar_specific_container_nodes = []
     standalone_nodes = []
 
+    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
+    container_exec_mt = (
+        "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
+    )
+
+    set_container_executable = SetLaunchConfiguration(
+        "container_executable",
+        container_exec,
+        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
+    )
+
+    set_container_mt_executable = SetLaunchConfiguration(
+        "container_executable",
+        container_exec_mt,
+        condition=IfCondition(LaunchConfiguration("use_multithread")),
+    )
+
     match mode:
         case "cuda":
             if not use_agnocast:
@@ -403,14 +420,16 @@ def launch_setup(context, *args, **kwargs):
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
 
-    launch_targets = []
+    launch_targets = [set_container_executable, set_container_mt_executable]
 
     if lidar_specific_container_nodes:
+        container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
+
         lidar_specific_container_nodes.extend(make_common_nodes(context))
         lidar_specific_container = ComposableNodeContainer(
             name=LaunchConfiguration("container_name"),
             namespace="pointcloud_preprocessor",
-            package="rclcpp_components",
+            package=container_package,
             executable=LaunchConfiguration("container_executable"),
             composable_node_descriptions=lidar_specific_container_nodes,
             output="both",
@@ -532,20 +551,7 @@ def generate_launch_description():
     add_launch_arg("hires_mode", "true")
     add_launch_arg("diagnostics.packet_loss.error_threshold")
 
-    set_container_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container",
-        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    set_container_mt_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container_mt",
-        condition=IfCondition(LaunchConfiguration("use_multithread")),
-    )
-
     return launch.LaunchDescription(
         launch_arguments
-        + [set_container_executable, set_container_mt_executable]
         + [OpaqueFunction(function=launch_setup)]
     )
