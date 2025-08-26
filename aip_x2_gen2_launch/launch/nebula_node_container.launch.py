@@ -74,16 +74,13 @@ def create_parameter_dict(*args):
 
 
 def make_common_nodes(context):
-    if UnlessCondition(LaunchConfiguration("use_shared_container")).evaluate(context):
-        return [
-            ComposableNode(
-                package="autoware_glog_component",
-                plugin="autoware::glog_component::GlogComponent",
-                name="glog_component",
-            )
-        ]
-
-    return []
+    return [
+        ComposableNode(
+            package="autoware_glog_component",
+            plugin="autoware::glog_component::GlogComponent",
+            name="glog_component",
+        )
+    ]
 
 
 def make_nebula_node(context, as_composable_node, env=None):
@@ -392,7 +389,7 @@ def launch_setup(context, *args, **kwargs):
             if use_blockage_diag:
                 shared_container_nodes.extend(make_blockage_diag_nodes(context))
         case "cpu":
-            lidar_specific_container_nodes.append(make_preprocessor_nodes(context))
+            lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
 
             if use_blockage_diag:
@@ -409,6 +406,7 @@ def launch_setup(context, *args, **kwargs):
     launch_targets = []
 
     if lidar_specific_container_nodes:
+        lidar_specific_container_nodes.extend(make_common_nodes(context))
         lidar_specific_container = ComposableNodeContainer(
             name=LaunchConfiguration("container_name"),
             namespace="pointcloud_preprocessor",
@@ -424,11 +422,10 @@ def launch_setup(context, *args, **kwargs):
         load_shared_container_nodes = LoadComposableNodes(
             composable_node_descriptions=shared_container_nodes,
             target_container=LaunchConfiguration("container_name"),
-            condition=IfCondition(LaunchConfiguration("use_shared_container")),
         )
         launch_targets.append(load_shared_container_nodes)
 
-    launch_targets.append(standalone_nodes)
+    launch_targets.extend(standalone_nodes)
 
     return launch_targets
 

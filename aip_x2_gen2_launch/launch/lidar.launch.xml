@@ -21,7 +21,7 @@
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
 
-  <let name="use_cuda_concat" value="$(eval pipeline_mode in ['cuda', 'cuda-all-in-one'])"/>
+  <let name="use_cuda_concat" value="$(eval '\'$(var pipeline_mode)\' == \'cuda\' or \'$(var pipeline_mode)\' == \'cuda-all-in-one\'')"/>
 
   <group>
     <push-ros-namespace namespace="lidar" />
