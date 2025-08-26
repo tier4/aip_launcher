@@ -551,7 +551,4 @@ def generate_launch_description():
     add_launch_arg("hires_mode", "true")
     add_launch_arg("diagnostics.packet_loss.error_threshold")
 
-    return launch.LaunchDescription(
-        launch_arguments
-        + [OpaqueFunction(function=launch_setup)]
-    )
+    return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
