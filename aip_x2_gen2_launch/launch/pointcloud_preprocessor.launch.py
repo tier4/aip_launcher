@@ -43,7 +43,7 @@ def launch_setup(context, *args, **kwargs):
     ]
     concat_extra_arguments = []
 
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+    if IfCondition(LaunchConfiguration("use_cuda")).evaluate(context):
         concat_package = "autoware_cuda_pointcloud_preprocessor"
         concat_plugin = "autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent"
         # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
@@ -85,9 +85,9 @@ def generate_launch_description():
 
     aip_x2_gen2_launch_share_dir = get_package_share_directory("aip_x2_gen2_launch")
 
-    add_launch_arg("use_multithread", "True")
-    add_launch_arg("use_intra_process", "True")
-    add_launch_arg("use_cuda_preprocessor", "False")
+    add_launch_arg("use_multithread", "true")
+    add_launch_arg("use_intra_process", "true")
+    add_launch_arg("use_cuda", "false")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg(
         "concatenate_and_time_sync_node_param_path",
