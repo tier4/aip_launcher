@@ -1,17 +1,22 @@
 /**:
   ros__parameters:
-    radial_resolution_m: 0.2        # Resolution in radial direction (meters)
-    azimuth_resolution_rad: 0.025    # Resolution in azimuth direction (radians, ~1 degree)
-    elevation_resolution_rad: 0.05  # Resolution in elevation direction (radians, ~1 degree)
-    voxel_points_threshold: 2     # Minimum points required per voxel
-    min_radius_m: 0.5               # Minimum radius to consider (meters)
-    max_radius_m: 300.0             # Maximum radius to consider (meters)
-    visibility_estimation_max_range_m: 20.0  # Maximum range for visibility estimation (meters)
-    use_return_type_classification: true  # Whether to use return type classification
-    filter_secondary_returns: false      # Whether to filter secondary returns (keep only primary when true)
-    secondary_noise_threshold: 4         # Threshold for classifying primary vs secondary returns
-    primary_return_types: [1, 6, 8, 10]     # Return types considered as primary returns
-    filter_ratio_error_threshold: 0.7     # Error threshold for filter ratio diagnostics
-    filter_ratio_warn_threshold: 0.3      # Warning threshold for filter ratio diagnostics
-    visibility_error_threshold: 0.5       # Error threshold for visibility diagnostics
-    visibility_warn_threshold: 0.6
+  publish_noise_cloud: false                             # Publish a separate point cloud containing detected noise points
+  radial_resolution_m: 0.5                              # Voxel grid resolution in the radial (distance) direction, in meters
+  azimuth_resolution_rad: 0.0175                        # Voxel grid resolution in the azimuth (horizontal angle) direction, in radians (~1 degree)
+  elevation_resolution_rad: 0.0175                      # Voxel grid resolution in the elevation (vertical angle) direction, in radians (~1 degree)
+  voxel_points_threshold: 1                             # Minimum number of points required in a voxel to be considered valid
+  min_radius_m: 0.5                                     # Minimum distance from the sensor to include points, in meters
+  max_radius_m: 300.0                                   # Maximum distance from the sensor to include points, in meters
+  visibility_estimation_max_range_m: 10.0               # Maximum range for estimating point cloud visibility, in meters
+  visibility_estimation_max_secondary_voxel_count: 300  # Max number of secondary voxels to consider in visibility estimation
+  visibility_estimation_only: true                      # If true, only perform visibility estimation without filtering
+  use_return_type_classification: true                  # Use return type information to classify points (e.g., primary/secondary returns)
+  filter_secondary_returns: false                       # If true, filter out secondary returns and keep only primary returns
+  secondary_noise_threshold: 2                          # Threshold for classifying noise in secondary returns
+  intensity_threshold: 1                                # Minimum intensity value for a point to be considered valid
+  primary_return_types: [1, 6, 8, 10]                   # List of return types considered as primary returns
+  visibility_warn_threshold: 0.7                        # Warning threshold for visibility diagnostics
+  filter_ratio_error_threshold: 0.5                     # Error threshold for filter ratio diagnostics
+  filter_ratio_warn_threshold: 0.7                      # Warning threshold for filter ratio diagnostics
+  visibility_error_threshold: 0.8                       # Error threshold for visibility diagnostics
+  visibility_warn_threshold: 0.9                        # Warning threshold for visibility diagnostics

@@ -17,7 +17,7 @@
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
   <!-- <arg name="polar_voxel_filter" default="disable"> -->
-  <arg name="polar_voxel_filter" default="cuda">
+  <arg name="polar_voxel_filter" default="cpu">
     <choice value="disable"/>
     <choice value="cpu"/>
     <choice value="cuda"/>
@@ -77,6 +77,7 @@
         <arg name="use_dual_return_filter" value="true"/>
         <arg name="hires_mode" value="false"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -120,6 +121,7 @@
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="hires_mode" value="true"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -162,6 +164,7 @@
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -204,6 +207,7 @@
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -248,6 +252,7 @@
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="hires_mode" value="true"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -288,9 +293,10 @@
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
-        <arg name="use_dual_return_filter" value="true"/>
+        <arg name="use_dual_return_filter" value="false"/>
         <arg name="hires_mode" value="true"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="$(var polar_voxel_filter)"/>
       </include>
     </group>
 
@@ -333,6 +339,7 @@
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 
@@ -375,6 +382,7 @@
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_filter" value="disable"/>
       </include>
     </group>
 

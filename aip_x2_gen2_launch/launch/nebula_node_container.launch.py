@@ -213,58 +213,60 @@ def make_preprocessor_nodes(context):
         # keep the output frame as the input frame
         ring_outlier_output_frame = {"output_frame": ""}
 
-    use_dual_return_filter = IfCondition(LaunchConfiguration("use_dual_return_filter")).evaluate(
-        context
-    )
+    # use_dual_return_filter = IfCondition(LaunchConfiguration("use_dual_return_filter")).evaluate(
+    #     context
+    # )
 
     voxel_outlier_filter_arg = LaunchConfiguration("polar_voxel_filter").perform(context)
     use_voxel_outlier_filter = voxel_outlier_filter_arg in ["cpu", "cuda"]
 
-    if not use_voxel_outlier_filter:
-        if not use_dual_return_filter:
-            nodes.append(
-                ComposableNode(
-                    package="autoware_pointcloud_preprocessor",
-                    plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent",
-                    name="ring_outlier_filter",
-                    remappings=[
-                        ("input", "rectified/pointcloud_ex"),
-                        ("output", "pointcloud_before_sync"),
-                    ],
-                    parameters=[
-                        ring_outlier_filter_node_param,
-                        ring_outlier_output_frame,
-                        {"is_agnocast_publish_node": True},
-                    ],
-                    extra_arguments=[
-                        {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                    ],
-                )
-            )
-        else:
-            nodes.append(
-                ComposableNode(
-                    package="autoware_pointcloud_preprocessor",
-                    plugin="autoware::pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-                    name="dual_return_filter",
-                    remappings=[
-                        ("input", "rectified/pointcloud_ex"),
-                        ("output", "pointcloud_before_sync"),
-                    ],
-                    parameters=[
-                        {
-                            "vertical_bins": LaunchConfiguration("vertical_bins"),
-                            "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
-                            "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
-                            "is_agnocast_publish_node": True,
-                        }
-                    ]
-                    + [load_composable_node_param(context, "dual_return_filter_param_file")],
-                    extra_arguments=[
-                        {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                    ],
-                )
-            )
+    # if not use_voxel_outlier_filter:
+    #     if not use_dual_return_filter:
+
+    # Use ring outlier filter for filtering
+    nodes.append(
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent",
+            name="ring_outlier_filter",
+            remappings=[
+                ("input", "rectified/pointcloud_ex"),
+                ("output", "pointcloud_before_sync"),
+            ],
+            parameters=[
+                ring_outlier_filter_node_param,
+                ring_outlier_output_frame,
+                {"is_agnocast_publish_node": True},
+            ],
+            extra_arguments=[
+                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+            ],
+        )
+    )
+        # else:
+        #     nodes.append(
+        #         ComposableNode(
+        #             package="autoware_pointcloud_preprocessor",
+        #             plugin="autoware::pointcloud_preprocessor::DualReturnOutlierFilterComponent",
+        #             name="dual_return_filter",
+        #             remappings=[
+        #                 ("input", "rectified/pointcloud_ex"),
+        #                 ("output", "pointcloud_before_sync"),
+        #             ],
+        #             parameters=[
+        #                 {
+        #                     "vertical_bins": LaunchConfiguration("vertical_bins"),
+        #                     "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
+        #                     "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
+        #                     "is_agnocast_publish_node": True,
+        #                 }
+        #             ]
+        #             + [load_composable_node_param(context, "dual_return_filter_param_file")],
+        #             extra_arguments=[
+        #                 {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+        #             ],
+        #         )
+        #     )
 
     return nodes
 
@@ -305,9 +307,9 @@ def make_cuda_preprocessor_nodes(context):
 
     voxel_outlier_filter_arg = LaunchConfiguration("polar_voxel_filter").perform(context)
     use_voxel_outlier_filter = voxel_outlier_filter_arg in ["cpu", "cuda"]
-    enable_ring_outlier_fileter = False if use_voxel_outlier_filter else True
+    enable_ring_outlier_filter = True
     output_topic = (
-        "pointcloud_before_sync" if enable_ring_outlier_fileter else "rectified/pointcloud_ex"
+        "pointcloud_before_sync" if enable_ring_outlier_filter else "rectified/pointcloud_ex"
     )
 
     return [
@@ -319,7 +321,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {"enable_ring_outlier_filter": enable_ring_outlier_fileter},
+                {"enable_ring_outlier_filter": enable_ring_outlier_filter},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -360,7 +362,7 @@ def make_polar_voxel_outlier_filter_node(context):
                 parameters=parameters,
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
+                    # ("output", "pointcloud_before_sync"),
                 ],
             )
         ]
@@ -376,8 +378,8 @@ def make_polar_voxel_outlier_filter_node(context):
                 remappings=[
                     ("~/input/pointcloud", "rectified/pointcloud_ex"),
                     ("~/input/pointcloud/cuda", "rectified/pointcloud_ex/cuda"),
-                    ("~/output/pointcloud", "pointcloud_before_sync"),
-                    ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+                    # ("~/output/pointcloud", "pointcloud_before_sync"),
+                    # ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
                 ],
             )
         ]
