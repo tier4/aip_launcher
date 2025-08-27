@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import os
 
 import launch
@@ -30,6 +31,8 @@ from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
 import yaml
+
+logger = logging.getLogger(__name__)
 
 
 def get_lidar_make(sensor_name):
@@ -71,16 +74,13 @@ def create_parameter_dict(*args):
 
 
 def make_common_nodes(context):
-    if UnlessCondition(LaunchConfiguration("use_shared_container")).evaluate(context):
-        return [
-            ComposableNode(
-                package="autoware_glog_component",
-                plugin="autoware::glog_component::GlogComponent",
-                name="glog_component",
-            )
-        ]
-
-    return []
+    return [
+        ComposableNode(
+            package="autoware_glog_component",
+            plugin="autoware::glog_component::GlogComponent",
+            name="glog_component",
+        )
+    ]
 
 
 def make_nebula_node(context, as_composable_node, env=None):
@@ -353,75 +353,121 @@ def make_blockage_diag_nodes(context):
 
 def make_agnocast_env(context):
     agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
-
-    if os.getenv("ENABLE_AGNOCAST") == "1":
-        return {
-            "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
-            "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
-        }
-
-    return {}
+    return {
+        "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
+        "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
+    }
 
 
 def launch_setup(context, *args, **kwargs):
-    def str2vector(string):
-        return [float(x) for x in string.strip("[]").split(",")]
+    mode = LaunchConfiguration("pipeline_mode").perform(context)
+    use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
+    env = make_agnocast_env(context) if use_agnocast else {}
 
-    # Start
+    use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
 
-    # Check that the cuda preprocessor is only used with a shared container
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
-        assert IfCondition(LaunchConfiguration("use_shared_container")).evaluate(
-            context
-        ), "The cuda preprocessor should only be used with a shared container."
-
-    env = make_agnocast_env(context)
-
-    nodes = []
+    shared_container_nodes = []
+    lidar_specific_container_nodes = []
     standalone_nodes = []
 
-    nodes.extend(make_common_nodes(context))
-
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
-        nodes.extend(make_cuda_preprocessor_nodes(context))
-        standalone_nodes.append(make_nebula_node(context, False, env))
-    else:
-        nodes.extend(make_preprocessor_nodes(context))
-        nodes.append(make_nebula_node(context, True))
-
-    if IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context):
-        nodes.extend(make_blockage_diag_nodes(context))
-
-    # set container to run all required components in the same process
-    container = ComposableNodeContainer(
-        name=LaunchConfiguration("container_name"),
-        namespace="pointcloud_preprocessor",
-        package="rclcpp_components",
-        executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=nodes,
-        output="both",
-        condition=UnlessCondition(LaunchConfiguration("use_shared_container")),
-        additional_env=env,
+    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
+    container_exec_mt = (
+        "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
     )
 
-    load_composable_nodes = LoadComposableNodes(
-        composable_node_descriptions=nodes,
-        target_container=LaunchConfiguration("container_name"),
-        condition=IfCondition(LaunchConfiguration("use_shared_container")),
+    set_container_executable = SetLaunchConfiguration(
+        "container_executable",
+        container_exec,
+        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
-    return [container, load_composable_nodes] + standalone_nodes
+    set_container_mt_executable = SetLaunchConfiguration(
+        "container_executable",
+        container_exec_mt,
+        condition=IfCondition(LaunchConfiguration("use_multithread")),
+    )
+
+    match mode:
+        case "cuda":
+            if not use_agnocast:
+                logger.warning("This pipeline mode may perform better when using Agnocast")
+
+            shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+
+            if use_blockage_diag:
+                lidar_specific_container_nodes.append(make_nebula_node(context, True))
+                lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+            else:
+                standalone_nodes.append(make_nebula_node(context, False, env))
+        case "cuda-all-in-one":
+            shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+            shared_container_nodes.append(make_nebula_node(context, True))
+
+            if use_blockage_diag:
+                shared_container_nodes.extend(make_blockage_diag_nodes(context))
+        case "cpu":
+            lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
+            lidar_specific_container_nodes.append(make_nebula_node(context, True))
+
+            if use_blockage_diag:
+                lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+        case "cuda-with-cpu-concat":
+            lidar_specific_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+            lidar_specific_container_nodes.append(make_nebula_node(context, True))
+
+            if use_blockage_diag:
+                lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+        case _:
+            raise ValueError(f"Unknown pipeline mode: {mode}")
+
+    launch_targets = [set_container_executable, set_container_mt_executable]
+
+    if lidar_specific_container_nodes:
+        container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
+
+        lidar_specific_container_nodes.extend(make_common_nodes(context))
+        lidar_specific_container = ComposableNodeContainer(
+            name=LaunchConfiguration("container_name"),
+            namespace="pointcloud_preprocessor",
+            package=container_package,
+            executable=LaunchConfiguration("container_executable"),
+            composable_node_descriptions=lidar_specific_container_nodes,
+            output="both",
+            additional_env=env,
+        )
+        launch_targets.append(lidar_specific_container)
+
+    if shared_container_nodes:
+        load_shared_container_nodes = LoadComposableNodes(
+            composable_node_descriptions=shared_container_nodes,
+            target_container=LaunchConfiguration("container_name"),
+        )
+        launch_targets.append(load_shared_container_nodes)
+
+    launch_targets.extend(standalone_nodes)
+
+    return launch_targets
 
 
 def generate_launch_description():
     launch_arguments = []
 
-    def add_launch_arg(name: str, default_value=None, description=None):
+    def add_launch_arg(name: str, default_value=None, description=None, **kwargs):
         # a default_value of None is equivalent to not passing that kwarg at all
         launch_arguments.append(
-            DeclareLaunchArgument(name, default_value=default_value, description=description)
+            DeclareLaunchArgument(
+                name, default_value=default_value, description=description, **kwargs
+            )
         )
 
+    # Agnocast parameters
+    add_launch_arg(
+        "agnocast_heaphook_path",
+        "/opt/ros/humble/lib/libagnocast_heaphook.so",
+        "Path to the agnocast heaphook library",
+    )
+
+    # Nebula parameters
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg(
         "nebula_common_config_file",
@@ -432,13 +478,8 @@ def generate_launch_description():
         description="file containing parameters common to all Nebula instances",
     )
     add_launch_arg("config_file", "", description="sensor configuration file")
-    add_launch_arg(
-        "agnocast_heaphook_path",
-        "/opt/ros/humble/lib/libagnocast_heaphook.so",
-        "Path to the agnocast heaphook library",
-    )
-    add_launch_arg("launch_hw", "True", "do launch driver")
-    add_launch_arg("setup_sensor", "True", "configure sensor")
+    add_launch_arg("launch_hw", "true", "do launch driver")
+    add_launch_arg("setup_sensor", "true", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(
         "multicast_ip",
@@ -460,21 +501,17 @@ def generate_launch_description():
     add_launch_arg("rotation_speed", "600", "rotational frequency")
     add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
     add_launch_arg("frame_id", "lidar", "frame id")
+    add_launch_arg("diag_span", "1000")
     add_launch_arg("input_frame", LaunchConfiguration("base_frame"), "use for cropbox")
     add_launch_arg("output_frame", LaunchConfiguration("base_frame"), "use for cropbox")
-    add_launch_arg("diag_span", "1000")
-    add_launch_arg("use_multithread", "False", "use multithread")
-    add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
+    add_launch_arg("use_multithread", "true", "use multithread")
+    add_launch_arg("use_intra_process", "true", "use intra-process communication in containers")
     add_launch_arg("container_name", "pointcloud_container")
     add_launch_arg(
-        "use_shared_container",
-        "False",
-        "Whether to use a new container for this lidar or use an existing one",
-    )
-    add_launch_arg(
-        "use_cuda_preprocessor",
-        "False",
-        "Use the cuda implementation of the pointcloud preprocessor. Requires use_shared_container to be enabled",
+        "pipeline_mode",
+        "cuda",
+        "Which pointcloud preprocessor pipeline mode to use",
+        choices=["cuda", "cpu", "cuda-all-in-one", "cuda-with-cpu-concat"],
     )
 
     add_launch_arg("dual_return_filter_param_file")
@@ -508,26 +545,10 @@ def generate_launch_description():
     add_launch_arg("enable_blockage_diag", "true")
 
     add_launch_arg("calibration_file", "")
-    add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+    add_launch_arg("output_as_sensor_frame", "true", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
     add_launch_arg("diagnostics.packet_loss.error_threshold")
 
-    set_container_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container",
-        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    set_container_mt_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container_mt",
-        condition=IfCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    return launch.LaunchDescription(
-        launch_arguments
-        + [set_container_executable, set_container_mt_executable]
-        + [OpaqueFunction(function=launch_setup)]
-    )
+    return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
