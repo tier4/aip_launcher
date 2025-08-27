@@ -40,6 +40,7 @@ def launch_setup(context, *args, **kwargs):
     concat_remappings = [
         ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
         ("output", "concatenated/pointcloud"),
+        ("output_info", "concatenated/pointcloud_info"),
     ]
     concat_extra_arguments = []
 
