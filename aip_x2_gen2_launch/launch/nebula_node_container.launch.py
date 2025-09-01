@@ -308,7 +308,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {'enable_ring_outlier_filter': True},
+                {"enable_ring_outlier_filter": True},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -366,8 +366,10 @@ def make_polar_voxel_outlier_filter_node(context):
         allow_substs=True,
     )
 
-    mode = LaunchConfiguration('polar_voxel_visibility_estimation_mode').perform(context)
-    node_name = "polar_voxel_outlier_filter"  # node name should be consistent with metric agent config
+    mode = LaunchConfiguration("polar_voxel_visibility_estimation_mode").perform(context)
+    node_name = (
+        "polar_voxel_outlier_filter"  # node name should be consistent with metric agent config
+    )
 
     match mode:
         case "cpu":
@@ -381,7 +383,7 @@ def make_polar_voxel_outlier_filter_node(context):
                     ],
                     remappings=[
                         ("input", "pointcloud_before_sync"),
-                    ]
+                    ],
                 )
             ]
         case "cuda":
@@ -396,7 +398,7 @@ def make_polar_voxel_outlier_filter_node(context):
                     ],
                     remappings=[
                         ("~/input/pointcloud", "pointcloud_before_sync"),
-                        ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda")
+                        ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda"),
                     ],
                 )
             ]
