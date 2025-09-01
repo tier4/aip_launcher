@@ -187,9 +187,9 @@
       <group>
         <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
-          <arg name="odometry_topic" value="$(var twist_topic)"/>
-          <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
-          <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
+          <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
+          <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
           <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.118"/>
@@ -222,9 +222,9 @@
       <group>
         <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/ars548.launch.xml">
 
-          <arg name="odometry_topic" value="$(var twist_topic)"/>
-          <arg name="acceleration_topic" value="$(var acceleration_topic)"/>
-          <arg name="steering_angle_topic" value="$(var steering_angle_topic)"/>
+          <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
+          <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
+          <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
           <arg name="launch_hw" value="$(var launch_driver)"/>
 
           <arg name="sensor_ip" value="10.13.1.119"/>
