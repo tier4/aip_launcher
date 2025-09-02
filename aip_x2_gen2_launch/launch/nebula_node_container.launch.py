@@ -55,10 +55,10 @@ def get_max_extents_from_wheel_center(
     Calculate bounding box extents for wheels when at maximum steering angle.
 
     Given a wheel of a given width and radius, and a maximum steering angle, calculate the maximum
-    extent from the wheel center in vehicle coordinates when the wheel is steered to its maximum 
+    extent from the wheel center in vehicle coordinates when the wheel is steered to its maximum
     angle.
 
-    Result is a tuple containing the maximum lateral (outward from tire center) and longitudinal 
+    Result is a tuple containing the maximum lateral (outward from tire center) and longitudinal
     (forward/backward from tire center) extents.
     """
     assert wheel_width_m > 0
