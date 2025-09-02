@@ -67,7 +67,7 @@
       "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: Packet loss status": default
       "/sensing/lidar/right_lower/hesai_ros_wrapper_node: Packet loss status": default
       "/sensing/lidar/right_upper/hesai_ros_wrapper_node: Packet loss status": default
-      
+
       "/sensing/lidar/front_lower/hesai_ros_wrapper_node: rate bound check": default
       "/sensing/lidar/front_upper/hesai_ros_wrapper_node: rate bound check": default
       "/sensing/lidar/left_lower/hesai_ros_wrapper_node: rate bound check": default
