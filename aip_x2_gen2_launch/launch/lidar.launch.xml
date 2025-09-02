@@ -65,7 +65,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[105.0, 270.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="is_channel_order_top2down" value="true"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -109,7 +109,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="is_channel_order_top2down" value="true"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -153,7 +153,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[130.0, 230.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="118" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -196,7 +196,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[140.0, 230.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="118" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -240,7 +240,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="is_channel_order_top2down" value="true"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -284,7 +284,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[90.0, 270.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="40" />
         <arg name="is_channel_order_top2down" value="true"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -328,7 +328,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[130.0, 230.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="118" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.4"/>
@@ -371,7 +371,7 @@
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
         <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
         <arg name="blockage_range" value="[150.0, 220.0]"/>
-        <arg name="vertical_bins" value ="128" />
+        <arg name="vertical_bins" value="128" />
         <arg name="horizontal_ring_id" value="118" />
         <arg name="is_channel_order_top2down" value="false"/>
         <arg name="horizontal_resolution" value="0.4"/>
