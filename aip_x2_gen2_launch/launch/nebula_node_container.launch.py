@@ -384,6 +384,7 @@ def make_polar_voxel_outlier_filter_node(context):
                     remappings=[
                         ("input", "pointcloud_before_sync"),
                     ],
+                    extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
                 )
             ]
         case "cuda":
