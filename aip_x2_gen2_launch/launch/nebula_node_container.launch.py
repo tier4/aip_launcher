@@ -13,7 +13,11 @@
 # limitations under the License.
 
 import logging
-from math import atan2, cos, pi, sin, sqrt
+from math import atan2
+from math import cos
+from math import pi
+from math import sin
+from math import sqrt
 import os
 
 import launch
@@ -62,9 +66,7 @@ def get_max_extents_from_wheel_center(
     if angle_corner < max_steer_angle_rad:
         max_longitudinal_offset = d_center_to_corner
     else:
-        max_longitudinal_offset = d_center_to_corner * cos(
-            max_steer_angle_rad - angle_corner
-        )
+        max_longitudinal_offset = d_center_to_corner * cos(max_steer_angle_rad - angle_corner)
 
     max_lateral_offset = d_center_to_corner * sin(max_steer_angle_rad + angle_corner)
 
@@ -200,7 +202,7 @@ def make_nebula_node(context, as_composable_node, env=None):
 
 def make_preprocessor_nodes(context):
     vehicle_info = get_vehicle_info(context)
-    
+
     cropbox_parameters_self = create_parameter_dict("input_frame", "output_frame")
     cropbox_parameters_self["negative"] = True
     cropbox_parameters_self["processing_time_threshold_sec"] = 0.01
