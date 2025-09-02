@@ -15,8 +15,7 @@
     secondary_noise_threshold: 2                          # Threshold for classifying noise in secondary returns
     intensity_threshold: 1                                # Minimum intensity value for a point to be considered valid
     primary_return_types: [1, 6, 8, 10]                   # List of return types considered as primary returns
-    visibility_warn_threshold: 0.7                        # Warning threshold for visibility diagnostics
+    visibility_warn_threshold: 0.9                        # Warning threshold for visibility diagnostics
     filter_ratio_error_threshold: 0.5                     # Error threshold for filter ratio diagnostics
     filter_ratio_warn_threshold: 0.7                      # Warning threshold for filter ratio diagnostics
     visibility_error_threshold: 0.8                       # Error threshold for visibility diagnostics
-    visibility_warn_threshold: 0.9                        # Warning threshold for visibility diagnostics
