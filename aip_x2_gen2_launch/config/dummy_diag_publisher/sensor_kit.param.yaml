@@ -20,6 +20,7 @@
       "imu_monitor: yaw_rate_status": default
       "topic_state_monitor_imu_data: imu_topic_status": default
       "gyro_bias_validator: gyro_bias_validator": default
+      "tamagawa_imu_driver: rate bound check": default
 
       # lidar
       "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status": default
@@ -84,6 +85,9 @@
       "uevent_diagnostics_publisher_1: camera5_uevent_diag": default
       "uevent_diagnostics_publisher_1: camera6_uevent_diag": default
       "uevent_diagnostics_publisher_1: camera7_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera8_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera9_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera10_uevent_diag": default
 
       # radar
       "/sensing/radar/front_center/nebula_continental_ars548: Liveness": default
