@@ -15,6 +15,8 @@
   # cspell: ignore gpgsa
   # cspell: ignore gpgsv
   # cspell: ignore SEPPOLANT
+  # cspell: ignore aimplusstatus
+  # cspell: ignore galauthstatus
   ros__parameters:
     device: tcp://192.168.20.102:28784
 
@@ -133,6 +135,8 @@
         attcoveuler: false
         pose: false
         twist: false
+        aimplusstatus: true
+        galauthstatus: true
         # For GNSS Rx only
         gpgsa: false
         gpgsv: false
