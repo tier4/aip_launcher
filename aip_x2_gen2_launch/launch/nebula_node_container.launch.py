@@ -13,6 +13,11 @@
 # limitations under the License.
 
 import logging
+from math import atan2
+from math import cos
+from math import pi
+from math import sin
+from math import sqrt
 import os
 
 import launch
@@ -43,6 +48,40 @@ def get_lidar_make(sensor_name):
     return "unrecognized_sensor_model"
 
 
+def get_max_extents_from_wheel_center(
+    wheel_width_m: float, wheel_radius_m: float, max_steer_angle_rad: float
+):
+    """
+    Calculate bounding box extents for wheels when at maximum steering angle.
+
+    Given a wheel of a given width and radius, and a maximum steering angle, calculate the maximum
+    extent from the wheel center in vehicle coordinates when the wheel is steered to its maximum
+    angle.
+
+    Result is a tuple containing the maximum lateral (outward from tire center) and longitudinal
+    (forward/backward from tire center) extents.
+    """
+    assert wheel_width_m > 0
+    assert wheel_radius_m > 0
+    assert max_steer_angle_rad < 90 / 180 * pi
+
+    w_half = wheel_width_m / 2
+    d_center_to_corner = sqrt(w_half**2 + wheel_radius_m**2)
+    angle_corner = atan2(w_half, wheel_radius_m)
+
+    if angle_corner < max_steer_angle_rad:
+        max_longitudinal_offset = d_center_to_corner
+    else:
+        max_longitudinal_offset = d_center_to_corner * cos(max_steer_angle_rad - angle_corner)
+
+    max_lateral_offset = d_center_to_corner * sin(max_steer_angle_rad + angle_corner)
+
+    assert max_lateral_offset > 0
+    assert max_longitudinal_offset > 0
+
+    return max_lateral_offset, max_longitudinal_offset
+
+
 def get_vehicle_info(context):
     # TODO(TIER IV): Use Parameter Substitution after we drop Galactic support
     # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
@@ -58,6 +97,28 @@ def get_vehicle_info(context):
     p["max_lateral_offset"] = gp["wheel_tread"] / 2.0 + gp["left_overhang"]
     p["min_height_offset"] = 0.0
     p["max_height_offset"] = gp["vehicle_height"]
+
+    wheel_width = gp["wheel_width"]
+    wheel_radius = gp["wheel_radius"]
+    max_steer_angle_rad = gp["max_steer_angle"]
+
+    max_lat_offset, max_lon_offset = get_max_extents_from_wheel_center(
+        wheel_width, wheel_radius, max_steer_angle_rad
+    )
+
+    p["wheels_min_longitudinal_offset"] = gp["wheel_base"] - max_lon_offset
+    p["wheels_max_longitudinal_offset"] = gp["wheel_base"] + max_lon_offset
+    p["wheels_min_lateral_offset"] = -(gp["wheel_tread"] / 2 + max_lat_offset)
+    p["wheels_max_lateral_offset"] = gp["wheel_tread"] / 2 + max_lat_offset
+    p["wheels_min_height_offset"] = 0.0
+
+    # The wheel height is scaled to 110% here (radius * 2) * 1.1 to account for
+    # possible suspension movement. There is no data at full steering on bumpy
+    # ground, so this is hard to verify. Might not be needed at all, or might
+    # need individual tuning for different vehicle platforms.
+    # Leaving it in for now, as it doesn't cause anyone trouble and *might* be needed.
+    p["wheels_max_height_offset"] = wheel_radius * 2.2
+
     return p
 
 
@@ -152,17 +213,29 @@ def make_nebula_node(context, as_composable_node, env=None):
 
 
 def make_preprocessor_nodes(context):
-    cropbox_parameters = create_parameter_dict("input_frame", "output_frame")
-    cropbox_parameters["negative"] = True
-    cropbox_parameters["processing_time_threshold_sec"] = 0.01
-
     vehicle_info = get_vehicle_info(context)
-    cropbox_parameters["min_x"] = vehicle_info["min_longitudinal_offset"]
-    cropbox_parameters["max_x"] = vehicle_info["max_longitudinal_offset"]
-    cropbox_parameters["min_y"] = vehicle_info["min_lateral_offset"]
-    cropbox_parameters["max_y"] = vehicle_info["max_lateral_offset"]
-    cropbox_parameters["min_z"] = vehicle_info["min_height_offset"]
-    cropbox_parameters["max_z"] = vehicle_info["max_height_offset"]
+
+    cropbox_parameters_self = create_parameter_dict("input_frame", "output_frame")
+    cropbox_parameters_self["negative"] = True
+    cropbox_parameters_self["processing_time_threshold_sec"] = 0.01
+
+    cropbox_parameters_self["min_x"] = vehicle_info["min_longitudinal_offset"]
+    cropbox_parameters_self["max_x"] = vehicle_info["max_longitudinal_offset"]
+    cropbox_parameters_self["min_y"] = vehicle_info["min_lateral_offset"]
+    cropbox_parameters_self["max_y"] = vehicle_info["max_lateral_offset"]
+    cropbox_parameters_self["min_z"] = vehicle_info["min_height_offset"]
+    cropbox_parameters_self["max_z"] = vehicle_info["max_height_offset"]
+
+    cropbox_parameters_wheels = create_parameter_dict("input_frame", "output_frame")
+    cropbox_parameters_wheels["negative"] = True
+    cropbox_parameters_wheels["processing_time_threshold_sec"] = 0.01
+
+    cropbox_parameters_wheels["min_x"] = vehicle_info["wheels_min_longitudinal_offset"]
+    cropbox_parameters_wheels["max_x"] = vehicle_info["wheels_max_longitudinal_offset"]
+    cropbox_parameters_wheels["min_y"] = vehicle_info["wheels_min_lateral_offset"]
+    cropbox_parameters_wheels["max_y"] = vehicle_info["wheels_max_lateral_offset"]
+    cropbox_parameters_wheels["min_z"] = vehicle_info["wheels_min_height_offset"]
+    cropbox_parameters_wheels["max_z"] = vehicle_info["wheels_max_height_offset"]
 
     nodes = []
 
@@ -175,7 +248,21 @@ def make_preprocessor_nodes(context):
                 ("input", "pointcloud_raw_ex"),
                 ("output", "self_cropped/pointcloud_ex"),
             ],
-            parameters=[cropbox_parameters],
+            parameters=[cropbox_parameters_self],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+
+    nodes.append(
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
+            name="crop_box_filter_wheels",
+            remappings=[
+                ("input", "self_cropped/pointcloud_ex"),
+                ("output", "wheels_cropped/pointcloud_ex"),
+            ],
+            parameters=[cropbox_parameters_wheels],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
@@ -191,7 +278,7 @@ def make_preprocessor_nodes(context):
                     "/sensing/vehicle_velocity_converter/twist_with_covariance",
                 ),
                 ("~/input/imu", "/sensing/imu/imu_data"),
-                ("~/input/pointcloud", "self_cropped/pointcloud_ex"),
+                ("~/input/pointcloud", "wheels_cropped/pointcloud_ex"),
                 ("~/output/pointcloud", "rectified/pointcloud_ex"),
             ],
             parameters=[
@@ -282,21 +369,27 @@ def make_cuda_preprocessor_nodes(context):
     preprocessor_parameters = {}
     preprocessor_parameters["crop_box.min_x"] = [
         vehicle_info["min_longitudinal_offset"],
+        vehicle_info["wheels_min_longitudinal_offset"],
     ]
     preprocessor_parameters["crop_box.max_x"] = [
         vehicle_info["max_longitudinal_offset"],
+        vehicle_info["wheels_max_longitudinal_offset"],
     ]
     preprocessor_parameters["crop_box.min_y"] = [
         vehicle_info["min_lateral_offset"],
+        vehicle_info["wheels_min_lateral_offset"],
     ]
     preprocessor_parameters["crop_box.max_y"] = [
         vehicle_info["max_lateral_offset"],
+        vehicle_info["wheels_max_lateral_offset"],
     ]
     preprocessor_parameters["crop_box.min_z"] = [
         vehicle_info["min_height_offset"],
+        vehicle_info["wheels_min_height_offset"],
     ]
     preprocessor_parameters["crop_box.max_z"] = [
         vehicle_info["max_height_offset"],
+        vehicle_info["wheels_max_height_offset"],
     ]
 
     return [
