@@ -133,6 +133,8 @@
         attcoveuler: false
         pose: false
         twist: false
+        aimplusstatus: true
+        galauthstatus: true
         # For GNSS Rx only
         gpgsa: false
         gpgsv: false
