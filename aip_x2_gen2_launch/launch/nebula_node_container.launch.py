@@ -308,6 +308,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
+                {"enable_ring_outlier_filter": True},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -359,6 +360,55 @@ def make_agnocast_env(context):
     }
 
 
+def make_polar_voxel_outlier_filter_node(context):
+    parameters = ParameterFile(
+        LaunchConfiguration("polar_voxel_outlier_filter_node_param_file").perform(context),
+        allow_substs=True,
+    )
+
+    mode = LaunchConfiguration("polar_voxel_visibility_estimation_mode").perform(context)
+    node_name = (
+        "polar_voxel_outlier_filter"  # node name should be consistent with metric agent config
+    )
+
+    match mode:
+        case "cpu":
+            return [
+                ComposableNode(
+                    package="autoware_pointcloud_preprocessor",
+                    plugin="autoware::pointcloud_preprocessor::PolarVoxelOutlierFilterComponent",
+                    name=node_name,
+                    parameters=[
+                        parameters,
+                    ],
+                    remappings=[
+                        ("input", "pointcloud_before_sync"),
+                    ],
+                    extra_arguments=[
+                        {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                    ],
+                )
+            ]
+        case "cuda":
+            return [
+                ComposableNode(
+                    package="autoware_cuda_pointcloud_preprocessor",
+                    plugin="autoware::cuda_pointcloud_preprocessor::CudaPolarVoxelOutlierFilterNode",
+                    name=node_name,
+                    parameters=[
+                        parameters,
+                        {"hardware_id": node_name},
+                    ],
+                    remappings=[
+                        ("~/input/pointcloud", "pointcloud_before_sync"),
+                        ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+                    ],
+                )
+            ]
+        case _:
+            return []
+
+
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("pipeline_mode").perform(context)
     use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
@@ -393,6 +443,7 @@ def launch_setup(context, *args, **kwargs):
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+            list_preprocessor_uses = shared_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.append(make_nebula_node(context, True))
@@ -402,23 +453,29 @@ def launch_setup(context, *args, **kwargs):
         case "cuda-all-in-one":
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             shared_container_nodes.append(make_nebula_node(context, True))
+            list_preprocessor_uses = shared_container_nodes
 
             if use_blockage_diag:
                 shared_container_nodes.extend(make_blockage_diag_nodes(context))
         case "cpu":
             lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
+            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
         case "cuda-with-cpu-concat":
             lidar_specific_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
+            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
+
+    # insert polar_voxel_outlier_filter to the same list that pointcloud preprocessor uses
+    list_preprocessor_uses.extend(make_polar_voxel_outlier_filter_node(context))
 
     launch_targets = [set_container_executable, set_container_mt_executable]
 
@@ -513,6 +570,12 @@ def generate_launch_description():
         "Which pointcloud preprocessor pipeline mode to use",
         choices=["cuda", "cpu", "cuda-all-in-one", "cuda-with-cpu-concat"],
     )
+    add_launch_arg(
+        "polar_voxel_visibility_estimation_mode",
+        "disable",
+        "Which polar_voxel visibility estimation mode to use",
+        choices=["cpu", "cuda", "disable"],
+    )
 
     add_launch_arg("dual_return_filter_param_file")
     add_launch_arg(
@@ -534,6 +597,13 @@ def generate_launch_description():
         [
             FindPackageShare("aip_common_sensor_launch"),
             "/config/distortion_corrector_node.param.yaml",
+        ],
+    )
+    add_launch_arg(
+        "polar_voxel_outlier_filter_node_param_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/polar_voxel_outlier_filter_node.param.yaml",
         ],
     )
     add_launch_arg("vertical_bins", "128")
