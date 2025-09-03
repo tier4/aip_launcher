@@ -79,6 +79,8 @@
 
       "concatenate_data: /sensing/lidar/concatenate_data": default
 
+      "polar_voxel_outlier_filter: polar_voxel_outlier_filter: /sensing/lidar/right_upper: visibility_validation": default
+
       # camera
       "v4l2_camera_camera0: camera0_diagnostics": default
       "v4l2_camera_camera1: camera1_diagnostics": default
