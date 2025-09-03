@@ -111,6 +111,12 @@ def get_vehicle_info(context):
     p["wheels_min_lateral_offset"] = -(gp["wheel_tread"] / 2 + max_lat_offset)
     p["wheels_max_lateral_offset"] = gp["wheel_tread"] / 2 + max_lat_offset
     p["wheels_min_height_offset"] = 0.0
+
+    # The wheel height is scaled to 110% here (radius * 2) * 1.1 to account for
+    # possible suspension movement. There is no data at full steering on bumpy
+    # ground, so this is hard to verify. Might not be needed at all, or might
+    # need individual tuning for different vehicle platforms.
+    # Leaving it in for now, as it doesn't cause anyone trouble and *might* be needed.
     p["wheels_max_height_offset"] = wheel_radius * 2.2
 
     return p
