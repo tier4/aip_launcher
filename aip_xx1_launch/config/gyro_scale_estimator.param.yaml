@@ -39,4 +39,4 @@
 
     on_off_correction:
       correct_for_bias: false
-      correct_for_scale: false
+      correct_for_scale: true
