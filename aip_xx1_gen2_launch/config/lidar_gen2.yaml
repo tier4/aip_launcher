@@ -40,9 +40,9 @@ launches:
       sensor_ip: 192.168.1.23
       data_port: 2371
       sync_angle: 90
-      cut_angle: 270.0
+      cut_angle: 269.0
       cloud_min_angle: 90
-      cloud_max_angle: 270
+      cloud_max_angle: 269
   - sensor_type: hesai_XT32
     namespace: side_right
     parameters:
