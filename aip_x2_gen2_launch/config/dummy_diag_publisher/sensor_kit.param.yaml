@@ -19,7 +19,7 @@
       # imu
       "imu_monitor: yaw_rate_status": default
       "topic_state_monitor_imu_data: imu_topic_status": default
-      "gyro_bias_validator: gyro_bias_validator": default
+      "gyro_bias_scale_validator: gyro_bias_scale_validator": default
       "tamagawa_imu_driver: rate bound check": default
 
       # lidar
