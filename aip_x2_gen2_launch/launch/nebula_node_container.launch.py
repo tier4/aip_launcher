@@ -401,7 +401,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {"enable_ring_outlier_filter": True},
+                {"enable_ring_outlier_filter": False},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
