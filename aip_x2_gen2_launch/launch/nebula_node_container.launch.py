@@ -236,6 +236,11 @@ def make_preprocessor_nodes(context):
     cropbox_parameters_wheels["max_y"] = vehicle_info["wheels_max_lateral_offset"]
     cropbox_parameters_wheels["min_z"] = vehicle_info["wheels_min_height_offset"]
     cropbox_parameters_wheels["max_z"] = vehicle_info["wheels_max_height_offset"]
+    distortion_corrector_output = "pointcloud_before_sync"
+    use_ring_based_outlier_filter = False
+    if LaunchConfiguration("enable_ring_based_outlier_filter").perform(context).lower() == "true":
+        distortion_corrector_output = "rectified/pointcloud_ex"
+        use_ring_based_outlier_filter = True
 
     nodes = []
 
@@ -279,7 +284,7 @@ def make_preprocessor_nodes(context):
                 ),
                 ("~/input/imu", "/sensing/imu/imu_data"),
                 ("~/input/pointcloud", "wheels_cropped/pointcloud_ex"),
-                ("~/output/pointcloud", "rectified/pointcloud_ex"),
+                ("~/output/pointcloud", distortion_corrector_output),
             ],
             parameters=[
                 load_composable_node_param(context, "distortion_corrector_node_param_file")
@@ -287,6 +292,8 @@ def make_preprocessor_nodes(context):
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
+    if not use_ring_based_outlier_filter:
+        return nodes
 
     ring_outlier_filter_node_param = ParameterFile(
         param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
@@ -312,7 +319,7 @@ def make_preprocessor_nodes(context):
                 name="ring_outlier_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
+                    ("output", distortion_corrector_output),
                 ],
                 parameters=[
                     ring_outlier_filter_node_param,
@@ -332,7 +339,7 @@ def make_preprocessor_nodes(context):
                 name="dual_return_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
+                    ("output", distortion_corrector_output),
                 ],
                 parameters=[
                     {
@@ -401,7 +408,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {"enable_ring_outlier_filter": False},
+                {"enable_ring_outlier_filter": LaunchConfiguration("enable_ring_based_outlier_filter")},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),
@@ -713,5 +720,6 @@ def generate_launch_description():
     add_launch_arg("point_filters.downsample_mask.path", "")
     add_launch_arg("hires_mode", "true")
     add_launch_arg("diagnostics.packet_loss.error_threshold")
+    add_launch_arg("enable_ring_based_outlier_filter", "false")
 
     return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
