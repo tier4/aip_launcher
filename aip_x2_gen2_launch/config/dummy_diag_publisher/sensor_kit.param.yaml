@@ -20,7 +20,7 @@
       "imu_monitor: yaw_rate_status": default
       "topic_state_monitor_imu_data: imu_topic_status": default
       "gyro_bias_scale_validator: gyro_bias_scale_validator": default
-      "tamagawa_imu_driver: rate bound check": default
+      "/sensing/imu/tamagawa/tag_can_driver: rate bound check": default
 
       # lidar
       "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status": default
@@ -79,7 +79,7 @@
 
       "concatenate_data: /sensing/lidar/concatenate_data": default
 
-      "polar_voxel_outlier_filter: polar_voxel_outlier_filter: /sensing/lidar/right_upper: visibility_validation": default
+      "polar_voxel_outlier_filter: /sensing/lidar/right_upper: visibility_validation": default
 
       # camera
       "v4l2_camera_camera0: camera0_diagnostics": default
