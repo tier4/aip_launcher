@@ -39,6 +39,12 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
+# These are not nice, but currently needed because the vehicle sometimes hits itself.
+# FIXME: Find a better solution.
+SELF_CROP_BOX_FRONT_PADDING = 0.05
+WHEELS_CROP_BOX_SIDE_PADDING = 0.05
+
+
 
 def get_lidar_make(sensor_name):
     if sensor_name[:6].lower() == "pandar":
@@ -220,7 +226,7 @@ def make_preprocessor_nodes(context):
     cropbox_parameters_self["processing_time_threshold_sec"] = 0.01
 
     cropbox_parameters_self["min_x"] = vehicle_info["min_longitudinal_offset"]
-    cropbox_parameters_self["max_x"] = vehicle_info["max_longitudinal_offset"]
+    cropbox_parameters_self["max_x"] = vehicle_info["max_longitudinal_offset"] + SELF_CROP_BOX_FRONT_PADDING
     cropbox_parameters_self["min_y"] = vehicle_info["min_lateral_offset"]
     cropbox_parameters_self["max_y"] = vehicle_info["max_lateral_offset"]
     cropbox_parameters_self["min_z"] = vehicle_info["min_height_offset"]
@@ -232,8 +238,8 @@ def make_preprocessor_nodes(context):
 
     cropbox_parameters_wheels["min_x"] = vehicle_info["wheels_min_longitudinal_offset"]
     cropbox_parameters_wheels["max_x"] = vehicle_info["wheels_max_longitudinal_offset"]
-    cropbox_parameters_wheels["min_y"] = vehicle_info["wheels_min_lateral_offset"]
-    cropbox_parameters_wheels["max_y"] = vehicle_info["wheels_max_lateral_offset"]
+    cropbox_parameters_wheels["min_y"] = vehicle_info["wheels_min_lateral_offset"] - WHEELS_CROP_BOX_SIDE_PADDING
+    cropbox_parameters_wheels["max_y"] = vehicle_info["wheels_max_lateral_offset"] + WHEELS_CROP_BOX_SIDE_PADDING
     cropbox_parameters_wheels["min_z"] = vehicle_info["wheels_min_height_offset"]
     cropbox_parameters_wheels["max_z"] = vehicle_info["wheels_max_height_offset"]
 
