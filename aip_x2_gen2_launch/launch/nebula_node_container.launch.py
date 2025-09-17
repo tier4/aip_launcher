@@ -475,7 +475,7 @@ def make_polar_voxel_outlier_filter_node(context):
                         parameters,
                     ],
                     remappings=[
-                        ("input", "pointcloud_before_sync"),
+                        ("input", "pointcloud_raw_ex"),
                     ],
                     extra_arguments=[
                         {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
@@ -493,8 +493,8 @@ def make_polar_voxel_outlier_filter_node(context):
                         {"hardware_id": node_name},
                     ],
                     remappings=[
-                        ("~/input/pointcloud", "pointcloud_before_sync"),
-                        ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+                        ("~/input/pointcloud", "pointcloud_raw_ex"),
+                        ("~/input/pointcloud/cuda", "pointcloud_raw_ex"),
                     ],
                 )
             ]
