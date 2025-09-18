@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    distance_ratio: 1.03
+    distance_ratio: 1.1
     object_length_threshold: 0.05
     max_rings_num: 128
     max_points_num_per_ring: 4000
