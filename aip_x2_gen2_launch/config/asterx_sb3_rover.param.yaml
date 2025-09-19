@@ -91,6 +91,8 @@
       pose: false
       twist: false
       diagnostics: true
+      aimplusstatus: true
+      galauthstatus: true
       # For GNSS Rx only
       gpgsa: false
       gpgsv: false
