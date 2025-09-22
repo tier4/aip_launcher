@@ -508,6 +508,9 @@ def launch_setup(context, *args, **kwargs):
     env = make_agnocast_env(context) if use_agnocast else {}
 
     use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
+    polar_voxel_outlier_filter_mode = LaunchConfiguration(
+        "polar_voxel_visibility_estimation_mode"
+    ).perform(context)
 
     shared_container_nodes = []
     lidar_specific_container_nodes = []
@@ -567,8 +570,10 @@ def launch_setup(context, *args, **kwargs):
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
 
-    # insert polar_voxel_outlier_filter to the same list that pointcloud preprocessor uses
-    list_preprocessor_uses.extend(make_polar_voxel_outlier_filter_node(context))
+    # If used, insert polar_voxel_outlier_filter to the same list that nebula uses
+    match polar_voxel_outlier_filter_mode:
+        case "cpu" | "cuda":
+            lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
 
     launch_targets = [set_container_executable, set_container_mt_executable]
 
