@@ -508,9 +508,10 @@ def launch_setup(context, *args, **kwargs):
     env = make_agnocast_env(context) if use_agnocast else {}
 
     use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
-    polar_voxel_outlier_filter_mode = LaunchConfiguration(
-        "polar_voxel_visibility_estimation_mode"
-    ).perform(context)
+
+    use_polar_voxel_outlier_filter = (
+        LaunchConfiguration("polar_voxel_visibility_estimation_mode").perform(context) != "disable"
+    )
 
     shared_container_nodes = []
     lidar_specific_container_nodes = []
@@ -539,41 +540,39 @@ def launch_setup(context, *args, **kwargs):
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
-            list_preprocessor_uses = shared_container_nodes
 
-            if use_blockage_diag:
+            if use_blockage_diag or use_polar_voxel_outlier_filter:
                 lidar_specific_container_nodes.append(make_nebula_node(context, True))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
+            if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
-            else:
-                standalone_nodes.append(make_nebula_node(context, False, env))
         case "cuda-all-in-one":
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             shared_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = shared_container_nodes
 
             if use_blockage_diag:
                 shared_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                shared_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case "cpu":
             lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case "cuda-with-cpu-concat":
             lidar_specific_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
-
-    # If used, insert polar_voxel_outlier_filter to the same list that nebula uses
-    match polar_voxel_outlier_filter_mode:
-        case "cpu" | "cuda":
-            lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
 
     launch_targets = [set_container_executable, set_container_mt_executable]
 
