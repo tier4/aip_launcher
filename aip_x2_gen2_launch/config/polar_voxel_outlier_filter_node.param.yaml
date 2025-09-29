@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    publish_noise_cloud: false                             # Publish a separate point cloud containing detected noise points
+    publish_noise_cloud: false                            # Publish a separate point cloud containing detected noise points
     radial_resolution_m: 0.5                              # Voxel grid resolution in the radial (distance) direction, in meters
     azimuth_resolution_rad: 0.0175                        # Voxel grid resolution in the azimuth (horizontal angle) direction, in radians (~1 degree)
     elevation_resolution_rad: 0.0175                      # Voxel grid resolution in the elevation (vertical angle) direction, in radians (~1 degree)
@@ -8,7 +8,7 @@
     min_radius_m: 0.5                                     # Minimum distance from the sensor to include points, in meters
     max_radius_m: 300.0                                   # Maximum distance from the sensor to include points, in meters
     visibility_estimation_max_range_m: 10.0               # Maximum range for estimating point cloud visibility, in meters
-    visibility_estimation_max_secondary_voxel_count: 300  # Max number of secondary voxels to consider in visibility estimation
+    visibility_estimation_max_secondary_voxel_count: 200  # Max number of secondary voxels to consider in visibility estimation
     visibility_estimation_only: true                      # If true, only perform visibility estimation without filtering
     use_return_type_classification: true                  # Use return type information to classify points (e.g., primary/secondary returns)
     filter_secondary_returns: false                       # If true, filter out secondary returns and keep only primary returns
