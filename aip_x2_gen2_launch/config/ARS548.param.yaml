@@ -27,7 +27,7 @@
       rate_bound_status:
         frequency_ok:
           min_hz: 9.0
-          max_hz: 100.0
+          max_hz: 15.0
         frequency_warn:
           min_hz: 8.0
           max_hz: 1000.0
