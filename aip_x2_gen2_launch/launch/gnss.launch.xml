@@ -14,6 +14,7 @@
         <remap from="navsatfix" to="~/nav_sat_fix"/>
         <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
         <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
+        <remap from="atteuler" to="~/atteuler"/>
       </node>
     </group>
 
@@ -36,6 +37,7 @@
         <remap from="navsatfix" to="~/nav_sat_fix"/>
         <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
         <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
+        <remap from="atteuler" to="~/atteuler"/>
       </node>
     </group>
 
