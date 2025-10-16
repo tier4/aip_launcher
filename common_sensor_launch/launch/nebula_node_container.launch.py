@@ -152,6 +152,7 @@ def launch_setup(context, *args, **kwargs):
                         "ptp_switch_type",
                         "ptp_domain",
                         "diag_span",
+                        "udp_socket_receive_buffer_size_bytes",
                     ),
                 },
             ],
@@ -348,6 +349,11 @@ def generate_launch_description():
     add_launch_arg("vertical_bins", "128")
     add_launch_arg("is_channel_order_top2down", "true")
     add_launch_arg("horizontal_resolution", "0.4")
+    add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes",
+        "5400000",
+        "Kernel UDP receive buffer size (SO_RCVBUF) in bytes for data socket",
+    )
     add_launch_arg(
         "blockage_diagnostics_param_file",
         os.path.join(
