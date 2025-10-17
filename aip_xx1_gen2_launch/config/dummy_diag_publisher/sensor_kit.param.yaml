@@ -33,7 +33,7 @@
       "topic_state_monitor_camera10: sensing_topic_status": default
 
       #lidar
-      "concatenate_data: concat_status": default
+      "concatenate_data: /sensing/lidar/concatenate_data": default
 
       "/sensing/lidar/side_left/hesai_ros_wrapper_node: hesai_status": default
       "/sensing/lidar/side_left/hesai_ros_wrapper_node: hesai_ptp": default
