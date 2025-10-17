@@ -6,8 +6,8 @@ launches:
       sensor_frame: hesai_top
       sensor_ip: 192.168.1.201
       data_port: 2368
-      sync_angle: 160
-      cut_angle: 160.0
+      sync_angle: 180
+      cut_angle: 180.0
   - sensor_type: hesai_XT32
     namespace: front_left
     parameters:

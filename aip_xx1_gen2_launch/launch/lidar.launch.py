@@ -82,12 +82,25 @@ def generate_launch_dictionary():
     return path_dictionary
 
 
+def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str) -> dict:
+    # Only NO. 8 vehicle does not have a rear lidar, so we erase the rear lidar entry.
+    if vehicle_id != "8":
+        return config
+
+    config["launches"] = [sensor for sensor in config["launches"] if sensor["namespace"] != "rear"]
+    return config
+
+
 def load_sub_launches_from_yaml(context, *args, **kwargs):
     def load_yaml(yaml_file_path):
         with open(LaunchConfiguration(yaml_file_path).perform(context), "r") as f:
             return yaml.safe_load(f)
 
     config = load_yaml("config_file")
+
+    # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
+    vehicle_id = LaunchConfiguration("vehicle_id").perform(context)
+    config = erase_rear_lidar_entry_depending_on_vehicle_id(config, vehicle_id)
 
     path_dictionary = generate_launch_dictionary()
 
@@ -123,7 +136,6 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         )
         sub_launch_actions.append(sub_launch_action)
 
-    processor_dict = config["preprocessor"]
     sub_launch_actions.append(
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -137,16 +149,9 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
                 ("base_frame", "base_link"),
                 ("use_multithread", "true"),
                 ("use_intra_process", "true"),
+                ("vehicle_id", LaunchConfiguration("vehicle_id")),
                 ("use_pointcloud_container", LaunchConfiguration("use_pointcloud_container")),
                 ("pointcloud_container_name", LaunchConfiguration("pointcloud_container_name")),
-                ("input_topics", join_list_of_arguments(processor_dict["input_topics"])),
-                ("input_offset", join_list_of_arguments(processor_dict["input_offset"])),
-                ("timeout_sec", str(processor_dict["timeout_sec"])),
-                ("input_twist_topic_type", str(processor_dict["input_twist_topic_type"])),
-                (
-                    "publish_synchronized_pointcloud",
-                    str(processor_dict["publish_synchronized_pointcloud"]),
-                ),
             ],
         )
     )
@@ -158,18 +163,19 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
 def generate_launch_description():
     # Define launch arguments
     launch_arguments = []
-    config_file_arg = DeclareLaunchArgument(
-        "config_file",
-        default_value=os.path.join(
-            get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
-        ),
-        description="Path to the configuration file",
+
+    default_config_file_path = os.path.join(
+        get_package_share_directory("aip_xx1_gen2_launch"), "config", "lidar_gen2.yaml"
     )
-    launch_arguments.append(config_file_arg)
 
     def add_launch_arg(name: str, default_value=None, **kwargs):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value, **kwargs))
 
+    add_launch_arg(
+        "config_file",
+        default_config_file_path,
+        description="Path to the configuration file",
+    )
     add_launch_arg("launch_driver", "true")
     add_launch_arg("launch_hw_monitor", "true", description="launch hardware monitor")
     add_launch_arg("host_ip", "192.168.1.11")
