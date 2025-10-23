@@ -15,6 +15,9 @@
       # performance monitoring  ----> To be confirmed in v0.47.0
       # "blockage: blockage_validation": default
 
+      # lidar
+      "concatenate_data: /sensing/lidar/concatenate_data": default
+
       # velodyne
       "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_status": default
       "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_temperature": default
