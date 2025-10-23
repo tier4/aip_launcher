@@ -8,6 +8,7 @@ launches:
       data_port: 2368
       sync_angle: 160
       cut_angle: 160.0
+      udp_socket_receive_buffer_size_bytes: 10800000
   - sensor_type: hesai_XT32
     namespace: front_left
     parameters:
