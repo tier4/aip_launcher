@@ -4,7 +4,7 @@
     has_static_tf_only: false
     rosbag_length: 10.0
     maximum_queue_size: 5
-    timeout_sec: 0.2
+    timeout_sec: 0.09 # under 0.1 sec to avoid waiting for next lidar frame
     is_motion_compensated: true
     publish_synchronized_pointcloud: true
     keep_input_frame_in_synchronized_pointcloud: true
