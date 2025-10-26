@@ -10,6 +10,6 @@
         frequency_ok:
           min_hz: 9.5
         frequency_warn:
-          min_hz: 9.0
+          min_hz: 8.0
     sync_diagnostics:
       topic: /sync_diag/graph_updates
