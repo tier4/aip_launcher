@@ -185,6 +185,7 @@ def make_nebula_node(context, as_composable_node, env=None):
                 "point_filters.downsample_mask.path",
                 "hires_mode",
                 "diagnostics.packet_loss.error_threshold",
+                "udp_socket_receive_buffer_size_bytes",
             ),
             "retry_hw": True,
         },
