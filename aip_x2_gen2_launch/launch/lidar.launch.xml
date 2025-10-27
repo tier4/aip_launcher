@@ -20,6 +20,7 @@
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
+  <arg name="enable_calibration_download" default="false"/>
 
   <arg name="polar_voxel_visibility_estimation_mode" default="cpu">
     <choice value="cpu"/>
@@ -72,6 +73,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png" />
@@ -117,6 +119,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png" />
@@ -162,6 +165,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png" />
@@ -206,6 +210,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png" />
@@ -251,6 +256,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png" />
@@ -296,6 +302,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
@@ -341,6 +348,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png" />
@@ -385,6 +393,7 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png" />
