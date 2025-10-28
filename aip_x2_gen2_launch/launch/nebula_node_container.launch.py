@@ -181,6 +181,7 @@ def make_nebula_node(context, as_composable_node, env=None):
                 "point_filters.downsample_mask.path",
                 "hires_mode",
                 "diagnostics.packet_loss.error_threshold",
+                "udp_socket_receive_buffer_size_bytes",
             ),
             "retry_hw": True,
         },
@@ -651,6 +652,9 @@ def generate_launch_description():
     add_launch_arg("cloud_max_angle", "360", "maximum view angle setting on device")
     add_launch_arg("data_port", "2368", "device data port number")
     add_launch_arg("gnss_port", "2380", "device gnss port number")
+    add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes", "10800000", "UDP socket receive buffer size"
+    )
     add_launch_arg("packet_mtu_size", "1500", "packet mtu size")
     add_launch_arg("rotation_speed", "600", "rotational frequency")
     add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
