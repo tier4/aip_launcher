@@ -154,6 +154,10 @@ def make_nebula_node(context, as_composable_node, env=None):
             LaunchConfiguration("nebula_common_config_file").perform(context),
             allow_substs=True,
         ),
+        ParameterFile(
+            LaunchConfiguration("nebula_model_specific_config_file").perform(context),
+            allow_substs=True,
+        ),
         {
             "sensor_model": sensor_model,
             **create_parameter_dict(
@@ -631,6 +635,16 @@ def generate_launch_description():
             "/config/nebula_hesai_common.param.yaml",
         ],
         description="file containing parameters common to all Nebula instances",
+    )
+    add_launch_arg(
+        "nebula_model_specific_config_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/",
+            LaunchConfiguration("sensor_model"),
+            ".param.yaml",
+        ],
+        description="file containing parameters specific to the sensor model",
     )
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_hw", "true", "do launch driver")
