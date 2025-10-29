@@ -710,7 +710,7 @@ def generate_launch_description():
     add_launch_arg(
         "distortion_corrector_node_param_file",
         [
-            FindPackageShare("aip_common_sensor_launch"),
+            FindPackageShare("aip_x2_gen2_launch"),
             "/config/distortion_corrector_node.param.yaml",
         ],
     )
