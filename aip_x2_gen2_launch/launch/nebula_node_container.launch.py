@@ -703,7 +703,7 @@ def generate_launch_description():
     add_launch_arg(
         "ring_outlier_filter_node_param_file",
         [
-            FindPackageShare("aip_common_sensor_launch"),
+            FindPackageShare("aip_x2_gen2_launch"),
             "/config/ring_outlier_filter_node.param.yaml",
         ],
     )
