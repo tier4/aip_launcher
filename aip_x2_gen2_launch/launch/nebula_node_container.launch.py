@@ -692,7 +692,13 @@ def generate_launch_description():
         choices=["cpu", "cuda", "disable"],
     )
 
-    add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg(
+        "dual_return_filter_param_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/dual_return_filter.param.yaml",
+        ],
+    )
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [
