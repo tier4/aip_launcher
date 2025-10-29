@@ -18,6 +18,7 @@
   </arg>
   <arg name="udp_only" default="false"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
+  <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="distortion_corrector_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/distortion_corrector_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
@@ -78,7 +79,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -124,7 +125,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -170,7 +171,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -215,7 +216,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -261,7 +262,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -307,7 +308,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -353,7 +354,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -398,7 +399,7 @@
         <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>
