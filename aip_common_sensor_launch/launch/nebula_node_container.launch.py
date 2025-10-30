@@ -416,7 +416,9 @@ def generate_launch_description():
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("udp_only", "False", "use UDP only")
-    add_launch_arg("udp_socket_receive_buffer_size_bytes", "5400000", "UDP socket receive buffer size in bytes")
+    add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes", "5400000", "UDP socket receive buffer size in bytes"
+    )
     add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(
