@@ -9,6 +9,7 @@
   <arg name="sensor_ip" default="192.168.1.201"/>
   <arg name="host_ip" default="255.255.255.255"/>
   <arg name="data_port" default="2368"/>
+  <arg name="udp_socket_receive_buffer_size_bytes" default="5400000"/>
   <arg name="scan_phase" default="0.0"/>
   <arg name="cloud_min_angle" default="0"/>
   <arg name="cloud_max_angle" default="360"/>
@@ -28,6 +29,7 @@
     <arg name="sensor_ip" value="$(var sensor_ip)"/>
     <arg name="host_ip" value="$(var host_ip)"/>
     <arg name="data_port" value="$(var data_port)"/>
+    <arg name="udp_socket_receive_buffer_size_bytes" value="$(var udp_socket_receive_buffer_size_bytes)"/>
     <arg name="scan_phase" value="$(var scan_phase)"/>
     <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
     <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
