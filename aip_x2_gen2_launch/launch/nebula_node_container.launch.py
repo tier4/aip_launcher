@@ -180,6 +180,7 @@ def make_nebula_node(context, as_composable_node, env=None):
                 "setup_sensor",
                 "diag_span",
                 "calibration_file",
+                "calibration_download_enabled",
                 "launch_hw",
                 "udp_only",
                 "point_filters.downsample_mask.path",
@@ -730,6 +731,7 @@ def generate_launch_description():
     add_launch_arg("enable_blockage_diag", "true")
 
     add_launch_arg("calibration_file", "")
+    add_launch_arg("calibration_download_enabled")
     add_launch_arg("output_as_sensor_frame", "true", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")
