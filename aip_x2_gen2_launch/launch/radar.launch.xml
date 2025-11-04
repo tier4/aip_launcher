@@ -17,194 +17,128 @@
 
   <group>
     <push-ros-namespace namespace="radar"/>
-    <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_vehicle_msgs std_msgs --wait-for-start"/>
-
-    <group>
-      <push-ros-namespace namespace="front_center"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.114"/>
-        <arg name="frame_id" value="front_center/radar_link"/>
-        <arg name="object_frame" value="base_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="front_left"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.115"/>
-        <arg name="frame_id" value="front_left/radar_link"/>
-        <arg name="object_frame" value="front_left/radar_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="front_right"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.116"/>
-        <arg name="frame_id" value="front_right/radar_link"/>
-        <arg name="object_frame" value="front_right/radar_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="rear_center"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.117"/>
-        <arg name="frame_id" value="rear_center/radar_link"/>
-        <arg name="object_frame" value="base_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="rear_left"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.118"/>
-        <arg name="frame_id" value="rear_left/radar_link"/>
-        <arg name="object_frame" value="base_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <group>
-      <push-ros-namespace namespace="rear_right"/>
-      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/ars548.launch.xml">
-        <arg name="odometry_topic" value="$(var odometry_throttled_topic)"/>
-        <arg name="acceleration_topic" value="$(var acceleration_throttled_topic)"/>
-        <arg name="steering_angle_topic" value="$(var steering_angle_throttled_topic)"/>
-        <arg name="launch_hw" value="$(var launch_driver)"/>
-
-        <arg name="sensor_ip" value="10.13.1.119"/>
-        <arg name="frame_id" value="rear_right/radar_link"/>
-        <arg name="object_frame" value="base_link"/>
-
-        <arg name="sensor_model" value="ARS548"/>
-        <arg name="host_ip" value="10.13.1.166"/>
-        <arg name="multicast_ip" value="224.0.2.2"/>
-        <arg name="data_port" value="42102"/>
-        <arg name="configuration_host_port" value="42401"/>
-        <arg name="configuration_sensor_port" value="42101"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_radar_objects_adapter)/launch/radar_objects_adapter.launch.xml">
-        <arg name="input_radar_objects" value="radar_objects"/>
-        <arg name="input_radar_info" value="radar_info"/>
-        <arg name="output_detections" value="detected_objects"/>
-        <arg name="output_tracks" value="tracked_objects"/>
-        <arg name="param_path" value="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
-      </include>
-    </group>
-
-    <!-- merge radar objects -->
-    <let name="merger_param_path" value="$(find-pkg-share aip_x2_gen2_launch)/config/simple_object_merger.param.yaml"/>
-    <node pkg="autoware_simple_object_merger" exec="simple_object_merger_node" name="simple_object_merger" output="screen">
-      <remap from="~/output/objects" to="detected_objects"/>
-      <param from="$(var merger_param_path)"/>
-    </node>
-
-    <let name="tracked_objects_merger_param_path" value="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
-    <node pkg="autoware_simple_object_merger" exec="simple_tracked_object_merger_node" name="simple_tracked_object_merger" output="screen">
+  
+    <node_container pkg="rclcpp_components" exec="component_container_mt" name="radar_container" namespace="" output="screen">
+      <!-- front_center radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="front_center">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="front_center/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.114"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="front_center">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- front_left radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="front_left">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="front_left/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.115"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="front_left">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- front_right radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="front_right">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="front_right/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.116"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="front_right">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- rear_center radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="rear_center">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="rear_center/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.117"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="rear_center">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- rear_left radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="rear_left">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="rear_left/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.118"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="rear_left">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- rear_right radar -->
+      <composable_node pkg="nebula_ros" plugin="ContinentalARS548RosWrapper" name="nebula_continental_ars548" namespace="rear_right">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml" allow_substs="true"/>
+        <param name="launch_hw" value="$(var launch_driver)"/>
+        <param name="frame_id" value="rear_right/radar_link"/>
+        <param name="sensor_ip" value="10.13.1.119"/>
+        <remap from="odometry_input" to="$(var odometry_throttled_topic)"/>
+        <remap from="acceleration_input" to="$(var acceleration_throttled_topic)"/>
+        <remap from="steering_angle_input" to="$(var steering_angle_throttled_topic)"/>
+        <remap from="diagnostics" to="/diagnostics"/>
+      </composable_node>
+      <composable_node pkg="autoware_radar_objects_adapter" plugin="autoware::RadarObjectsAdapter" name="radar_objects_adapter" namespace="rear_right">
+        <remap from="~/input/objects" to="radar_objects"/>
+        <remap from="~/input/radar_info" to="radar_info"/>
+        <remap from="~/output/detections" to="detected_objects"/>
+        <remap from="~/output/tracks" to="tracked_objects"/>
+        <param from="$(find-pkg-share autoware_radar_objects_adapter)/config/radar_objects_adapter.param.yaml"/>
+      </composable_node>
+      <!-- merge radar objects -->
+      <composable_node pkg="autoware_simple_object_merger" plugin="autoware::simple_object_merger::SimpleDetectedObjectMergerNode" name="simple_object_merger">
+        <remap from="~/output/objects" to="detected_objects"/>
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_object_merger.param.yaml"/>
+      </composable_node>
+      <composable_node pkg="autoware_simple_object_merger" plugin="autoware::simple_object_merger::SimpleTrackedObjectMergerNode" name="simple_tracked_object_merger">
       <remap from="~/output/objects" to="tracked_objects"/>
-      <param from="$(var tracked_objects_merger_param_path)"/>
-    </node>
+      <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
+      </composable_node>
+    </node_container>
+
+    <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_vehicle_msgs std_msgs --wait-for-start"/>
 
   </group>
 </launch>
