@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>data_collection_car_description</name>
+  <version>0.1.0</version>
+  <description>Sensor description for the data collection vehicle</description>
+
+  <maintainer email="gen.shu@newmo.jp">Gen Shu</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <depend>camera_description</depend>
+  <depend>imu_description</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

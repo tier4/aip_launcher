@@ -189,6 +189,7 @@ class LinkType(enum.Enum):
     PANDAR_XT32 = "pandar_xt32"
     PANDAR_QT = "pandar_qt"
     PANDAR_QT128 = "pandar_qt128"
+    ROBOSENSE_M1PLUS = "robosense_m1_plus"
     VELODYNE16 = "velodyne_16"
     VLS128 = "velodyne_128"
     RADAR = "radar"
@@ -223,6 +224,9 @@ def determine_link_type(link_name: str) -> LinkType:
 
     if "livox" in link_name:
         return LinkType.LIVOX
+
+    if "robosense" in link_name or "m1plus" in link_name.lower():
+        return LinkType.ROBOSENSE_M1PLUS
 
     if "velodyne" in link_name:
         if "top" in link_name:
@@ -381,6 +385,10 @@ link_dicts: Dict[LinkType, Dict[str, Union[str, Callable[[Transformation], str]]
     LinkType.LIVOX: {
         "including_file": "$(find livox_description)/urdf/livox_horizon.xacro",
         "string_api": functools.partial(base_string_func, "livox_horizon_macro"),
+    },
+    LinkType.ROBOSENSE_M1PLUS: {
+        "including_file": "$(find data_collection_car_description)/urdf/robosense_m1_plus.xacro",
+        "string_api": functools.partial(base_string_func, "robosense_m1_plus_macro"),
     },
     LinkType.RADAR: {
         "including_file": "$(find radar_description)/urdf/radar.xacro",

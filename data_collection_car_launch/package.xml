@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>data_collection_car_launch</name>
+  <version>0.1.0</version>
+  <description>Launch files for the data collection vehicle sensor kit</description>
+
+  <maintainer email="gen.shu@newmo.jp">Gen Shu</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <depend>aip_common_sensor_launch</depend>
+  <depend>autoware_imu_corrector</depend>
+  <depend>autoware_vehicle_velocity_converter</depend>
+  <depend>data_collection_car_description</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
