@@ -11,6 +11,14 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
   <depend>python3-jinja2</depend>
 
+  <exec_depend>camera_description</exec_depend>
+  <exec_depend>imu_description</exec_depend>
+  <exec_depend>livox_description</exec_depend>
+  <exec_depend>pandar_description</exec_depend>
+  <exec_depend>radar_description</exec_depend>
+  <exec_depend>velodyne_description</exec_depend>
+  <exec_depend>vls_description</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
