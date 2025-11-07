@@ -254,7 +254,7 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="pointcloud_preprocessor",
-        package="rclcpp_components",
+        package="agnocastlib",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=nodes,
         output="both",
@@ -388,13 +388,13 @@ def generate_launch_description():
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
-        "component_container",
+        "agnocast_component_container_cie",
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
         "container_executable",
-        "component_container_mt",
+        "agnocast_component_container_cie",
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 

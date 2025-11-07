@@ -110,8 +110,8 @@ def launch_setup(context, *args, **kwargs):
         condition=LaunchConfigurationEquals("container", ""),
         name="gscam_container",
         namespace="",
-        package="rclcpp_components",
-        executable="component_container_mt",
+        package="agnocastlib",
+        executable="agnocast_component_container_cie",
         composable_node_descriptions=composable_nodes,
         output="screen",
     )

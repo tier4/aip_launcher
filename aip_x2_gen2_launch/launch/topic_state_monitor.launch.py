@@ -177,8 +177,8 @@ def generate_launch_description():
     container = ComposableNodeContainer(
         name="topic_state_monitor_container",
         namespace="topic_state_monitor",
-        package="rclcpp_components",
-        executable="component_container",
+        package="agnocastlib",
+        executable="agnocast_component_container_cie",
         composable_node_descriptions=[
             gnss_topic_monitor,
             imu_topic_monitor,
