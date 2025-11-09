@@ -152,6 +152,7 @@ def launch_setup(context, *args, **kwargs):
                         "ptp_switch_type",
                         "ptp_domain",
                         "diag_span",
+                        "udp_socket_receive_buffer_size_bytes",
                     ),
                 },
             ],
@@ -253,7 +254,7 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="pointcloud_preprocessor",
-        package="rclcpp_components",
+        package="agnocastlib",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=nodes,
         output="both",
@@ -349,6 +350,11 @@ def generate_launch_description():
     add_launch_arg("is_channel_order_top2down", "true")
     add_launch_arg("horizontal_resolution", "0.4")
     add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes",
+        "5400000",
+        "Kernel UDP receive buffer size (SO_RCVBUF) in bytes for data socket",
+    )
+    add_launch_arg(
         "blockage_diagnostics_param_file",
         os.path.join(
             common_sensor_share_dir,
@@ -382,13 +388,13 @@ def generate_launch_description():
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
-        "component_container",
+        "agnocast_component_container_cie",
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
         "container_executable",
-        "component_container_mt",
+        "agnocast_component_container_cie",
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
