@@ -254,7 +254,7 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="pointcloud_preprocessor",
-        package="agnocastlib",
+        package="callback_isolated_executor",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=nodes,
         output="both",
