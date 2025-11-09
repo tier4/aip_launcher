@@ -240,7 +240,7 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name="nebula_node_container",
         namespace="autoware_pointcloud_preprocessor",
-        package="agnocastlib",
+        package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[
             glog_component,
@@ -360,13 +360,13 @@ def generate_launch_description():
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
-        "agnocast_component_container_cie",
+        "component_container",
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
         "container_executable",
-        "agnocast_component_container_cie",
+        "component_container_mt",
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
