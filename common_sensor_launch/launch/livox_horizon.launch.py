@@ -133,8 +133,8 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name="pointcloud_preprocessor_container",
         namespace="livox_pointcloud_preprocessor",
-        package="agnocastlib",
-        executable="agnocast_component_container_cie",
+        package="rclcpp_components",
+        executable="component_container",
         composable_node_descriptions=[
             front_left_crop_box_min_range_component,
             front_center_crop_box_min_range_component,

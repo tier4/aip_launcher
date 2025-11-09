@@ -93,8 +93,8 @@ def launch_setup(context, *args, **kwargs):
     container = ComposableNodeContainer(
         name="livox_horizon",
         namespace="livox_horizon",
-        package="agnocastlib",
-        executable="agnocast_component_container_cie",
+        package="rclcpp_components",
+        executable="component_container",
         composable_node_descriptions=[
             get_crop_box_min_range_component(context, params["frame_id"]),
         ],
