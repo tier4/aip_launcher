@@ -17,6 +17,7 @@
 
   <group>
     <push-ros-namespace namespace="radar"/>
+    <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_vehicle_msgs std_msgs --wait-for-start"/>
 
     <node_container pkg="rclcpp_components" exec="component_container_mt" name="radar_container" namespace="" output="screen">
       <!-- front_center radar -->
@@ -137,8 +138,5 @@
       <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
       </composable_node>
     </node_container>
-
-    <node pkg="topic_tools" exec="transform" name="steer_angle_transform" output="screen" args="/vehicle/status/steering_status /vehicle/status/steering_status_scalar std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)'  --import autoware_vehicle_msgs std_msgs --wait-for-start"/>
-
   </group>
 </launch>
