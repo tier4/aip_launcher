@@ -197,7 +197,7 @@
         <arg name="cloud_max_angle" value="270"/>
         <arg name="return_mode" value="LastStrongest"/>
         <arg name="min_range" value="0.1"/>
-        <arg name="max_range" value="50.0"/>
+        <arg name="max_range" value="12.0"/>
         <arg name="udp_only" value="$(var udp_only)"/>
         <arg name="launch_hw" value="$(var launch_driver)"/>
         <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
