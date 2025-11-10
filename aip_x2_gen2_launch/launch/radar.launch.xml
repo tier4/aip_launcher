@@ -134,8 +134,8 @@
         <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_object_merger.param.yaml"/>
       </composable_node>
       <composable_node pkg="autoware_simple_object_merger" plugin="autoware::simple_object_merger::SimpleTrackedObjectMergerNode" name="simple_tracked_object_merger">
-      <remap from="~/output/objects" to="tracked_objects"/>
-      <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
+        <remap from="~/output/objects" to="tracked_objects"/>
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
       </composable_node>
     </node_container>
   </group>
