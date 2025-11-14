@@ -20,7 +20,7 @@
       blockage:
         status_level:
           ok: 2
-          warn: 1
+          warn: 0
         test_level:
           ok: 1
           warn: 1
