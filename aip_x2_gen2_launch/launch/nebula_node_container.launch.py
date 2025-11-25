@@ -192,6 +192,7 @@ def make_nebula_node(context, as_composable_node, env=None):
         },
     ]
 
+    package_name = "nebula_ros_" + sensor_make.lower()
     node_name = sensor_make.lower() + "_ros_wrapper_node"
     remappings = [
         ("pandar_points", "pointcloud_raw_ex"),
@@ -199,7 +200,7 @@ def make_nebula_node(context, as_composable_node, env=None):
 
     if as_composable_node:
         return ComposableNode(
-            package="nebula_ros",
+            package=package_name,
             plugin=sensor_make + "RosWrapper",
             name=node_name,
             parameters=parameters,
@@ -209,7 +210,7 @@ def make_nebula_node(context, as_composable_node, env=None):
 
     else:
         return Node(
-            package="nebula_ros",
+            package=package_name,
             executable="hesai_ros_wrapper_node",
             name=node_name,
             parameters=parameters,

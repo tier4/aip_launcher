@@ -105,7 +105,7 @@ def make_nebula_nodes(context):
 
     return [
         ComposableNode(
-            package="nebula_ros",
+            package="nebula_ros_" + sensor_make.lower(),
             plugin=sensor_make + "RosWrapper",
             name=sensor_make.lower() + "_ros_wrapper_node",
             parameters=[
