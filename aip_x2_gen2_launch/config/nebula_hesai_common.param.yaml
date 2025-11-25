@@ -5,6 +5,7 @@
     ptp_transport_type: L2
     ptp_switch_type: NON_TSN
     ptp_lock_threshold: 100
+    retro_multi_reflection_filtering: true
     diagnostics:
       pointcloud_publish_rate:
         frequency_ok:
