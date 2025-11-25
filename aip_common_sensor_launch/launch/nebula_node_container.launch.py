@@ -87,7 +87,7 @@ def make_nebula_nodes(context):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
+    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders_" + sensor_make.lower())
 
     # Calibration file
     if sensor_extension is not None:  # Velodyne and Hesai
