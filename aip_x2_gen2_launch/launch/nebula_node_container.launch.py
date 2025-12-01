@@ -318,7 +318,7 @@ def make_preprocessor_nodes(context):
                 name="ring_outlier_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_with_road_surface"),
+                    ("output", "pointcloud_before_sync"),
                 ],
                 parameters=[
                     ring_outlier_filter_node_param,
@@ -338,7 +338,7 @@ def make_preprocessor_nodes(context):
                 name="dual_return_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_with_road_surface"),
+                    ("output", "pointcloud_before_sync"),
                 ],
                 parameters=[
                     {
@@ -402,7 +402,7 @@ def make_preprocessor_nodes(context):
             plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
             name="detection_range_crop_box_filter",
             remappings=[
-                ("input", "pointcloud_with_road_surface"),
+                ("input", "pointcloud_before_sync"),
                 ("output", "pointcloud_with_road_surface_cropped"),
             ],
             parameters=[
@@ -425,7 +425,7 @@ def make_preprocessor_nodes(context):
             remappings=[
                 ("input", "pointcloud_with_road_surface_cropped"),
                 # ("output", "pointcloud_ground"),
-                ("output", "pointcloud_before_sync"),
+                ("output", "obstacle_segmentation/pointcloud"),
             ],
             parameters=[
                 ground_filter_param,
