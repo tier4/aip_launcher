@@ -1,0 +1,146 @@
+[0.247s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'list', '-p', '--base-paths', '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher']
+[0.247s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='list', build_base='build', ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['/home/autoware/x2gen2v4.3/src/autoware/aip_launcher'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], topological_order=False, names_only=False, paths_only=True, topological_graph=False, topological_graph_dot=False, topological_graph_density=False, topological_graph_legend=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x702045353c40>, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0x702045484310>, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0x702045484310>>, mixin_verb=('list',))
+[0.632s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.632s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.632s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.632s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.632s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.632s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher'
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['ignore', 'ignore_ament_install']
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'ignore'
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'ignore_ament_install'
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['colcon_pkg']
+[0.633s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'colcon_pkg'
+[0.633s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['colcon_meta']
+[0.633s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'colcon_meta'
+[0.633s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['ros']
+[0.633s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'ros'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['cmake', 'python']
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'cmake'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'python'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extensions ['python_setup_py']
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher) by extension 'python_setup_py'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extension 'ignore'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extension 'ignore_ament_install'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extensions ['colcon_pkg']
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extension 'colcon_pkg'
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extensions ['colcon_meta']
+[0.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extension 'colcon_meta'
+[0.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extensions ['ros']
+[0.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch) by extension 'ros'
+[0.648s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_common_sensor_launch' with type 'ros.ament_cmake' and name 'aip_common_sensor_launch'
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extensions ['ignore', 'ignore_ament_install']
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extension 'ignore'
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extension 'ignore_ament_install'
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extensions ['colcon_pkg']
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extension 'colcon_pkg'
+[0.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extensions ['colcon_meta']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extension 'colcon_meta'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extensions ['ros']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler) by extension 'ros'
+[0.649s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_urdf_compiler' with type 'ros.ament_cmake' and name 'aip_urdf_compiler'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extensions ['ignore', 'ignore_ament_install']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extension 'ignore'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extension 'ignore_ament_install'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extensions ['colcon_pkg']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extension 'colcon_pkg'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extensions ['colcon_meta']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extension 'colcon_meta'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extensions ['ros']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description) by extension 'ros'
+[0.650s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_description' with type 'ros.ament_cmake' and name 'aip_x1_description'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extension 'ignore'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extension 'ignore_ament_install'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extensions ['colcon_pkg']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extension 'colcon_pkg'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extensions ['colcon_meta']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extension 'colcon_meta'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extensions ['ros']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch) by extension 'ros'
+[0.651s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x1_launch' with type 'ros.ament_cmake' and name 'aip_x1_launch'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extensions ['ignore', 'ignore_ament_install']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extension 'ignore'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extension 'ignore_ament_install'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extensions ['colcon_pkg']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extension 'colcon_pkg'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extensions ['colcon_meta']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extension 'colcon_meta'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extensions ['ros']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description) by extension 'ros'
+[0.652s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_description' with type 'ros.ament_cmake' and name 'aip_x2_description'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extensions ['ignore', 'ignore_ament_install']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extension 'ignore'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extension 'ignore_ament_install'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extensions ['colcon_pkg']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extension 'colcon_pkg'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extensions ['colcon_meta']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extension 'colcon_meta'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extensions ['ros']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description) by extension 'ros'
+[0.653s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_description' with type 'ros.ament_cmake' and name 'aip_x2_gen2_description'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extension 'ignore'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extension 'ignore_ament_install'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extensions ['colcon_pkg']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extension 'colcon_pkg'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extensions ['colcon_meta']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extension 'colcon_meta'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extensions ['ros']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch) by extension 'ros'
+[0.654s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_gen2_launch' with type 'ros.ament_cmake' and name 'aip_x2_gen2_launch'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extension 'ignore'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extension 'ignore_ament_install'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extensions ['colcon_pkg']
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extension 'colcon_pkg'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extensions ['colcon_meta']
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extension 'colcon_meta'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extensions ['ros']
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch) by extension 'ros'
+[0.655s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_x2_launch' with type 'ros.ament_cmake' and name 'aip_x2_launch'
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extensions ['ignore', 'ignore_ament_install']
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extension 'ignore'
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extension 'ignore_ament_install'
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extensions ['colcon_pkg']
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extension 'colcon_pkg'
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extensions ['colcon_meta']
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extension 'colcon_meta'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extensions ['ros']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description) by extension 'ros'
+[0.656s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_description' with type 'ros.ament_cmake' and name 'aip_xx1_description'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extensions ['ignore', 'ignore_ament_install']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extension 'ignore'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extension 'ignore_ament_install'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extensions ['colcon_pkg']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extension 'colcon_pkg'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extensions ['colcon_meta']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extension 'colcon_meta'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extensions ['ros']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description) by extension 'ros'
+[0.657s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_description' with type 'ros.ament_cmake' and name 'aip_xx1_gen2_description'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extension 'ignore'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extension 'ignore_ament_install'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extensions ['colcon_pkg']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extension 'colcon_pkg'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extensions ['colcon_meta']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extension 'colcon_meta'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extensions ['ros']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch) by extension 'ros'
+[0.658s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_gen2_launch' with type 'ros.ament_cmake' and name 'aip_xx1_gen2_launch'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extension 'ignore'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extension 'ignore_ament_install'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extensions ['colcon_pkg']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extension 'colcon_pkg'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extensions ['colcon_meta']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extension 'colcon_meta'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extensions ['ros']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch) by extension 'ros'
+[0.659s] DEBUG:colcon.colcon_core.package_identification:Package '/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/aip_xx1_launch' with type 'ros.ament_cmake' and name 'aip_xx1_launch'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/log) by extensions ['ignore', 'ignore_ament_install']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/log) by extension 'ignore'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/autoware/x2gen2v4.3/src/autoware/aip_launcher/log) ignored
+[0.659s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults

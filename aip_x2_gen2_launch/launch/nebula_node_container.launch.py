@@ -318,7 +318,7 @@ def make_preprocessor_nodes(context):
                 name="ring_outlier_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
+                    ("output", "pointcloud_with_road_surface"),
                 ],
                 parameters=[
                     ring_outlier_filter_node_param,
@@ -338,7 +338,7 @@ def make_preprocessor_nodes(context):
                 name="dual_return_filter",
                 remappings=[
                     ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
+                    ("output", "pointcloud_with_road_surface"),
                 ],
                 parameters=[
                     {
@@ -354,6 +354,86 @@ def make_preprocessor_nodes(context):
                 ],
             )
         )
+
+    # add crop_box to limit points up to max_range described ground_segmentation.param.yaml with format:
+    #     /**
+    #   ros__parameters:
+    #     detection_range_crop_box_filter:
+    #       parameters:
+    #         min_x: -70.0
+    #         max_x: 120.0
+    #         min_y: -75.0
+    #         max_y: 75.0
+    #         margin_max_z: 0.0  # to extend the crop box max_z from vehicle_height
+    #         margin_min_z: -2.5 # to extend the crop box min_z from ground
+    #         negative: False
+    #         processing_time_threshold_sec: 0.01
+    #
+    #     ground_filter:
+    #       plugin: "ground_segmentation::ScanGroundFilterComponent"
+    #       parameters:
+    #         global_slope_max_angle_deg: 10.0
+    #         local_slope_max_angle_deg: 25.0 # recommended 30.0 for non elevation_grid_mode
+    #         split_points_distance_tolerance: 0.2
+    #         use_virtual_ground_point: True
+    #         split_height_distance: 0.2
+    #         non_ground_height_threshold: 0.20
+    #         grid_size_m: 0.5
+    #         grid_mode_switch_radius: 150.0
+    #         gnd_grid_buffer_size: 5
+    #         detection_range_z_max: 3.2
+    #         elevation_grid_mode: true
+    #         use_recheck_ground_cluster: true
+    #         recheck_start_distance: 20.0
+    #         use_lowest_point: true
+    #         low_priority_region_x: -20.0
+    #         center_pcl_shift: 0.0
+    #         radial_divider_angle_deg: 1.0
+    #         # debug parameters
+    #         publish_processing_time_detail: false
+    detection_range_crop_box_filter_param = load_composable_node_param(
+        context, "ground_segmentation_param_file"
+    )["detection_range_crop_box_filter"]["parameters"]
+    detection_range_crop_box_filter_param["input_frame"] = "base_link"
+    detection_range_crop_box_filter_param["output_frame"] = "base_link"
+    nodes.append(
+        ComposableNode(
+            package="autoware_pointcloud_preprocessor",
+            plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
+            name="detection_range_crop_box_filter",
+            remappings=[
+                ("input", "pointcloud_with_road_surface"),
+                ("output", "pointcloud_with_road_surface_cropped"),
+            ],
+            parameters=[
+                detection_range_crop_box_filter_param
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+
+
+    # add ground segmentation node
+    ground_filter_param = load_composable_node_param(
+        context, "ground_segmentation_param_file"
+    )["ground_filter"]["parameters"]
+    nodes.append(
+        ComposableNode(
+            package="autoware_ground_segmentation",
+            plugin="autoware::ground_segmentation::ScanGroundFilterComponent",
+            name="ground_filter",
+            remappings=[
+                ("input", "pointcloud_with_road_surface_cropped"),
+                # ("output", "pointcloud_ground"),
+                ("output", "pointcloud_before_sync"),
+            ],
+            parameters=[
+                ground_filter_param,
+                {"is_agnocast_publish_node": True},
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
 
     return nodes
 
@@ -694,6 +774,13 @@ def generate_launch_description():
     )
 
     add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg(
+        "ground_segmentation_param_file",
+        [
+            FindPackageShare("aip_common_sensor_launch"),
+            "/config/ground_segmentation.param.yaml",
+        ],
+    )
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [
