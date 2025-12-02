@@ -69,13 +69,40 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # load concat or passthrough filter
+    obstacle_pointcloud_concat_and_time_sync_node_param = ParameterFile(
+        param_file=LaunchConfiguration("obstacle_pointcloud_concatenate_and_time_sync_node_param_path").perform(
+            context
+        ),
+        allow_substs=True,
+    )
+    obstacle_pointcloud_concat_remappings = [
+        ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+        ("output", "/perception/obstacle_segmentation/pointcloud"),
+        ("output_info", "/perception/obstacle_segmentation/pointcloud_info"),
+    ]
+    
     concat_loader = LoadComposableNodes(
         composable_node_descriptions=[concat_component],
         target_container=LaunchConfiguration("pointcloud_container_name"),
         condition=IfCondition(LaunchConfiguration("use_concat_filter")),
     )
 
-    return [concat_loader]
+    # add one more concatenation node
+    obstacle_pointcloud_concat_component = ComposableNode(
+        package=concat_package,
+        plugin=concat_plugin,
+        name="obstacle_pointcloud_concatenate_data",
+        remappings=obstacle_pointcloud_concat_remappings,
+        parameters=[obstacle_pointcloud_concat_and_time_sync_node_param],
+        extra_arguments=concat_extra_arguments,
+    )
+    obstacle_pointcloud_concat_loader = LoadComposableNodes(
+        composable_node_descriptions=[obstacle_pointcloud_concat_component],
+        target_container=LaunchConfiguration("pointcloud_container_name"),
+        condition=IfCondition(LaunchConfiguration("use_concat_filter")),
+    )
+
+    return [concat_loader, obstacle_pointcloud_concat_loader]
 
 
 def generate_launch_description():
@@ -90,6 +117,13 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "true")
     add_launch_arg("use_cuda", "false")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
+    add_launch_arg("obstacle_pointcloud_concatenate_and_time_sync_node_param_path",
+        os.path.join(
+            aip_x2_gen2_launch_share_dir,
+            "config",
+            "obstacle_pointcloud_concatenate.param.yaml",
+        ),
+    )
     add_launch_arg(
         "concatenate_and_time_sync_node_param_path",
         os.path.join(
