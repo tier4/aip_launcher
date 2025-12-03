@@ -9,7 +9,7 @@
     publish_synchronized_pointcloud: true
     keep_input_frame_in_synchronized_pointcloud: true
     publish_previous_but_late_pointcloud: false
-    synchronized_pointcloud_postfix: pointcloud
+    synchronized_pointcloud_postfix: pointcloud_after_sync
     input_twist_topic_type: twist
     input_topics: [
                     "/sensing/lidar/rear_upper/obstacle_segmentation/pointcloud", # 0.047

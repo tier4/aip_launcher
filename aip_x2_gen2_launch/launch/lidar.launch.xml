@@ -10,7 +10,7 @@
   <arg name="vehicle_mirror_param_file"/>
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="pipeline_mode" default="cpu">
+  <arg name="pipeline_mode" default="cuda">
     <choice value="cuda"/>
     <choice value="cpu"/>
     <choice value="cuda-all-in-one"/>
@@ -80,6 +80,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -127,6 +128,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -174,6 +176,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -220,6 +223,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -267,6 +271,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -313,7 +318,8 @@
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
-        <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" /> 
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -361,6 +367,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -407,6 +414,7 @@
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/ground_segmentation.param.yaml" />
+        <arg name="cuda_ground_segmentation_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/cuda_ground_segmentation.param.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>

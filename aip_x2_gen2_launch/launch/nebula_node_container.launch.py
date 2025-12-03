@@ -504,6 +504,26 @@ def make_cuda_preprocessor_nodes(context):
         )
     ]
 
+def make_ground_segmentation_nodes(context):
+    ground_segmentation_node_param = load_composable_node_param(
+        context, "cuda_ground_segmentation_param_file"
+    )
+    return [
+        ComposableNode(
+            package="autoware_ground_segmentation_cuda",
+            plugin="autoware::cuda_ground_segmentation::CudaScanGroundSegmentationFilterNode",
+            name="ground_segmentation_cuda_node",
+            parameters=[
+                ground_segmentation_node_param,
+            ],
+            remappings=[
+                ("~/input/pointcloud", "pointcloud_before_sync"),
+                ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+                ("~/output/pointcloud", "obstacle_segmentation/pointcloud"),
+                ("~/output/pointcloud/cuda", "obstacle_segmentation/pointcloud/cuda")
+            ],
+        ),
+    ]
 
 def make_blockage_diag_nodes(context):
     return [
@@ -626,7 +646,7 @@ def launch_setup(context, *args, **kwargs):
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
-
+            lidar_specific_container_nodes.extend(make_ground_segmentation_nodes(context))
             if use_blockage_diag or use_polar_voxel_outlier_filter:
                 lidar_specific_container_nodes.append(make_nebula_node(context, True))
             if use_polar_voxel_outlier_filter:
@@ -774,6 +794,12 @@ def generate_launch_description():
     )
 
     add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg("cuda_ground_segmentation_param_file",
+        [
+            FindPackageShare("aip_common_sensor_launch"),
+            "/config/cuda_ground_segmentation.param.yaml",
+        ],
+    )
     add_launch_arg(
         "ground_segmentation_param_file",
         [

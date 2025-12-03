@@ -33,3 +33,12 @@
         radial_divider_angle_deg: 1.0
         # debug parameters
         publish_processing_time_detail: false
+
+
+
+        min_x: -70.0
+        max_x: 120.0
+        min_y: -75.0
+        max_y: 75.0
+        max_z: 3.2  # to extend the crop box max_z from vehicle_height
+        min_z: -2.5 # to extend the crop box min_z from ground
