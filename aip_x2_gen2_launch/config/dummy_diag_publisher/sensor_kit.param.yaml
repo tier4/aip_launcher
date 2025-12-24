@@ -20,7 +20,7 @@
       "imu_monitor: yaw_rate_status": default
       "topic_state_monitor_imu_data: imu_topic_status": default
       "gyro_bias_scale_validator: gyro_bias_scale_validator": default
-      "/sensing/imu/tamagawa/tag_can_driver: rate bound check": default
+      "/sensing/imu/tamagawa/tag_can_driver: rate_bound_check": default
 
       # lidar
       "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status": default
@@ -50,32 +50,32 @@
       "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_temperature": default
       "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_temperature": default
 
-      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: Functional safety status": default
-      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: functional_safety_status": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: functional_safety_status": default
 
-      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: Packet loss status": default
-      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: packet_loss_status": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: packet_loss_status": default
 
-      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: rate bound check": default
-      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: rate_bound_check": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: rate_bound_check": default
 
       "concatenate_data: /sensing/lidar/concatenate_data": default
 

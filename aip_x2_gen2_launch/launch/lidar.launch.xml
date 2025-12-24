@@ -1,7 +1,7 @@
 <launch>
   <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
 
-  <arg name="launch_driver" default="true"/>
+  <arg name="launch_driver" default="false"/>
   <arg name="setup_sensor" default="true"/>
   <arg name="host_ip" default="192.168.1.11"/>
   <!-- <arg name="host_ip" default="224.0.3.3"/> -->
