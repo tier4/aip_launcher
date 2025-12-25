@@ -4,7 +4,6 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
@@ -48,8 +47,10 @@ def generate_launch_description():
         ],
     )
 
-    return LaunchDescription([
-        param_file_arg,
-        target_container_arg,
-        load,
-    ])
+    return LaunchDescription(
+        [
+            param_file_arg,
+            target_container_arg,
+            load,
+        ]
+    )
