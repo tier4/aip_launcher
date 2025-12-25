@@ -1,0 +1,7 @@
+/**:
+  ros__parameters:
+    topic_names:
+      - /dummy_pointcloud
+      - /another_dummy_pointcloud
+    frame_ids: [lidar_dummy]
+    rate_hz: 10.0
