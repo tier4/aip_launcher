@@ -1,7 +1,15 @@
 /**:
   ros__parameters:
     topic_names:
-      - /dummy_pointcloud
-      - /another_dummy_pointcloud
-    frame_ids: [lidar_dummy]
+      - /sensing/lidar/front_left/pointcloud_before_sync
+      - /sensing/lidar/front_right/pointcloud_before_sync
+      - /sensing/lidar/side_left/pointcloud_before_sync
+      - /sensing/lidar/side_right/pointcloud_before_sync
+      - /sensing/lidar/rear/pointcloud_before_sync
+    frame_ids:
+      - hesai_front_left
+      - hesai_front_right
+      - hesai_side_left
+      - hesai_side_right
+      - hesai_rear
     rate_hz: 10.0
