@@ -13,11 +13,11 @@ YAMLで指定した設定に基づき、**ダミーの `sensor_msgs/PointCloud2`
 
 ## ROS パラメータ
 
-| Parameter | Type | 内容 |
-|---|---|---|
-| `topic_names` | `string[]` | publish するトピック名の配列（必須、1個以上） |
-| `frame_ids` | `string[]` | `header.frame_id` に設定する frame 名。サイズは **1 / topic_names と同数** を許可（1要素なら全トピック共通） |
-| `rate_hz` | `double` | publish 周期 [Hz]（全トピック共通） |
+| Parameter     | Type       | 内容                                                                                                         |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------ |
+| `topic_names` | `string[]` | publish するトピック名の配列（必須、1個以上）                                                                |
+| `frame_ids`   | `string[]` | `header.frame_id` に設定する frame 名。サイズは **1 / topic_names と同数** を許可（1要素なら全トピック共通） |
+| `rate_hz`     | `double`   | publish 周期 [Hz]（全トピック共通）                                                                          |
 
 ### YAML例（`config/topic_info.param.yaml`）
 
