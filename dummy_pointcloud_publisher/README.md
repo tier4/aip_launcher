@@ -33,6 +33,7 @@ YAMLで指定した**ダミーの `sensor_msgs/PointCloud2` トピック**を pu
     frame_ids: [base_link]
     rate_hz: 10.0
 ```
+
 ```yaml
 /**:
   ros__parameters:
@@ -73,7 +74,6 @@ ros2 launch dummy_pointcloud_publisher dummy_pointcloud_publisher.launch.xml
 ```bash
 ros2 launch dummy_pointcloud_publisher load_into_existing_container.launch.py
 ```
-
 
 ---
 
