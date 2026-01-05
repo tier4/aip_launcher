@@ -21,7 +21,7 @@ def generate_launch_description():
     param_file_arg = DeclareLaunchArgument(
         "param_file",
         default_value=default_param_path,
-        description="Path to ROS2 parameter YAML",
+        description="Path to ROS 2 parameter YAML",
     )
 
     # 例: /perception/perception_container など、既存コンテナのフル名を指定

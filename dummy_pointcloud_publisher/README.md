@@ -53,7 +53,7 @@ ros2 launch dummy_pointcloud_publisher dummy_pointcloud_publisher.launch.xml
 既に起動している `component_container`（例：Autoware の node_container）に対して、Composable Node を追加ロードします。
 
 ```bash
-ros2 launch dummy_pointcloud_publisher load_dummy_into_existing_container.launch.py \
+ros2 launch dummy_pointcloud_publisher load_into_existing_container.launch.py \
   target_container:=/dummy_container \
   param_file:=/path/to/topic_info.param.yaml
 ```

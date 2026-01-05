@@ -36,13 +36,13 @@ DummyPointCloudPublisher::DummyPointCloudPublisher(const rclcpp::NodeOptions & o
     RCLCPP_ERROR(this->get_logger(), "Parameter 'topic_names' is empty.");
   }
 
+  const size_t n = topic_names_.size();
   const auto frames = expandOrValidate<std::string>(frame_ids_, n, "frame_ids");
 
   // --- QoS ---
   const auto qos = rclcpp::SensorDataQoS();
 
   // --- create publishers & templates ---
-  const size_t n = topic_names_.size();
   streams_.reserve(n);
   for (size_t i = 0; i < n; ++i) {
     Stream s;
