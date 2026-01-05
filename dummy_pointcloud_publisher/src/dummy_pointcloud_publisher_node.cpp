@@ -24,11 +24,13 @@
 namespace dummy_pointcloud_publisher
 {
 
-DummyPointCloudPublisher::DummyPointCloudPublisher(const rclcpp::NodeOptions & options)
+DummyPointCloudPublisher::DummyPointCloudPublisher(
+  const rclcpp::NodeOptions & options)
 : rclcpp::Node("dummy_pointcloud_publisher", options)
 {
   // --- parameters ---
-  topic_names_ = this->declare_parameter<std::vector<std::string>>("topic_names");
+  topic_names_ =
+    this->declare_parameter<std::vector<std::string>>("topic_names");
   frame_ids_ = this->declare_parameter<std::vector<std::string>>("frame_ids");
   rate_hz_ = this->declare_parameter<double>("rate_hz");
 
@@ -49,13 +51,16 @@ DummyPointCloudPublisher::DummyPointCloudPublisher(const rclcpp::NodeOptions & o
     s.topic_name = topic_names_[i];
     s.frame_id = frames[i];
 
-    s.pub = this->create_publisher<sensor_msgs::msg::PointCloud2>(s.topic_name, qos);
+    s.pub = this->create_publisher<sensor_msgs::msg::PointCloud2>(
+      s.topic_name,
+      qos);
     s.msg = makePointCloudTemplate(s.frame_id);
 
     streams_.push_back(std::move(s));
 
-    RCLCPP_INFO(this->get_logger(), "Stream[%zu]: topic=%s frame_id=%s",
-      i, streams_[i].topic_name.c_str(), streams_[i].frame_id.c_str());
+    RCLCPP_INFO(
+      this->get_logger(), "Stream[%zu]: topic=%s frame_id=%s", i,
+      streams_[i].topic_name.c_str(), streams_[i].frame_id.c_str());
   }
 
   // --- single timer publishes all topics ---
@@ -64,14 +69,17 @@ DummyPointCloudPublisher::DummyPointCloudPublisher(const rclcpp::NodeOptions & o
     std::chrono::duration_cast<std::chrono::nanoseconds>(period),
     std::bind(&DummyPointCloudPublisher::onTimer, this));
 
-  RCLCPP_INFO(this->get_logger(), "Started. rate_hz=%.3f streams=%zu", rate_hz_, streams_.size());
+  RCLCPP_INFO(
+    this->get_logger(), "Started. rate_hz=%.3f streams=%zu", rate_hz_,
+    streams_.size());
 }
 
 void DummyPointCloudPublisher::onTimer()
 {
   const auto stamp = this->now();
   for (auto & s : streams_) {
-    s.msg.header.stamp = stamp;  // stampだけ更新
+    // stampだけ更新
+    s.msg.header.stamp = stamp;
     s.pub->publish(s.msg);
   }
 }
@@ -139,9 +147,11 @@ std::vector<T> DummyPointCloudPublisher::expandOrValidate(
     return v;
   }
   throw std::runtime_error(
-    "parameter '" + param_name + "' size must be 1, or topic_names.size()");
+          "parameter '" + param_name +
+          "' size must be 1, or topic_names.size()");
 }
 
 }  // namespace dummy_pointcloud_publisher
 
-RCLCPP_COMPONENTS_REGISTER_NODE(dummy_pointcloud_publisher::DummyPointCloudPublisher)
+RCLCPP_COMPONENTS_REGISTER_NODE(
+  dummy_pointcloud_publisher::DummyPointCloudPublisher)

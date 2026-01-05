@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP
-#define DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP
+#ifndef DUMMY_POINTCLOUD_PUBLISHER__DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP_
+#define DUMMY_POINTCLOUD_PUBLISHER__DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP_
 
 #include <string>
 #include <vector>
@@ -36,14 +36,17 @@ private:
     std::string frame_id;
 
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub;
-    sensor_msgs::msg::PointCloud2 msg;  // 再利用する（header.stampだけ更新）
+    sensor_msgs::msg::PointCloud2 msg;
   };
 
   void onTimer();
-  sensor_msgs::msg::PointCloud2 makePointCloudTemplate(const std::string & frame_id) const;
+  sensor_msgs::msg::PointCloud2
+  makePointCloudTemplate(const std::string & frame_id) const;
 
   template<class T>
-  std::vector<T> expandOrValidate(const std::vector<T> & v, size_t n, const std::string & param_name) const;
+  std::vector<T> expandOrValidate(
+    const std::vector<T> & v, size_t n,
+    const std::string & param_name) const;
 
   // parameters
   std::vector<std::string> topic_names_;
@@ -59,4 +62,4 @@ private:
 
 }  // namespace dummy_pointcloud_publisher
 
-#endif  // DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP
+#endif  // DUMMY_POINTCLOUD_PUBLISHER__DUMMY_POINTCLOUD_PUBLISHER_NODE_HPP_

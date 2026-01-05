@@ -24,38 +24,38 @@ from launch_ros.parameter_descriptions import ParameterFile
 
 
 def generate_launch_description():
-    pkg_name = "dummy_pointcloud_publisher"
+    pkg_name = 'dummy_pointcloud_publisher'
     default_param_path = os.path.join(
         get_package_share_directory(pkg_name),
-        "config",
-        "topic_info.param.yaml",
+        'config',
+        'topic_info.param.yaml',
     )
 
     param_file_arg = DeclareLaunchArgument(
-        "param_file",
+        'param_file',
         default_value=default_param_path,
-        description="Path to ROS 2 parameter YAML",
+        description='Path to ROS 2 parameter YAML',
     )
 
     # 例: /perception/perception_container など、既存コンテナのフル名を指定
     target_container_arg = DeclareLaunchArgument(
-        "target_container",
-        default_value="/pointcloud_container",
-        description="Target container name",
+        'target_container',
+        default_value='/pointcloud_container',
+        description='Target container name',
     )
 
     param_file = ParameterFile(
-        LaunchConfiguration("param_file"),
+        LaunchConfiguration('param_file'),
         allow_substs=True,
     )
 
     load = LoadComposableNodes(
-        target_container=LaunchConfiguration("target_container"),
+        target_container=LaunchConfiguration('target_container'),
         composable_node_descriptions=[
             ComposableNode(
                 package=pkg_name,
-                plugin="dummy_pointcloud_publisher::DummyPointCloudPublisher",
-                name="dummy_pointcloud_publisher",
+                plugin='dummy_pointcloud_publisher::DummyPointCloudPublisher',
+                name='dummy_pointcloud_publisher',
                 parameters=[param_file],
             )
         ],
