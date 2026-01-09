@@ -5,6 +5,7 @@
   <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_fusion, lidar, camera"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <arg name="use_opencl_preprocess_sensing" default="false" description="use OpenCL implementation for pointcloud preprocessing"/>
 
   <group>
 
@@ -14,6 +15,7 @@
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="use_opencl_preprocess_sensing" value="$(var use_opencl_preprocess_sensing)"/>
     </include>
 
     <!-- Camera Driver -->

@@ -219,6 +219,63 @@ def make_cuda_preprocessor_nodes(context):
     ]
 
 
+def make_opencl_preprocessor_nodes(context):
+    # Vehicle parameters
+    vehicle_info = get_vehicle_info(context)
+    mirror_info = load_composable_node_param(context, "vehicle_mirror_param_file")
+
+    # Pointcloud preprocessor parameters
+    opencl_preprocessor_param = ParameterFile(
+        param_file=LaunchConfiguration("opencl_pointcloud_preprocessor_param_path").perform(context),
+        allow_substs=True,
+    )
+
+    preprocessor_parameters = {}
+    preprocessor_parameters["crop_box.min_x"] = [
+        vehicle_info["min_longitudinal_offset"],
+        mirror_info["min_longitudinal_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_x"] = [
+        vehicle_info["max_longitudinal_offset"],
+        mirror_info["max_longitudinal_offset"],
+    ]
+    preprocessor_parameters["crop_box.min_y"] = [
+        vehicle_info["min_lateral_offset"],
+        mirror_info["min_lateral_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_y"] = [
+        vehicle_info["max_lateral_offset"],
+        mirror_info["max_lateral_offset"],
+    ]
+    preprocessor_parameters["crop_box.min_z"] = [
+        vehicle_info["min_height_offset"],
+        mirror_info["min_height_offset"],
+    ]
+    preprocessor_parameters["crop_box.max_z"] = [
+        vehicle_info["max_height_offset"],
+        mirror_info["max_height_offset"],
+    ]
+
+    return [
+        ComposableNode(
+            package="autoware_opencl_pointcloud_preprocessor",
+            plugin="autoware::opencl_pointcloud_preprocessor::OpenCLPointcloudPreprocessorNode",
+            name="opencl_pointcloud_preprocessor_node",
+            parameters=[
+                preprocessor_parameters,
+                opencl_preprocessor_param,
+            ],
+            remappings=[
+                ("~/input/pointcloud", "pointcloud_raw_ex"),
+                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+                ("~/input/imu", "/sensing/imu/imu_data"),
+                ("~/output/pointcloud", "pointcloud_before_sync"),
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    ]
+
+
 def make_preprocessor_nodes(context):
     # Vehicle parameters
     vehicle_info = get_vehicle_info(context)
@@ -357,7 +414,9 @@ def launch_setup(context, *args, **kwargs):
     nodes.extend(make_common_nodes(context))
     nodes.extend(make_nebula_nodes(context))
 
-    if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
+    if IfCondition(LaunchConfiguration("use_opencl_preprocess_sensing")).evaluate(context):
+        nodes.extend(make_opencl_preprocessor_nodes(context))
+    elif IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
         nodes.extend(make_cuda_preprocessor_nodes(context))
     else:
         nodes.extend(make_preprocessor_nodes(context))
@@ -444,6 +503,11 @@ def generate_launch_description():
         "False",
         "Use the cuda implementation of the pointcloud preprocessor. When using the CUDA implementations for both concatenation and the preprocessor, requires use_shared_container to be enabled",
     )
+    add_launch_arg(
+        "use_opencl_preprocess_sensing",
+        "False",
+        "Use the OpenCL implementation of the pointcloud preprocessor for FPGA/GPU acceleration",
+    )
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
     add_launch_arg("ptp_switch_type", "TSN")
@@ -485,6 +549,15 @@ def generate_launch_description():
             "ring_outlier_filter_node.param.yaml",
         ),
         description="path to parameter file of ring outlier filter node",
+    )
+    add_launch_arg(
+        "opencl_pointcloud_preprocessor_param_path",
+        os.path.join(
+            get_package_share_directory("autoware_opencl_pointcloud_preprocessor"),
+            "config",
+            "opencl_pointcloud_preprocessor.param.yaml",
+        ),
+        description="path to parameter file of OpenCL pointcloud preprocessor node",
     )
 
     set_container_executable = SetLaunchConfiguration(

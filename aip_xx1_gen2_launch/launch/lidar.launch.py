@@ -128,6 +128,10 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     base_parameters["use_cuda_preprocessor"] = LaunchConfiguration("use_cuda_preprocessor").perform(
         context
     )
+    # Set OpenCL-related parameters
+    base_parameters["use_opencl_preprocess_sensing"] = LaunchConfiguration("use_opencl_preprocess_sensing").perform(
+        context
+    )
 
     # Create launch actions for each lidar
     sub_launch_actions = []
@@ -220,6 +224,7 @@ def generate_launch_description():
     # However, this approach lacks fault tolerance, so will not be adopted for a while.
     add_launch_arg("use_shared_container", "false")
     add_launch_arg("use_cuda_preprocessor", "true")
+    add_launch_arg("use_opencl_preprocess_sensing", "false")
     # ====================================================================================
 
     # Create launch description with the config_file argument
