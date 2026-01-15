@@ -126,6 +126,7 @@ ros2 launch dummy_pointcloud_publisher dummy_pointcloud_publisher.launch.xml
 ros2 topic list | grep pointcloud
 ```
 
+##### Terminal output
 ```text
 /sensing/lidar/front_left/pointcloud_before_sync
 /sensing/lidar/front_right/pointcloud_before_sync
@@ -140,6 +141,7 @@ ros2 topic list | grep pointcloud
 ros2 topic echo /sensing/lidar/front_left/pointcloud_before_sync --once
 ```
 
+##### Terminal output
 ```text
 header:
   stamp:
