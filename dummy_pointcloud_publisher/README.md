@@ -95,6 +95,7 @@ Then run step (2) in another terminal to verify communication.
 ## Verification / Expected Output (How to Run)
 
 This section shows **example command outputs** for verifying that the package is working.
+
 > NOTE: The outputs below are placeholders. Please replace them with the actual logs from your environment.
 
 ---
@@ -231,6 +232,7 @@ ros2 component list /pointcloud_container
 ```
 
 ##### Terminal output
+
 ```text
 1  /dummy_pointcloud_publisher
 ```
@@ -242,6 +244,7 @@ ros2 topic list | grep pointcloud
 ```
 
 ##### Terminal output
+
 ```text
 /sensing/lidar/front_left/pointcloud_before_sync
 /sensing/lidar/front_right/pointcloud_before_sync
@@ -257,6 +260,7 @@ ros2 topic echo /sensing/lidar/front_left/pointcloud_before_sync --once
 ```
 
 ##### Terminal output
+
 ```text
 header:
   stamp:
@@ -296,6 +300,3 @@ row_step: 0
 data: []
 is_dense: true
 ```
-
-
-
