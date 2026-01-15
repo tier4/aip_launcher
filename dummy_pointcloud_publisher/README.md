@@ -13,11 +13,11 @@ It is implemented as a **Composable Node (component)**, so you can **load it int
 
 ## ROS パラメータ
 
-| Parameter     | Type       | Description |
-| ------------- | ---------- | ----------- |
-| `topic_names` | `string[]` | Array of topic names to publish (required, at least one) |
+| Parameter     | Type       | Description                                                                                                                       |
+| ------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `topic_names` | `string[]` | Array of topic names to publish (required, at least one)                                                                          |
 | `frame_ids`   | `string[]` | Frame names to set in `header.frame_id`. Size can be **1 or the same as `topic_names`** (if 1 element, it is used for all topics) |
-| `rate_hz`     | `double`   | Publish rate in [Hz] (shared for all topics) |
+| `rate_hz`     | `double`   | Publish rate in [Hz] (shared for all topics)                                                                                      |
 
 ### YAML examples（`config/topic_info.param.yaml`）
 
