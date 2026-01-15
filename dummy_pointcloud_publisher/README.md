@@ -73,7 +73,7 @@ Adds `dummy_pointcloud_publisher` into an already running `component_container` 
 
 ```bash
 ros2 launch dummy_pointcloud_publisher load_into_existing_container.launch.py
-  target_container:=/dummy_container
+  target_container:=/pointcloud_container
 ```
 
 ---
