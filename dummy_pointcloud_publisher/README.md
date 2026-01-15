@@ -1,25 +1,25 @@
 # dummy_pointcloud_publisher
 
-YAMLで指定した**ダミーの `sensor_msgs/PointCloud2` トピック**を publish する ROS 2（Humble想定）パッケージです。
-コンポーネント（Composable Node）として実装しており、**既存のコンテナへロード**して利用できます。
+This is a ROS 2 (Humble assumed) package that **publishes dummy `sensor_msgs/PointCloud2` topics** specified in a YAML file.
+It is implemented as a **Composable Node (component)**, so you can **load it into an existing container** and use it there.
 
-## 機能概要
+## Overview
 
-- YAMLファイルで指定した **複数トピック**に対して `PointCloud2` を出力
-- `QoS` は LiDAR 代替用途を想定し `SensorDataQoS` を使用
-- 点群は基本 **空（width=0）** のダミー
+- Publishes `PointCloud2` to **multiple topics** specified in a YAML file
+- Uses `SensorDataQoS`, assuming usage as a LiDAR substitute
+- The point cloud is basically a dummy with **no points (width=0)**
 
 ---
 
 ## ROS パラメータ
 
-| Parameter     | Type       | 内容                                                                                                         |
-| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------ |
-| `topic_names` | `string[]` | publish するトピック名の配列（必須、1個以上）                                                                |
-| `frame_ids`   | `string[]` | `header.frame_id` に設定する frame 名。サイズは **1 / topic_names と同数** を許可（1要素なら全トピック共通） |
-| `rate_hz`     | `double`   | publish 周期 [Hz]（全トピック共通）                                                                          |
+| Parameter     | Type       | Description |
+| ------------- | ---------- | ----------- |
+| `topic_names` | `string[]` | Array of topic names to publish (required, at least one) |
+| `frame_ids`   | `string[]` | Frame names to set in `header.frame_id`. Size can be **1 or the same as `topic_names`** (if 1 element, it is used for all topics) |
+| `rate_hz`     | `double`   | Publish rate in [Hz] (shared for all topics) |
 
-### YAML例（`config/topic_info.param.yaml`）
+### YAML examples（`config/topic_info.param.yaml`）
 
 ```yaml
 /**:
@@ -54,12 +54,12 @@ YAMLで指定した**ダミーの `sensor_msgs/PointCloud2` トピック**を pu
 
 ---
 
-## 起動方法
+## How to Run
 
-### 1) ノード単体を起動（launch.xml）
+### 1) Run as a standalone node (launch.xml)
 
-`dummy_pointcloud_publisher.launch.xml` を起動すると、ノード単体でダミートピックを publish します。
-（YAMLを読み込んでパラメータを渡す前提）
+Launching `dummy_pointcloud_publisher.launch.xml` will publish the dummy topics as a standalone node.
+(It assumes parameters are provided by loading the YAML.)
 
 ```bash
 ros2 launch dummy_pointcloud_publisher dummy_pointcloud_publisher.launch.xml
@@ -67,24 +67,27 @@ ros2 launch dummy_pointcloud_publisher dummy_pointcloud_publisher.launch.xml
 
 ---
 
-### 2) 既存コンテナへロード（Python launch）
+### 2) Load into an existing container (Python launch)
 
-既に起動している `component_container`（デフォルト: `/pointcloud_container`）に対して、`dummy_pointcloud_publisher` を追加ロードします。
+Adds `dummy_pointcloud_publisher` into an already running `component_container` (default: `/pointcloud_container`).
 
 ```bash
 ros2 launch dummy_pointcloud_publisher load_into_existing_container.launch.py
+  target_container:=/dummy_container
 ```
 
 ---
 
-### 3) テスト用：空コンテナを起動（Python launch）
+- `target_container`: destination container name
 
-ロード先コンテナが無い場合、テスト用に **空のコンポーネントコンテナ**だけを起動できます。
+### 3) For testing: launch an empty container (Python launch)
+
+If there is no destination container, you can launch an **empty component container** for testing.
 
 ```bash
 ros2 launch dummy_pointcloud_publisher empty_container.launch.py
 ```
 
-別ターミナルで 2) のロードを実行して疎通確認します。
+Then run step (2) in another terminal to verify communication.
 
 ---
