@@ -11,7 +11,7 @@ It is implemented as a **Composable Node (component)**, so you can **load it int
 
 ---
 
-## ROS パラメータ
+## ROS Parameters
 
 | Parameter     | Type       | Description                                                                                                                       |
 | ------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
