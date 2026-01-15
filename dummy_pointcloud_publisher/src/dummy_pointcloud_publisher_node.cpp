@@ -78,7 +78,7 @@ void DummyPointCloudPublisher::onTimer()
 {
   const auto stamp = this->now();
   for (auto & s : streams_) {
-    // stampだけ更新
+    // update only the stamp
     s.msg.header.stamp = stamp;
     s.pub->publish(s.msg);
   }
@@ -90,7 +90,7 @@ sensor_msgs::msg::PointCloud2 DummyPointCloudPublisher::makePointCloudTemplate(
   sensor_msgs::msg::PointCloud2 msg;
   msg.header.frame_id = frame_id;
 
-  // x,y,z float32 の最低限のPointCloud2
+  // minimum required fields for PointCloud2: x,y,z float32
   msg.height = 1;
   msg.width = 0;
 

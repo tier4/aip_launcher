@@ -25,13 +25,13 @@ def generate_launch_description():
         description="Composable node container name",
     )
 
-    # MultiThreaded のコンテナ（基本これでOK）
+    # ComposableNodeContainer for MultiThreaded
     container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
-        composable_node_descriptions=[],  # ★何もロードしない
+        composable_node_descriptions=[],
         output="screen",
     )
 

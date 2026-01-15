@@ -37,7 +37,7 @@ def generate_launch_description():
         description="Path to ROS 2 parameter YAML",
     )
 
-    # 例: /perception/perception_container など、既存コンテナのフル名を指定
+    # Specify the full name of an existing container, e.g., /perception/perception_container
     target_container_arg = DeclareLaunchArgument(
         "target_container",
         default_value="/pointcloud_container",
