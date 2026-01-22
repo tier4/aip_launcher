@@ -86,15 +86,15 @@ def make_common_nodes(context):
 def make_nebula_nodes(context):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
-    sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_decoders")
+    sensor_vendor, sensor_extension = get_lidar_make(sensor_model)
+    sensor_vendor_lower = sensor_vendor.lower()
+    nebula_vendor_decoders_share_dir = get_package_share_directory(f"nebula_{sensor_vendor_lower}_decoders")
 
     # Calibration file
     if sensor_extension is not None:  # Velodyne and Hesai
         sensor_calib_fp = os.path.join(
-            nebula_decoders_share_dir,
+            nebula_vendor_decoders_share_dir,
             "calibration",
-            sensor_make.lower(),
             sensor_model + sensor_extension,
         )
         assert os.path.exists(
@@ -105,9 +105,9 @@ def make_nebula_nodes(context):
 
     return [
         ComposableNode(
-            package="nebula_ros",
-            plugin=sensor_make + "RosWrapper",
-            name=sensor_make.lower() + "_ros_wrapper_node",
+            package="nebula_" + sensor_vendor_lower,
+            plugin=sensor_vendor + "RosWrapper",
+            name=sensor_vendor_lower + "_ros_wrapper_node",
             parameters=[
                 ParameterFile(
                     LaunchConfiguration("nebula_common_config_file").perform(context),
