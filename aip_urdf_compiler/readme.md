@@ -20,25 +20,23 @@ The aip_urdf_compiler is a standalone Python script for generating URDF (Unified
 To generate URDF files for your description package, manually run the `compile_urdf.py` script:
 
 ```bash
-python3 scripts/compile_urdf.py <template_directory> <calibration_directory> <output_directory> <project_name>
+python3 scripts/compile_urdf.py <calibration_directory> <output_directory>
 ```
 
 **Parameters:**
 
-- `<template_directory>`: Path to the templates directory (e.g., `aip_urdf_compiler/templates`)
 - `<calibration_directory>`: Path to your config directory containing calibration YAML files
 - `<output_directory>`: Path to your URDF output directory
-- `<project_name>`: Name of your project/package
 
 **Example:**
 
 ```bash
 python3 aip_urdf_compiler/scripts/compile_urdf.py \
-    aip_urdf_compiler/templates \
     aip_urdf_compiler/example_config \
-    aip_urdf_compiler/example_urdf \
-    aip_urdf_compiler_example
+    aip_urdf_compiler/example_urdf
 ```
+
+**Note:** The template directory is automatically resolved relative to the script location (`../templates` from the script).
 
 ### Configuration Files
 

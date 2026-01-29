@@ -393,10 +393,13 @@ link_dicts: Dict[LinkType, Dict[str, Union[str, Callable[[Transformation], str]]
 
 
 def main(
-    template_directory: str,
     calibration_directory: str,
     output_directory: str,
 ):
+    # Get template directory relative to this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    template_directory = os.path.join(script_dir, "..", "templates")
+
     os.makedirs(output_directory, exist_ok=True)
     # Load the template
     with open(os.path.join(template_directory, "sensors.xacro.template"), "r") as file:
@@ -482,18 +485,22 @@ def main(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Process three positional arguments.")
+    parser = argparse.ArgumentParser(
+        description="Generate URDF files from sensor calibration data."
+    )
 
-    # Add three positional arguments
-    parser.add_argument("template_directory", type=str, help="The first argument")
-    parser.add_argument("calibration_directory", type=str, help="The second argument")
-    parser.add_argument("output_directory", type=str, help="The third argument")
+    # Add two positional arguments
+    parser.add_argument(
+        "calibration_directory", type=str, help="Path to calibration YAML files directory"
+    )
+    parser.add_argument(
+        "output_directory", type=str, help="Path to output directory for generated URDF files"
+    )
 
     # Parse the arguments
     args = parser.parse_args()
 
     main(
-        args.template_directory,
         args.calibration_directory,
         args.output_directory,
     )
