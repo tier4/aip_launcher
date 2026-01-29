@@ -396,7 +396,6 @@ def main(
     template_directory: str,
     calibration_directory: str,
     output_directory: str,
-    project_name: str,
 ):
     os.makedirs(output_directory, exist_ok=True)
     # Load the template
@@ -410,7 +409,6 @@ def main(
     calib = Calibration(calib_yaml)
 
     render_meta_data = {}
-    render_meta_data["default_config_path"] = f"$(find {project_name})/config"
     render_meta_data["sensor_calibration_yaml_path"] = "$(arg config_dir)/sensors_calibration.yaml"
     render_meta_data["sensor_units_includes"] = []
     render_meta_data["sensor_units"] = []
@@ -462,9 +460,6 @@ def main(
         sensor_unit_calib = Calibration(sensor_unit_calib_yaml)
         sensor_unit_render_meta_data = {}
         sensor_unit_render_meta_data["unit_macro_name"] = sensor_unit["macro_name"]
-        sensor_unit_render_meta_data["default_config_path"] = render_meta_data[
-            "default_config_path"
-        ]
         sensor_unit_render_meta_data["joint_unit_name"] = sensor_unit["name"]
         sensor_unit_render_meta_data["current_base_link"] = sensor_unit_calib.base_frame
         sensor_unit_isolated_sensors = []
@@ -487,13 +482,12 @@ def main(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Process four positional arguments.")
+    parser = argparse.ArgumentParser(description="Process three positional arguments.")
 
-    # Add four positional arguments
+    # Add three positional arguments
     parser.add_argument("template_directory", type=str, help="The first argument")
     parser.add_argument("calibration_directory", type=str, help="The second argument")
     parser.add_argument("output_directory", type=str, help="The third argument")
-    parser.add_argument("project_name", type=str, help="The fourth argument")
 
     # Parse the arguments
     args = parser.parse_args()
@@ -502,5 +496,4 @@ if __name__ == "__main__":
         args.template_directory,
         args.calibration_directory,
         args.output_directory,
-        args.project_name,
     )
