@@ -398,7 +398,7 @@ def main(
 ):
     # Get template directory relative to this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    template_directory = os.path.join(script_dir, "..", "templates")
+    template_directory = os.path.normpath(os.path.join(script_dir, "..", "templates"))
 
     os.makedirs(output_directory, exist_ok=True)
     # Load the template

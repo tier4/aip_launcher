@@ -4,7 +4,7 @@
 
 The aip_urdf_compiler is a standalone Python script for generating URDF (Unified Robot Description Format) files from configuration files. It simplifies sensor model management by automatically generating URDF models from sensor configurations.
 
-**Note:** This is no longer a ROS2 package. Users must manually invoke the Python script to generate URDF files.
+**Note:** This is no longer a ROS 2 package. Users must manually invoke the Python script to generate URDF files.
 
 ## Key Features
 
@@ -42,8 +42,8 @@ python3 aip_urdf_compiler/scripts/compile_urdf.py \
 
 The calibration directory must contain the following YAML files:
 
-1. **sensors_calibration.yaml** - Main calibration file defining vehicle-level sensors and sensor units
-2. **{unit_name}\_calibration.yaml** - Separate calibration files for each sensor unit
+1. `sensors_calibration.yaml` - Main calibration file defining vehicle-level sensors and sensor units
+2. `{unit_name}_calibration.yaml` - Separate calibration files for each sensor unit
 
 **About `unit_name`:**
 
