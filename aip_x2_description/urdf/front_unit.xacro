@@ -9,7 +9,7 @@
     <xacro:include filename="$(find aip_x2_description)/urdf/radar.xacro"/>
 
     <xacro:arg name="gpu" default="false"/>
-    <xacro:arg name="config_dir"/>
+    <xacro:arg name="config_dir" default="$(find INVALID_SENSOR_KIT_description)/config"/>
 
     <xacro:property name="front_unit_base_link" default="front_unit_base_link"/>
 

@@ -8,7 +8,7 @@
     <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro" />
 
     <xacro:arg name="gpu" default="false" />
-    <xacro:arg name="config_dir"/>
+    <xacro:arg name="config_dir" default="$(find INVALID_SENSOR_KIT_description)/config"/>
 
     <!-- base-->
     <xacro:property name="calibration"
