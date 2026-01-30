@@ -1,3 +1,8 @@
+# This is an example calibration file for sensors.xacro
+# This file serves as a template compatible with urdf/sensors.xacro
+# If there is any discrepancy between this file and the xacro file, the xacro file takes precedence.
+# This file is intended for reference and testing purposes.
+
 base_link:
   sensor_kit_base_link:
     x: 0.86419
