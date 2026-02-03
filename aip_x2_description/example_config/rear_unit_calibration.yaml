@@ -1,3 +1,8 @@
+# This is an example calibration file for rear_unit.xacro
+# This file serves as a template compatible with urdf/rear_unit.xacro
+# If there is any discrepancy between this file and the xacro file, the xacro file takes precedence.
+# This file is intended for reference and testing purposes.
+
 rear_unit_base_link:
   pandar_40p_rear_base_link:
     x: 0.0

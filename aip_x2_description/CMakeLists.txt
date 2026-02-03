@@ -7,5 +7,4 @@ ament_auto_find_build_dependencies()
 
 ament_auto_package(INSTALL_TO_SHARE
     urdf
-    config
 )

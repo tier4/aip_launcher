@@ -1,3 +1,8 @@
+# This is an example calibration file for top_unit.xacro
+# This file serves as a template compatible with urdf/top_unit.xacro
+# If there is any discrepancy between this file and the xacro file, the xacro file takes precedence.
+# This file is intended for reference and testing purposes.
+
 top_unit_base_link:
   camera0/camera_link:
     x: 0.76673
