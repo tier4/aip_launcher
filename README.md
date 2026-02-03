@@ -1,5 +1,15 @@
 # aip_launch
 
+## DEPRECATION NOTICE
+
+This repository is no longer maintained.
+AIP sensor configurations are planned to be moved into <https://github.com/tier4/autoware_launch> and its variants.
+
+Please do not make any PR into this repo, except for beta version maintenance (for which case migration is still recommended).
+
+- [Launch File Migration Task(Confluence, TIER IV internal)](https://tier4.atlassian.net/wiki/spaces/~712020e05010c262454e81a8762ebcdeff5006/pages/4892098803/Launch+File+Migration+Task)
+- [Slack Discussion (TIER IV internal)](https://star4.slack.com/archives/CTEJP8L4T/p1769573109512369)
+
 ## Directory Structure
 
 ```bash
