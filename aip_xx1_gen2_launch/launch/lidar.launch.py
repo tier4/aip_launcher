@@ -132,6 +132,9 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     base_parameters["use_opencl_preprocess_sensing"] = LaunchConfiguration("use_opencl_preprocess_sensing").perform(
         context
     )
+    base_parameters["use_ring_fix16"] = LaunchConfiguration("use_ring_fix16").perform(context)
+    base_parameters["num_rings"] = LaunchConfiguration("num_rings").perform(context)
+    base_parameters["num_fires"] = LaunchConfiguration("num_fires").perform(context)
 
     # Create launch actions for each lidar
     sub_launch_actions = []
@@ -225,6 +228,9 @@ def generate_launch_description():
     add_launch_arg("use_shared_container", "false")
     add_launch_arg("use_cuda_preprocessor", "true")
     add_launch_arg("use_opencl_preprocess_sensing", "false")
+    add_launch_arg("use_ring_fix16", "false", description="Use RingFix16 format for GPU pipeline")
+    add_launch_arg("num_rings", "128", description="Number of rings for RingFix16 format")
+    add_launch_arg("num_fires", "1800", description="Number of fires per ring for RingFix16 format")
     # ====================================================================================
 
     # Create launch description with the config_file argument

@@ -6,6 +6,9 @@
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
   <arg name="use_opencl_preprocess_sensing" default="false" description="use OpenCL implementation for pointcloud preprocessing"/>
+  <arg name="use_ring_fix16" default="false" description="Use RingFix16 format for GPU pipeline"/>
+  <arg name="num_rings" default="128" description="Number of rings for RingFix16 format"/>
+  <arg name="num_fires" default="1800" description="Number of fires per ring for RingFix16 format"/>
 
   <group>
 
@@ -16,6 +19,9 @@
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="use_opencl_preprocess_sensing" value="$(var use_opencl_preprocess_sensing)"/>
+      <arg name="use_ring_fix16" value="$(var use_ring_fix16)"/>
+      <arg name="num_rings" value="$(var num_rings)"/>
+      <arg name="num_fires" value="$(var num_fires)"/>
     </include>
 
     <!-- Camera Driver -->

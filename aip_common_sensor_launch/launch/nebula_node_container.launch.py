@@ -256,24 +256,91 @@ def make_opencl_preprocessor_nodes(context):
         mirror_info["max_height_offset"],
     ]
 
-    return [
-        ComposableNode(
-            package="autoware_opencl_pointcloud_preprocessor",
-            plugin="autoware::opencl_pointcloud_preprocessor::OpenCLPointcloudPreprocessorNode",
-            name="opencl_pointcloud_preprocessor_node",
-            parameters=[
-                preprocessor_parameters,
-                opencl_preprocessor_param,
-            ],
-            remappings=[
-                ("~/input/pointcloud", "pointcloud_raw_ex"),
-                ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
-                ("~/input/imu", "/sensing/imu/imu_data"),
-                ("~/output/pointcloud", "pointcloud_before_sync"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+    # Check if RingFix16 mode is enabled
+    use_ring_fix16 = LaunchConfiguration("use_ring_fix16").perform(context).lower() == "true"
+
+    if use_ring_fix16:
+        # RingFix16 GPU Pipeline:
+        # PointCloud2 -> PointCloud2ToRingFix16 -> Preprocessor -> DeviceRingFix16ToPointCloud2 -> PointCloud2
+        nodes = []
+
+        # 1. PointCloud2 to RingPointCloudFix16 converter
+        nodes.append(
+            ComposableNode(
+                package="autoware_internal_pointcloud_converter",
+                plugin="autoware::internal_pointcloud_converter::PointCloud2ToRingFix16",
+                name="pointcloud2_to_ring_fix16",
+                parameters=[
+                    {
+                        "num_rings": int(LaunchConfiguration("num_rings").perform(context)),
+                        "num_fires": int(LaunchConfiguration("num_fires").perform(context)),
+                    }
+                ],
+                remappings=[
+                    ("input", "pointcloud_raw_ex"),
+                    ("output", "ring_fix16"),
+                ],
+                extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+            )
         )
-    ]
+
+        # 2. OpenCL Pointcloud Preprocessor (RingFix16 input, DeviceRingFix16 output)
+        nodes.append(
+            ComposableNode(
+                package="autoware_opencl_pointcloud_preprocessor",
+                plugin="autoware::opencl_pointcloud_preprocessor::OpenCLPointcloudPreprocessorNode",
+                name="opencl_pointcloud_preprocessor_node",
+                parameters=[
+                    preprocessor_parameters,
+                    opencl_preprocessor_param,
+                    {"input_type": "ring_fix16"},
+                ],
+                remappings=[
+                    ("~/input/pointcloud", "ring_fix16"),
+                    ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+                    ("~/input/imu", "/sensing/imu/imu_data"),
+                    ("~/output/pointcloud", "preprocessed/device_ring_fix16"),
+                ],
+                extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+            )
+        )
+
+        # 3. DeviceRingFix16 to PointCloud2 converter
+        nodes.append(
+            ComposableNode(
+                package="autoware_internal_pointcloud_converter",
+                plugin="autoware::internal_pointcloud_converter::DeviceRingFix16ToPointCloud2",
+                name="device_ring_fix16_to_pointcloud2",
+                remappings=[
+                    ("input", "preprocessed/device_ring_fix16"),
+                    ("output", "pointcloud_before_sync"),
+                ],
+                extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+            )
+        )
+
+        return nodes
+    else:
+        # Legacy PointCloud2 mode
+        return [
+            ComposableNode(
+                package="autoware_opencl_pointcloud_preprocessor",
+                plugin="autoware::opencl_pointcloud_preprocessor::OpenCLPointcloudPreprocessorNode",
+                name="opencl_pointcloud_preprocessor_node",
+                parameters=[
+                    preprocessor_parameters,
+                    opencl_preprocessor_param,
+                    {"input_type": "pointcloud2"},
+                ],
+                remappings=[
+                    ("~/input/pointcloud", "pointcloud_raw_ex"),
+                    ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
+                    ("~/input/imu", "/sensing/imu/imu_data"),
+                    ("~/output/pointcloud", "pointcloud_before_sync"),
+                ],
+                extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+            )
+        ]
 
 
 def make_preprocessor_nodes(context):
@@ -508,6 +575,13 @@ def generate_launch_description():
         "False",
         "Use the OpenCL implementation of the pointcloud preprocessor for FPGA/GPU acceleration",
     )
+    add_launch_arg(
+        "use_ring_fix16",
+        "False",
+        "Use RingFix16 format for GPU pipeline (requires use_opencl_preprocess_sensing=true)",
+    )
+    add_launch_arg("num_rings", "128", "Number of rings for RingFix16 format")
+    add_launch_arg("num_fires", "1800", "Number of fires per ring for RingFix16 format")
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
     add_launch_arg("ptp_switch_type", "TSN")

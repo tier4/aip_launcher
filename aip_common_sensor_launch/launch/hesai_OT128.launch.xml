@@ -18,6 +18,9 @@
   <arg name="use_shared_container" default="false"/>
   <arg name="use_cuda_preprocessor" default="false"/>
   <arg name="use_opencl_preprocess_sensing" default="false"/>
+  <arg name="use_ring_fix16" default="false"/>
+  <arg name="num_rings" default="128"/>
+  <arg name="num_fires" default="1800"/>
   <arg name="udp_only" default="false"/>
 
   <include file="$(find-pkg-share aip_common_sensor_launch)/launch/nebula_node_container.launch.py">
@@ -37,6 +40,9 @@
     <arg name="use_shared_container" value="$(var use_shared_container)"/>
     <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
     <arg name="use_opencl_preprocess_sensing" value="$(var use_opencl_preprocess_sensing)"/>
+    <arg name="use_ring_fix16" value="$(var use_ring_fix16)"/>
+    <arg name="num_rings" value="$(var num_rings)"/>
+    <arg name="num_fires" value="$(var num_fires)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
     <arg name="ptp_profile" value="automotive"/>
