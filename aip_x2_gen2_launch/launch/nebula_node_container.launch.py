@@ -397,6 +397,7 @@ def make_cuda_preprocessor_nodes(context):
         vehicle_info["max_height_offset"],
         vehicle_info["wheels_max_height_offset"],
     ]
+    preprocessor_parameters["crop_box.negative"] = [True, True]
 
     return [
         ComposableNode(
