@@ -5,10 +5,14 @@
   <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_fusion, lidar, camera"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <!-- OpenCL Pipeline Control Parameters -->
+  <arg name="ocl_sensing" default="false" description="Enable OpenCL sensing preprocessing"/>
+  <arg name="ocl_only_top" default="true" description="Apply OpenCL only to top LiDAR"/>
+  <!-- Legacy OpenCL parameters -->
   <arg name="use_opencl_preprocess_sensing" default="false" description="use OpenCL implementation for pointcloud preprocessing"/>
   <arg name="use_ring_fix16" default="false" description="Use RingFix16 format for GPU pipeline"/>
   <arg name="num_rings" default="128" description="Number of rings for RingFix16 format"/>
-  <arg name="num_fires" default="1800" description="Number of fires per ring for RingFix16 format"/>
+  <arg name="num_fires" default="512" description="Number of fires per ring for RingFix16 format"/>
 
   <group>
 
@@ -18,6 +22,8 @@
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="ocl_sensing" value="$(var ocl_sensing)"/>
+      <arg name="ocl_only_top" value="$(var ocl_only_top)"/>
       <arg name="use_opencl_preprocess_sensing" value="$(var use_opencl_preprocess_sensing)"/>
       <arg name="use_ring_fix16" value="$(var use_ring_fix16)"/>
       <arg name="num_rings" value="$(var num_rings)"/>

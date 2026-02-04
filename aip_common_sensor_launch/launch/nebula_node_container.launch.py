@@ -293,7 +293,7 @@ def make_opencl_preprocessor_nodes(context):
                 parameters=[
                     preprocessor_parameters,
                     opencl_preprocessor_param,
-                    {"input_type": "ring_fix16"},
+                    {"input_type": "device_ring_fix16"},
                 ],
                 remappings=[
                     ("~/input/pointcloud", "ring_fix16"),
@@ -581,7 +581,7 @@ def generate_launch_description():
         "Use RingFix16 format for GPU pipeline (requires use_opencl_preprocess_sensing=true)",
     )
     add_launch_arg("num_rings", "128", "Number of rings for RingFix16 format")
-    add_launch_arg("num_fires", "1800", "Number of fires per ring for RingFix16 format")
+    add_launch_arg("num_fires", "512", "Number of fires per ring for RingFix16 format")
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
     add_launch_arg("ptp_switch_type", "TSN")

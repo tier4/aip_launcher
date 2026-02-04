@@ -129,6 +129,8 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         context
     )
     # Set OpenCL-related parameters
+    ocl_sensing = LaunchConfiguration("ocl_sensing").perform(context).lower() == "true"
+    ocl_only_top = LaunchConfiguration("ocl_only_top").perform(context).lower() == "true"
     base_parameters["use_opencl_preprocess_sensing"] = LaunchConfiguration("use_opencl_preprocess_sensing").perform(
         context
     )
@@ -141,6 +143,26 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
     for launch in config["launches"]:
         launch_parameters = deepcopy(base_parameters)
         launch_parameters.update(launch["parameters"])  # dict
+
+        # Control OpenCL preprocessing based on ocl_sensing and ocl_only_top
+        # - ocl_sensing=true, ocl_only_top=true → only top LiDAR gets OpenCL
+        # - ocl_sensing=true, ocl_only_top=false → all LiDARs get OpenCL
+        # - ocl_sensing=false → all LiDARs use CPU
+        if ocl_sensing:
+            if ocl_only_top:
+                # Only top LiDAR uses OpenCL
+                is_top = launch["namespace"] == "top"
+                launch_parameters["use_opencl_preprocess_sensing"] = "true" if is_top else "false"
+                launch_parameters["use_ring_fix16"] = "true" if is_top else "false"
+            else:
+                # All LiDARs use OpenCL
+                launch_parameters["use_opencl_preprocess_sensing"] = "true"
+                launch_parameters["use_ring_fix16"] = "true"
+        else:
+            # CPU mode for all
+            launch_parameters["use_opencl_preprocess_sensing"] = "false"
+            launch_parameters["use_ring_fix16"] = "false"
+
         launch_parameter_list_tuple = [(str(k), str(v)) for k, v in launch_parameters.items()]
         sub_launch_action = GroupAction(
             [
@@ -227,10 +249,14 @@ def generate_launch_description():
     # However, this approach lacks fault tolerance, so will not be adopted for a while.
     add_launch_arg("use_shared_container", "false")
     add_launch_arg("use_cuda_preprocessor", "true")
+    # OpenCL Pipeline Control Parameters
+    add_launch_arg("ocl_sensing", "false", description="Enable OpenCL sensing preprocessing")
+    add_launch_arg("ocl_only_top", "true", description="Apply OpenCL only to top LiDAR")
+    # Legacy OpenCL parameters
     add_launch_arg("use_opencl_preprocess_sensing", "false")
     add_launch_arg("use_ring_fix16", "false", description="Use RingFix16 format for GPU pipeline")
     add_launch_arg("num_rings", "128", description="Number of rings for RingFix16 format")
-    add_launch_arg("num_fires", "1800", description="Number of fires per ring for RingFix16 format")
+    add_launch_arg("num_fires", "512", description="Number of fires per ring for RingFix16 format")
     # ====================================================================================
 
     # Create launch description with the config_file argument

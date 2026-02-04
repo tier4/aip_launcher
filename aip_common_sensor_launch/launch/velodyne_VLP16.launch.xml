@@ -21,7 +21,7 @@
   <arg name="use_opencl_preprocess_sensing" default="false"/>
   <arg name="use_ring_fix16" default="false"/>
   <arg name="num_rings" default="16"/>
-  <arg name="num_fires" default="1800"/>
+  <arg name="num_fires" default="512"/>
   <arg name="vertical_bins" default="16"/>
   <arg name="horizontal_ring_id" default="0"/>
   <arg name="is_channel_order_top2down" default="false"/>
