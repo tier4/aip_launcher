@@ -119,5 +119,5 @@
     }
   ],
   "flagWords": [],
-  "ignoreWords": ["asterx", "ntrip", "NTRIP"]
+  "ignoreWords": ["asterx", "fintekcan", "ntrip", "NTRIP"]
 }
