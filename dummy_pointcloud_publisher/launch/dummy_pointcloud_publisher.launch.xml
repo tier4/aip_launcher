@@ -1,0 +1,11 @@
+<launch>
+  <arg name="topic_info"
+        default="$(find-pkg-share dummy_pointcloud_publisher)/config/topic_info.param.yaml" />
+
+  <node pkg="dummy_pointcloud_publisher" exec="dummy_pointcloud_publisher_node" name="dummy_pointcloud_publisher" output="screen"
+      args="
+      --ros-args
+      --params-file $(var topic_info)" >
+  </node>
+
+</launch>

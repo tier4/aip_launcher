@@ -18,8 +18,11 @@
   </arg>
   <arg name="udp_only" default="false"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
+  <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
+  <arg name="distortion_corrector_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/distortion_corrector_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
+  <arg name="enable_calibration_download" default="false"/>
 
   <arg name="polar_voxel_visibility_estimation_mode" default="cpu">
     <choice value="cpu"/>
@@ -52,6 +55,7 @@
         <arg name="sensor_ip" value="192.168.1.202"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="0"/>
         <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="88"/>
@@ -71,11 +75,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -96,6 +102,7 @@
         <arg name="sensor_ip" value="192.168.1.203"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2322"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="270"/>
         <arg name="cut_angle" value="359.0" />
         <arg name="cloud_min_angle" value="90"/>
@@ -115,11 +122,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -140,6 +149,7 @@
         <arg name="sensor_ip" value="192.168.1.212"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="0"/>
         <arg name="cut_angle" value="180.0" />
         <arg name="cloud_min_angle" value="90"/>
@@ -159,11 +169,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -183,6 +195,7 @@
         <arg name="sensor_ip" value="192.168.1.213"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2377"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="270"/>
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
@@ -202,11 +215,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="225.0"/>
         <arg name="max_azimuth_deg" value="315.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -227,6 +242,7 @@
         <arg name="sensor_ip" value="192.168.1.204"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2323"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="180"/>
         <arg name="cut_angle" value="275.0" />
         <arg name="cloud_min_angle" value="85"/>
@@ -246,11 +262,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -271,6 +289,7 @@
         <arg name="sensor_ip" value="192.168.1.205"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2324"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="90"/>
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="0"/>
@@ -290,11 +309,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_upper.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -315,6 +336,7 @@
         <arg name="sensor_ip" value="192.168.1.214"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2378"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="180"/>
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
@@ -334,11 +356,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
@@ -358,6 +382,7 @@
         <arg name="sensor_ip" value="192.168.1.215"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2379"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
         <arg name="sync_angle" value="90"/>
         <arg name="cut_angle" value="270.0" />
         <arg name="cloud_min_angle" value="90"/>
@@ -377,11 +402,13 @@
         <arg name="horizontal_resolution" value="0.4"/>
         <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
         <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_lower.csv" />
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)" />
         <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
-        <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)" />
         <arg name="min_azimuth_deg" value="45.0"/>
         <arg name="max_azimuth_deg" value="135.0"/>
         <arg name="use_dual_return_filter" value="false"/>

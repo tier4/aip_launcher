@@ -117,6 +117,7 @@ def make_nebula_nodes(context):
                     "calibration_file": sensor_calib_fp,
                     "sensor_model": sensor_model,
                     "launch_hw": LaunchConfiguration("launch_driver"),
+                    "calibration_download_enabled": True,
                     **create_parameter_dict(
                         "host_ip",
                         "sensor_ip",
@@ -142,6 +143,7 @@ def make_nebula_nodes(context):
                         "hires_mode",
                         "diag_span",
                         "diagnostics.packet_loss.error_threshold",
+                        "udp_socket_receive_buffer_size_bytes",
                     ),
                 },
             ],
@@ -196,6 +198,7 @@ def make_cuda_preprocessor_nodes(context):
         vehicle_info["max_height_offset"],
         mirror_info["max_height_offset"],
     ]
+    preprocessor_parameters["crop_box.negative"] = [True, True]
 
     return [
         ComposableNode(
@@ -414,6 +417,9 @@ def generate_launch_description():
     add_launch_arg("launch_driver", "True", "do launch driver")
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("udp_only", "False", "use UDP only")
+    add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes", "5400000", "UDP socket receive buffer size in bytes"
+    )
     add_launch_arg("retry_hw", "false", "retry hw")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg(

@@ -6,7 +6,7 @@
     <arg name="launch_driver" default="true" />
     <arg name="interface" default="fintekcan3"/>
     <arg name="receiver_interval_sec" default="0.01"/>
-    <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+    <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
     <arg name="is_main_ecu" default="true" />
     <let name="imu_frame_id" value="top_front_left/imu_link" if="$(var is_main_ecu)"/>
     <let name="imu_frame_id" value="top_front_right/imu_link" unless="$(var is_main_ecu)"/>

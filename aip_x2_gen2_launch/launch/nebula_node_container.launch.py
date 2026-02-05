@@ -154,6 +154,10 @@ def make_nebula_node(context, as_composable_node, env=None):
             LaunchConfiguration("nebula_common_config_file").perform(context),
             allow_substs=True,
         ),
+        ParameterFile(
+            LaunchConfiguration("nebula_model_specific_config_file").perform(context),
+            allow_substs=True,
+        ),
         {
             "sensor_model": sensor_model,
             **create_parameter_dict(
@@ -176,11 +180,13 @@ def make_nebula_node(context, as_composable_node, env=None):
                 "setup_sensor",
                 "diag_span",
                 "calibration_file",
+                "calibration_download_enabled",
                 "launch_hw",
                 "udp_only",
                 "point_filters.downsample_mask.path",
                 "hires_mode",
                 "diagnostics.packet_loss.error_threshold",
+                "udp_socket_receive_buffer_size_bytes",
             ),
             "retry_hw": True,
         },
@@ -391,6 +397,7 @@ def make_cuda_preprocessor_nodes(context):
         vehicle_info["max_height_offset"],
         vehicle_info["wheels_max_height_offset"],
     ]
+    preprocessor_parameters["crop_box.negative"] = [True, True]
 
     return [
         ComposableNode(
@@ -475,7 +482,7 @@ def make_polar_voxel_outlier_filter_node(context):
                         parameters,
                     ],
                     remappings=[
-                        ("input", "pointcloud_before_sync"),
+                        ("input", "pointcloud_raw_ex"),
                     ],
                     extra_arguments=[
                         {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
@@ -493,8 +500,8 @@ def make_polar_voxel_outlier_filter_node(context):
                         {"hardware_id": node_name},
                     ],
                     remappings=[
-                        ("~/input/pointcloud", "pointcloud_before_sync"),
-                        ("~/input/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+                        ("~/input/pointcloud", "pointcloud_raw_ex"),
+                        ("~/input/pointcloud/cuda", "pointcloud_raw_ex"),
                     ],
                 )
             ]
@@ -508,6 +515,10 @@ def launch_setup(context, *args, **kwargs):
     env = make_agnocast_env(context) if use_agnocast else {}
 
     use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
+
+    use_polar_voxel_outlier_filter = (
+        LaunchConfiguration("polar_voxel_visibility_estimation_mode").perform(context) != "disable"
+    )
 
     shared_container_nodes = []
     lidar_specific_container_nodes = []
@@ -536,39 +547,39 @@ def launch_setup(context, *args, **kwargs):
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
-            list_preprocessor_uses = shared_container_nodes
 
-            if use_blockage_diag:
+            if use_blockage_diag or use_polar_voxel_outlier_filter:
                 lidar_specific_container_nodes.append(make_nebula_node(context, True))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
+            if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
-            else:
-                standalone_nodes.append(make_nebula_node(context, False, env))
         case "cuda-all-in-one":
             shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             shared_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = shared_container_nodes
 
             if use_blockage_diag:
                 shared_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                shared_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case "cpu":
             lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case "cuda-with-cpu-concat":
             lidar_specific_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
-            list_preprocessor_uses = lidar_specific_container_nodes
 
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+            if use_polar_voxel_outlier_filter:
+                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
-
-    # insert polar_voxel_outlier_filter to the same list that pointcloud preprocessor uses
-    list_preprocessor_uses.extend(make_polar_voxel_outlier_filter_node(context))
 
     launch_targets = [set_container_executable, set_container_mt_executable]
 
@@ -627,6 +638,16 @@ def generate_launch_description():
         ],
         description="file containing parameters common to all Nebula instances",
     )
+    add_launch_arg(
+        "nebula_model_specific_config_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/",
+            LaunchConfiguration("sensor_model"),
+            ".param.yaml",
+        ],
+        description="file containing parameters specific to the sensor model",
+    )
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_hw", "true", "do launch driver")
     add_launch_arg("setup_sensor", "true", "configure sensor")
@@ -647,6 +668,9 @@ def generate_launch_description():
     add_launch_arg("cloud_max_angle", "360", "maximum view angle setting on device")
     add_launch_arg("data_port", "2368", "device data port number")
     add_launch_arg("gnss_port", "2380", "device gnss port number")
+    add_launch_arg(
+        "udp_socket_receive_buffer_size_bytes", "10800000", "UDP socket receive buffer size"
+    )
     add_launch_arg("packet_mtu_size", "1500", "packet mtu size")
     add_launch_arg("rotation_speed", "600", "rotational frequency")
     add_launch_arg("dual_return_distance_threshold", "0.1", "dual return distance threshold")
@@ -670,25 +694,31 @@ def generate_launch_description():
         choices=["cpu", "cuda", "disable"],
     )
 
-    add_launch_arg("dual_return_filter_param_file")
+    add_launch_arg(
+        "dual_return_filter_param_file",
+        [
+            FindPackageShare("aip_x2_gen2_launch"),
+            "/config/dual_return_filter.param.yaml",
+        ],
+    )
     add_launch_arg(
         "blockage_diagnostics_param_file",
         [
-            FindPackageShare("aip_common_sensor_launch"),
+            FindPackageShare("aip_x2_gen2_launch"),
             "/config/blockage_diagnostics.param.yaml",
         ],
     )
     add_launch_arg(
         "ring_outlier_filter_node_param_file",
         [
-            FindPackageShare("aip_common_sensor_launch"),
+            FindPackageShare("aip_x2_gen2_launch"),
             "/config/ring_outlier_filter_node.param.yaml",
         ],
     )
     add_launch_arg(
         "distortion_corrector_node_param_file",
         [
-            FindPackageShare("aip_common_sensor_launch"),
+            FindPackageShare("aip_x2_gen2_launch"),
             "/config/distortion_corrector_node.param.yaml",
         ],
     )
@@ -708,6 +738,7 @@ def generate_launch_description():
     add_launch_arg("enable_blockage_diag", "true")
 
     add_launch_arg("calibration_file", "")
+    add_launch_arg("calibration_download_enabled")
     add_launch_arg("output_as_sensor_frame", "true", "output final pointcloud in sensor frame")
     add_launch_arg("use_dual_return_filter", "false")
     add_launch_arg("point_filters.downsample_mask.path", "")

@@ -1,7 +1,7 @@
 <launch>
 
   <arg name="launch_driver" default="true" />
-  <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
   <arg name="imu_connection" default="$(env IMU_CONNECTION serial)" description="serial or can" />
 
   <group>
@@ -21,7 +21,7 @@
     <group if="$(eval &quot;'$(var imu_connection)'=='can'&quot;)">
       <arg name="interface" default="canImu"/>
       <arg name="receiver_interval_sec" default="0.01"/>
-      <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
+      <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
       <push-ros-namespace namespace="tamagawa"/>
       <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
         <arg name="interface" value="$(var interface)"/>

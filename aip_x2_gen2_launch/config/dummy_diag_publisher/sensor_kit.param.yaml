@@ -100,6 +100,9 @@
       "tier4_camera_sync_doctor5: camera5_sync_status": default
       "tier4_camera_sync_doctor6: camera6_sync_status": default
       "tier4_camera_sync_doctor7: camera7_sync_status": default
+      "tier4_camera_sync_doctor8: camera8_sync_status": default
+      "tier4_camera_sync_doctor9: camera9_sync_status": default
+      "tier4_camera_sync_doctor10: camera10_sync_status": default
 
       # /sensing/camera/004-image
       "image_diagnostics3: camera3": default
