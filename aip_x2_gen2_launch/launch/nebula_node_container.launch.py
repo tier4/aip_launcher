@@ -100,10 +100,10 @@ def get_vehicle_info(context):
 
     wheel_width = gp["wheel_width"]
     wheel_radius = gp["wheel_radius"]
-    max_steer_angle_rad = gp["max_steer_angle"]
+    max_tire_cut_angle = 0.838
 
     max_lat_offset, max_lon_offset = get_max_extents_from_wheel_center(
-        wheel_width, wheel_radius, max_steer_angle_rad
+        wheel_width, wheel_radius, max_tire_cut_angle
     )
 
     p["wheels_min_longitudinal_offset"] = gp["wheel_base"] - max_lon_offset
