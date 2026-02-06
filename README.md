@@ -4,6 +4,7 @@
 
 This repository is no longer maintained.
 AIP sensor configurations are planned to be moved into <https://github.com/tier4/autoware_launch> and its variants.
+If you are using <https://github.com/tier4/autoware_launch> (vanilla) and still wants to use other sensor types, use [tier4/unmigrated-packages](https://github.com/tier4/aip_launcher/tree/tier4/unmigrated-packages) instead of the default tier4/universe branch.
 
 Please do not make any PR into this repo, except for beta version maintenance (for which case migration is still recommended).
 
