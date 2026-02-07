@@ -3,7 +3,7 @@
 
   <arg name="launch_driver" default="true"/>
   <arg name="setup_sensor" default="true"/>
-  <arg name="host_ip" default="192.168.1.11"/>
+  <arg name="host_ip" default="192.168.30.11"/>
   <!-- <arg name="host_ip" default="224.0.3.3"/> -->
   <arg name="use_concat_filter" default="true"/>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
@@ -16,7 +16,7 @@
     <choice value="cuda-all-in-one"/>
     <choice value="cuda-with-cpu-concat"/>
   </arg>
-  <arg name="udp_only" default="false"/>
+  <arg name="udp_only" default="true"/>
   <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
   <arg name="enable_blockage_diag" default="true"/>
@@ -50,7 +50,7 @@
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_upper/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.202"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2321"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -96,7 +96,7 @@
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_upper/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.203"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2322"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -142,7 +142,7 @@
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="rear_lower/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.212"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2376"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -187,7 +187,7 @@
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="left_lower/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.213"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2377"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -233,7 +233,7 @@
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_upper/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.204"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2323"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -279,7 +279,7 @@
         <arg name="sensor_model" value="Pandar128E4X"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_upper/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.205"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2324"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -325,7 +325,7 @@
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="front_lower/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.214"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2378"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
@@ -370,7 +370,7 @@
         <arg name="sensor_model" value="PandarQT128"/>
         <arg name="setup_sensor" value="$(var setup_sensor)"/>
         <arg name="frame_id" value="right_lower/lidar"/>
-        <arg name="sensor_ip" value="192.168.1.215"/>
+        <arg name="sensor_ip" value="192.168.30.21"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2379"/>
         <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
