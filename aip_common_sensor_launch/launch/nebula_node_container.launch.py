@@ -293,7 +293,7 @@ def make_opencl_preprocessor_nodes(context):
                 parameters=[
                     preprocessor_parameters,
                     opencl_preprocessor_param,
-                    {"input_type": "device_ring_fix16"},
+                    {"use_pc2": False},
                 ],
                 remappings=[
                     ("~/input/pointcloud", "ring_fix16"),
@@ -330,7 +330,7 @@ def make_opencl_preprocessor_nodes(context):
                 parameters=[
                     preprocessor_parameters,
                     opencl_preprocessor_param,
-                    {"input_type": "pointcloud2"},
+                    {"use_pc2": True},
                 ],
                 remappings=[
                     ("~/input/pointcloud", "pointcloud_raw_ex"),
