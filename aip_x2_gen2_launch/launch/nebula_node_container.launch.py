@@ -525,7 +525,7 @@ def launch_setup(context, *args, **kwargs):
 
     container_exec = "agnocast_component_container" if use_agnocast else "component_container"
     container_exec_mt = (
-        "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
+        "agnocast_component_container_cie" if use_agnocast else "component_container_mt"
     )
 
     set_container_executable = SetLaunchConfiguration(
