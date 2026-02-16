@@ -102,7 +102,6 @@ class LinkType(enum.Enum):
 ### Components
 
 1. **compile_urdf.py**
-
    - Main Python script for URDF generation
    - Configuration parser
    - Transform processor
@@ -115,13 +114,11 @@ class LinkType(enum.Enum):
 ### Generation Process
 
 1. **Configuration Reading**
-
    - Parses configuration YAML files from the calibration directory
    - Extracts transformation data
    - Validates configurations
 
 2. **Transform Processing**
-
    - Processes each sensor transform from `sensors_calibration.yaml`
    - Determines sensor types and frame IDs (auto-detects from name if type not specified)
    - Identifies sensor units (type: "units") vs individual sensors
@@ -137,7 +134,6 @@ class LinkType(enum.Enum):
 ## Adding New Sensors
 
 1. Add sensor descriptions (xacro module files) in either:
-
    - Your target package
    - `common_sensor_description` package or other sensor description packages
 
@@ -158,17 +154,14 @@ The script prints status messages during execution. Check the console output for
 ### Common Issues
 
 1. Missing sensor definitions
-
    - Ensure sensor type is defined in `LinkType` enum in `compile_urdf.py`
    - Verify xacro file exists in the appropriate description package
 
 2. Configuration errors
-
    - Check that YAML files are properly formatted
    - Verify all required fields (`type`, transform values) are present in configurations
 
 3. Template not found
-
    - Ensure template directory path is correct
    - Verify template files exist in the templates directory
 
