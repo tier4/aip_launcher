@@ -30,7 +30,7 @@ jobs:
           fi
 
       - name: Comment on PR
-        if: failure() && steps.check-branch.outputs.is_awf_latest == 'true'
+        if: failure() && steps.check-branch.outputs.is_default_branch == 'true'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
