@@ -1,0 +1,47 @@
+name: check-pr-target-branch
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  check-target-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Check target branch
+        id: check-branch
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "Target branch is: $TARGET_BRANCH"
+
+          if [ "$TARGET_BRANCH" = "tier4/universe" ]; then
+            echo "is_default_branch=true" >> $GITHUB_OUTPUT
+            echo "ERROR: Pull requests targeting the tier4/universe branch are not allowed."
+            exit 1
+          else
+            echo "is_default_branch=false" >> $GITHUB_OUTPUT
+            echo "Target branch is acceptable."
+          fi
+
+      - name: Comment on PR
+        if: failure() && steps.check-branch.outputs.is_default_branch == 'true'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ⚠️ **WARNING: Invalid Target Branch** ⚠️
+
+            This pull request is targeting the `tier4/universe` branch, which is not allowed.
+
+            This `aip_launcher` repository is no longer accepting new changes for the `tier4/universe` branch
+            and is only kept to support previously released beta branches.
+
+            `aip_common_sensor_launch` has been moved to [tier4/autoware_launch](https://github.com/tier4/autoware_launch),
+            and `aip_x1`, `aip_x2_gen2` and `aip_xx1_gen2` have been moved to their respective `tier4/autoware_launch.<product>` repositories.
+
+            **Please re-create your PR targeting a different repository.**
