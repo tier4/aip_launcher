@@ -44,4 +44,4 @@ jobs:
             `aip_common_sensor_launch` has been moved to [tier4/autoware_launch](https://github.com/tier4/autoware_launch),
             and `aip_x1`, `aip_x2_gen2` and `aip_xx1_gen2` have been moved to their respective `tier4/autoware_launch.<product>` repositories.
 
-            **Please re-create your PR targeting a different branch.**
+            **Please re-create your PR targeting a different repository.**
