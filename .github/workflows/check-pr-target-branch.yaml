@@ -38,10 +38,10 @@ jobs:
 
             This pull request is targeting the `tier4/universe` branch, which is not allowed.
 
-            This `aip_launcher` repository is no longer accepting new changes for `tier4/universe` branch,
-            and only kept for supporting previously released beta branches.
+            This `aip_launcher` repository is no longer accepting new changes for the `tier4/universe` branch
+            and is only kept to support previously released beta branches.
 
-            `aip_common_sensor_launch` are moved into [tier4/autoware_launch](https://github.com/tier4/autoware_launch),
-            and `aip_x1`, `aip_x2_gen2` and `aip_xx1_gen2` are moved into each `tier4/autoware_launch.<product>` repository.
+            `aip_common_sensor_launch` has been moved to [tier4/autoware_launch](https://github.com/tier4/autoware_launch),
+            and `aip_x1`, `aip_x2_gen2` and `aip_xx1_gen2` have been moved to their respective `tier4/autoware_launch.<product>` repositories.
 
-            **Please re-create your PR into different target.**
+            **Please re-create your PR targeting a different branch.**
