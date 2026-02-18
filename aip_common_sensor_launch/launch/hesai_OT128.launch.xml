@@ -21,6 +21,7 @@
   <arg name="use_ring_fix16" default="false"/>
   <arg name="num_rings" default="128"/>
   <arg name="num_fires" default="512"/>
+  <arg name="expected_min_points" default="0"/>
   <arg name="udp_only" default="false"/>
 
   <include file="$(find-pkg-share aip_common_sensor_launch)/launch/nebula_node_container.launch.py">
@@ -43,6 +44,7 @@
     <arg name="use_ring_fix16" value="$(var use_ring_fix16)"/>
     <arg name="num_rings" value="$(var num_rings)"/>
     <arg name="num_fires" value="$(var num_fires)"/>
+    <arg name="expected_min_points" value="$(var expected_min_points)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="true"/>
     <arg name="ptp_profile" value="automotive"/>
