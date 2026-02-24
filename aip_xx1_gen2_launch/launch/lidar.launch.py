@@ -149,8 +149,10 @@ def load_sub_launches_from_yaml(context, *args, **kwargs):
         # - ocl_sensing=true, ocl_only_top=false → all LiDARs get OpenCL
         # - ocl_sensing=false → all LiDARs use CPU
         if ocl_sensing:
+            # OpenCL/FPGA environment: disable CUDA for all LiDARs
+            launch_parameters["use_cuda_preprocessor"] = "false"
             if ocl_only_top:
-                # Only top LiDAR uses OpenCL
+                # Only top LiDAR uses OpenCL; others fall back to CPU
                 is_top = launch["namespace"] == "top"
                 launch_parameters["use_opencl_preprocess_sensing"] = "true" if is_top else "false"
                 launch_parameters["use_ring_fix16"] = "true" if is_top else "false"
