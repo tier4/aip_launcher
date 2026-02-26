@@ -9,7 +9,7 @@ launches:
       sync_angle: 160
       cut_angle: 160.0
       num_rings: 128
-      expected_min_points: 100000
+      expected_min_points: 300000
   - sensor_type: hesai_XT32
     namespace: front_left
     parameters:
