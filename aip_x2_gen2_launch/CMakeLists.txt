@@ -9,6 +9,8 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+install(PROGRAMS scripts/transform_pointcloud_to_map.py DESTINATION lib/${PROJECT_NAME})
+
 ament_auto_package(INSTALL_TO_SHARE
   launch
   data
