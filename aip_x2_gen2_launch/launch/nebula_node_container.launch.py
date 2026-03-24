@@ -358,7 +358,7 @@ def make_preprocessor_nodes(context):
     return nodes
 
 
-def make_cuda_preprocessor_nodes(context):
+def make_cuda_preprocessor_nodes(context, as_standalone=False, env=None):
     # Vehicle parameters
     vehicle_info = get_vehicle_info(context)
 
@@ -398,29 +398,43 @@ def make_cuda_preprocessor_nodes(context):
         vehicle_info["wheels_max_height_offset"],
     ]
 
+    parameters = [
+        preprocessor_parameters,
+        distortion_corrector_node_param,
+        ring_outlier_filter_node_param,
+        {"enable_ring_outlier_filter": True},
+    ]
+
+    remappings = [
+        ("~/input/pointcloud", "pointcloud_raw_ex"),
+        (
+            "~/input/twist",
+            "/sensing/vehicle_velocity_converter/twist_with_covariance",
+        ),
+        ("~/input/imu", "/sensing/imu/imu_data"),
+        ("~/output/pointcloud", "pointcloud_before_sync"),
+        ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
+    ]
+
+    if as_standalone:
+        return [
+            Node(
+                package="autoware_cuda_pointcloud_preprocessor",
+                executable="agnocast_cuda_pointcloud_preprocessor_node",
+                name="cuda_pointcloud_preprocessor_node",
+                parameters=parameters,
+                remappings=remappings,
+                additional_env=env,
+            )
+        ]
+
     return [
         ComposableNode(
             package="autoware_cuda_pointcloud_preprocessor",
             plugin="autoware::cuda_pointcloud_preprocessor::CudaPointcloudPreprocessorNode",
             name="cuda_pointcloud_preprocessor_node",
-            parameters=[
-                preprocessor_parameters,
-                distortion_corrector_node_param,
-                ring_outlier_filter_node_param,
-                {"enable_ring_outlier_filter": True},
-            ],
-            remappings=[
-                ("~/input/pointcloud", "pointcloud_raw_ex"),
-                (
-                    "~/input/twist",
-                    "/sensing/vehicle_velocity_converter/twist_with_covariance",
-                ),
-                ("~/input/imu", "/sensing/imu/imu_data"),
-                ("~/output/pointcloud", "pointcloud_before_sync"),
-                ("~/output/pointcloud/cuda", "pointcloud_before_sync/cuda"),
-            ],
-            # The whole node can not set use_intra_process due to type negotiation internal topics
-            # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+            parameters=parameters,
+            remappings=remappings,
         )
     ]
 
@@ -455,7 +469,6 @@ def make_agnocast_env(context):
     agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
     return {
         "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
-        "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
     }
 
 
@@ -545,7 +558,12 @@ def launch_setup(context, *args, **kwargs):
             if not use_agnocast:
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
-            shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+            if use_agnocast:
+                standalone_nodes.extend(
+                    make_cuda_preprocessor_nodes(context, as_standalone=True, env=env)
+                )
+            else:
+                shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
 
             if use_blockage_diag or use_polar_voxel_outlier_filter:
                 lidar_specific_container_nodes.append(make_nebula_node(context, True))
@@ -554,7 +572,12 @@ def launch_setup(context, *args, **kwargs):
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
         case "cuda-all-in-one":
-            shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
+            if use_agnocast:
+                standalone_nodes.extend(
+                    make_cuda_preprocessor_nodes(context, as_standalone=True, env=env)
+                )
+            else:
+                shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             shared_container_nodes.append(make_nebula_node(context, True))
 
             if use_blockage_diag:

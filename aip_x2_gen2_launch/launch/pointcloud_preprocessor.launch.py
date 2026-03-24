@@ -23,11 +23,14 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 
 
 def launch_setup(context, *args, **kwargs):
+    use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
+
     # concatenate node parameters
     concatenate_and_time_sync_node_param = ParameterFile(
         param_file=LaunchConfiguration("concatenate_and_time_sync_node_param_path").perform(
@@ -42,13 +45,32 @@ def launch_setup(context, *args, **kwargs):
         ("output", "concatenated/pointcloud"),
         ("output_info", "concatenated/pointcloud_info"),
     ]
-    concat_extra_arguments = []
 
-    if IfCondition(LaunchConfiguration("use_cuda")).evaluate(context):
+    use_cuda = IfCondition(LaunchConfiguration("use_cuda")).evaluate(context)
+
+    # When agnocast + CUDA: launch as standalone node
+    if use_cuda and use_agnocast:
+        agnocast_heaphook_path = "/opt/ros/humble/lib/libagnocast_heaphook.so"
+        env = {
+            "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",
+        }
+        concat_remappings.append(("output/cuda", "concatenated/pointcloud/cuda"))
+        concat_node = Node(
+            package="autoware_cuda_pointcloud_preprocessor",
+            executable="agnocast_cuda_concatenate_and_time_sync_node",
+            name="concatenate_data",
+            remappings=concat_remappings,
+            parameters=[concatenate_and_time_sync_node_param],
+            additional_env=env,
+            condition=IfCondition(LaunchConfiguration("use_concat_filter")),
+        )
+        return [concat_node]
+
+    # Non-agnocast path: composable node
+    concat_extra_arguments = []
+    if use_cuda:
         concat_package = "autoware_cuda_pointcloud_preprocessor"
         concat_plugin = "autoware::cuda_pointcloud_preprocessor::CudaPointCloudConcatenateDataSynchronizerComponent"
-        # NOTE(knzo25): when using  the cuda blackboard, this setting can not be made global
-        # extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         concat_remappings.append(("output/cuda", "concatenated/pointcloud/cuda"))
     else:
         concat_package = "autoware_pointcloud_preprocessor"
