@@ -511,7 +511,7 @@ def make_polar_voxel_outlier_filter_node(context):
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("pipeline_mode").perform(context)
     use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
-    env = make_agnocast_env(context) if use_agnocast else {}
+    env = make_agnocast_env(context)
 
     use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
 
