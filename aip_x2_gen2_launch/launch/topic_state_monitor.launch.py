@@ -13,183 +13,99 @@
 # limitations under the License.
 
 from launch import LaunchDescription
-from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
+from launch_ros.actions import Node
 
 
-def generate_launch_description():
-    # GNSS topic monitor
-    gnss_topic_monitor = ComposableNode(
+def make_topic_state_monitor_node(name, topic, topic_type, diag_name, warn_rate, error_rate):
+    return Node(
         package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_gnss_pose",
+        executable="autoware_topic_state_monitor_node",
+        name=name,
         parameters=[
             {
-                "topic": "/sensing/gnss/pose",
-                "topic_type": "geometry_msgs/msg/PoseStamped",
+                "topic": topic,
+                "topic_type": topic_type,
                 "best_effort": True,
-                "diag_name": "gnss_topic_status",
-                "warn_rate": 2.5,
-                "error_rate": 0.5,
+                "diag_name": diag_name,
+                "warn_rate": warn_rate,
+                "error_rate": error_rate,
                 "timeout": 5.0,
                 "window_size": 10,
             }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    # IMU topic monitor
-    imu_topic_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_imu_data",
-        parameters=[
-            {
-                "topic": "/sensing/imu/imu_data",
-                "topic_type": "sensor_msgs/msg/Imu",
-                "best_effort": True,
-                "diag_name": "imu_topic_status",
-                "warn_rate": 5.0,
-                "error_rate": 1.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    # Radar topic monitors
-    radar_front_center_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_center",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_center/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_front_center_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_front_left_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_left",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_left/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_front_left_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_front_right_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_front_right",
-        parameters=[
-            {
-                "topic": "/sensing/radar/front_right/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_front_right_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_center_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_center",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_center/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_rear_center_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_left_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_left",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_left/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_rear_left_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    radar_rear_right_monitor = ComposableNode(
-        package="autoware_topic_state_monitor",
-        plugin="autoware::topic_state_monitor::TopicStateMonitorNode",
-        name="topic_state_monitor_radar_rear_right",
-        parameters=[
-            {
-                "topic": "/sensing/radar/rear_right/nebula_packets",
-                "topic_type": "nebula_msgs/msg/NebulaPackets",
-                "best_effort": True,
-                "diag_name": "radar_rear_right_topic_status",
-                "warn_rate": 20.0,
-                "error_rate": 5.0,
-                "timeout": 5.0,
-                "window_size": 10,
-            }
-        ],
-        extra_arguments=[{"use_intra_process_comms": True}],
-    )
-
-    # ComposableNodeContainer to run all ComposableNodes
-    container = ComposableNodeContainer(
-        name="topic_state_monitor_container",
-        namespace="topic_state_monitor",
-        package="rclcpp_components",
-        executable="component_container",
-        composable_node_descriptions=[
-            gnss_topic_monitor,
-            imu_topic_monitor,
-            radar_front_center_monitor,
-            radar_front_left_monitor,
-            radar_front_right_monitor,
-            radar_rear_center_monitor,
-            radar_rear_left_monitor,
-            radar_rear_right_monitor,
         ],
         output="screen",
     )
 
-    return LaunchDescription([container])
+
+def generate_launch_description():
+    nodes = [
+        # GNSS topic monitor
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_gnss_pose",
+            topic="/sensing/gnss/pose",
+            topic_type="geometry_msgs/msg/PoseStamped",
+            diag_name="gnss_topic_status",
+            warn_rate=2.5,
+            error_rate=0.5,
+        ),
+        # IMU topic monitor
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_imu_data",
+            topic="/sensing/imu/imu_data",
+            topic_type="sensor_msgs/msg/Imu",
+            diag_name="imu_topic_status",
+            warn_rate=5.0,
+            error_rate=1.0,
+        ),
+        # Radar topic monitors
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_front_center",
+            topic="/sensing/radar/front_center/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_front_center_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_front_left",
+            topic="/sensing/radar/front_left/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_front_left_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_front_right",
+            topic="/sensing/radar/front_right/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_front_right_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_rear_center",
+            topic="/sensing/radar/rear_center/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_rear_center_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_rear_left",
+            topic="/sensing/radar/rear_left/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_rear_left_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+        make_topic_state_monitor_node(
+            name="topic_state_monitor_radar_rear_right",
+            topic="/sensing/radar/rear_right/nebula_packets",
+            topic_type="nebula_msgs/msg/NebulaPackets",
+            diag_name="radar_rear_right_topic_status",
+            warn_rate=20.0,
+            error_rate=5.0,
+        ),
+    ]
+
+    return LaunchDescription(nodes)

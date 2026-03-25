@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+    <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+
     <arg name="sensor_model" default="ARS548"/>
     <arg name="launch_hw" default="true" description="Whether to connect to a real sensor (true) or to accept packet messages (false)."/>
     <arg name="config_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml"/>
@@ -10,6 +12,7 @@
     <arg name="steering_angle_topic"/>
 
     <node pkg="nebula_ros" exec="continental_ars548_ros_wrapper_node" name="nebula_continental_ars548" output="screen">
+        <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
         <param from="$(var config_file)" allow_substs="true"/>
         <param name="launch_hw" value="$(var launch_hw)"/>
         <param name="frame_id" value="$(var frame_id)"/>

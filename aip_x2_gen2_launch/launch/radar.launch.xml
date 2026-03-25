@@ -13,27 +13,25 @@
   <let name="acceleration_throttled_topic" value="$(var acceleration_topic)_throttled"/>
   <let name="steering_angle_throttled_topic" value="$(var steering_angle_topic)_throttled"/>
 
-  <!-- Component container for throttle nodes -->
-  <node_container pkg="rclcpp_components" exec="component_container" name="throttle_container" namespace="" output="screen">
-    <composable_node pkg="topic_tools" plugin="topic_tools::ThrottleNode" name="odometry_throttler">
-      <param name="input_topic" value="$(var odometry_topic)"/>
-      <param name="output_topic" value="$(var odometry_throttled_topic)"/>
-      <param name="throttle_type" value="messages"/>
-      <param name="msgs_per_sec" value="25.0"/>
-    </composable_node>
-    <composable_node pkg="topic_tools" plugin="topic_tools::ThrottleNode" name="acceleration_throttler">
-      <param name="input_topic" value="$(var acceleration_topic)"/>
-      <param name="output_topic" value="$(var acceleration_throttled_topic)"/>
-      <param name="throttle_type" value="messages"/>
-      <param name="msgs_per_sec" value="25.0"/>
-    </composable_node>
-    <composable_node pkg="topic_tools" plugin="topic_tools::ThrottleNode" name="steering_angle_throttler">
-      <param name="input_topic" value="$(var steering_angle_topic)"/>
-      <param name="output_topic" value="$(var steering_angle_throttled_topic)"/>
-      <param name="throttle_type" value="messages"/>
-      <param name="msgs_per_sec" value="25.0"/>
-    </composable_node>
-  </node_container>
+  <!-- Standalone throttle nodes (decomposed from component container) -->
+  <node pkg="topic_tools" exec="throttle" name="odometry_throttler" output="screen">
+    <param name="input_topic" value="$(var odometry_topic)"/>
+    <param name="output_topic" value="$(var odometry_throttled_topic)"/>
+    <param name="throttle_type" value="messages"/>
+    <param name="msgs_per_sec" value="25.0"/>
+  </node>
+  <node pkg="topic_tools" exec="throttle" name="acceleration_throttler" output="screen">
+    <param name="input_topic" value="$(var acceleration_topic)"/>
+    <param name="output_topic" value="$(var acceleration_throttled_topic)"/>
+    <param name="throttle_type" value="messages"/>
+    <param name="msgs_per_sec" value="25.0"/>
+  </node>
+  <node pkg="topic_tools" exec="throttle" name="steering_angle_throttler" output="screen">
+    <param name="input_topic" value="$(var steering_angle_topic)"/>
+    <param name="output_topic" value="$(var steering_angle_throttled_topic)"/>
+    <param name="throttle_type" value="messages"/>
+    <param name="msgs_per_sec" value="25.0"/>
+  </node>
 
   <group>
     <push-ros-namespace namespace="radar"/>

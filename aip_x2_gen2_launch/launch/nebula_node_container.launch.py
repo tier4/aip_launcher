@@ -439,27 +439,42 @@ def make_cuda_preprocessor_nodes(context, as_standalone=False, env=None):
     ]
 
 
-def make_blockage_diag_nodes(context):
+def make_blockage_diag_nodes(context, as_standalone=False, env=None):
+    parameters = [
+        {
+            "angle_range": LaunchConfiguration("blockage_range"),
+            "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
+            "vertical_bins": LaunchConfiguration("vertical_bins"),
+            "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
+            "max_distance_range": LaunchConfiguration("max_range"),
+            "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
+        },
+        load_composable_node_param(context, "blockage_diagnostics_param_file"),
+    ]
+    remappings = [
+        ("input", "pointcloud_raw_ex"),
+        ("output", "blockage_diag/pointcloud"),
+    ]
+
+    if as_standalone:
+        return [
+            Node(
+                package="autoware_pointcloud_preprocessor",
+                executable="agnocast_blockage_diag_node",
+                name="blockage_return_diag",
+                remappings=remappings,
+                parameters=parameters,
+                additional_env=env,
+            )
+        ]
+
     return [
         ComposableNode(
             package="autoware_pointcloud_preprocessor",
             plugin="autoware::pointcloud_preprocessor::BlockageDiagComponent",
             name="blockage_return_diag",
-            remappings=[
-                ("input", "pointcloud_raw_ex"),
-                ("output", "blockage_diag/pointcloud"),
-            ],
-            parameters=[
-                {
-                    "angle_range": LaunchConfiguration("blockage_range"),
-                    "horizontal_ring_id": LaunchConfiguration("horizontal_ring_id"),
-                    "vertical_bins": LaunchConfiguration("vertical_bins"),
-                    "is_channel_order_top2down": LaunchConfiguration("is_channel_order_top2down"),
-                    "max_distance_range": LaunchConfiguration("max_range"),
-                    "horizontal_resolution": LaunchConfiguration("horizontal_resolution"),
-                }
-            ]
-            + [load_composable_node_param(context, "blockage_diagnostics_param_file")],
+            remappings=remappings,
+            parameters=parameters,
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     ]
@@ -472,7 +487,7 @@ def make_agnocast_env(context):
     }
 
 
-def make_polar_voxel_outlier_filter_node(context):
+def make_polar_voxel_outlier_filter_node(context, as_standalone=False, env=None):
     parameters = ParameterFile(
         LaunchConfiguration("polar_voxel_outlier_filter_node_param_file").perform(context),
         allow_substs=True,
@@ -485,6 +500,17 @@ def make_polar_voxel_outlier_filter_node(context):
 
     match mode:
         case "cpu":
+            if as_standalone:
+                return [
+                    Node(
+                        package="autoware_pointcloud_preprocessor",
+                        executable="agnocast_polar_voxel_outlier_filter_node",
+                        name=node_name,
+                        parameters=[parameters],
+                        remappings=[("input", "pointcloud_raw_ex")],
+                        additional_env=env,
+                    )
+                ]
             return [
                 ComposableNode(
                     package="autoware_pointcloud_preprocessor",
@@ -502,6 +528,20 @@ def make_polar_voxel_outlier_filter_node(context):
                 )
             ]
         case "cuda":
+            if as_standalone:
+                return [
+                    Node(
+                        package="autoware_cuda_pointcloud_preprocessor",
+                        executable="cuda_polar_voxel_outlier_filter_node",
+                        name=node_name,
+                        parameters=[parameters, {"hardware_id": node_name}],
+                        remappings=[
+                            ("~/input/pointcloud", "pointcloud_raw_ex"),
+                            ("~/input/pointcloud/cuda", "pointcloud_raw_ex"),
+                        ],
+                        additional_env=env,
+                    )
+                ]
             return [
                 ComposableNode(
                     package="autoware_cuda_pointcloud_preprocessor",
@@ -562,28 +602,55 @@ def launch_setup(context, *args, **kwargs):
                 standalone_nodes.extend(
                     make_cuda_preprocessor_nodes(context, as_standalone=True, env=env)
                 )
+                if use_blockage_diag or use_polar_voxel_outlier_filter:
+                    standalone_nodes.append(make_nebula_node(context, False, env))
+                if use_polar_voxel_outlier_filter:
+                    standalone_nodes.extend(
+                        make_polar_voxel_outlier_filter_node(
+                            context, as_standalone=True, env=env
+                        )
+                    )
+                if use_blockage_diag:
+                    standalone_nodes.extend(
+                        make_blockage_diag_nodes(context, as_standalone=True, env=env)
+                    )
             else:
                 shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
 
-            if use_blockage_diag or use_polar_voxel_outlier_filter:
-                lidar_specific_container_nodes.append(make_nebula_node(context, True))
-            if use_polar_voxel_outlier_filter:
-                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
-            if use_blockage_diag:
-                lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
+                if use_blockage_diag or use_polar_voxel_outlier_filter:
+                    lidar_specific_container_nodes.append(make_nebula_node(context, True))
+                if use_polar_voxel_outlier_filter:
+                    lidar_specific_container_nodes.extend(
+                        make_polar_voxel_outlier_filter_node(context)
+                    )
+                if use_blockage_diag:
+                    lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
         case "cuda-all-in-one":
             if use_agnocast:
                 standalone_nodes.extend(
                     make_cuda_preprocessor_nodes(context, as_standalone=True, env=env)
                 )
+                standalone_nodes.append(make_nebula_node(context, False, env))
+                if use_blockage_diag:
+                    standalone_nodes.extend(
+                        make_blockage_diag_nodes(context, as_standalone=True, env=env)
+                    )
+                if use_polar_voxel_outlier_filter:
+                    standalone_nodes.extend(
+                        make_polar_voxel_outlier_filter_node(
+                            context, as_standalone=True, env=env
+                        )
+                    )
             else:
                 shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
-            shared_container_nodes.append(make_nebula_node(context, True))
+                shared_container_nodes.append(make_nebula_node(context, True))
 
-            if use_blockage_diag:
-                shared_container_nodes.extend(make_blockage_diag_nodes(context))
-            if use_polar_voxel_outlier_filter:
-                shared_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
+                if use_blockage_diag:
+                    shared_container_nodes.extend(make_blockage_diag_nodes(context))
+                if use_polar_voxel_outlier_filter:
+                    shared_container_nodes.extend(
+                        make_polar_voxel_outlier_filter_node(context)
+                    )
         case "cpu":
             lidar_specific_container_nodes.extend(make_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
@@ -591,7 +658,9 @@ def launch_setup(context, *args, **kwargs):
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
             if use_polar_voxel_outlier_filter:
-                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
+                lidar_specific_container_nodes.extend(
+                    make_polar_voxel_outlier_filter_node(context)
+                )
         case "cuda-with-cpu-concat":
             lidar_specific_container_nodes.extend(make_cuda_preprocessor_nodes(context))
             lidar_specific_container_nodes.append(make_nebula_node(context, True))
@@ -599,7 +668,9 @@ def launch_setup(context, *args, **kwargs):
             if use_blockage_diag:
                 lidar_specific_container_nodes.extend(make_blockage_diag_nodes(context))
             if use_polar_voxel_outlier_filter:
-                lidar_specific_container_nodes.extend(make_polar_voxel_outlier_filter_node(context))
+                lidar_specific_container_nodes.extend(
+                    make_polar_voxel_outlier_filter_node(context)
+                )
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
 
