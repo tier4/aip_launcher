@@ -599,11 +599,10 @@ def launch_setup(context, *args, **kwargs):
                 logger.warning("This pipeline mode may perform better when using Agnocast")
 
             if use_agnocast:
+                standalone_nodes.append(make_nebula_node(context, False, env))
                 standalone_nodes.extend(
                     make_cuda_preprocessor_nodes(context, as_standalone=True, env=env)
                 )
-                if use_blockage_diag or use_polar_voxel_outlier_filter:
-                    standalone_nodes.append(make_nebula_node(context, False, env))
                 if use_polar_voxel_outlier_filter:
                     standalone_nodes.extend(
                         make_polar_voxel_outlier_filter_node(
@@ -615,10 +614,9 @@ def launch_setup(context, *args, **kwargs):
                         make_blockage_diag_nodes(context, as_standalone=True, env=env)
                     )
             else:
+                lidar_specific_container_nodes.append(make_nebula_node(context, True))
                 shared_container_nodes.extend(make_cuda_preprocessor_nodes(context))
 
-                if use_blockage_diag or use_polar_voxel_outlier_filter:
-                    lidar_specific_container_nodes.append(make_nebula_node(context, True))
                 if use_polar_voxel_outlier_filter:
                     lidar_specific_container_nodes.extend(
                         make_polar_voxel_outlier_filter_node(context)
