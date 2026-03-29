@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
 
 def make_topic_state_monitor_node(name, topic, topic_type, diag_name, warn_rate, error_rate):
+    # Uses TypedTopicStateMonitorNode (agnocast::Node) with compile-time type registry
+    # instead of rclcpp::GenericSubscription. See typed_topic_state_monitor_core.hpp.
     return Node(
         package="autoware_topic_state_monitor",
-        executable="autoware_topic_state_monitor_node",
+        executable="typed_topic_state_monitor_agnocast_node",
         name=name,
         parameters=[
             {
@@ -34,6 +38,10 @@ def make_topic_state_monitor_node(name, topic, topic_type, diag_name, warn_rate,
             }
         ],
         output="screen",
+        additional_env={
+            "LD_PRELOAD": "libagnocast_heaphook.so:"
+            + os.environ.get("LD_PRELOAD", ""),
+        },
     )
 
 
