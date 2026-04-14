@@ -82,7 +82,7 @@
         <arg name="min_azimuth_deg" value="135.0"/>
         <arg name="max_azimuth_deg" value="225.0"/>
         <arg name="use_dual_return_filter" value="false"/>
-        <arg name="hires_mode" value="false"/>
+        <arg name="hires_mode" value="true"/>
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
