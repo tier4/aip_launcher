@@ -36,7 +36,7 @@
   <arg name="polar_voxel_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_outlier_filter_node.param.yaml"/>
   <arg name="polar_voxel_noise_filter_node_param_file_upper" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_noise_filter_node.param.yaml"/>
   <arg name="polar_voxel_noise_filter_node_param_file_lower" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_noise_filter_node.param_lower.yaml"/>
-  
+
   <let name="use_cuda_concat" value="$(eval '\'$(var pipeline_mode)\' == \'cuda\' or \'$(var pipeline_mode)\' == \'cuda-all-in-one\'')"/>
 
   <group>

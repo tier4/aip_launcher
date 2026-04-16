@@ -489,6 +489,7 @@ def make_cuda_preprocessor_nodes(context):
 
     return nodes
 
+
 def make_blockage_diag_nodes(context):
     return [
         ComposableNode(
