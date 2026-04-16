@@ -27,8 +27,16 @@
     <choice value="cuda"/>
     <choice value="disable"/>
   </arg>
-  <arg name="polar_voxel_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_outlier_filter_node.param.yaml"/>
 
+  <arg name="noise_filter_type" default="polar_voxel">
+    <choice value="polar_voxel"/>
+    <choice value="none"/>
+  </arg>
+
+  <arg name="polar_voxel_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_outlier_filter_node.param.yaml"/>
+  <arg name="polar_voxel_noise_filter_node_param_file_upper" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_noise_filter_node.param.yaml"/>
+  <arg name="polar_voxel_noise_filter_node_param_file_lower" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_noise_filter_node.param_lower.yaml"/>
+  
   <let name="use_cuda_concat" value="$(eval '\'$(var pipeline_mode)\' == \'cuda\' or \'$(var pipeline_mode)\' == \'cuda-all-in-one\'')"/>
 
   <group>
@@ -86,6 +94,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_upper)"/>
       </include>
     </group>
 
@@ -132,6 +142,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_upper)"/>
       </include>
     </group>
 
@@ -177,6 +189,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_lower)"/>
       </include>
     </group>
 
@@ -222,6 +236,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_lower)"/>
       </include>
     </group>
 
@@ -269,6 +285,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_upper)"/>
       </include>
     </group>
 
@@ -315,6 +333,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="$(var polar_voxel_visibility_estimation_mode)"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_upper)"/>
       </include>
     </group>
 
@@ -360,6 +380,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_lower)"/>
       </include>
     </group>
 
@@ -405,6 +427,8 @@
         <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
         <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
         <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+        <arg name="noise_filter_type" value="$(var noise_filter_type)"/>
+        <arg name="polar_voxel_noise_filter_node_param_file" value="$(var polar_voxel_noise_filter_node_param_file_lower)"/>
       </include>
     </group>
 
