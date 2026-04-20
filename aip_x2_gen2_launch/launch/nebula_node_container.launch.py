@@ -285,7 +285,7 @@ def make_preprocessor_nodes(context):
                 ),
                 ("~/input/imu", "/sensing/imu/imu_data"),
                 ("~/input/pointcloud", "wheels_cropped/pointcloud_ex"),
-                ("~/output/pointcloud", "rectified/pointcloud_ex"),
+                ("~/output/pointcloud", "pointcloud_before_sync"),
             ],
             parameters=[
                 load_composable_node_param(context, "distortion_corrector_node_param_file")
@@ -293,67 +293,6 @@ def make_preprocessor_nodes(context):
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
-
-    ring_outlier_filter_node_param = ParameterFile(
-        param_file=LaunchConfiguration("ring_outlier_filter_node_param_file").perform(context),
-        allow_substs=True,
-    )
-
-    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
-    if LaunchConfiguration("output_as_sensor_frame").perform(context).lower() == "true":
-        ring_outlier_output_frame = {"output_frame": LaunchConfiguration("frame_id")}
-    else:
-        # keep the output frame as the input frame
-        ring_outlier_output_frame = {"output_frame": ""}
-
-    use_dual_return_filter = IfCondition(LaunchConfiguration("use_dual_return_filter")).evaluate(
-        context
-    )
-
-    if not use_dual_return_filter:
-        nodes.append(
-            ComposableNode(
-                package="autoware_pointcloud_preprocessor",
-                plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent",
-                name="ring_outlier_filter",
-                remappings=[
-                    ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
-                ],
-                parameters=[
-                    ring_outlier_filter_node_param,
-                    ring_outlier_output_frame,
-                    {"is_agnocast_publish_node": True},
-                ],
-                extra_arguments=[
-                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                ],
-            )
-        )
-    else:
-        nodes.append(
-            ComposableNode(
-                package="autoware_pointcloud_preprocessor",
-                plugin="autoware::pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-                name="dual_return_filter",
-                remappings=[
-                    ("input", "rectified/pointcloud_ex"),
-                    ("output", "pointcloud_before_sync"),
-                ],
-                parameters=[
-                    {
-                        "vertical_bins": LaunchConfiguration("vertical_bins"),
-                        "min_azimuth_deg": LaunchConfiguration("min_azimuth_deg"),
-                        "max_azimuth_deg": LaunchConfiguration("max_azimuth_deg"),
-                        "is_agnocast_publish_node": True,
-                    }
-                ]
-                + [load_composable_node_param(context, "dual_return_filter_param_file")],
-                extra_arguments=[
-                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                ],
-            )
-        )
 
     return nodes
 
@@ -407,7 +346,7 @@ def make_cuda_preprocessor_nodes(context):
                 preprocessor_parameters,
                 distortion_corrector_node_param,
                 ring_outlier_filter_node_param,
-                {"enable_ring_outlier_filter": True},
+                {"enable_ring_outlier_filter": False},
             ],
             remappings=[
                 ("~/input/pointcloud", "pointcloud_raw_ex"),

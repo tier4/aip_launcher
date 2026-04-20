@@ -76,7 +76,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -122,7 +122,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
@@ -168,7 +168,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -213,7 +213,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="225.0"/>
@@ -259,7 +259,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -305,7 +305,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
@@ -351,7 +351,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="135.0"/>
@@ -396,7 +396,7 @@
         <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
         <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)" />
         <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)" />
-        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png" />
+        <arg name="point_filters.downsample_mask.path" value="" />
         <arg name="dual_return_distance_threshold" value="0.1"/>
         <arg name="blockage_diagnostics_param_file" value="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics_param_file.yaml" />
         <arg name="min_azimuth_deg" value="45.0"/>
