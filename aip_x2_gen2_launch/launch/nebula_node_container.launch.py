@@ -219,59 +219,7 @@ def make_nebula_node(context, as_composable_node, env=None):
 
 
 def make_preprocessor_nodes(context):
-    vehicle_info = get_vehicle_info(context)
-
-    cropbox_parameters_self = create_parameter_dict("input_frame", "output_frame")
-    cropbox_parameters_self["negative"] = True
-    cropbox_parameters_self["processing_time_threshold_sec"] = 0.01
-
-    cropbox_parameters_self["min_x"] = vehicle_info["min_longitudinal_offset"]
-    cropbox_parameters_self["max_x"] = vehicle_info["max_longitudinal_offset"]
-    cropbox_parameters_self["min_y"] = vehicle_info["min_lateral_offset"]
-    cropbox_parameters_self["max_y"] = vehicle_info["max_lateral_offset"]
-    cropbox_parameters_self["min_z"] = vehicle_info["min_height_offset"]
-    cropbox_parameters_self["max_z"] = vehicle_info["max_height_offset"]
-
-    cropbox_parameters_wheels = create_parameter_dict("input_frame", "output_frame")
-    cropbox_parameters_wheels["negative"] = True
-    cropbox_parameters_wheels["processing_time_threshold_sec"] = 0.01
-
-    cropbox_parameters_wheels["min_x"] = vehicle_info["wheels_min_longitudinal_offset"]
-    cropbox_parameters_wheels["max_x"] = vehicle_info["wheels_max_longitudinal_offset"]
-    cropbox_parameters_wheels["min_y"] = vehicle_info["wheels_min_lateral_offset"]
-    cropbox_parameters_wheels["max_y"] = vehicle_info["wheels_max_lateral_offset"]
-    cropbox_parameters_wheels["min_z"] = vehicle_info["wheels_min_height_offset"]
-    cropbox_parameters_wheels["max_z"] = vehicle_info["wheels_max_height_offset"]
-
     nodes = []
-
-    nodes.append(
-        ComposableNode(
-            package="autoware_pointcloud_preprocessor",
-            plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
-            name="crop_box_filter_self",
-            remappings=[
-                ("input", "pointcloud_raw_ex"),
-                ("output", "self_cropped/pointcloud_ex"),
-            ],
-            parameters=[cropbox_parameters_self],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
-
-    nodes.append(
-        ComposableNode(
-            package="autoware_pointcloud_preprocessor",
-            plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent",
-            name="crop_box_filter_wheels",
-            remappings=[
-                ("input", "self_cropped/pointcloud_ex"),
-                ("output", "wheels_cropped/pointcloud_ex"),
-            ],
-            parameters=[cropbox_parameters_wheels],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
 
     nodes.append(
         ComposableNode(
@@ -284,7 +232,7 @@ def make_preprocessor_nodes(context):
                     "/sensing/vehicle_velocity_converter/twist_with_covariance",
                 ),
                 ("~/input/imu", "/sensing/imu/imu_data"),
-                ("~/input/pointcloud", "wheels_cropped/pointcloud_ex"),
+                ("~/input/pointcloud", "pointcloud_raw_ex"),
                 ("~/output/pointcloud", "pointcloud_before_sync"),
             ],
             parameters=[
