@@ -25,7 +25,7 @@
     </include>
 
     <!-- Radar Driver -->
-    <include file="$(find-pkg-share aip_x2_launch)/launch/radar.launch.xml">
+    <include file="$(find-pkg-share aip_x2_launch)/launch/radar.launch.xml" if="false">
       <arg name="launch_driver" value="$(var launch_driver)" />
     </include>
 

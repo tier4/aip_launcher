@@ -3,7 +3,7 @@
     diagnostics:
       functional_safety:
         mode: advanced
-        error_definitions_path: $(find-pkg-share autoware_launch)/config/sensing/lidar/diagnostics/qt128_fusa_codes.csv
+        error_definitions_path: $(find-pkg-share aip_x2_gen2_launch)/config/sensing/lidar/diagnostics/qt128_fusa_codes.csv
         # In ROS 2, parameters cannot be an empty list, so this is commented out.
         # ignored_error_codes:
         #  - 0xaaaa # justification
