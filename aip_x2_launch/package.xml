@@ -12,9 +12,17 @@
 
   <exec_depend>common_sensor_launch</exec_depend>
   <exec_depend>dummy_diag_publisher</exec_depend>
+  <exec_depend>glog_component</exec_depend>
   <exec_depend>gnss_poser</exec_depend>
   <exec_depend>imu_corrector</exec_depend>
+  <exec_depend>imu_monitor</exec_depend>
+  <exec_depend>nebula_ros</exec_depend>
+  <exec_depend>pandar_driver</exec_depend>
+  <exec_depend>pandar_monitor</exec_depend>
+  <exec_depend>pandar_pointcloud</exec_depend>
   <exec_depend>pointcloud_preprocessor</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+  <exec_depend>topic_state_monitor</exec_depend>
   <exec_depend>septentrio_gnss_driver</exec_depend>
   <exec_depend>tamagawa_imu_driver</exec_depend>
   <exec_depend>topic_tools</exec_depend>
