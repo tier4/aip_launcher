@@ -143,6 +143,6 @@
         gpgsa: false
         gpgsv: false
 
-    loging:
+    login:
       user: "GnssUser"
       password: "gnss.user"
