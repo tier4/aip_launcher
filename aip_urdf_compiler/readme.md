@@ -30,6 +30,7 @@ To use aip_urdf_compiler in your description package:
   ```
 
 - Configure your sensors in `config/sensors.yaml` with metadata values (Note: do not need to add meta values in `individual_params`):
+
   - `type`: Required string, corresponding to the string value from [existing sensors](#existing-sensors)
   - `frame_id`: Optional string, overwrites the TF frame ID.
 
@@ -66,11 +67,13 @@ class LinkType(enum.Enum):
 ### Components
 
 1. **aip_urdf_compiler**
+
    - Main package handling URDF generation
    - Processes configuration files
    - Manages build-time compilation
 
 2. **aip_cmake_urdf_compile**
+
    - CMake macro implementation
    - Creates build targets
    - Ensures URDF regeneration on each build
@@ -83,11 +86,13 @@ class LinkType(enum.Enum):
 ### Compilation Process
 
 1. **Configuration Reading**
+
    - Parses `config/sensors.yaml`
    - Extracts transformation data
    - Validates configurations
 
 2. **Transform Processing**
+
    - Processes each sensor transform
    - Determines sensor types and frame IDs
    - Generates appropriate macro strings
@@ -101,6 +106,7 @@ class LinkType(enum.Enum):
 ## Adding New Sensors
 
 1. Add sensor descriptions (xacro module files) in either:
+
    - Your target package
    - `common_sensor_description` package
 
@@ -121,6 +127,7 @@ cat $workspace/log/build_<timestamp>/aip_{project}_description/streams.log
 ### Common Issues
 
 1. Missing sensor definitions
+
    - Ensure sensor type is defined in `LinkType`
    - Verify xacro file exists in description package
 
