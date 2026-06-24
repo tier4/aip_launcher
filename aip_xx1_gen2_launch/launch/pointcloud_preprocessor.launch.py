@@ -45,16 +45,26 @@ def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str
 
 
 def launch_setup(context, *args, **kwargs):
+    # Determine parameter file depending on vehicle_model
+    vehicle_model = LaunchConfiguration("vehicle_model").perform(context)
+    aip_xx1_gen2_launch_share_dir = get_package_share_directory("aip_xx1_gen2_launch")
+
+    if vehicle_model == "ioniq5":
+        param_file_name = "concatenate_and_time_sync_node_ioniq5.param.yaml"
+    else:
+        param_file_name = "concatenate_and_time_sync_node.param.yaml"
+
+    param_path = os.path.join(aip_xx1_gen2_launch_share_dir, "config", param_file_name)
+
     # Load concatenate node parameters as YAML
-    with open(
-        LaunchConfiguration("concatenate_and_time_sync_node_param_path").perform(context), "r"
-    ) as f:
+    with open(param_path, "r") as f:
         concatenate_and_time_sync_node_param = yaml.safe_load(f)["/**"]["ros__parameters"]
 
     # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
-    concatenate_and_time_sync_node_param = erase_rear_lidar_entry_depending_on_vehicle_id(
-        concatenate_and_time_sync_node_param, LaunchConfiguration("vehicle_id").perform(context)
-    )
+    if vehicle_model != "ioniq5":
+        concatenate_and_time_sync_node_param = erase_rear_lidar_entry_depending_on_vehicle_id(
+            concatenate_and_time_sync_node_param, LaunchConfiguration("vehicle_id").perform(context)
+        )
 
     # set concat filter as a component
     concat_component = ComposableNode(
@@ -85,23 +95,14 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
-    aip_xx1_gen2_launch_share_dir = get_package_share_directory("aip_xx1_gen2_launch")
-
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("individual_container_name", "concatenate_container")
+    add_launch_arg("vehicle_model", default_value="")
     add_launch_arg(
         "vehicle_id",
         default_value=EnvironmentVariable("VEHICLE_ID", default_value="default"),
-    )
-    add_launch_arg(
-        "concatenate_and_time_sync_node_param_path",
-        os.path.join(
-            aip_xx1_gen2_launch_share_dir,
-            "config",
-            "concatenate_and_time_sync_node.param.yaml",
-        ),
     )
 
     set_container_executable = SetLaunchConfiguration(
