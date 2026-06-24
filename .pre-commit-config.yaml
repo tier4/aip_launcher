@@ -2,6 +2,9 @@ ci:
   autofix_commit_msg: "ci(pre-commit): autofix"
   autoupdate_commit_msg: "ci(pre-commit): autoupdate"
 
+default_language_version:
+  python: python3.12
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
