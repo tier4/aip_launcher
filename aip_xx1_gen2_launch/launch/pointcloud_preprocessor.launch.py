@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# cspell:ignore IONIQ ioniq
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -26,6 +28,12 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 import yaml
+
+IONIQ5_LIDAR_TOPICS = {
+    "/sensing/lidar/top/pointcloud_before_sync",
+    "/sensing/lidar/side_left/pointcloud_before_sync",
+    "/sensing/lidar/side_right/pointcloud_before_sync",
+}
 
 
 def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str) -> dict:
@@ -44,17 +52,38 @@ def erase_rear_lidar_entry_depending_on_vehicle_id(config: dict, vehicle_id: str
     return config
 
 
+def filter_lidar_entries_for_ioniq5(config: dict) -> dict:
+    indices_to_keep = [
+        i for i, topic in enumerate(config["input_topics"]) if topic in IONIQ5_LIDAR_TOPICS
+    ]
+    config["input_topics"] = [config["input_topics"][i] for i in indices_to_keep]
+    config["matching_strategy"]["lidar_timestamp_offsets"] = [
+        config["matching_strategy"]["lidar_timestamp_offsets"][i] for i in indices_to_keep
+    ]
+    config["matching_strategy"]["lidar_timestamp_noise_window"] = [
+        config["matching_strategy"]["lidar_timestamp_noise_window"][i] for i in indices_to_keep
+    ]
+    return config
+
+
 def launch_setup(context, *args, **kwargs):
+    vehicle_model = LaunchConfiguration("vehicle_model").perform(context)
+
     # Load concatenate node parameters as YAML
     with open(
         LaunchConfiguration("concatenate_and_time_sync_node_param_path").perform(context), "r"
     ) as f:
         concatenate_and_time_sync_node_param = yaml.safe_load(f)["/**"]["ros__parameters"]
 
-    # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
-    concatenate_and_time_sync_node_param = erase_rear_lidar_entry_depending_on_vehicle_id(
-        concatenate_and_time_sync_node_param, LaunchConfiguration("vehicle_id").perform(context)
-    )
+    if vehicle_model == "ioniq5":
+        concatenate_and_time_sync_node_param = filter_lidar_entries_for_ioniq5(
+            concatenate_and_time_sync_node_param
+        )
+    else:
+        # Remove the rear lidar entry from the parameter file if the vehicle does not have a rear lidar
+        concatenate_and_time_sync_node_param = erase_rear_lidar_entry_depending_on_vehicle_id(
+            concatenate_and_time_sync_node_param, LaunchConfiguration("vehicle_id").perform(context)
+        )
 
     # set concat filter as a component
     concat_component = ComposableNode(
@@ -91,6 +120,7 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("individual_container_name", "concatenate_container")
+    add_launch_arg("vehicle_model", default_value="")
     add_launch_arg(
         "vehicle_id",
         default_value=EnvironmentVariable("VEHICLE_ID", default_value="default"),
