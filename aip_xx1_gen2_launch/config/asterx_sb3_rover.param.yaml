@@ -95,3 +95,7 @@
     # logger
 
     activate_debug_log: false
+
+    login:
+      user: "GnssUser"
+      password: "gnss.user"
