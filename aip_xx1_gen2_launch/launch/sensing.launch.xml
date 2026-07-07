@@ -4,7 +4,6 @@
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
   <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_fusion, lidar, camera"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
   <arg name="vehicle_model" default="$(env VEHICLE_MODEL default)"/>
 
   <group>
