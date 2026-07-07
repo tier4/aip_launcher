@@ -4,7 +4,6 @@
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
   <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_fusion, lidar, camera"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name ="vehicle_id" default="$(env VEHICLE_ID default)" />
 
   <group>
 
@@ -12,6 +11,7 @@
     <let name="is_gen2_0" value="$(eval &quot;'$(var vehicle_id)' in ['1', '5', '8']&quot;)"/>
     <let name="lidar_config_file" value="$(find-pkg-share aip_xx1_gen2_launch)/config/lidar_gen2.yaml" if="$(var is_gen2_0)"/>
     <let name="lidar_config_file" value="$(find-pkg-share aip_xx1_gen2_launch)/config/lidar_gen2_1.yaml" unless="$(var is_gen2_0)"/>
+    <let name="lidar_config_file" value="$(find-pkg-share aip_xx1_gen2_launch)/config/lidar_gen2_ioniq5.yaml" if="$(eval &quot;'$(var vehicle_model)' == 'ioniq5'&quot;)"/>
     <log message="lidar_config_file: $(var lidar_config_file)"/>
 
     <include file="$(find-pkg-share aip_xx1_gen2_launch)/launch/lidar.launch.py">
