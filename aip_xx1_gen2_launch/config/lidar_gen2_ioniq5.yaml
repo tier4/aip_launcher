@@ -3,6 +3,7 @@ launches:
     namespace: top
     parameters:
       max_range: 300.0
+      min_range: 0.3
       sensor_frame: hesai_top
       sensor_ip: 192.168.1.201
       data_port: 2368
@@ -12,6 +13,7 @@ launches:
   #   namespace: front_left
   #   parameters:
   #     max_range: 80.0
+  #     min_range: 0.3
   #     sensor_frame: hesai_front_left
   #     sensor_ip: 192.168.1.21
   #     data_port: 2369
@@ -23,6 +25,7 @@ launches:
   #   namespace: front_right
   #   parameters:
   #     max_range: 80.0
+  #     min_range: 0.3
   #     sensor_frame: hesai_front_right
   #     sensor_ip: 192.168.1.22
   #     data_port: 2370
@@ -34,6 +37,7 @@ launches:
     namespace: side_left
     parameters:
       max_range: 10.0
+      min_range: 0.3
       sensor_frame: hesai_side_left
       sensor_ip: 192.168.1.23
       data_port: 2371
@@ -45,6 +49,7 @@ launches:
     namespace: side_right
     parameters:
       max_range: 10.0
+      min_range: 0.3
       sensor_frame: hesai_side_right
       sensor_ip: 192.168.1.24
       data_port: 2372
@@ -56,6 +61,7 @@ launches:
   #   namespace: rear
   #   parameters:
   #     max_range: 1.5
+  #     min_range: 0.3
   #     sensor_frame: hesai_rear
   #     sensor_ip: 192.168.1.25
   #     data_port: 2373
