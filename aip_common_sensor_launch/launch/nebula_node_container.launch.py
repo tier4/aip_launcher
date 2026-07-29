@@ -275,6 +275,7 @@ def make_opencl_preprocessor_nodes(context):
                         "num_rings": int(LaunchConfiguration("num_rings").perform(context)),
                         "num_fires": int(LaunchConfiguration("num_fires").perform(context)),
                         "expected_min_points": int(LaunchConfiguration("expected_min_points").perform(context)),
+                        "fixed_fires_per_ring": int(LaunchConfiguration("fixed_fires_per_ring").perform(context)),
                     }
                 ],
                 remappings=[
@@ -584,6 +585,11 @@ def generate_launch_description():
     add_launch_arg("num_rings", "128", "Number of rings for RingFix16 format")
     add_launch_arg("num_fires", "512", "Number of fires per ring for RingFix16 format")
     add_launch_arg("expected_min_points", "0", "Minimum input point count to publish (0=disabled)")
+    add_launch_arg(
+        "fixed_fires_per_ring",
+        "0",
+        "Fixed per-ring fire cap for RingFix16 thinning (0=use num_fires)",
+    )
     add_launch_arg("ptp_profile", "1588v2")
     add_launch_arg("ptp_transport_type", "L2")
     add_launch_arg("ptp_switch_type", "TSN")

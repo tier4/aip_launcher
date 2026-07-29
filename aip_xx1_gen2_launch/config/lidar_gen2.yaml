@@ -10,6 +10,10 @@ launches:
       cut_angle: 160.0
       num_rings: 128
       expected_min_points: 300000
+      # Fixed per-ring fire cap for the RingFix16 thinning (HighReso + Dual).
+      # Derived from the LiDAR: expected_min_points / num_rings = 300000 / 128 ~= 2344.
+      # Tune up for more fidelity (more chunks) or down for throughput.
+      fixed_fires_per_ring: 2344
   - sensor_type: hesai_XT32
     namespace: front_left
     parameters:
